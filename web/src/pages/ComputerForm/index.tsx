@@ -48,11 +48,11 @@ export default function ComputerForm() {
     }
 
     return (
-        <div id="page-computer-form">
+        <div id="page-computer-form" className="container">
             <PageHeader 
                 title={"Meu patrimônio"} />
 
-            <main className="container">
+            <main>
 
                 <form onSubmit={handleCreatePatrimony}>
                     <fieldset>
@@ -80,7 +80,7 @@ export default function ComputerForm() {
                                 onChange={(e) => setDescription(e.target.value)}/>
                         </div>
                         
-                        <div className="computer-items-ip">
+                        <div className="fieldset-computer-ip">
                             <div className="legend">
                                 Ips
                                 <button>
@@ -89,7 +89,7 @@ export default function ComputerForm() {
                             </div>
                             {ipItems.map((ipItem, index) => {
                                 return (
-                                    <div key={ipItem.ip} className="ip-items">
+                                    <div key={index} className="ip-items">
                                         <Input 
                                             name="ip"
                                             label="Ip"
@@ -112,15 +112,15 @@ export default function ComputerForm() {
                     </fieldset>
 
                     <fieldset>
-                        <legend>
+                        <div className="legend">
                             Monitores
                             <button>
                                 + Novo Monitor
                             </button>
-                        </legend>
+                        </div>
                         {monitorItems.map((monitorItem, index) => {
                             return (
-                                <div key={monitorItem.patrimony} className="monitor-items">
+                                <div key={index} className="monitor-items">
                                     <Input
                                         name="patrimonyMonitor"
                                         label="Patrimônio"
