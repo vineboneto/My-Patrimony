@@ -14,9 +14,9 @@
     --color-primary: #396CB9;
     --color-secondary: rgba(35, 86, 217, 1);
     --color-secondary-dark: rgba(41, 70, 143, 1);
-    --color-light-gray: #E6E1E1;
-    --color-dark-gray: rgba(128, 128, 128, 1);
-    --color-box-shadown: rgba(112, 97, 97, 1);
+    --color-background-light: #E5E1E1;
+    --color-gray: #CCC9C9;
+    --color-input: #706161;
     --color-sucess: #30BC35;
 }
 
@@ -32,7 +32,7 @@ html, body, #root {
 }
 
 body {
-     background: var(--color-background);
+    background-color: var(--color-background-light);
 }
 
 #root {
