@@ -1,7 +1,7 @@
 /* DESKTOP */ 
 
 .page-header {
-    height: 340px;
+    height: 405px;
     display: flex;
     flex-direction: column;
     background-color: var(--color-primary);
@@ -14,7 +14,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.6rem;
-    background-color: var(--color-secondary-dark);
+    background-color: var(--color-primary-dark);
 }
 
 .page-header .top-bar-container a {
@@ -27,7 +27,7 @@
 }
 
 .page-header .top-bar-container > img {
-    height: 1.6rem;
+    height: 10.6rem;
 }
 
 .page-header .header-content {
@@ -37,6 +37,7 @@
     position: relative;
     flex: 1;
     padding-bottom: 48px;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -44,8 +45,8 @@
 }
 
 .page-header .header-content strong {
-    font: 700 4.7rem Archivo;
-    max-width: 350px;
+    font: 700 4.7rem 'Archivo';
+    max-width: 600px;
     line-height: 4.2rem;
     color: #fff
 }
