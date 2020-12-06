@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 
-import backIcon from '../../assets/imgs/icons/backIcon.svg'
+import prevIcon from '../../assets/imgs/icons/prevIcon.svg'
 
 import './styles.css'
 
@@ -17,7 +17,7 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
             
             <div className="top-bar-container">
                 <Link to="/">
-                    <img src={backIcon} alt="Voltar"/>
+                    <img src={prevIcon} alt="Voltar"/>
                 </Link>
             </div>
 
