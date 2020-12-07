@@ -3,10 +3,10 @@ import React, { useState } from 'react'
 import Footer from '../../components/Footer'
 import Form from '../../components/Form'
 import Input from '../../components/Input'
+import IpForm from '../../components/IpForm'
 import IpItems from '../../components/IpItems'
 import OwnerItem from '../../components/OwnerItem'
 import PageHeader from '../../components/PageHeader'
-import Select from '../../components/Select'
 import Textarea from '../../components/Textarea'
 
 import './styles.css'
@@ -75,15 +75,9 @@ const ComputerForm = () => {
                             value={description}
                             onChange={(e) => setDescription(e.target.value)} />
                     </div>
+                    <IpForm
+                        addNewIp={addNewIpItem}>
 
-                    <div className="ips">
-                        <div className="legend">
-                            Ips
-                            <button type="button" onClick={addNewIpItem}>
-                                + Novo Ip
-                            </button>
-                        </div>
-                    
                         {ipItems.map((ipItem, index) => {
                             return (
                                 <IpItems
@@ -94,7 +88,9 @@ const ComputerForm = () => {
                                     onGatewayChange={(gatewayValue: string) => setIpItemsValue(index, 'gateway', gatewayValue)} />
                             )
                         })}
-                    </div>
+                    </IpForm>
+                    
+                    
                 </Form>
 
                 <Footer next="/" />
