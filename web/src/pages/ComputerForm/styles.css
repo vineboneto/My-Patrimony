@@ -68,13 +68,6 @@
     color: #000;
 }
 
-#page-computer-form main .ips .ip-items {
-    display: grid;
-    grid-template-columns: 201px 201px 201px;
-    grid-template-areas: "ip mask gateway";
-    justify-content: space-between; 
-}
-
 #page-computer-form main .ips .input-block {
     margin-top: 2.4rem;
 }

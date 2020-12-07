@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Footer from '../../components/Footer'
 import Form from '../../components/Form'
 import Input from '../../components/Input'
+import IpItems from '../../components/IpItems'
 import OwnerItem from '../../components/OwnerItem'
 import PageHeader from '../../components/PageHeader'
 import Select from '../../components/Select'
@@ -85,23 +86,12 @@ const ComputerForm = () => {
                     
                         {ipItems.map((ipItem, index) => {
                             return (
-                                <div key={index} className="ip-items">
-                                    <Input 
-                                        name="ip"
-                                        label="Ip"
-                                        value={ipItem.ip}
-                                        onChange={(e) => setIpItemsValue(index, 'ip', e.target.value)}/>
-                                    <Input
-                                        name="mask"
-                                        label="Máscara de sub-rede"
-                                        value={ipItem.mask}
-                                        onChange={(e) => setIpItemsValue(index, 'mask', e.target.value)} />
-                                    <Input
-                                        name="gateway"
-                                        label="Gateway"
-                                        value={ipItem.gateway}
-                                        onChange={(e) => setIpItemsValue(index, 'gateway', e.target.value)} />
-                                </div>
+                                <IpItems
+                                    key={index}
+                                    ipItem={ipItem}
+                                    onIpChange={(ipValue: string) => setIpItemsValue(index, 'ip', ipValue) }
+                                    onMaskChange={(maskValue: string) => setIpItemsValue(index, 'mask', maskValue)} 
+                                    onGatewayChange={(gatewayValue: string) => setIpItemsValue(index, 'gateway', gatewayValue)} />
                             )
                         })}
                     </div>
