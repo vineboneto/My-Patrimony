@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 
-import prevIcon from '../../assets/imgs/icons/prevIcon.svg'
+import prevIcon from '../../assets/images/icons/prevIcon.svg'
 
 import './styles.css'
 

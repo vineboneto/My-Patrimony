@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import monitorIcon from '../../assets/imgs/icons/monitorIcon.svg'
-import nextIcon from '../../assets/imgs/icons/nextIcon.svg'
+import monitorIcon from '../../assets/images/icons/monitorIcon.svg'
+import nextIcon from '../../assets/images/icons/nextIcon.svg'
 
 import './styles.css'
 

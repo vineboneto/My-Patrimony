@@ -1,12 +1,11 @@
+/* DESKTOP */
+
 #page-computer-form {
     width: 100vw;
     /* height: 100vh; */
-    max-width: 100vw;
-}
+    max-width: 1100vw;
 
-#page-computer-form .page-header .header-content {
-    margin-bottom: 6.4rem;
-    margin-bottom: 0;
+    background-color: var(--color-background-form);
 }
 
 #page-computer-form main {
@@ -14,62 +13,56 @@
     max-width: 74rem;
     border-radius: 0.8rem;
     margin: -8.2rem auto 3.2rem;
-    padding-top: 6.4rem;
+    padding-top: 3.4rem;
     overflow: hidden;
 }
 
-
-#page-computer-form main fieldset {
-    border: 0;
-    padding: 0 3.4rem;
-}
-
-#page-computer-form main fieldset + fieldset {
-    margin-top: 6.4rem;
-}
-
-#page-computer-form main fieldset .computer-items{
+#page-computer-form main .owner-item{
     display: grid;
-    grid-template-columns: 179px 179px 210px;
-    grid-template-areas: "sector patrimony user"
-    "textarea textarea textarea";
+    grid-template-columns: 300px 300px;
+    grid-template-areas: "sector owner";
     justify-content: space-between;
 }
 
-#page-computer-form main fieldset .ip-items,
-#page-computer-form main fieldset .monitor-items {
+#page-computer-form main .computer-item {
     display: grid;
-    grid-template-columns: 179px 179px 210px;
-    grid-template-areas: "col col col";
-    justify-content: space-between; 
+    grid-template-columns: 175px 242px 1fr;
+    grid-template-areas: "computer model void"
+    "textarea textarea textarea";
+    column-gap: 53px;
 }
 
-#page-computer-form main fieldset .computer-items .textarea-block {
+#page-computer-form main .computer-item > :nth-child(1) {
+    grid-area: computer;
+}
+
+#page-computer-form main .computer-item > :nth-child(2) {
+    grid-area: model;
+}
+
+#page-computer-form main .computer-item > :nth-child(3) {
     grid-area: textarea;
-    margin-bottom: 2rem;
 }
 
-#page-computer-form main fieldset legend,
-#page-computer-form main fieldset .legend {
-    font: 600 2.4rem Archivo;
-    color: #000;
-    margin-bottom: 2.4rem;
+#page-computer-form main .input-block + .textarea-block {
+    margin-top: 2.4rem; 
+}
+
+/* IPS */
+
+#page-computer-form main .ips .legend {
+    margin-top: 2.4rem;
+    font: 600 2rem 'Archivo';
+    color: var(--color-label-input);
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
     padding-bottom: 2.6rem;
-    border-bottom: 1px solid var(--color-gray);
+    border-bottom: 1px solid var(--color-border-input);
 }
 
-#page-computer-form main fieldset .fieldset-computer-ip .legend {
-    font-size: 2rem;
-    color: var(--color-input);
-}
-
-
-#page-computer-form main fieldset .legend button,
-#page-computer-form main fieldset legend button {
+#page-computer-form main .ips .legend button {
     background: none;
     border: 0;
     color: var(--color-primary);
@@ -77,67 +70,21 @@
     transition: color 0.2s;
 }
 
-#page-computer-form main fieldset .legend button:hover {
+#page-computer-form main .ips .legend button:hover {
     color: #000;
 }
 
-#page-computer-form main fieldset .printer-item {
+#page-computer-form main .ips .ip-items {
     display: grid;
-    grid-template-columns: 179px 179px 210px;
-    row-gap: 20px;
-    grid-template-areas: "patrimony model espace"
-    "ip mask gateway";
+    grid-template-columns: 201px 201px 201px;
+    grid-template-areas: "ip mask gateway";
     justify-content: space-between; 
-
 }
 
-#page-computer-form main fieldset .printer-item > :nth-child(3) {
-    grid-area: ip;
+#page-computer-form main .ips .input-block {
+    margin-top: 2.4rem;
 }
 
-#page-computer-form main fieldset .printer-item > :nth-child(4) {
-    grid-area: mask;
-}
 
-#page-computer-form main fieldset .printer-item > :nth-child(5) {
-    grid-area: gateway;
-}
 
-#page-computer-form main fieldset .input-block + .textarea-block {
-    margin-top: 2.4rem; 
-}
-
-#page-computer-form main fieldset .select-block + .input-block {
-    margin-top: 2.4rem; 
-}
-
-#page-computer-form main form footer {
-    width: 100%;
-    padding: 4rem;
-    background: var(--color-gray);
-    border-top: 1px solid var(--color-gray);
-    margin-top: 6.4rem; 
-
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-}
-
-#page-computer-form main footer button {
-    grid-area: button;
-    width: 20rem;
-    height: 5.6rem;
-    background: var(--color-secondary);
-    color: #fff;
-    border: 0;
-    border-radius: 0.8rem;
-    cursor: pointer;
-    font: 700 1.6rem Archivo;
-    display: flex;
-    align-items: center;
-    justify-content:  center;
-    text-decoration: none;
-    transition: background-color 0.2s;
-}
 

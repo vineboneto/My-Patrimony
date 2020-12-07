@@ -10,7 +10,9 @@ const Form: React.FC<FormProps> = (props) => {
     return (
         <form className="form-block">
             <fieldset>
-                <legend>{props.legend}</legend>
+                <legend>
+                    {props.legend}
+                </legend>
 
                 {props.children}
             </fieldset>
