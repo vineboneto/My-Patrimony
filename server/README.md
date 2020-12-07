@@ -1,3 +1,3 @@
 # Server
 
-Utilize o banco de dados mysql 5.7
+Instale o banco de dados _Mysql 5.7_

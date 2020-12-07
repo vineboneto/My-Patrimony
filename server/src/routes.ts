@@ -4,6 +4,7 @@ import SectorController from './controllers/SectorController'
 const routes = express.Router()
 const sectorController = new SectorController
 
-routes.get('/sector', sectorController.index)
+routes.get('/sectors', sectorController.index)
+routes.post('/sectors', sectorController.create)
 
 export default routes

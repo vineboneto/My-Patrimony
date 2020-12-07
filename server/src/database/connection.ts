@@ -1,20 +1,19 @@
 import knex from 'knex'
 import path from 'path';
+const knexfile = require('../../knexfile.ts')
 
-const port = 3306
-
-const db = knex({
-    client: 'mysql',
-    connection: {
-        host: `localhost:${port}`,
-        user: 'root',
-        password: '1234',
-        database: 'mypatrimony'
-    },
-    migrations: {
-        directory: path.resolve(__dirname, 'src', 'database', 'migrations') 
-    },
-    useNullAsDefault: true
-})
+const db = knex(knexfile)
+// client: 'mysql',
+// connection: {
+//     host: 'localhost',
+//     database: 'mypatrimony',
+//     port: 3306,
+//     user: 'root',
+//     password: '1234',
+// },
+// migrations: {
+//     directory: path.resolve(__dirname, 'src', 'database', 'migrations') 
+// },
+// useNullAsDefault: true
 
 export default db
