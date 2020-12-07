@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Footer from '../../components/Footer'
 import Form from '../../components/Form'
 import Input from '../../components/Input'
+import OwnerItem from '../../components/OwnerItem'
 import PageHeader from '../../components/PageHeader'
 import Select from '../../components/Select'
 import Textarea from '../../components/Textarea'
@@ -37,6 +38,7 @@ const ComputerForm = () => {
         ]);
     }
 
+
     return (
         <div id="page-computer-form">
             <PageHeader
@@ -45,22 +47,12 @@ const ComputerForm = () => {
             <main>
                 <Form legend="Proprietário">
 
-                    <div className="owner-item">
-                        <Select
-                            name="sector"
-                            label="Setor"
-                            value={sector}
-                            onChange={(e) => setSector(e.target.value)}
-                            options={[
-                                { value: 'UPA', label: 'UPA' }
-                            ]} />
+                    <OwnerItem
+                        sector={sector}
+                        owner={owner}
+                        onSectorChange={(sector: string) => setSector(sector)}
+                        onOwnerChange={(owner: string) => setOwner(owner)} />
 
-                        <Input
-                            name="owner"
-                            label="Usuário"
-                            value={owner}
-                            onChange={(e) => setOwner(e.target.value)} />
-                    </div>
                 </Form>
 
                 <Form legend="Computador">
