@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
+import ComputerItem from '../../components/ComputerItem'
 
 import Footer from '../../components/Footer'
 import Form from '../../components/Form'
-import Input from '../../components/Input'
 import IpForm from '../../components/IpForm'
 import IpItems from '../../components/IpItems'
 import OwnerItem from '../../components/OwnerItem'
 import PageHeader from '../../components/PageHeader'
-import Textarea from '../../components/Textarea'
 
 import './styles.css'
 
@@ -57,24 +56,13 @@ const ComputerForm = () => {
                 </Form>
 
                 <Form legend="Computador">
-                    <div className="computer-item">
-                        <Input
-                            name="patrimony"
-                            label="Patrimônio"
-                            value={patrimony}
-                            onChange={(e) => setPatrimony(e.target.value)} />
-                        <Input
-                            name="model"
-                            label="Modelo"
-                            value={model}
-                            onChange={(e) => setModel(e.target.value)} />
-
-                        <Textarea
-                            name="description"
-                            label="Descrição"
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)} />
-                    </div>
+                    <ComputerItem
+                        computerItem={{ patrimony: patrimony, model: model, description: description }}
+                        onDescriptionChange={(description: string) => setDescription(description)}
+                        onModelChange={(model: string) => setModel(model)}
+                        onPatrimonyChange={(patrimony: string) => setPatrimony(patrimony)} />
+                    {/* Optou-se por criar um IpForm ao inves de utiliza o componente Form,
+                    pois o mozila não suporta display flex na tag legend */}
                     <IpForm
                         addNewIp={addNewIpItem}>
 

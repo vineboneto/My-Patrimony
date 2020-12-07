@@ -1,0 +1,23 @@
+.computer-item {
+    display: grid;
+    grid-template-columns: 175px 242px 1fr;
+    grid-template-areas: "computer model void"
+    "textarea textarea textarea";
+    column-gap: 53px;
+}
+
+.computer-item > :nth-child(1) {
+    grid-area: computer;
+}
+
+.computer-item > :nth-child(2) {
+    grid-area: model;
+}
+
+.computer-item > :nth-child(3) {
+    grid-area: textarea;
+}
+
+.input-block + .textarea-block {
+    margin-top: 2.4rem; 
+}

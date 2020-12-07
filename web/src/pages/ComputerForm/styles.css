@@ -18,59 +18,10 @@
 }
 
 
-#page-computer-form main .computer-item {
-    display: grid;
-    grid-template-columns: 175px 242px 1fr;
-    grid-template-areas: "computer model void"
-    "textarea textarea textarea";
-    column-gap: 53px;
-}
 
-#page-computer-form main .computer-item > :nth-child(1) {
-    grid-area: computer;
-}
 
-#page-computer-form main .computer-item > :nth-child(2) {
-    grid-area: model;
-}
 
-#page-computer-form main .computer-item > :nth-child(3) {
-    grid-area: textarea;
-}
 
-#page-computer-form main .input-block + .textarea-block {
-    margin-top: 2.4rem; 
-}
-
-/* IPS */
-
-#page-computer-form main .ips .legend {
-    margin-top: 2.4rem;
-    font: 600 2rem 'Archivo';
-    color: var(--color-label-input);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding-bottom: 2.6rem;
-    border-bottom: 1px solid var(--color-border-input);
-}
-
-#page-computer-form main .ips .legend button {
-    background: none;
-    border: 0;
-    color: var(--color-primary);
-    font: 700 1.6rem Archivo;
-    transition: color 0.2s;
-}
-
-#page-computer-form main .ips .legend button:hover {
-    color: #000;
-}
-
-#page-computer-form main .ips .input-block {
-    margin-top: 2.4rem;
-}
 
 
 
