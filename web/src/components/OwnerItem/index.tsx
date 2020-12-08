@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Input from '../Input'
 import Select from '../Select'
+
+import api from '../../services/api'
 
 import './styles.css'
 
@@ -14,6 +16,28 @@ interface OwnerProps {
 
 const OwnerItem: React.FC<OwnerProps> = ({ sector, owner, onSectorChange, onOwnerChange}) => {
     const [isOpen, setIsOpen] = useState(false)
+    const [options, setOptions] = useState([
+        { value: '', label: '' }
+    ])
+
+    useEffect(() => {
+        getDataSector()
+    }, [])
+    
+
+    async function getDataSector() {
+        const response =  await api.get('sectors')
+        const datas = response.data
+        
+
+        const options = datas.map((data: any) => {
+            return {
+                value: data.id,
+                label: data.name
+            }
+        })
+        setOptions(options)
+    }
 
     return (
         <div className="owner-item">
@@ -24,9 +48,7 @@ const OwnerItem: React.FC<OwnerProps> = ({ sector, owner, onSectorChange, onOwne
                 isOpen={isOpen}
                 onChange={(e) => onSectorChange(e.target.value)}
                 onIsOpenClick={(isOpen: boolean) => setIsOpen(isOpen)}
-                options={[
-                    { value: 'UPA', label: 'UPA' }
-                ]} />
+                options={options} />
 
             <Input
                 name="owner"

@@ -24,8 +24,6 @@ const ComputerForm = () => {
         { ip: '', mask: '', gateway: '' }
     ])
 
-
-
     function setIpItemsValue(position: Number, field: string, value: string) {
         const updateIpItems = ipItems.map((ipItem, index) => {
             if (index === position) {
