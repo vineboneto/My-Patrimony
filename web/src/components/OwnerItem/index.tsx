@@ -10,34 +10,16 @@ import './styles.css'
 interface OwnerProps {
     sector: string
     owner: string
+    options: Array<{
+        value: string
+        label: string
+    }>
     onSectorChange: Function
     onOwnerChange: Function
 }
 
-const OwnerItem: React.FC<OwnerProps> = ({ sector, owner, onSectorChange, onOwnerChange}) => {
+const OwnerItem: React.FC<OwnerProps> = ({ sector, owner, onSectorChange, onOwnerChange, options}) => {
     const [isOpen, setIsOpen] = useState(false)
-    const [options, setOptions] = useState([
-        { value: '', label: '' }
-    ])
-
-    useEffect(() => {
-        getDataSector()
-    }, [])
-    
-
-    async function getDataSector() {
-        const response =  await api.get('sectors')
-        const datas = response.data
-        
-
-        const options = datas.map((data: any) => {
-            return {
-                value: data.id,
-                label: data.name
-            }
-        })
-        setOptions(options)
-    }
 
     return (
         <div className="owner-item">

@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import ComputerItem from '../../components/ComputerItem'
+import React, { MouseEvent, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
+import ComputerItem from '../../components/ComputerItem'
 import Footer from '../../components/Footer'
 import Form from '../../components/Form'
 import IpForm from '../../components/IpForm'
@@ -9,19 +10,25 @@ import OwnerItem from '../../components/OwnerItem'
 import PageHeader from '../../components/PageHeader'
 
 
+import monitorIcon from '../../assets/images/icons/monitorIcon.svg'
+import nextIcon from '../../assets/images/icons/nextIcon.svg'
+
+
 import './styles.css'
+import api from '../../services/api'
 
 const ComputerForm = () => {
 
     const [sector, setSector] = useState('')
-
-    
     const [owner, setOwner] = useState('')
     const [patrimony, setPatrimony] = useState('')
     const [model, setModel] = useState('')
     const [description, setDescription] = useState('')
     const [ipItems, setIpItems] = useState([
         { ip: '', mask: '', gateway: '' }
+    ])
+    const [options, setOptions] = useState([
+        { value: '', label: '' }
     ])
 
     function setIpItemsValue(position: Number, field: string, value: string) {
@@ -41,6 +48,37 @@ const ComputerForm = () => {
         ]);
     }
 
+    useEffect(() => {
+        getDataSector()
+    }, [])
+    
+
+    async function getDataSector() {
+        const response =  await api.get('sectors')
+        const datas = response.data
+        
+
+        const options = datas.map((data: any) => {
+            return {
+                value: data.id,
+                label: data.name
+            }
+        })
+        setOptions(options)
+    }
+
+    async function handleCreateOwner(e: MouseEvent) {
+        e.preventDefault()
+        api.post('/owners', {
+            name: owner,
+            sector_id: parseInt(sector)
+        }).then(() => {
+            alert('Propriétario cadastro')
+        }).catch(() => alert('Erro ao cadastrar!'))
+    }
+
+
+
     return (
         <div id="page-computer-form">
             <PageHeader
@@ -50,6 +88,7 @@ const ComputerForm = () => {
                 <Form legend="Proprietário">
 
                     <OwnerItem
+                        options={options}
                         sector={sector}
                         owner={owner}
                         onSectorChange={(sector: string) => setSector(sector)}
@@ -84,7 +123,18 @@ const ComputerForm = () => {
                     
                 </Form>
 
-                <Footer next="/" />
+                <Footer>
+                    <button onClick={handleCreateOwner} >
+                        Salvar Patrimônio
+                    </button>
+
+                    <div className="link-next">
+                        <Link to="/">
+                            <img src={monitorIcon} alt="Monitor"/>
+                            <img src={nextIcon} alt="Proxíma pagína"/>
+                        </Link>
+                    </div>
+                </Footer>
             </main>
         </div>
     )
