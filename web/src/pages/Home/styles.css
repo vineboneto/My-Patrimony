@@ -6,7 +6,7 @@
 }
 
 #page-patrimony-home .page-patrimony-header {
-    height: 405px;
+    height: 470px;
     display: flex;
     flex-direction: column;
     background-color: var(--color-primary);
@@ -15,7 +15,7 @@
 #page-patrimony-home .page-patrimony-header .top-bar-container {
     width: 100%;
     padding: 1.6rem;
-    font: 700 2.4rem 'Archivo';
+    font: 700 2.4rem 'Poppins';
     color: #fff;
     background-color: var(--color-primary-dark);
     
@@ -47,7 +47,7 @@
 }
 
 #page-patrimony-home .page-patrimony-header .header-content strong {
-    font: 700 8.7rem 'Archivo';
+    font: 700 8.7rem 'Poppins';
     line-height: 4.2rem;
     color: #fff
 }

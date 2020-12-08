@@ -48,10 +48,6 @@
     align-items: center;
 }
 
-.dialog-block .dialog-content .input-block label {
-    font-size: 1.8rem;
-}
-
 .dialog-block .dialog-content .save-dialog,
 .dialog-block .dialog-content .close-dialog {
     color: #fff;
@@ -62,13 +58,25 @@
 
 .dialog-block .dialog-content .close-dialog {
     background-color: #fff;
+    color: var(--color-label-input);
+    font-size: 1.8rem;
     cursor: pointer;
-    justify-self: self-end;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dialog-block .dialog-content .close-dialog img {
+    transition: opacity 0.2s;
+    color: #fff;
+}
+
+.dialog-block .dialog-content .close-dialog img:hover {
+    opacity: 0.6;
 }
 
 .dialog-block .dialog-content .save-dialog {
     background-color: var(--color-success);
-    margin-top: 2rem;
     padding: 0.8rem;
 }
 

@@ -41,11 +41,12 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
                         className="close-dialog" 
                         onClick={() => onClose(false)}
                         >
+                        Novo Setor
                         <img src={closeIcon} alt="Fechar"/>
                     </button>
                     <Input
                         name="sector"
-                        label="Novo Setor"
+                        label=""
                         value={sector}
                         onChange={(e) => setSector(e.target.value)} />
                     
