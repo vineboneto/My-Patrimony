@@ -10,8 +10,6 @@ interface OwnerProps {
     owner: string
     onSectorChange: Function
     onOwnerChange: Function
-    // onIsOpenClick: Function
-    // isOpen: boolean
 }
 
 const OwnerItem: React.FC<OwnerProps> = ({sector, owner, onSectorChange, onOwnerChange}) => {
@@ -24,8 +22,8 @@ const OwnerItem: React.FC<OwnerProps> = ({sector, owner, onSectorChange, onOwner
                 label="Setor"
                 value={sector}
                 onChange={(e) => onSectorChange(e.target.value)}
-                isOpen={isOpen}         
                 onIsOpenClick={(isOpen: boolean) => setIsOpen(isOpen)}
+                isOpen={isOpen}
                 options={[
                     { value: 'UPA', label: 'UPA' }
                 ]} />

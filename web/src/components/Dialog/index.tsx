@@ -6,9 +6,10 @@ import './styles.css'
 
 interface DialogProps {
     isOpen: boolean
+    onClose: Function
 }
 
-const Dialog: React.FC<DialogProps> = ({ isOpen }) => {
+const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     const [sector, setSector] = useState('')
 
     return (
@@ -25,7 +26,12 @@ const Dialog: React.FC<DialogProps> = ({ isOpen }) => {
 
                     <footer>
                         <button type="button" className="save-dialog">Salvar</button>
-                        <button type="button" className="close-dialog">Fechar</button>
+                        <button 
+                            type="button" 
+                            className="close-dialog" 
+                            onClick={() => onClose(false)}>
+                                Fechar
+                        </button>
                     </footer>
                 </form>
                 </div>

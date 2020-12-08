@@ -1,4 +1,4 @@
-import React, { SelectHTMLAttributes } from 'react'
+import React, { SelectHTMLAttributes, useState } from 'react'
 
 import Dialog from '../Dialog'
 
@@ -13,26 +13,34 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
         value: string
         label: string
     }>
-    isOpen?: boolean
     onIsOpenClick?: Function
+    isOpen?: boolean
 }
 
-const Select : React.FC<SelectProps> = ({ label, name, options, isOpen, onIsOpenClick, ...rest }) => {
+const Select : React.FC<SelectProps> = ({ label, name, options, onIsOpenClick, isOpen, ...rest }) => {
+    
     
     return (
         <div className="select-block">
             <label htmlFor={name}>
                 {label}
-                
                 {isOpen !== undefined && onIsOpenClick !== undefined &&
-                <button className="plusSector" onClick={(e) => {
-                    e.preventDefault() 
-                    onIsOpenClick(!isOpen) }}
-                >
-                    <img src={plusIcon} alt="Novo Setor" />
-                    <Dialog isOpen={isOpen} />
-                </button>}
-                
+                    <div className="plusSector">
+                        <button 
+                            className="plusSector"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                onIsOpenClick(true)
+                            }}>
+                                
+                            <img src={plusIcon} alt="Novo Setor" />
+                            
+                        </button>
+                        <Dialog 
+                            isOpen={isOpen}
+                            onClose={(isOpen: boolean) => onIsOpenClick(isOpen)} />
+                    </div>
+                }
             </label>
             <select value="" id={name} {...rest}>
                 <option value="" disabled hidden>Selecione o setor</option>
