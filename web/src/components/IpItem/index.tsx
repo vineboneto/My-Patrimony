@@ -5,8 +5,8 @@ import './styles.css'
 
 interface IpItemsProps {
     ipItem: {
-        ip: string
-        mask: string
+        ip: string,
+        mask: string,
         gateway: string
     }
     onIpChange: Function

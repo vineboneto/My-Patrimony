@@ -7,8 +7,8 @@ import './styles.css'
 
 interface ComputerItemProps {
     computerItem: {
-        patrimony: string
-        model: string
+        patrimony: string,
+        model: string,
         description: string
     }
     onPatrimonyChange: Function

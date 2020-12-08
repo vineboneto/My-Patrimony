@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import Input from '../Input'
 import Select from '../Select'
@@ -10,9 +10,13 @@ interface OwnerProps {
     owner: string
     onSectorChange: Function
     onOwnerChange: Function
+    // onIsOpenClick: Function
+    // isOpen: boolean
 }
 
 const OwnerItem: React.FC<OwnerProps> = ({sector, owner, onSectorChange, onOwnerChange}) => {
+    const [isOpen, setIsOpen] = useState(false)
+
     return (
         <div className="owner-item">
             <Select
@@ -20,6 +24,8 @@ const OwnerItem: React.FC<OwnerProps> = ({sector, owner, onSectorChange, onOwner
                 label="Setor"
                 value={sector}
                 onChange={(e) => onSectorChange(e.target.value)}
+                isOpen={isOpen}         
+                onIsOpenClick={(isOpen: boolean) => setIsOpen(isOpen)}
                 options={[
                     { value: 'UPA', label: 'UPA' }
                 ]} />
@@ -28,7 +34,8 @@ const OwnerItem: React.FC<OwnerProps> = ({sector, owner, onSectorChange, onOwner
                 name="owner"
                 label="Usuário"
                 value={owner}
-                onChange={(e) => onOwnerChange(e.target.value)}/>
+                onChange={(e) => onOwnerChange(e.target.value)}
+            />
         </div>
     )
 }

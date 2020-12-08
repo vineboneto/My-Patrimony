@@ -1,0 +1,69 @@
+.dialog-block {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0);
+    z-index: 999;
+}
+
+.dialog-block:before {
+    content: "";
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.25);
+    z-index: 999;
+  
+    /* fade in */
+    transition: opacity 0.2s ease-in-out;
+}
+/* show the dialog in the center of the screen */
+.dialog-block .dialog-content {
+    box-sizing: border-box;
+    /* maintain on screen even during scroll (potentially problematic on mobile) */
+    position: fixed;
+    /* when centering, try using FlexBox instead of this junk */
+    top: 50%;
+    left: 50%;
+    width: 250px;
+    height: 250;
+    transform: translate3d(-50%,-50%,0);
+  
+    /* dialogs are usually boxy things that are on top of everything */
+    padding: 20px;
+    border: 1px solid #CCC;
+    background: white;
+    z-index: 1000;
+  
+    /* zoom in from the center */
+    transition: transform 0.2s ease-in-out;
+}
+
+.dialog-block .dialog-content footer {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.dialog-block .dialog-content footer .save-dialog,
+.dialog-block .dialog-content footer .close-dialog {
+    color: #fff;
+    padding: 1rem 2.4rem;
+    outline: 0;
+    border: 0;
+    border-radius: 0.8rem;
+}
+
+.dialog-block .dialog-content footer .close-dialog {
+    background-color: var(--color-danger);
+}
+
+.dialog-block .dialog-content footer .save-dialog {
+    background-color: var(--color-success);
+}
+
+

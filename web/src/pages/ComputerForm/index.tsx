@@ -4,7 +4,7 @@ import ComputerItem from '../../components/ComputerItem'
 import Footer from '../../components/Footer'
 import Form from '../../components/Form'
 import IpForm from '../../components/IpForm'
-import IpItems from '../../components/IpItems'
+import IpItems from '../../components/IpItem'
 import OwnerItem from '../../components/OwnerItem'
 import PageHeader from '../../components/PageHeader'
 
@@ -37,7 +37,7 @@ const ComputerForm = () => {
             { ip: '', mask: '', gateway: '' }
         ]);
     }
-
+    // const [isOpen, setIsOpen] = useState(false)
 
     return (
         <div id="page-computer-form">
@@ -51,7 +51,10 @@ const ComputerForm = () => {
                         sector={sector}
                         owner={owner}
                         onSectorChange={(sector: string) => setSector(sector)}
-                        onOwnerChange={(owner: string) => setOwner(owner)} />
+                        onOwnerChange={(owner: string) => setOwner(owner)}
+                        // onIsOpenClick={(isOpen: boolean) => setIsOpen(isOpen)}
+                        // isOpen={isOpen}
+                        />
 
                 </Form>
 
