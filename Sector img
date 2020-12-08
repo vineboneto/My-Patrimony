@@ -1,0 +1,28 @@
+[33m4514f58[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m update layout
+[33mc6308fa[m created Home
+[33m5fd041a[m register news sectors
+[33md206ff6[m update layout component Dialog
+[33m93a2952[m[33m ([m[1;31morigin/master[m[33m)[m updated Dialog
+[33m3158030[m created component Dialog
+[33m0e90c99[m created migration sector and insert into database
+[33me15c520[m connection database
+[33ma9deacf[m created component ComputerItem
+[33m218bf12[m created component IpForm
+[33mf752391[m created component IpItems
+[33m87f62e6[m created OwnerItem
+[33m32d6da9[m update .vscode
+[33m135c03e[m updated layout ComputerForm
+[33mf4ee93e[m update layout component page-header in top-bar-container
+[33m8d26cbd[m created new ComputerForm and components Footer and Select
+[33mfdf7158[m update database and update layout in figma
+[33md814206[m update layout ComputerForm
+[33m195fefa[m created ComputerForm
+[33m16fb2e7[m PageHeader
+[33mc92a4b0[m init pageheaer component and computer register
+[33m99dfc45[m update typescript for 4.1.2, create global css and import fonts
+[33m6a58279[m remove layout file
+[33mb59c51b[m Update README.md
+[33m7847928[m link layout figma
+[33m5f98fba[m create database and dumps
+[33md2fbe11[m starter project
+[33m4bdd694[m Initialize project using Create React App

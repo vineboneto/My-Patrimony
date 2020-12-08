@@ -14,6 +14,8 @@ import './styles.css'
 const ComputerForm = () => {
 
     const [sector, setSector] = useState('')
+
+    
     const [owner, setOwner] = useState('')
     const [patrimony, setPatrimony] = useState('')
     const [model, setModel] = useState('')
@@ -54,7 +56,7 @@ const ComputerForm = () => {
                         owner={owner}
                         onSectorChange={(sector: string) => setSector(sector)}
                         onOwnerChange={(owner: string) => setOwner(owner)}
-                        />
+                    />
 
                 </Form>
 
