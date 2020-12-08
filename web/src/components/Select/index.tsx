@@ -21,7 +21,7 @@ const Select : React.FC<SelectProps> = ({ label, name, options, onIsOpenClick, i
     
     
     return (
-        <div className="select-block">
+        <div className="select-block" >
             <label htmlFor={name}>
                 {label}
                 {isOpen !== undefined && onIsOpenClick !== undefined &&
@@ -30,7 +30,7 @@ const Select : React.FC<SelectProps> = ({ label, name, options, onIsOpenClick, i
                             className="plusSector"
                             onClick={(e) => {
                                 e.preventDefault()
-                                onIsOpenClick(true)
+                                onIsOpenClick(!isOpen)
                             }}>
                                 
                             <img src={plusIcon} alt="Novo Setor" />
@@ -38,7 +38,8 @@ const Select : React.FC<SelectProps> = ({ label, name, options, onIsOpenClick, i
                         </button>
                         <Dialog 
                             isOpen={isOpen}
-                            onClose={(isOpen: boolean) => onIsOpenClick(isOpen)} />
+                            onClose={(isOpen: boolean) => onIsOpenClick(isOpen)}
+                            onCloseFocus={(isOpen: boolean) => onIsOpenClick(isOpen)} />
                     </div>
                 }
             </label>
