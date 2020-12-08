@@ -1,18 +1,34 @@
-import React, { useState } from 'react'
+import React, { MouseEvent, useState } from 'react'
 
 import Input from '../Input'
 import closeIcon from '../../assets/images/icons/closeIcon.svg'
+
+import api from '../../services/api'
 
 import './styles.css'
 
 interface DialogProps {
     isOpen: boolean
     onClose: Function
-    onCloseFocus: Function
 }
 
-const Dialog: React.FC<DialogProps> = ({ isOpen, onClose, onCloseFocus }) => {
+const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     const [sector, setSector] = useState('')
+
+
+    async function handleCreateSector(e: MouseEvent) {
+        e.preventDefault()
+
+        api.post('sectors', {
+            name: sector
+        }).then(() => {
+            alert('Setor Cadastrado!!')
+            onClose(false)
+        }).catch(() => {
+            alert('Erro ao cadastrar!!!')
+        })
+    }
+
 
     return (
         <div>
@@ -33,7 +49,12 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose, onCloseFocus }) => {
                         value={sector}
                         onChange={(e) => setSector(e.target.value)} />
                     
-                    <button type="button" className="save-dialog">Salvar</button>
+                    <button 
+                        type="submit"
+                        onClick={handleCreateSector}
+                        className="save-dialog">
+                            Salvar
+                    </button>
                 </div>
             </div>
         }

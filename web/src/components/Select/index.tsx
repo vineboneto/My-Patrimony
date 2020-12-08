@@ -1,8 +1,6 @@
-import React, { SelectHTMLAttributes, useState } from 'react'
+import React, { SelectHTMLAttributes } from 'react'
 
-import Dialog from '../Dialog'
-
-import plusIcon from '../../assets/images/icons/plusIcon.svg'
+import PlusItem from '../PlusItem'
 
 import './styles.css'
 
@@ -13,36 +11,23 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
         value: string
         label: string
     }>
-    onIsOpenClick?: Function
     isOpen?: boolean
+    onIsOpenClick?: Function
 }
 
-const Select : React.FC<SelectProps> = ({ label, name, options, onIsOpenClick, isOpen, ...rest }) => {
-    
-    
+const Select : React.FC<SelectProps> = ({ isOpen, name, label, options, onIsOpenClick, ...rest }) => {
+
     return (
         <div className="select-block" >
             <label htmlFor={name}>
                 {label}
                 {isOpen !== undefined && onIsOpenClick !== undefined &&
-                    <div className="plusSector">
-                        <button 
-                            className="plusSector"
-                            onClick={(e) => {
-                                e.preventDefault()
-                                onIsOpenClick(!isOpen)
-                            }}>
-                                
-                            <img src={plusIcon} alt="Novo Setor" />
-                            
-                        </button>
-                        <Dialog 
-                            isOpen={isOpen}
-                            onClose={(isOpen: boolean) => onIsOpenClick(isOpen)}
-                            onCloseFocus={(isOpen: boolean) => onIsOpenClick(isOpen)} />
-                    </div>
+                    <PlusItem
+                        isOpen={isOpen}
+                        onIsOpenClick={(isOpen: boolean) => onIsOpenClick(isOpen)} />
                 }
             </label>
+            
             <select value="" id={name} {...rest}>
                 <option value="" disabled hidden>Selecione o setor</option>
 

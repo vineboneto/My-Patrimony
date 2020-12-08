@@ -7,7 +7,7 @@ import IpForm from '../../components/IpForm'
 import IpItems from '../../components/IpItem'
 import OwnerItem from '../../components/OwnerItem'
 import PageHeader from '../../components/PageHeader'
-import Select from '../../components/Select'
+
 
 import './styles.css'
 
@@ -21,6 +21,8 @@ const ComputerForm = () => {
     const [ipItems, setIpItems] = useState([
         { ip: '', mask: '', gateway: '' }
     ])
+
+
 
     function setIpItemsValue(position: Number, field: string, value: string) {
         const updateIpItems = ipItems.map((ipItem, index) => {

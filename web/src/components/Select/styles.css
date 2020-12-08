@@ -38,21 +38,3 @@
     bottom: 0;
 }
 
-.select-block .plusSector  {
-    outline: 0;
-    border: 1px solid var(--color-success);
-    border-radius: 0.6rem;
-    margin-bottom: 0;
-    background-color: #fff;
-    cursor: pointer;
-
-    display: flex;
-    align-items: center;
-    justify-self: center;
-}
-
-.select-block .plusSector img,
-.select-block .plusSector  {
-    height: 25px;
-    width: 25px;
-}
