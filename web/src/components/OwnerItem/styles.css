@@ -4,3 +4,33 @@
     grid-template-areas: "sector owner";
     justify-content: space-between;
 }
+
+
+.owner-item .select-block label {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "label plus";
+}
+
+.owner-item .plusSector  {
+    grid-area: plus;
+    outline: 0;
+    border: 1px solid var(--color-success);
+    border-radius: 5px;
+    margin-bottom: 0;
+    background-color: #fff;
+    cursor: pointer;
+    transition: opacity 0.2s;
+
+    justify-self: right;
+}
+
+.owner-item .plusSector img,
+.owner-item .plusSector  {
+    height: 25px;
+    width: 25px;
+}
+
+.owner-item .plusSector img:hover {
+    opacity: 0.6;
+}

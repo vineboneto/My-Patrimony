@@ -1,36 +1,58 @@
-import React, { useEffect, useState } from 'react'
+import React, { SelectHTMLAttributes, useState } from 'react'
 
 import Input from '../Input'
-import Select from '../Select'
+import Dialog from '../../components/Dialog'
 
-import api from '../../services/api'
+import plusIcon from '../../assets/images/icons/plusIcon.svg'
+
+// import api from '../../services/api'
 
 import './styles.css'
 
-interface OwnerProps {
+interface OwnerProps extends SelectHTMLAttributes<HTMLSelectElement> {
     sector: string
     owner: string
     options: Array<{
         value: string
         label: string
     }>
-    onSectorChange: Function
-    onOwnerChange: Function
+    // onSectorChange: (sector: string) => void
+    onOwnerChange: (owner: string) => void
 }
 
-const OwnerItem: React.FC<OwnerProps> = ({ sector, owner, onSectorChange, onOwnerChange, options}) => {
+const OwnerItem: React.FC<OwnerProps> = ({ sector, owner, onOwnerChange, options, ...rest}) => {
+    
     const [isOpen, setIsOpen] = useState(false)
 
     return (
         <div className="owner-item">
-            <Select
-                name="sector"
-                label="Setor"
-                value={sector}
-                isOpen={isOpen}
-                onChange={(e) => onSectorChange(e.target.value)}
-                onIsOpenClick={(isOpen: boolean) => setIsOpen(isOpen)}
-                options={options} />
+            <div className="select-block" >
+                <label htmlFor="sector">
+                    Setor
+                    <button 
+                        className="plusSector"
+                        onClick={(e) => {
+                            e.preventDefault()
+                            setIsOpen(true)
+                     }}>      
+                        <img src={plusIcon} alt="Novo Setor" />
+                    </button>
+
+
+                    <Dialog 
+                        isOpen={isOpen}
+                        onClose={(isOpen: boolean) => setIsOpen(isOpen)}/>
+                    
+                </label>
+                
+                <select value="" id="sector" {...rest}>
+                    <option value="" disabled hidden>Selecione o setor</option>
+
+                    {options.map(option => {
+                        return <option key={option.value} value={option.value}>{option.label}</option>
+                    })}
+                </select>
+            </div>
 
             <Input
                 name="owner"

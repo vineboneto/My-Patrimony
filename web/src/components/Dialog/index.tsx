@@ -9,7 +9,7 @@ import './styles.css'
 
 interface DialogProps {
     isOpen: boolean
-    onClose: Function
+    onClose: (isOpen: boolean) => void
 }
 
 const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {

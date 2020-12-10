@@ -91,7 +91,8 @@ const ComputerForm = () => {
                         options={options}
                         sector={sector}
                         owner={owner}
-                        onSectorChange={(sector: string) => setSector(sector)}
+                        value={sector}
+                        onChange={(e) => setSector(e.target.value)}
                         onOwnerChange={(owner: string) => setOwner(owner)}
                     />
 

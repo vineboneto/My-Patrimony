@@ -1,31 +1,21 @@
 import React, { SelectHTMLAttributes } from 'react'
 
-import PlusItem from '../PlusItem'
-
 import './styles.css'
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
-    name: string
     label: string
     options: Array<{
         value: string
         label: string
     }>
-    isOpen?: boolean
-    onIsOpenClick?: Function
 }
 
-const Select : React.FC<SelectProps> = ({ isOpen, name, label, options, onIsOpenClick, ...rest }) => {
+const Select : React.FC<SelectProps> = ({ name, label, options, ...rest }) => {
 
     return (
         <div className="select-block" >
             <label htmlFor={name}>
                 {label}
-                {isOpen !== undefined && onIsOpenClick !== undefined &&
-                    <PlusItem
-                        isOpen={isOpen}
-                        onIsOpenClick={(isOpen: boolean) => onIsOpenClick(isOpen)} />
-                }
             </label>
             
             <select value="" id={name} {...rest}>
