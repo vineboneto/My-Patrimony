@@ -2,15 +2,16 @@ import { Response, Request } from 'express';
 
 import db from '../database/connection';
 
+interface ipItem {
+    ip: string,
+    mask: string
+    gateway: string
+}
+
 export default class OwnerController {
     async create(req: Request, res: Response) {
 
-        const { name, sector_id, patrimony, description, model } = req.body
-        console.log(name)
-        console.log(sector_id)
-        console.log(patrimony)
-        console.log(description)
-        console.log(model)
+        const { name, sector_id, patrimony, description, model, ips } = req.body
 
         const trx = await db.transaction()
 
@@ -19,9 +20,22 @@ export default class OwnerController {
 
             // Captura id inserido
             const owner_id = insertedOwnerId[0]
-            console.log(owner_id)
 
-            await trx('computers').insert({ patrimony, description, model, owner_id })
+            const insertedComputerId = await trx('computers').insert({ patrimony, description, model, owner_id })
+
+            // Captura id inserido
+            const computer_id = insertedComputerId[0]
+
+            const classIps = ips.map((ipItem: ipItem) => {
+                return {
+                    ip: intToIp(ipItem.ip),
+                    mask: intToIp(ipItem.mask),
+                    gateway: intToIp(ipItem.gateway),
+                    computer_id
+                }
+            })
+
+            await trx('ips').insert(classIps)
 
             await trx.commit()
 
@@ -33,4 +47,10 @@ export default class OwnerController {
             })
         }
     }
+}
+
+function intToIp(ip: string) {
+    const ipArray = ip.split('.')
+    const newIp = ipArray[0] + ipArray[1] + ipArray[2] + ipArray[3]
+    return parseInt(newIp)
 }
