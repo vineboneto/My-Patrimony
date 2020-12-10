@@ -13,6 +13,8 @@ export default class OwnerController {
 
         const { name, sector_id, patrimony, description, model, ips } = req.body
 
+        console.log(ips)
+
         const trx = await db.transaction()
 
         try {
@@ -28,12 +30,14 @@ export default class OwnerController {
 
             const classIps = ips.map((ipItem: ipItem) => {
                 return {
-                    ip: intToIp(ipItem.ip),
-                    mask: intToIp(ipItem.mask),
-                    gateway: intToIp(ipItem.gateway),
+                    ip: ipItem.ip,
+                    mask: ipItem.mask,
+                    gateway: ipItem.gateway,
                     computer_id
                 }
             })
+
+            console.log(classIps)
 
             await trx('ips').insert(classIps)
 
