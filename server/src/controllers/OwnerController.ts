@@ -10,9 +10,15 @@ export default class OwnerController {
         const trx = await db.transaction()
 
         try {
-            await trx('owners').insert({ name, sector_id })
+            const insertedOwnerId = await trx('owners').insert({ name, sector_id })
 
             trx.commit()
+            // Captura id inserido
+            const owner_id = insertedOwnerId[0]
+
+            // const insertedComputerId = await trx('computers').insert 
+
+
 
             return res.status(201).send()
         } catch(err) {
