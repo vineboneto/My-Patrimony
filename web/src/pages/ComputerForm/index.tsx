@@ -1,4 +1,4 @@
-import React, { MouseEvent, useEffect, useState } from 'react'
+import React, { MouseEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import ComputerItem from '../../components/ComputerItem'
@@ -27,9 +27,6 @@ const ComputerForm = () => {
     const [ipItems, setIpItems] = useState([
         { ip: '', mask: '', gateway: '' }
     ])
-    const [options, setOptions] = useState([
-        { value: '', label: '' }
-    ])
 
     function setIpItemsValue(position: Number, field: string, value: string) {
         const updateIpItems = ipItems.map((ipItem, index) => {
@@ -48,36 +45,19 @@ const ComputerForm = () => {
         ]);
     }
 
-    useEffect(() => {
-        getDataSector()
-    }, [])
-    
-
-    async function getDataSector() {
-        const response =  await api.get('sectors')
-        const datas = response.data
-        
-
-        const options = datas.map((data: any) => {
-            return {
-                value: data.id,
-                label: data.name
-            }
-        })
-        setOptions(options)
-    }
-
     async function handleCreateOwner(e: MouseEvent) {
         e.preventDefault()
         api.post('/owners', {
             name: owner,
-            sector_id: parseInt(sector)
+            sector_id: parseInt(sector),
+            patrimony: patrimony,
+            model: model,
+            description: description,
+            ips: ipItems
         }).then(() => {
-            alert('Propriétario cadastro')
+            alert('Computador cadastrado')
         }).catch(() => alert('Erro ao cadastrar!'))
     }
-
-
 
     return (
         <div id="page-computer-form">
@@ -88,7 +68,6 @@ const ComputerForm = () => {
                 <Form legend="Proprietário">
 
                     <OwnerItem
-                        options={options}
                         sector={sector}
                         owner={owner}
                         value={sector}

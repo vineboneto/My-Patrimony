@@ -22,13 +22,15 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
         api.post('sectors', {
             name: sector
         }).then(() => {
+            setSector("")
             alert('Setor Cadastrado!!')
             onClose(false)
         }).catch(() => {
             alert('Erro ao cadastrar!!!')
         })
-    }
 
+
+    }
 
     return (
         <div>
@@ -40,7 +42,7 @@ const Dialog: React.FC<DialogProps> = ({ isOpen, onClose }) => {
                         type="button" 
                         className="close-dialog" 
                         onClick={() => onClose(false)}
-                        >
+                    >
                         Novo Setor
                         <img src={closeIcon} alt="Fechar"/>
                     </button>
