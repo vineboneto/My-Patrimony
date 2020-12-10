@@ -53,8 +53,8 @@ export default class OwnerController {
     }
 }
 
-function intToIp(ip: string) {
-    const ipArray = ip.split('.')
-    const newIp = ipArray[0] + ipArray[1] + ipArray[2] + ipArray[3]
-    return parseInt(newIp)
-}
+// function intToIp(ip: string) {
+//     const ipArray = ip.split('.')
+//     const newIp = ipArray[0] + ipArray[1] + ipArray[2] + ipArray[3]
+//     return parseInt(newIp)
+// }
