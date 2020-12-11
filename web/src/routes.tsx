@@ -10,9 +10,9 @@ export default function Routes() {
     return (
         <BrowserRouter>
             <Route exact path="/" component={Home} />
-            <Route path="/computer-register" component={ComputerForm} />
-            <Route path="/monitor-register" component={MonitorForm} />
-            <Route path="/test" component={Test} />
+            <Route path="/computer-register/" component={ComputerForm} />
+            <Route path="/monitor-register/" component={MonitorForm} />
+            <Route path="/test/" component={Test} />
         </BrowserRouter>
     )
 }

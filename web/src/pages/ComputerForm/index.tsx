@@ -105,11 +105,17 @@ const ComputerForm = () => {
 
                 <Footer>
                     <button onClick={handleCreateOwner} >
-                        Salvar Patrimônio
+                        Salvar Computador
                     </button>
 
                     <div className="link-next">
-                        <Link to="/monitor-register">
+                        <Link to={{
+                            pathname: '/monitor-register',
+                            state: {
+                                 sector: sector,
+                                  owner: owner 
+                            }
+                        }} >
                             <img src={monitorIcon} alt="Monitor"/>
                             <img src={nextIcon} alt="Proxíma pagína"/>
                         </Link>
