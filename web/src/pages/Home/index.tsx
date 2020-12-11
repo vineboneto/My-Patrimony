@@ -12,6 +12,7 @@ const Home: React.FC  = () => {
     return (
 
         <div id="page-patrimony-home">
+            
             <header className="page-patrimony-header">
                 <div className="top-bar-container">
                     <span>Meu Patrimônio</span>    
