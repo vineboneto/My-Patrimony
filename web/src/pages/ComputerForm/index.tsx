@@ -109,7 +109,7 @@ const ComputerForm = () => {
                     </button>
 
                     <div className="link-next">
-                        <Link to="/">
+                        <Link to="/monitor-register">
                             <img src={monitorIcon} alt="Monitor"/>
                             <img src={nextIcon} alt="Proxíma pagína"/>
                         </Link>
