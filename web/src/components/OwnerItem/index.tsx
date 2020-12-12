@@ -13,10 +13,11 @@ import api from '../../services/api'
 interface OwnerProps extends SelectHTMLAttributes<HTMLSelectElement> {
     sector: string
     owner: string
+    readOnly?: boolean
     onOwnerChange: (owner: string) => void
 }
 
-const OwnerItem: React.FC<OwnerProps> = ({ sector, owner, onOwnerChange, ...rest}) => {
+const OwnerItem: React.FC<OwnerProps> = ({ sector, owner, onOwnerChange, readOnly = false, ...rest}) => {
     
     const [isOpen, setIsOpen] = useState(false)
     const [options, setOptions] = useState([
@@ -46,13 +47,14 @@ const OwnerItem: React.FC<OwnerProps> = ({ sector, owner, onOwnerChange, ...rest
         <div className="owner-item">
             <div className="select-block" >
                 <label htmlFor="sector">
+
                     Setor
                     <button 
                         className="plusSector"
                         onClick={(e) => {
                             e.preventDefault()
                             setIsOpen(true)
-                     }}>      
+                    }}>      
                         <img src={plusIcon} alt="Novo Setor" />
                     </button>
 
@@ -60,10 +62,12 @@ const OwnerItem: React.FC<OwnerProps> = ({ sector, owner, onOwnerChange, ...rest
                     <Dialog 
                         isOpen={isOpen}
                         onClose={(isOpen: boolean) => setIsOpen(isOpen)}/>
+                       
+                    
                     
                 </label>
                 
-                <select value="" id="sector" {...rest}>
+                <select value="" id="sector" {...rest} disabled={readOnly}>
                     <option value="" disabled hidden>Selecione o setor</option>
 
                     {options.map(option => {
@@ -77,7 +81,7 @@ const OwnerItem: React.FC<OwnerProps> = ({ sector, owner, onOwnerChange, ...rest
                 label="Usuário"
                 value={owner}
                 onChange={(e) => onOwnerChange(e.target.value)}
-                
+                disabled={readOnly}
             />
         </div>
     )

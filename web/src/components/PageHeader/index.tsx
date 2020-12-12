@@ -8,6 +8,7 @@ import './styles.css'
 
 interface PageHeaderProps {
     title: string;
+    linkPrev: string
 }
 
 const PageHeader: React.FC<PageHeaderProps> = (props) => {
@@ -16,7 +17,7 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
         <header className="page-header">
             
             <div className="top-bar-container">
-                <Link to="/">
+                <Link to={props.linkPrev}>
                     <img src={prevIcon} alt="Voltar"/>
                 </Link>
             </div>

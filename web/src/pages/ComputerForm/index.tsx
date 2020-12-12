@@ -8,6 +8,7 @@ import IpForm from '../../components/IpForm'
 import IpItems from '../../components/IpItem'
 import OwnerItem from '../../components/OwnerItem'
 import PageHeader from '../../components/PageHeader'
+import Main from '../../components/Main'
 
 
 import monitorIcon from '../../assets/images/icons/monitorIcon.svg'
@@ -62,9 +63,10 @@ const ComputerForm = () => {
     return (
         <div id="page-computer-form">
             <PageHeader
-                title="Cadastre o computador..." />
+                title="Cadastre o computador..."
+                linkPrev="/"/>
 
-            <main>
+            <Main>
                 <Form legend="Proprietário">
 
                     <OwnerItem
@@ -112,8 +114,8 @@ const ComputerForm = () => {
                         <Link to={{
                             pathname: '/monitor-register',
                             state: {
-                                 sector: sector,
-                                  owner: owner 
+                                sectorProps: sector,
+                                ownerProps: owner
                             }
                         }} >
                             <img src={monitorIcon} alt="Monitor"/>
@@ -121,7 +123,7 @@ const ComputerForm = () => {
                         </Link>
                     </div>
                 </Footer>
-            </main>
+            </Main>
         </div>
     )
 }
