@@ -1,15 +1,13 @@
-import React, {  useCallback, useEffect, useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import PageHeader from '../../components/PageHeader'
 import Form from '../../components/Form'
 import Main from '../../components/Main'
 import OwnerItem from '../../components/OwnerItem'
-import Input from '../../components/Input'
+import MonitorItem from '../../components/MonitorItem'
 
 import './styles.css'
-import Textarea from '../../components/Textarea'
-import MonitorItem from '../../components/MonitorItem'
 
 interface MonitorFormProps {
     ownerProps: string,
@@ -31,13 +29,11 @@ const MonitorForm: React.FC<MonitorFormProps> = ({ readOnly }) => {
         readOnly = true
     }
 
-    const locationProps  = useCallback(() => {
+    useEffect(() => {
         setSector(location.state.sectorProps)
         setOwner(location.state.ownerProps) 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-    
-    useEffect(() => locationProps, [locationProps])
      
 
     return (

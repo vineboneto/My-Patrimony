@@ -81,7 +81,7 @@ const ComputerForm = () => {
 
                 <Form legend="Computador">
                     <ComputerItem
-                        computerItem={{ patrimony: patrimony, model: model, description: description }}
+                        computerItem={{ patrimony, model, description }}
                         onDescriptionChange={(description: string) => setDescription(description)}
                         onModelChange={(model: string) => setModel(model)}
                         onPatrimonyChange={(patrimony: string) => setPatrimony(patrimony)} />
