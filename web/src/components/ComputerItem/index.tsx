@@ -11,9 +11,9 @@ interface ComputerItemProps {
         model: string,
         description: string
     }
-    onPatrimonyChange: Function
-    onModelChange: Function
-    onDescriptionChange: Function
+    onPatrimonyChange: (patrimony: string) => void
+    onModelChange: (model: string) => void
+    onDescriptionChange: (description: string) => void
 }
 
 const ComputerItem: React.FC<ComputerItemProps> = ({ computerItem, onPatrimonyChange, onModelChange, onDescriptionChange }) => {

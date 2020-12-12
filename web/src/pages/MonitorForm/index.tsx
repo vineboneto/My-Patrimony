@@ -8,6 +8,8 @@ import OwnerItem from '../../components/OwnerItem'
 import Input from '../../components/Input'
 
 import './styles.css'
+import Textarea from '../../components/Textarea'
+import MonitorItem from '../../components/MonitorItem'
 
 interface MonitorFormProps {
     ownerProps: string,
@@ -21,6 +23,9 @@ const MonitorForm: React.FC<MonitorFormProps> = ({ readOnly }) => {
     const [sector, setSector] = useState('')
     const [owner, setOwner] = useState('')
     const [patrimony, setPatrimony] = useState('')
+    const [model, setModel] = useState('')
+    const [inch, setInch] = useState('')
+    const [description, setDescription] = useState('')
 
     if (location.state.sectorProps && location.state.ownerProps) {
         readOnly = true
@@ -53,12 +58,13 @@ const MonitorForm: React.FC<MonitorFormProps> = ({ readOnly }) => {
                     />
                 </Form>
                 <Form legend="Monitor">
-                    <Input
-                        name="patrimony"
-                        label="Patrimônio"
-                        value={patrimony}
-                        onChange={(e) => setPatrimony(e.target.value)} 
-                    />
+                    <MonitorItem
+                        monitorItem={{ patrimony, model, inch, description }}
+                        onChangePatrimony={(patrimony: string) => setPatrimony(patrimony)}
+                        onChangeModel={(model: string) => setModel(model)}
+                        onChangeInch={(inch: string) => setInch(inch)}
+                        onChangeDescription={(description: string) => setDescription(description)} />
+
                 </Form>
             </Main>
         </div>
