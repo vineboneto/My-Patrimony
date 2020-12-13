@@ -45,7 +45,6 @@ const ComputerForm = () => {
     }
 
     async function handleCreateOwner(e: MouseEvent) {
-        console.log('Entrou...')
         e.preventDefault()
         api.post('/owners', {
             name: owner,
@@ -84,24 +83,22 @@ const ComputerForm = () => {
                         onDescriptionChange={(description: string) => setDescription(description)}
                         onModelChange={(model: string) => setModel(model)}
                         onPatrimonyChange={(patrimony: string) => setPatrimony(patrimony)} />
-                    {/* Optou-se por criar um IpForm ao inves de utiliza o componente Form,
-                    pois o mozila não suporta display flex na tag legend */}
-                    <IpForm
-                        addNewIp={addNewIpItem}>
+                </Form>
 
-                        {ipItems.map((ipItem, index) => {
-                            return (
-                                <IpItems
-                                    key={index}
-                                    ipItem={ipItem}
-                                    onIpChange={(ipValue: string) => setIpItemsValue(index, 'ip', ipValue) }
-                                    onMaskChange={(maskValue: string) => setIpItemsValue(index, 'mask', maskValue)} 
-                                    onGatewayChange={(gatewayValue: string) => setIpItemsValue(index, 'gateway', gatewayValue)} />
-                            )
-                        })}
-                    </IpForm>
-                    
-                    
+                <Form 
+                    legend="Ips"
+                    addNew={addNewIpItem}
+                    labelButton="+ Novo Ip">
+                    {ipItems.map((ipItem, index) => {
+                        return (
+                            <IpItems
+                                key={index}
+                                ipItem={ipItem}
+                                onIpChange={(ipValue: string) => setIpItemsValue(index, 'ip', ipValue) }
+                                onMaskChange={(maskValue: string) => setIpItemsValue(index, 'mask', maskValue)} 
+                                onGatewayChange={(gatewayValue: string) => setIpItemsValue(index, 'gateway', gatewayValue)} />
+                        )
+                    })}   
                 </Form>
 
                 <Footer
@@ -109,6 +106,7 @@ const ComputerForm = () => {
                     iconNext={monitorIcon}
                     labelButtonSave="Salvar computador"
                     handleButton={(e: MouseEvent) => handleCreateOwner(e)} />
+
             </Main>
         </div>
     )
