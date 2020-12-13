@@ -13,8 +13,6 @@ export default class OwnerController {
 
         const { name, sector_id, patrimony, description, model, ips } = req.body
 
-        console.log(ips)
-
         const trx = await db.transaction()
 
         try {
@@ -37,13 +35,11 @@ export default class OwnerController {
                 }
             })
 
-            console.log(classIps)
-
             await trx('ips').insert(classIps)
 
             await trx.commit()
 
-            return res.status(201).send()
+            return res.status(201).send({ owner_id: owner_id })
         } catch(err) {
             await trx.rollback()
             return res.status(400).json({
