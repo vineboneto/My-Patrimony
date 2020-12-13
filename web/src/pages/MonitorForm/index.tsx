@@ -1,11 +1,17 @@
 import React, {  useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 import PageHeader from '../../components/PageHeader'
 import Form from '../../components/Form'
 import Main from '../../components/Main'
 import OwnerItem from '../../components/OwnerItem'
 import MonitorItem from '../../components/MonitorItem'
+import Footer from '../../components/Footer'
+
+// import nextIcon from '../../assets/images/icons/nextIcon.svg'
+// import backIcon from '../../assets/images/icons/backIcon2.svg'
+import printerIcon from '../../assets/images/icons/printerIcon.svg'
+import powerIcon from '../../assets/images/icons/powerIcon.svg'
 
 import './styles.css'
 
@@ -16,18 +22,52 @@ interface MonitorFormProps {
 }
 
 const MonitorForm: React.FC<MonitorFormProps> = ({ readOnly }) => {
-   
+    
     const location = useLocation<MonitorFormProps>()
     const [sector, setSector] = useState('')
     const [owner, setOwner] = useState('')
-    const [patrimony, setPatrimony] = useState('')
-    const [model, setModel] = useState('')
-    const [inch, setInch] = useState('')
-    const [description, setDescription] = useState('')
 
-    if (location.state.sectorProps && location.state.ownerProps) {
-        readOnly = true
+    const [monitorItems, setMonitorItems] = useState([
+        { patrimony: '', model: '', inch: '', description: '' }
+    ])
+
+    // const [patrimony, setPatrimony] = useState('')
+    // const [model, setModel] = useState('')
+    // const [inch, setInch] = useState('')
+    // const [description, setDescription] = useState('')
+
+    setReadOnly()
+
+    function setReadOnly() {
+        if (location.state.sectorProps && location.state.ownerProps) {
+            readOnly = true
+        }
     }
+
+
+    function setMonitorItemValue(position: number, field: string, value: string) {
+        const updateMonitorItem = monitorItems.map((monitorItem, index ) => {
+            if (index === position) {
+                return { ...monitorItem, [field]: value  }
+            }
+
+            return monitorItem
+        })
+        setMonitorItems(updateMonitorItem)
+    }
+
+    function addNewMonitorItem() {
+        setMonitorItems([
+            ...monitorItems,
+            { patrimony: '', model: '', inch: '', description: '' }
+        ])
+    }
+
+    function handleCreateMonitor() {
+
+    }
+
+
 
     useEffect(() => {
         setSector(location.state.sectorProps)
@@ -53,15 +93,33 @@ const MonitorForm: React.FC<MonitorFormProps> = ({ readOnly }) => {
                         readOnly={readOnly}  
                     />
                 </Form>
-                <Form legend="Monitor">
-                    <MonitorItem
-                        monitorItem={{ patrimony, model, inch, description }}
-                        onChangePatrimony={(patrimony: string) => setPatrimony(patrimony)}
-                        onChangeModel={(model: string) => setModel(model)}
-                        onChangeInch={(inch: string) => setInch(inch)}
-                        onChangeDescription={(description: string) => setDescription(description)} />
-
+                <Form 
+                    legend="Monitores"
+                    addNew={addNewMonitorItem}
+                    labelButton="+ Novo Monitor">
+                    
+                    
+                    {monitorItems.map((monitorItem, index) => {
+                        return (
+                            <MonitorItem
+                                key={index}
+                                monitorItem={monitorItem}
+                                onChangePatrimony={(patrimony: string) => setMonitorItemValue(index, 'patrimony', patrimony)}
+                                onChangeModel={(model: string) => setMonitorItemValue(index, 'model', model)}
+                                onChangeInch={(inch: string) => setMonitorItemValue(index, 'inch', inch)}
+                                onChangeDescription={(description: string) => setMonitorItemValue(index, 'description', description)} />
+                        )
+                    })}
                 </Form>
+
+                <Footer  
+                    toNext={{ pathname: '/' }}
+                    toPrev={{ pathname: '/computer-register' }}
+                    iconPrev={powerIcon}
+                    iconNext={printerIcon}
+                    labelButtonSave="Salvar Monitores"
+                    handleButton={() => handleCreateMonitor()} />
+                
             </Main>
         </div>
     )

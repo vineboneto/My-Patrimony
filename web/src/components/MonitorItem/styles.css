@@ -6,6 +6,10 @@
     justify-content: space-between;
 }
 
+.monitor-item + .monitor-item {
+    margin-top: 2.4rem;
+}
+
 .monitor-item > :nth-child(4) {
     grid-area: description;
 }

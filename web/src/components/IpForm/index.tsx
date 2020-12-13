@@ -3,7 +3,7 @@ import React from 'react'
 import './styles.css'
 
 interface IpFormProps {
-    addNewIp: Function
+    addNewIp: () => void
 }
 
 const IpForm: React.FC<IpFormProps> = ({ addNewIp, children }) => {

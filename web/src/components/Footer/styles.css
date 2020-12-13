@@ -7,10 +7,68 @@
 }
 
 .footer-block .footer-content {
-    display: flex;
-    justify-content: flex-end;
-    padding-right: 2rem;
+    display: grid;
+    justify-content: space-between;
+    grid-template-columns: 40% 60%;
+    grid-template-areas: "link-prev link-next";
+    padding: 0 3.4rem;
     margin: 0 auto;
     flex: 1;
 }
+
+.footer-block .footer-content .link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5.4rem;
+    border-radius: 0.8rem;
+    border: 1px solid var(--color-border-input);
+    background-color: var(--color-primary);
+    color: #fff;
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+    outline: 0;
+    padding: 0 1.6rem;
+    max-width: 100px;
+}
+
+.footer-block .footer-content .next-block {
+    display: flex;
+    grid-area: link-next;
+    justify-self: flex-end;
+}
+
+.footer-block .footer-content .next-block .link-next a {
+    width: 100%;
+    max-height: 100%;
+}
+
+.footer-block .footer-content .next-block button {
+    width: 23.1rem;
+    height: 5.4rem;
+    margin-right: 2rem;
+    border-radius: 0.8rem;
+    border: 1px solid var(--color-border-input);
+    background-color: var(--color-primary);
+    color: #fff;
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+    outline: 0;
+    padding: 0 1.6rem;
+    font: 1.6rem 'Archivo';
+    cursor: pointer;
+}
+
+.footer-block .footer-content .next-block .link-next a > :nth-child(1)  {
+    margin-right: 10px;
+}
+
+.footer-block .footer-content  > :nth-child(1) a >  :nth-child(2) {
+    margin-bottom: 2px;
+    margin-left: 6px;
+}
+
+
+
+
+
+
 

@@ -5,10 +5,9 @@ import Dialog from '../../components/Dialog'
 
 import plusIcon from '../../assets/images/icons/plusIcon.svg'
 
-// import api from '../../services/api'
+import api from '../../services/api'
 
 import './styles.css'
-import api from '../../services/api'
 
 interface OwnerProps extends SelectHTMLAttributes<HTMLSelectElement> {
     sector: string

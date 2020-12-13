@@ -1,5 +1,4 @@
 import React, { MouseEvent, useState } from 'react'
-import { Link } from 'react-router-dom'
 
 import ComputerItem from '../../components/ComputerItem'
 import Footer from '../../components/Footer'
@@ -12,11 +11,10 @@ import Main from '../../components/Main'
 
 
 import monitorIcon from '../../assets/images/icons/monitorIcon.svg'
-import nextIcon from '../../assets/images/icons/nextIcon.svg'
 
+import api from '../../services/api'
 
 import './styles.css'
-import api from '../../services/api'
 
 const ComputerForm = () => {
 
@@ -47,6 +45,7 @@ const ComputerForm = () => {
     }
 
     async function handleCreateOwner(e: MouseEvent) {
+        console.log('Entrou...')
         e.preventDefault()
         api.post('/owners', {
             name: owner,
@@ -105,24 +104,11 @@ const ComputerForm = () => {
                     
                 </Form>
 
-                <Footer>
-                    <button onClick={handleCreateOwner} >
-                        Salvar Computador
-                    </button>
-
-                    <div className="link-next">
-                        <Link to={{
-                            pathname: '/monitor-register',
-                            state: {
-                                sectorProps: sector,
-                                ownerProps: owner
-                            }
-                        }} >
-                            <img src={monitorIcon} alt="Monitor"/>
-                            <img src={nextIcon} alt="Proxíma pagína"/>
-                        </Link>
-                    </div>
-                </Footer>
+                <Footer
+                    toNext={{ pathname: '/monitor-register', state: { sectorProps: sector, ownerProps: owner } }}
+                    iconNext={monitorIcon}
+                    labelButtonSave="Salvar computador"
+                    handleButton={(e: MouseEvent) => handleCreateOwner(e)} />
             </Main>
         </div>
     )
