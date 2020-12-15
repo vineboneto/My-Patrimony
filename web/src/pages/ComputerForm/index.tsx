@@ -95,8 +95,8 @@ const ComputerForm: React.FC = () => {
                 <Form legend="Proprietário">
 
                     <OwnerItem
-                        sector={sector}
                         owner={owner}
+                        readOnly={true}
                     />
 
                 </Form>

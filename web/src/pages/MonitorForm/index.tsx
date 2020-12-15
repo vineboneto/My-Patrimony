@@ -75,8 +75,8 @@ const MonitorForm: React.FC<MonitorFormProps> = () => {
             <Main>
                 <Form legend="Proprietário">
                     <OwnerItem
-                        sector={sector}
-                        owner={owner} 
+                        owner={owner}
+                        readOnly={true}
                     />
                 </Form>
                 <Form 

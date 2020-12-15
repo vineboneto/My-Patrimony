@@ -26,60 +26,15 @@ const OwnerForm: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => {
-        setSectorId(location.state.sector)
-        setOwner(location.state.owner)
-        getDataSector()
-        getDataOwner()        
+        
+        setSectorId(location.state?.sector)
+        setOwner(location.state?.owner)      
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen])
     
-    const [optionsSector, setOptionsSector] = useState([
-        { value: '', label: '' }
-    ])
-    const [optionsOwner, setOpitonsOwner] = useState([
-        { value: '', label: '', sectorId: '' }
-    ])
-
-    async function getDataSector() {
-        const response =  await api.get('sectors')
-        const datas = response.data
-        
-
-        const options = datas.map((data: any) => {
-            return {
-                value: data.id,
-                label: data.name
-            }
-        })
-        setOptionsSector(options)
-    }
-
-    async function getDataOwner() {
-        const response = await api.get('owners')
-        const datas = response.data
-        const options = datas.map((data: any) => {
-            return {
-                value: data.id,
-                label: data.name,
-                sectorId: data.sector_id
-            }
-        })
-        setOpitonsOwner(options)
-    }
-
 
     const handleOwnerChange = (owner: string) => {
         setOwner(owner)
-
-        const sectorId = optionsOwner.find((ownerId) => {
-            if (ownerId.value.toString() === owner) {
-                console.log(ownerId.sectorId)
-                return ownerId
-            }
-            return ''
-        })
-
-        setSectorId(sectorId?.sectorId || '')
     }
     
     return (
@@ -94,11 +49,10 @@ const OwnerForm: React.FC = () => {
                     labelButton="+ Novo Proprietário"
                     addNew={() => setIsOpen(true)}>
                     <OwnerItem
-                        sector={sectorId}
                         owner={owner}
                         onOwnerChange={handleOwnerChange}
-                        optionsOwner={optionsOwner}
-                        optionsSector={optionsSector}
+                        isOpen={isOpen}
+                        
                     />
                     <NewOwnerDialog 
                         title="Novo Propriétario"
