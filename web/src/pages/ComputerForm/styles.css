@@ -8,7 +8,7 @@
     background-color: var(--color-background-form);
 }
 
-#page-computer-form .form-block legend {
+#page-computer-form .main-block > :nth-child(3) legend {
     font: 600 2rem 'Archivo';
     color: var(--color-label-input);
 }

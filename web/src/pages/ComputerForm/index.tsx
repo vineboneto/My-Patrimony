@@ -1,4 +1,4 @@
-import React, { MouseEvent, useState } from 'react'
+import React, { MouseEvent, useEffect, useState } from 'react'
 
 import ComputerItem from '../../components/ComputerItem'
 import Footer from '../../components/Footer'
@@ -10,21 +10,40 @@ import Main from '../../components/Main'
 
 
 import monitorIcon from '../../assets/images/icons/monitorIcon.svg'
+import profileIcon from '../../assets/images/icons/profileIcon.svg'
 
 import api from '../../services/api'
 
 import './styles.css'
+import { useLocation } from 'react-router-dom'
 
-const ComputerForm = () => {
+interface OwnerFormProps {
+    
+        owner: string,
+        sector: string
+    
+}
 
-    const [sector, setSector] = useState('')
+const ComputerForm: React.FC = () => {
+
+    const location = useLocation<OwnerFormProps>()
     const [owner, setOwner] = useState('')
+    const [sector, setSector] = useState('')
     const [patrimony, setPatrimony] = useState('')
     const [model, setModel] = useState('')
     const [description, setDescription] = useState('')
     const [ipItems, setIpItems] = useState([
         { ip: '', mask: '', gateway: '' }
     ])
+
+    
+    
+    useEffect(() => {
+        setOwner(location.state.owner)
+        setSector(location.state.sector)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
 
     function setIpItemsValue(position: Number, field: string, value: string) {
         const updateIpItems = ipItems.map((ipItem, index) => {
@@ -42,8 +61,6 @@ const ComputerForm = () => {
             { ip: '', mask: '', gateway: '' }
         ]);
     }
-    
-    var owner_id
 
     async function handleCreateOwner(e: MouseEvent) {
         e.preventDefault()
@@ -80,9 +97,6 @@ const ComputerForm = () => {
                     <OwnerItem
                         sector={sector}
                         owner={owner}
-                        value={sector}
-                        onChange={(e) => setSector(e.target.value)}
-                        onOwnerChange={(owner: string) => setOwner(owner)}
                     />
 
                 </Form>
@@ -115,9 +129,16 @@ const ComputerForm = () => {
                     toNext={
                         { 
                             pathname: '/monitor-register', state: {
-                                 sectorProps: sector, ownerProps: { owner: owner, owner_id: owner_id } }
+                                 sector, owner }
                         }
                     }
+                    toPrev={
+                        {
+                            pathname: "/owner-register", state: {
+                                sector, owner }
+                        }
+                    }
+                    iconPrev={profileIcon}
                     iconNext={monitorIcon}
                     labelButtonSave="Salvar computador"
                     handleButton={(e: MouseEvent) => handleCreateOwner(e)} />

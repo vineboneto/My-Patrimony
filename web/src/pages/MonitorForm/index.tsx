@@ -14,15 +14,11 @@ import powerIcon from '../../assets/images/icons/powerIcon.svg'
 import './styles.css'
 
 interface MonitorFormProps {
-    ownerProps: {
-        owner: string,
-        owner_id: number
-    },
-    sectorProps: string
-    readOnly: boolean
+    owner: string
+    sector: string
 }
 
-const MonitorForm: React.FC<MonitorFormProps> = ({ readOnly }) => {
+const MonitorForm: React.FC<MonitorFormProps> = () => {
     
     const location = useLocation<MonitorFormProps>()
     const [sector, setSector] = useState('')
@@ -32,16 +28,11 @@ const MonitorForm: React.FC<MonitorFormProps> = ({ readOnly }) => {
         { patrimony: '', model: '', inch: '', description: '' }
     ])
 
-    // const [patrimony, setPatrimony] = useState('')
-    // const [model, setModel] = useState('')
-    // const [inch, setInch] = useState('')
-    // const [description, setDescription] = useState('')
-
     setReadOnly()
 
     function setReadOnly() {
-        if (location.state.sectorProps && location.state.ownerProps.owner) {
-            readOnly = true
+        if (location.state.sector && location.state.owner) {
+            
         }
     }
 
@@ -66,14 +57,11 @@ const MonitorForm: React.FC<MonitorFormProps> = ({ readOnly }) => {
 
     async function handleCreateMonitor(e: MouseEvent) {
         e.preventDefault()
-    }
-
-    
+    }    
 
     useEffect(() => {
-        console.log(location.state.ownerProps.owner_id)
-        setSector(location.state.sectorProps)
-        setOwner(location.state.ownerProps.owner) 
+        setSector(location.state.sector)
+        setOwner(location.state.owner) 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
      
@@ -88,11 +76,7 @@ const MonitorForm: React.FC<MonitorFormProps> = ({ readOnly }) => {
                 <Form legend="Proprietário">
                     <OwnerItem
                         sector={sector}
-                        value={sector}
-                        owner={owner}
-                        onOwnerChange={(owner: string) => setOwner(owner)}
-                        onChange={(e) => setSector(e.target.value)}
-                        readOnly={readOnly}  
+                        owner={owner} 
                     />
                 </Form>
                 <Form 
@@ -116,7 +100,7 @@ const MonitorForm: React.FC<MonitorFormProps> = ({ readOnly }) => {
 
                 <Footer  
                     toNext={{ pathname: '/' }}
-                    toPrev={{ pathname: '/computer-register' }}
+                    toPrev={{ pathname: '/computer-register', state: { owner, sector } }}
                     iconPrev={powerIcon}
                     iconNext={printerIcon}
                     labelButtonSave="Salvar Monitores"

@@ -10,7 +10,7 @@
 .form-block fieldset legend {
     font: 600 2.4rem 'Archivo';
     color: #000;
-    /* margin-bottom: 2.4rem; */
+    padding-top: 3.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -25,6 +25,7 @@
     color: var(--color-primary);
     font: 700 1.6rem Archivo;
     transition: color 0.2s;
+    cursor: pointer;
 }
 
 .form-block legend button:hover {

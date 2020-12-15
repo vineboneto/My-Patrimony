@@ -16,7 +16,7 @@ const Form: React.FC<FormProps> = ({ addNew, legend, children, labelButton="" })
                     {legend}
                     
                     {labelButton && addNew &&
-                        <button type="button" onClick={() => addNew()}>
+                        <button  type="button" onClick={() => addNew()}>
                             {labelButton}
                         </button> 
                     }
