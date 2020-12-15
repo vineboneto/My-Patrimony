@@ -19,12 +19,16 @@ interface OwnerProps extends SelectHTMLAttributes<HTMLSelectElement> {
 const OwnerItem: React.FC<OwnerProps> = ({ sector, owner, onOwnerChange, readOnly = false, ...rest}) => {
     
     const [isOpen, setIsOpen] = useState(false)
-    const [options, setOptions] = useState([
+    const [optionsSector, setOptionsSector] = useState([
+        { value: '', label: '' }
+    ])
+    const [optionsOwner, setOpitonsOwner] = useState([
         { value: '', label: '' }
     ])
 
     useEffect(() => {
         getDataSector()
+        getDataOwner()
     }, [isOpen])
     
 
@@ -39,7 +43,19 @@ const OwnerItem: React.FC<OwnerProps> = ({ sector, owner, onOwnerChange, readOnl
                 label: data.name
             }
         })
-        setOptions(options)
+        setOptionsSector(options)
+    }
+
+    async function getDataOwner() {
+        const response = await api.get('owners')
+        const datas = response.data
+        const options = datas.map((data: any) => {
+            return {
+                value: data.id,
+                label: data.name
+            }
+        })
+        setOpitonsOwner(options)
     }
 
     return (
@@ -69,7 +85,7 @@ const OwnerItem: React.FC<OwnerProps> = ({ sector, owner, onOwnerChange, readOnl
                 <select value="" id="sector" {...rest} disabled={readOnly}>
                     <option value="" disabled hidden>Selecione o setor</option>
 
-                    {options.map(option => {
+                    {optionsSector.map(option => {
                         return <option key={option.value} value={option.value}>{option.label}</option>
                     })}
                 </select>

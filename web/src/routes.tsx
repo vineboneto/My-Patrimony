@@ -4,6 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom'
 import ComputerForm from './pages/ComputerForm';
 import Home from './pages/Home';
 import MonitorForm from './pages/MonitorForm'
+import OwnerForm from './pages/OwnerForm';
 import Test from './pages/Test'
 
 export default function Routes() {
@@ -12,6 +13,7 @@ export default function Routes() {
             <Route exact path="/" component={Home} />
             <Route path="/computer-register/" component={ComputerForm} />
             <Route path="/monitor-register/" component={MonitorForm} />
+            <Route path="/owner-register/" component={OwnerForm} />
             <Route path="/test/" component={Test} />
         </BrowserRouter>
     )

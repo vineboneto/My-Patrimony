@@ -12,36 +12,37 @@ interface FooterProps {
     toPrev?: object
     iconPrev?: string
     iconNext?: string
-    labelButtonSave: string
-    handleButton: (e: MouseEvent) => void
+    labelButtonSave?: string
+    handleButton?: (e: MouseEvent) => void
 }
 
 const Footer: React.FC<FooterProps>  = ({ toNext, toPrev, iconNext, iconPrev, labelButtonSave, handleButton }) => {
     return (
         <footer className="footer-block">
             <div className="footer-content">
-                {toPrev && handleButton && 
+                {toPrev  && 
                     <div className="link">
-                        <Link to={toPrev}>
+                        <Link to={toPrev || '/'}>
                             <img src={backIcon} alt="Página anterior"/>
                             <img src={iconPrev} alt={iconPrev}/>
                         </Link>
                     </div>
                 }
-                {toNext && handleButton &&
-                    <div className="next-block">
+                <div className="next-block">
+                    {handleButton &&
                         <button onClick={(e) => handleButton(e)}>
                             {labelButtonSave}
                         </button>
-
+                    }
+                    {toNext && 
                         <div className="link">
-                            <Link to={toNext} >
+                            <Link to={toNext || '/'} >
                                 <img src={iconNext} alt="Impressora"/>
                                 <img src={nextIcon} alt="Proxíma pagína"/>
                             </Link>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
         </footer>
     )

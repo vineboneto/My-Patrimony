@@ -1,5 +1,5 @@
-import React, {  useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import React, {  MouseEvent, useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
 import PageHeader from '../../components/PageHeader'
 import Form from '../../components/Form'
@@ -8,15 +8,16 @@ import OwnerItem from '../../components/OwnerItem'
 import MonitorItem from '../../components/MonitorItem'
 import Footer from '../../components/Footer'
 
-// import nextIcon from '../../assets/images/icons/nextIcon.svg'
-// import backIcon from '../../assets/images/icons/backIcon2.svg'
 import printerIcon from '../../assets/images/icons/printerIcon.svg'
 import powerIcon from '../../assets/images/icons/powerIcon.svg'
 
 import './styles.css'
 
 interface MonitorFormProps {
-    ownerProps: string,
+    ownerProps: {
+        owner: string,
+        owner_id: number
+    },
     sectorProps: string
     readOnly: boolean
 }
@@ -39,7 +40,7 @@ const MonitorForm: React.FC<MonitorFormProps> = ({ readOnly }) => {
     setReadOnly()
 
     function setReadOnly() {
-        if (location.state.sectorProps && location.state.ownerProps) {
+        if (location.state.sectorProps && location.state.ownerProps.owner) {
             readOnly = true
         }
     }
@@ -63,15 +64,16 @@ const MonitorForm: React.FC<MonitorFormProps> = ({ readOnly }) => {
         ])
     }
 
-    function handleCreateMonitor() {
-
+    async function handleCreateMonitor(e: MouseEvent) {
+        e.preventDefault()
     }
 
-
+    
 
     useEffect(() => {
+        console.log(location.state.ownerProps.owner_id)
         setSector(location.state.sectorProps)
-        setOwner(location.state.ownerProps) 
+        setOwner(location.state.ownerProps.owner) 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
      
@@ -118,7 +120,7 @@ const MonitorForm: React.FC<MonitorFormProps> = ({ readOnly }) => {
                     iconPrev={powerIcon}
                     iconNext={printerIcon}
                     labelButtonSave="Salvar Monitores"
-                    handleButton={() => handleCreateMonitor()} />
+                    handleButton={(e: MouseEvent) => handleCreateMonitor(e)} />
                 
             </Main>
         </div>

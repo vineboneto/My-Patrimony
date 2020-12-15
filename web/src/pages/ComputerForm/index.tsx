@@ -42,26 +42,37 @@ const ComputerForm = () => {
             { ip: '', mask: '', gateway: '' }
         ]);
     }
+    
+    var owner_id
 
     async function handleCreateOwner(e: MouseEvent) {
         e.preventDefault()
-        api.post('/owners', {
-            name: owner,
-            sector_id: parseInt(sector),
-            patrimony: patrimony,
-            model: model,
-            description: description,
-            ips: ipItems
-        }).then(() => {
-            alert('Computador cadastrado')
-        }).catch(() => alert('Erro ao cadastrar!'))
+
+        const promise = api.post('/owners')
+
+        const dataPromise = promise.then((response) => response.data)
+        console.log(dataPromise)
+        return dataPromise
+        // api.post('/owners', {
+        //     name: owner,
+        //     sector_id: parseInt(sector),
+        //     patrimony: patrimony,
+        //     model: model,
+        //     description: description,
+        //     ips: ipItems
+        // }).then((response) => {
+        //     alert('Computador cadastrado')
+        //     owner_id = response.data
+        //     console.log(owner_id)
+        // }).catch(() => alert('Erro ao cadastrar!'))
     }
+
 
     return (
         <div id="page-computer-form">
             <PageHeader
                 title="Cadastre o computador..."
-                linkPrev="/"/>
+                linkPrev="/owner-register"/>
 
             <Main>
                 <Form legend="Proprietário">
@@ -101,7 +112,12 @@ const ComputerForm = () => {
                 </Form>
 
                 <Footer
-                    toNext={{ pathname: '/monitor-register', state: { sectorProps: sector, ownerProps: owner } }}
+                    toNext={
+                        { 
+                            pathname: '/monitor-register', state: {
+                                 sectorProps: sector, ownerProps: { owner: owner, owner_id: owner_id } }
+                        }
+                    }
                     iconNext={monitorIcon}
                     labelButtonSave="Salvar computador"
                     handleButton={(e: MouseEvent) => handleCreateOwner(e)} />
