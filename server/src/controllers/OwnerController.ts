@@ -2,20 +2,20 @@ import { Request, Response } from 'express'
 
 import db from '../database/connection'
 
-export default class SectorController {
+export default class OwnerController {
     async index(req: Request, res: Response) {
-        const sectors = await db('sectors').select('*').from('owners')
-        return res.json(sectors)
+        const owners = await db('sectors').select('*').from('owners')
+        return res.json(owners)
     }
 
     async create(req:Request, res: Response) {
 
-        const { name } = req.body
+        const { name, sector_id } = req.body
         
         const trx = await db.transaction()
 
         try {
-            await trx('sectors').insert({ name })    
+            await trx('owners').insert({ name, sector_id })    
 
             await trx.commit();
 

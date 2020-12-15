@@ -8,7 +8,7 @@ interface ipItem {
     gateway: string
 }
 
-export default class OwnerController {
+export default class ComputerController {
     async create(req: Request, res: Response) {
 
         const { name, sector_id, patrimony, description, model, ips } = req.body

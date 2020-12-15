@@ -5,10 +5,12 @@ export async function up(knex: Knex) {
         table.increments('id').primary()
         table.string('name').notNullable()
         table.integer('sector_id').unsigned().notNullable()
-        
+
         table.foreign('sector_id')
             .references('id')
             .inTable('sectors')
+            .onDelete('CASCADE')
+            .onUpdate('CASCADE')
     })
 }
 
