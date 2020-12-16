@@ -28,13 +28,6 @@ const MonitorForm: React.FC<MonitorFormProps> = () => {
         { patrimony: '', model: '', inch: '', description: '' }
     ])
 
-    setReadOnly()
-
-    function setReadOnly() {
-        if (location.state.sector && location.state.owner) {
-            
-        }
-    }
 
 
     function setMonitorItemValue(position: number, field: string, value: string) {
@@ -76,6 +69,7 @@ const MonitorForm: React.FC<MonitorFormProps> = () => {
                 <Form legend="Proprietário">
                     <OwnerItem
                         owner={owner}
+                        sector={sector}
                         readOnly={true}
                     />
                 </Form>

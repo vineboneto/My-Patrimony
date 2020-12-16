@@ -6,12 +6,14 @@ import './styles.css'
 
 interface OwnerProps extends SelectHTMLAttributes<HTMLSelectElement> {
     owner: string
+    sector?: string
     readOnly?: boolean
     onOwnerChange?: (owner: string) => void
+    onSectorChange?: (sector: string) => void
     isOpen?: boolean
 }
 
-const OwnerItem: React.FC<OwnerProps> = ({ isOpen, owner, onOwnerChange, readOnly = false, ...rest}) => {
+const OwnerItem: React.FC<OwnerProps> = ({ isOpen, owner, sector, onOwnerChange, onSectorChange, readOnly = false, ...rest}) => {
 
     const [optionsSector, setOptionsSector] = useState([
         { value: '', label: '' }
@@ -19,7 +21,6 @@ const OwnerItem: React.FC<OwnerProps> = ({ isOpen, owner, onOwnerChange, readOnl
     const [optionsOwner, setOptionsOwner] = useState([
         { value: '', label: '', sectorId: '' }
     ])
-    const [sectorId, setSectorId] = useState('')
 
     useEffect(() => {
         getDataSector()
@@ -61,13 +62,11 @@ const OwnerItem: React.FC<OwnerProps> = ({ isOpen, owner, onOwnerChange, readOnl
         const owner = e.target.value
         const sectorId = optionsOwner.find((ownerId) => {
             if (ownerId.value.toString() === owner) {
-                console.log(ownerId.sectorId)
                 return ownerId
             }
             return ''
         })
-
-        setSectorId(sectorId?.sectorId || '')
+        if (onSectorChange) onSectorChange(sectorId?.sectorId || '')
     }
 
     return (
@@ -98,7 +97,7 @@ const OwnerItem: React.FC<OwnerProps> = ({ isOpen, owner, onOwnerChange, readOnl
                 <label htmlFor="sector">Setor</label>
                 
                 <select 
-                    value={sectorId}
+                    value={sector}
                     id="sector"  
                     disabled={true}
                     {...rest}>

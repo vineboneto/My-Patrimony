@@ -15,13 +15,11 @@ import profileIcon from '../../assets/images/icons/profileIcon.svg'
 import api from '../../services/api'
 
 import './styles.css'
-import { useLocation } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 
 interface OwnerFormProps {
-    
         owner: string,
         sector: string
-    
 }
 
 const ComputerForm: React.FC = () => {
@@ -36,11 +34,14 @@ const ComputerForm: React.FC = () => {
         { ip: '', mask: '', gateway: '' }
     ])
 
+    const history = useHistory<OwnerFormProps>()
+
     
     
     useEffect(() => {
         setOwner(location.state.owner)
         setSector(location.state.sector)
+        console.log(location.state)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -65,23 +66,19 @@ const ComputerForm: React.FC = () => {
     async function handleCreateOwner(e: MouseEvent) {
         e.preventDefault()
 
-        const promise = api.post('/owners')
-
-        const dataPromise = promise.then((response) => response.data)
-        console.log(dataPromise)
-        return dataPromise
-        // api.post('/owners', {
-        //     name: owner,
-        //     sector_id: parseInt(sector),
-        //     patrimony: patrimony,
-        //     model: model,
-        //     description: description,
-        //     ips: ipItems
-        // }).then((response) => {
-        //     alert('Computador cadastrado')
-        //     owner_id = response.data
-        //     console.log(owner_id)
-        // }).catch(() => alert('Erro ao cadastrar!'))
+        api.post('/computers', {
+            patrimony: patrimony,
+            model: model,
+            description: description,
+            owner_id: owner,
+            ips: ipItems
+        }).then(() => {
+            alert('Computador cadastrado')
+            history.push({
+                pathname: '/monitor-register',
+                state: { owner, sector }
+            })
+        }).catch(() => alert('Erro ao cadastrar!'))
     }
 
 
@@ -96,6 +93,7 @@ const ComputerForm: React.FC = () => {
 
                     <OwnerItem
                         owner={owner}
+                        sector={sector}
                         readOnly={true}
                     />
 

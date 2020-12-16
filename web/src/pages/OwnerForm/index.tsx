@@ -10,7 +10,7 @@ import NewOwnerDialog from '../../dialogs/NewOwnerDialog'
 
 import powerIcon from '../../assets/images/icons/powerIcon.svg'
 
-import api from '../../services/api'
+// import api from '../../services/api'
 
 import './styles.css'
 
@@ -28,7 +28,8 @@ const OwnerForm: React.FC = () => {
     useEffect(() => {
         
         setSectorId(location.state?.sector)
-        setOwner(location.state?.owner)      
+        setOwner(location.state?.owner)    
+        console.log(location.state)  
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen])
     
@@ -50,7 +51,9 @@ const OwnerForm: React.FC = () => {
                     addNew={() => setIsOpen(true)}>
                     <OwnerItem
                         owner={owner}
+                        sector={sectorId}
                         onOwnerChange={handleOwnerChange}
+                        onSectorChange={(sectorId: string) => setSectorId(sectorId) }
                         isOpen={isOpen}
                         
                     />
@@ -63,7 +66,7 @@ const OwnerForm: React.FC = () => {
                     toNext={
                         { 
                             pathname: '/computer-register', state: {
-                                owner: owner, sector: sectorId}
+                                owner, sector: sectorId}
                         }
                     }
                     iconNext={powerIcon}/>

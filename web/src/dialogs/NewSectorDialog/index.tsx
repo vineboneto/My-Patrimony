@@ -1,4 +1,4 @@
-import React, { MouseEvent, useEffect, useState } from 'react'
+import React, { MouseEvent, useState } from 'react'
 
 import Input from '../../components/Input'
 import closeIcon from '../../assets/images/icons/closeIcon.svg'

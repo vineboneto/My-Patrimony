@@ -11,15 +11,11 @@ interface ipItem {
 export default class ComputerController {
     async create(req: Request, res: Response) {
 
-        const { name, sector_id, patrimony, description, model, ips } = req.body
+        const { patrimony, description, model, owner_id,  ips } = req.body
 
         const trx = await db.transaction()
 
         try {
-            const insertedOwnerId = await trx('owners').insert({ name, sector_id })
-
-            // Captura id inserido
-            const owner_id = insertedOwnerId[0]
 
             const insertedComputerId = await trx('computers').insert({ patrimony, description, model, owner_id })
 
@@ -39,7 +35,7 @@ export default class ComputerController {
 
             await trx.commit()
 
-            return res.status(201).send({ owner_id: owner_id })
+            return res.status(201).send()
         } catch(err) {
             await trx.rollback()
             return res.status(400).json({
