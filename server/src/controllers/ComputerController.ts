@@ -14,10 +14,12 @@ export default class ComputerController {
         const { patrimony, description, model, owner_id,  ips } = req.body
 
         const trx = await db.transaction()
+        console.log(owner_id)
 
-        try {
-
+        try {  
+            
             const insertedComputerId = await trx('computers').insert({ patrimony, description, model, owner_id })
+            console.log('Entrou')
 
             // Captura id inserido
             const computer_id = insertedComputerId[0]
@@ -30,6 +32,8 @@ export default class ComputerController {
                     computer_id
                 }
             })
+
+            console.log(classIps)
 
             await trx('ips').insert(classIps)
 

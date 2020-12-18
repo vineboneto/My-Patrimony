@@ -13,9 +13,11 @@ export async function up(knex: Knex) {
         table.foreign('computer_id')
             .references('id')
             .inTable('computers')
+
         table.foreign('printer_id')
             .references('id')
             .inTable('printers')
+
         table.foreign('router_id')
             .references('id')
             .inTable('routes')
