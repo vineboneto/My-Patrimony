@@ -1,5 +1,5 @@
 import React, {  MouseEvent, useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import PageHeader from '../../components/PageHeader'
 import Form from '../../components/Form'
@@ -14,20 +14,20 @@ import powerIcon from '../../assets/images/icons/powerIcon.svg'
 import './styles.css'
 import api from '../../services/api'
 
-interface MonitorFormProps {
+interface OwnerFormProps {
     owner: string
     sector: string
 }
 
-const MonitorForm: React.FC<MonitorFormProps> = () => {
+const MonitorForm: React.FC<OwnerFormProps> = () => {
     
-    const location = useLocation<MonitorFormProps>()
+    const location = useLocation<OwnerFormProps>()
     const [sector, setSector] = useState('')
     const [owner, setOwner] = useState('')
-
     const [monitorItems, setMonitorItems] = useState([
         { patrimony: '', model: '', inch: '', description: '' }
     ])
+    const history = useHistory<OwnerFormProps>()
 
     function setMonitorItemValue(position: number, field: string, value: string) {
         const updateMonitorItem = monitorItems.map((monitorItem, index ) => {
@@ -55,7 +55,11 @@ const MonitorForm: React.FC<MonitorFormProps> = () => {
             owner_id: owner
         }).then(() => {
             alert('Monitor Cadastrado!')
-
+            history.push({ 
+                pathname: '/printer-register', state: {
+                    owner, sector
+                }
+             })
         }).catch(() => alert('Erro ao cadastrar!'))
     }    
 
@@ -100,7 +104,7 @@ const MonitorForm: React.FC<MonitorFormProps> = () => {
                 </Form>
 
                 <Footer  
-                    toNext={{ pathname: '/' }}
+                    toNext={{ pathname: '/printer-register', state: { owner, sector } }}
                     toPrev={{ pathname: '/computer-register', state: { owner, sector } }}
                     iconPrev={powerIcon}
                     iconNext={printerIcon}

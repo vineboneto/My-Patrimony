@@ -5,6 +5,7 @@ import ComputerForm from './pages/ComputerForm';
 import Home from './pages/Home';
 import MonitorForm from './pages/MonitorForm'
 import OwnerForm from './pages/OwnerForm';
+import PrinterForm from './pages/PrinterForm';
 import Test from './pages/Test'
 
 export default function Routes() {
@@ -14,6 +15,7 @@ export default function Routes() {
             <Route path="/computer-register/" component={ComputerForm} />
             <Route path="/monitor-register/" component={MonitorForm} />
             <Route path="/owner-register/" component={OwnerForm} />
+            <Route path="/printer-register/" component={PrinterForm} />
             <Route path="/test/" component={Test} />
         </BrowserRouter>
     )
