@@ -119,7 +119,7 @@ const PrinterForm: React.FC = () => {
 
                 <Footer
                     toNext={{
-                        pathname: '/',
+                        pathname: '/stabiliser-register',
                         state: { owner, sector }
                     }}
                     toPrev={{
