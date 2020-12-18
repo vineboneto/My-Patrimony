@@ -19,7 +19,7 @@ Layout da aplicação disponível [aqui](https://www.figma.com/file/UZH4KDbmpU3h
 
 ### Sobre
 
-<p align="justify"}>
+<p align="justify">
 Na secretária de saúde percebe-se que o controle de patrimônio é um grande incomodo para muitos, exigindo tempo e dedicação para realizar verificação sobre os mesmos,
 além de ser extremamente complicado manter o seu controle, já que mudanças ocorrem o tempo todo.
 Com este intuito este software tem como principal objetivo tornar o controle do patrimônio eficiente e simples. Para isto será criado um site
