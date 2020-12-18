@@ -6,7 +6,7 @@ export async function up(knex :Knex) {
         table.string('patrimony', 45).notNullable()
         table.string('model', 45)
         table.integer('inch')
-        table.string('description', 1024)
+        table.string('description', 255)
         table.integer('owner_id').unsigned().notNullable()
 
         table.foreign('owner_id')
