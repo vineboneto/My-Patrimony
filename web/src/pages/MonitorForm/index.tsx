@@ -12,6 +12,7 @@ import printerIcon from '../../assets/images/icons/printerIcon.svg'
 import powerIcon from '../../assets/images/icons/powerIcon.svg'
 
 import './styles.css'
+import api from '../../services/api'
 
 interface MonitorFormProps {
     owner: string
@@ -27,8 +28,6 @@ const MonitorForm: React.FC<MonitorFormProps> = () => {
     const [monitorItems, setMonitorItems] = useState([
         { patrimony: '', model: '', inch: '', description: '' }
     ])
-
-
 
     function setMonitorItemValue(position: number, field: string, value: string) {
         const updateMonitorItem = monitorItems.map((monitorItem, index ) => {
@@ -50,6 +49,14 @@ const MonitorForm: React.FC<MonitorFormProps> = () => {
 
     async function handleCreateMonitor(e: MouseEvent) {
         e.preventDefault()
+
+        api.post('/monitors', {
+            monitorItems: monitorItems,
+            owner_id: owner
+        }).then(() => {
+            alert('Monitor Cadastrado!')
+
+        }).catch(() => alert('Erro ao cadastrar!'))
     }    
 
     useEffect(() => {

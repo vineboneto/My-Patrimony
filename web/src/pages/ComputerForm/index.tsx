@@ -41,7 +41,6 @@ const ComputerForm: React.FC = () => {
     useEffect(() => {
         setOwner(location.state.owner)
         setSector(location.state.sector)
-        console.log(location.state)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

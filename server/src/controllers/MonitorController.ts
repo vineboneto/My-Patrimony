@@ -15,21 +15,22 @@ export default class MonitorController {
 
         const { owner_id, monitorItems } = req.body
 
-        const updateMonitorItems = monitorItems.map((monitorItem: MonitorItem) => {
-            return {
-                patrimony: monitorItem.patrimony,
-                description: monitorItem.description,
-                model: monitorItem.model,
-                inch: convertInchToNumber(monitorItem.inch)
-            }
-        })
-
-        console.log(monitorItems)
-        console.log(updateMonitorItems)
-
         const trx = await db.transaction()
 
         try {
+            const classMonitorItems = monitorItems.map((monitorItem: MonitorItem) => {
+                return {
+                    patrimony: monitorItem.patrimony,
+                    description: monitorItem.description,
+                    model: monitorItem.model,
+                    inch: convertInchToNumber(monitorItem.inch),
+                    owner_id
+                }
+            })
+
+            await trx('monitors').insert(classMonitorItems)
+
+            await trx.commit()
 
             return res.status(201).send()
         } catch (err) {
