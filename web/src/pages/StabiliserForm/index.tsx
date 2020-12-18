@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import React, { MouseEvent, useEffect, useState } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
+
+import Footer from '../../components/Footer'
 import Form from '../../components/Form'
 import Main from '../../components/Main'
 import OwnerItem from '../../components/OwnerItem'
 import PageHeader from '../../components/PageHeader'
 import StabiliserItem from '../../components/StabiliserItem'
 
+import printerIcon from '../../assets/images/icons/printerIcon.svg'
+import homeIcon from '../../assets/images/icons/homeIcon.svg'
+
 import './styles.css'
+import api from '../../services/api'
 
 interface OwnerProps {
     owner: string
@@ -15,6 +21,7 @@ interface OwnerProps {
 
 const StabiliserForm: React.FC = () => {
     const location = useLocation<OwnerProps>()
+    const history = useHistory()
     const [owner, setOwner] = useState('')
     const [sector, setSector] = useState('')
     const [patrimony, setPatrimony] = useState('')
@@ -26,6 +33,18 @@ const StabiliserForm: React.FC = () => {
         setSector(location.state.sector)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    async function handleCreateStabiliser(e: MouseEvent) {
+        api.post('/stabilisers', {
+            patrimony,
+            model,
+            description,
+            owner_id: parseInt(owner)
+        }).then(() =>{
+            alert('Estabilizador Cadastrado!')
+            history.push('/')
+        }).catch(() => alert('Erro ao realizar cadastro!'))
+    }
 
     return (
         <div id="page-stabiliser-form">
@@ -56,6 +75,20 @@ const StabiliserForm: React.FC = () => {
                     />
 
                 </Form>
+
+                <Footer
+                    toNext={{
+                        pathname: '/'
+                    }}
+                    toPrev={{
+                        pathname: '/printer-register',
+                        state: { owner, sector }
+                    }}
+                    iconPrev={printerIcon}
+                    iconNext={homeIcon} 
+                    labelButtonSave="Salvar Estabilizador"
+                    handleButton={(e) => handleCreateStabiliser(e)}
+                />
             </Main>
         </div>
     )
