@@ -24,6 +24,6 @@ Na secretária de saúde percebe-se que o controle de patrimônio é um grande i
 além de ser extremamente complicado manter o seu controle, já que mudanças ocorrem o tempo todo.
 Com este intuito este software tem como principal objetivo tornar o controle do patrimônio eficiente e simples. Para isto será criado um site
 web onde os funcionarios poderam cadastrar seus patrimônios e tranferi-los para outros setores de forma rapída, facíl e principalmente acessivel, além de claro, consiguerem realizar um controle melhor sobre os patrimônios aos quais são responsáveis.
-Neste WebSite será utilizado como principais tecnologias __REACTJS__ e num futuro distante __ReactNative__ para aplicações mobile, caso a primeira aplicação obtenha sucesso.
+Neste WebSite será utilizado como principais tecnologias <strong>REACTJS</strong> e num futuro distante <strong>ReactNative</strong> para aplicações mobile, caso a primeira aplicação obtenha sucesso.
 </p>
 
