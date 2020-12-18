@@ -4,3 +4,7 @@
     height: 100vh;
     background-color: var(--color-background-form);
 }
+
+#page-owner-form .form-block fieldset legend {
+    padding-top: 3.5rem;
+}

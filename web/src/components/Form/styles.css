@@ -10,7 +10,6 @@
 .form-block fieldset legend {
     font: 600 2.4rem 'Archivo';
     color: #000;
-    padding-top: 3.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;

@@ -7,10 +7,15 @@ export async function up(knex: Knex) {
         table.string('mask', 16).notNullable()
         table.string('gateway', 16).notNullable()
         table.integer('computer_id').unsigned()
+        table.integer('printer_id').unsigned()
+        table.integer('router_id').unsigned()
 
         table.foreign('computer_id')
             .references('id')
             .inTable('computers')
+        table.foreign('printer_id')
+            .references('id')
+            .inTable('printers')
     })
 }
 

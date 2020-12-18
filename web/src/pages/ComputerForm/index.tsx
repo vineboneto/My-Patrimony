@@ -1,4 +1,5 @@
 import React, { MouseEvent, useEffect, useState } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import ComputerItem from '../../components/ComputerItem'
 import Footer from '../../components/Footer'
@@ -15,7 +16,6 @@ import profileIcon from '../../assets/images/icons/profileIcon.svg'
 import api from '../../services/api'
 
 import './styles.css'
-import { useHistory, useLocation } from 'react-router-dom'
 
 interface OwnerLocationProps {
         owner: string,
@@ -85,7 +85,10 @@ const ComputerForm: React.FC = () => {
         <div id="page-computer-form">
             <PageHeader
                 title="Cadastre o computador..."
-                linkPrev={{ pathname: '/owner-register', state: { owner, sector } }}
+                linkPrev={{ 
+                    pathname: '/owner-register',
+                    state: { owner, sector }
+                }}
             />
 
             <Main>
@@ -124,22 +127,19 @@ const ComputerForm: React.FC = () => {
                 </Form>
 
                 <Footer
-                    toNext={
-                        { 
-                            pathname: '/monitor-register', state: {
-                                 sector, owner }
-                        }
-                    }
-                    toPrev={
-                        {
-                            pathname: "/owner-register", state: {
-                                sector, owner }
-                        }
-                    }
+                    toNext={{ 
+                        pathname: '/monitor-register',
+                        state: { sector, owner }
+                    }}
+                    toPrev={{
+                        pathname: "/owner-register",
+                        state: { sector, owner }
+                    }}
                     iconPrev={profileIcon}
                     iconNext={monitorIcon}
                     labelButtonSave="Salvar computador"
-                    handleButton={(e: MouseEvent) => handleCreateOwner(e)} />
+                    handleButton={(e: MouseEvent) => handleCreateOwner(e)} 
+                />
 
             </Main>
         </div>

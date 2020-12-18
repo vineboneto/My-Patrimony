@@ -4,7 +4,7 @@ import db from '../database/connection'
 
 export default class PrinterController {
     async create(req: Request, res: Response) {
-        const { patrimony, model, description, owner_id } = req.body
+        const { patrimony, model, description, ipItems, owner_id } = req.body
 
         const trx = await db.transaction()
 

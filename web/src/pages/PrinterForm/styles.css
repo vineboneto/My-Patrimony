@@ -1,5 +1,5 @@
 #page-printer-form {
     width: 100vw;
     background-color: var(--color-background-form);
-    height: 100vh;
+    /* height: 100vh; */
 }

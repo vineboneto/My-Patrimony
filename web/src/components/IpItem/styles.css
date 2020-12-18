@@ -4,3 +4,7 @@
     grid-template-areas: "ip mask gateway";
     justify-content: space-between; 
 }
+
+.ip-items + .ip-items {
+    margin-top: 2.4rem;
+}

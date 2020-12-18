@@ -1,0 +1,19 @@
+.printer-block {
+    display: grid;
+    grid-template-areas: "patrimony model void"
+    "description description description";
+    grid-template-columns: 175px 242px 1fr;
+    column-gap: 30px;
+}
+
+.printer-block > :nth-child(1) {
+    grid-area: patrimony;
+}
+
+.printer-block > :nth-child(2) {
+    grid-area: model;
+}
+
+.printer-block > :nth-child(3) {
+    grid-area: description;
+}
