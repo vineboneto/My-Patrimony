@@ -66,6 +66,7 @@ const OwnerItem: React.FC<OwnerProps> = ({ isOpen, owner, sector, onOwnerChange,
             }
             return ''
         })
+        console.log(owner)
         if (onSectorChange) onSectorChange(sectorId?.sectorId || '')
     }
 

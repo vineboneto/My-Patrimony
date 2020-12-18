@@ -64,8 +64,12 @@ const PrinterForm: React.FC = () => {
             model,
             description,
             owner_id: parseInt(owner),
-            iptItems: ipItems
-        })
+            ips: ipItems
+        }).then(() => {
+            alert('Impressora Cadastrada!')
+        }).catch(() => {
+            alert('Erro ao realizar cadasatro!')
+        }) 
     }
 
     return (
@@ -125,7 +129,7 @@ const PrinterForm: React.FC = () => {
                     iconPrev={monitorIcon}
                     iconNext={stabIcon}
                     labelButtonSave="Salvar Impressora"
-                    handleButton={(e: MouseEvent) => handleCreatePrinter}
+                    handleButton={(e: MouseEvent) => handleCreatePrinter(e)}
                 />
             </Main>
         </div>

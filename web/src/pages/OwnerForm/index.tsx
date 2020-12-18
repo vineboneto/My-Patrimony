@@ -24,15 +24,20 @@ const OwnerForm: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => {
-        
-        setSectorId(location.state?.sector)
-        setOwner(location.state?.owner)    
+        if (location.state) {
+            console.log('Entrou')
+            setSectorId(location.state?.sector)
+            setOwner(location.state?.owner)
+            
+        }
+        console.log(owner)    
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen])
     
 
     const handleOwnerChange = (owner: string) => {
         setOwner(owner)
+        console.log(owner)
     }
     
     return (
@@ -60,12 +65,10 @@ const OwnerForm: React.FC = () => {
                         onClose={(isOpen: boolean) => setIsOpen(isOpen)}/>
                 </Form>
                 <Footer
-                    toNext={
-                        { 
-                            pathname: '/computer-register', state: {
-                                owner, sector: sectorId}
-                        }
-                    }
+                    toNext={{ 
+                        pathname: '/computer-register',
+                        state: { owner, sector: sectorId}  
+                    }}
                     iconNext={powerIcon}/>
             </Main>
         </div>

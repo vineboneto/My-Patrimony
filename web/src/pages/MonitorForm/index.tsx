@@ -56,9 +56,8 @@ const MonitorForm: React.FC = () => {
         }).then(() => {
             alert('Monitor Cadastrado!')
             history.push({ 
-                pathname: '/printer-register', state: {
-                    owner, sector
-                }
+                pathname: '/printer-register',
+                 state: { owner, sector }
              })
         }).catch(() => alert('Erro ao cadastrar!'))
     }    

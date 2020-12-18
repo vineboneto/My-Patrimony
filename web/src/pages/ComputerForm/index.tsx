@@ -18,8 +18,8 @@ import api from '../../services/api'
 import './styles.css'
 
 interface OwnerLocationProps {
-        owner: string,
-        sector: string
+    owner: string,
+    sector: string
 }
 
 const ComputerForm: React.FC = () => {
@@ -39,6 +39,7 @@ const ComputerForm: React.FC = () => {
     
     
     useEffect(() => {
+        console.log(location.state)
         setOwner(location.state.owner)
         setSector(location.state.sector)
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,7 +70,7 @@ const ComputerForm: React.FC = () => {
             patrimony: patrimony,
             model: model,
             description: description,
-            owner_id: owner,
+            owner_id: parseInt(owner),
             ips: ipItems
         }).then(() => {
             alert('Computador cadastrado')
@@ -129,11 +130,11 @@ const ComputerForm: React.FC = () => {
                 <Footer
                     toNext={{ 
                         pathname: '/monitor-register',
-                        state: { sector, owner }
+                        state: { owner, sector }
                     }}
                     toPrev={{
                         pathname: "/owner-register",
-                        state: { sector, owner }
+                        state: { owner, sector }
                     }}
                     iconPrev={profileIcon}
                     iconNext={monitorIcon}
