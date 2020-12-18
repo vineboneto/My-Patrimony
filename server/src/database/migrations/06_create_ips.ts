@@ -16,6 +16,9 @@ export async function up(knex: Knex) {
         table.foreign('printer_id')
             .references('id')
             .inTable('printers')
+        table.foreign('router_id')
+            .references('id')
+            .inTable('routes')
     })
 }
 
