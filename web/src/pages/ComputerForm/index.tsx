@@ -17,14 +17,14 @@ import api from '../../services/api'
 import './styles.css'
 import { useHistory, useLocation } from 'react-router-dom'
 
-interface OwnerFormProps {
+interface OwnerLocationProps {
         owner: string,
         sector: string
 }
 
 const ComputerForm: React.FC = () => {
 
-    const location = useLocation<OwnerFormProps>()
+    const location = useLocation<OwnerLocationProps>()
     const [owner, setOwner] = useState('')
     const [sector, setSector] = useState('')
     const [patrimony, setPatrimony] = useState('')
@@ -34,7 +34,7 @@ const ComputerForm: React.FC = () => {
         { ip: '', mask: '', gateway: '' }
     ])
 
-    const history = useHistory<OwnerFormProps>()
+    const history = useHistory<OwnerLocationProps>()
 
     
     

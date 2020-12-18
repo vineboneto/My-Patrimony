@@ -14,20 +14,20 @@ import powerIcon from '../../assets/images/icons/powerIcon.svg'
 import './styles.css'
 import api from '../../services/api'
 
-interface OwnerFormProps {
+interface OwnerLocationProps {
     owner: string
     sector: string
 }
 
-const MonitorForm: React.FC<OwnerFormProps> = () => {
+const MonitorForm: React.FC = () => {
     
-    const location = useLocation<OwnerFormProps>()
+    const location = useLocation<OwnerLocationProps>()
     const [sector, setSector] = useState('')
     const [owner, setOwner] = useState('')
     const [monitorItems, setMonitorItems] = useState([
         { patrimony: '', model: '', inch: '', description: '' }
     ])
-    const history = useHistory<OwnerFormProps>()
+    const history = useHistory<OwnerLocationProps>()
 
     function setMonitorItemValue(position: number, field: string, value: string) {
         const updateMonitorItem = monitorItems.map((monitorItem, index ) => {

@@ -29,7 +29,6 @@ const OwnerForm: React.FC = () => {
         
         setSectorId(location.state?.sector)
         setOwner(location.state?.owner)    
-        console.log(location.state)  
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen])
     
