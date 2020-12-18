@@ -74,7 +74,8 @@ const MonitorForm: React.FC = () => {
         <div id="page-monitor-form">
             <PageHeader
                 title="Cadastre o Monitor..."
-                linkPrev="/computer-register"/>
+                linkPrev={{ pathname: '/computer-register', state: { owner, sector } }}
+            />
 
             <Main>
                 <Form legend="Proprietário">

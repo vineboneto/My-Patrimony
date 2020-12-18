@@ -10,8 +10,6 @@ import NewOwnerDialog from '../../dialogs/NewOwnerDialog'
 
 import powerIcon from '../../assets/images/icons/powerIcon.svg'
 
-// import api from '../../services/api'
-
 import './styles.css'
 
 interface OwnerProps {
@@ -41,7 +39,7 @@ const OwnerForm: React.FC = () => {
         <div id="page-owner-form">
             <PageHeader
                 title="Selecione o Proprietário..."
-                linkPrev="/" />
+                linkPrev={{ pathname: '/' }} />
 
             <Main>
                 <Form

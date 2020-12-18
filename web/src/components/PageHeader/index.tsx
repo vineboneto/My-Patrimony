@@ -8,7 +8,13 @@ import './styles.css'
 
 interface PageHeaderProps {
     title: string;
-    linkPrev: string
+    linkPrev: {
+        pathname: string,
+        state?: {
+            owner: string
+            sector: string
+        }
+    }
 }
 
 const PageHeader: React.FC<PageHeaderProps> = (props) => {

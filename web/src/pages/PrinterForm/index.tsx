@@ -29,14 +29,17 @@ const PrinterForm = () => {
         <div id="page-printer-form">
             <PageHeader 
                 title="Cadastre a Impressora..."
-                linkPrev="/monitor-register"/>
+                linkPrev={{ pathname: '/monitor-register', state: { owner, sector } }}
+                />
 
                 <Main>
                     <Form
                         legend="Proprietário">
                         <OwnerItem
                             sector={sector}
-                            owner={owner} />
+                            owner={owner}
+                            readOnly={true} 
+                        />
                     </Form>
                 </Main>
         </div>

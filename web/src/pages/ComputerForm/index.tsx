@@ -85,7 +85,8 @@ const ComputerForm: React.FC = () => {
         <div id="page-computer-form">
             <PageHeader
                 title="Cadastre o computador..."
-                linkPrev="/owner-register"/>
+                linkPrev={{ pathname: '/owner-register', state: { owner, sector } }}
+            />
 
             <Main>
                 <Form legend="Proprietário">
