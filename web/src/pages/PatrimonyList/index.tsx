@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import Input from '../../components/Input'
+import Main from '../../components/Main'
 
 import PageHeader from '../../components/PageHeader'
+import PatrimonyItem from '../../components/PatrimonyItem'
 import Select from '../../components/Select'
 
 import './styles.css'
@@ -15,7 +17,7 @@ const PatrimonyList: React.FC = () => {
     return (
         <div id="page-patrimony-list">
             <PageHeader
-                title="O que procura?"
+                title="O que procura ?"
                 linkPrev="/"
             />
 
@@ -48,6 +50,10 @@ const PatrimonyList: React.FC = () => {
                     />
 
                 </div>
+
+                <Main>
+                    <PatrimonyItem />
+                </Main>
 
 
         </div>

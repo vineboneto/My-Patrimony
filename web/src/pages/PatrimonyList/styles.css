@@ -1,15 +1,27 @@
 #page-patrimony-list {
     width: 100vw;
+    height: 100vh;
+    background-color: var(--color-background-form);
+}
+
+#page-patrimony-list .page-header .header-content {
+    margin: 5rem auto;
+    justify-content: flex-start;
 }
 
 #page-patrimony-list  .search-block {
     max-width: 74rem;
-    margin: -8.4rem auto 0;
+    margin: -18.4rem auto 0;
     display: grid;
-    grid-template-columns: 220px 220px 220px;
-    column-gap: 30px;
+    grid-template-columns: 230px 230px 230px;
+    justify-content: space-between;
 }
 
 #page-patrimony-list .search-block label {
     color: #fff;
+}
+
+#page-patrimony-list .main-block {
+    margin: 3.2rem auto;
+    padding-top: 0;
 }

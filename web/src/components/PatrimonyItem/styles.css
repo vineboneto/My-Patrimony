@@ -1,0 +1,46 @@
+.patrimony-block {
+    padding: 3.4rem;
+}
+
+.patrimony-block .patrimony-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border-input);
+}
+
+.patrimony-block .patrimony-header h2 {
+    font: 3rem'Archivo';
+}
+
+.patrimony-block .patrimony-header span {
+    font: 3rem'Archivo';
+    color: var(--color-primary-dark);
+}
+
+.patrimony-block .patrimony-content {
+    margin-top: 1.6rem;
+    display: flex;
+    justify-content: space-between;
+    font: 2rem 'Poppins';
+}
+
+.patrimony-block .patrimony-content .info h3  {
+    font: 2.2rem 'Poppins' 600;
+    
+    margin-bottom: 1rem;
+}
+
+.patrimony-block .patrimony-content .info p span {
+    color: var(--color-primary);
+}
+
+.patrimony-block .patrimony-content .patrimony-action {
+    align-self: flex-end;
+}
+
+.patrimony-block .patrimony-content .patrimony-action > :nth-child(2) {
+    margin-left: 2rem;
+}
+
