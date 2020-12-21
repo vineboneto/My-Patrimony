@@ -5,6 +5,10 @@
 .input-block label {
     font-size: 1.4rem;
     color: var(--color-label-input);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .input-block input {
