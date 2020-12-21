@@ -32,7 +32,7 @@ const Home: React.FC  = () => {
                         <img src={okIcon} alt="Novo Patrimônio"/>
                     </Link>
 
-                    <Link to="/computer-register">
+                    <Link to="/patrimony-list">
                         Buscar Patrimônio
                         <img src={searchIcon} alt="Buscar Patriônio"/>
                     </Link>

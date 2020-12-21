@@ -14,7 +14,7 @@ interface PageHeaderProps {
             owner: string
             sector: string
         }
-    }
+    } | string
 }
 
 const PageHeader: React.FC<PageHeaderProps> = (props) => {
