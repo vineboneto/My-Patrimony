@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Input from '../../components/Input'
-import Main from '../../components/Main'
 
 import PageHeader from '../../components/PageHeader'
 import PatrimonyItem from '../../components/PatrimonyItem'
@@ -51,13 +50,24 @@ const PatrimonyList: React.FC = () => {
 
                 </div>
 
-                <Main>
-                    <PatrimonyItem
-                        owner="Viniicus Gazolla Boneto"
-                        sector="UPA"
-                        info={{ type: 'Computador', patrimony: '666', model: 'Dell', ips: ['192.168.1.54', '192.168.2.54'] }} />
-                </Main>
+                
+                <PatrimonyItem
+                    owner="Viniicus Gazolla Boneto"
+                    sector="UPA"
+                    info={{ type: 'Computador', patrimony: '666', model: 'Dell', ips: ['192.168.1.54', '192.168.2.54'] }} />
+            
 
+            
+                <PatrimonyItem
+                    owner="Viniicus Gazolla Boneto"
+                    sector="UPA"
+                    info={{ type: 'Computador', patrimony: '666', model: 'Dell', ips: ['192.168.1.54', '192.168.2.54'] }} />
+                
+                <PatrimonyItem
+                    owner="Viniicus Gazolla Boneto"
+                    sector="UPA"
+                    info={{ type: 'Computador', patrimony: '666', model: 'Dell',}} />
+                
 
         </div>
         

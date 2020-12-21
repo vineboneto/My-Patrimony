@@ -1,3 +1,4 @@
+
 #page-patrimony-list {
     width: 100vw;
     height: 100vh;
@@ -15,13 +16,13 @@
     display: grid;
     grid-template-columns: 230px 230px 230px;
     justify-content: space-between;
+    margin-bottom: 3rem;
 }
 
 #page-patrimony-list .search-block label {
     color: #fff;
 }
 
-#page-patrimony-list .main-block {
-    margin: 3.2rem auto;
-    padding-top: 0;
+#page-patrimony-list .patrimony-item:last-child {
+    margin-bottom: 3rem;
 }

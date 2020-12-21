@@ -19,7 +19,7 @@ interface PatrimonyItemPros {
 
 const PatrimonyItem: React.FC<PatrimonyItemPros> = ({ owner, sector, info }) => {
     return (
-        <div className="patrimony-block">
+        <div className="patrimony-item">
             <div className="patrimony-header">
                 <h2>{owner}</h2>
                 <span>{sector}</span>
@@ -30,8 +30,7 @@ const PatrimonyItem: React.FC<PatrimonyItemPros> = ({ owner, sector, info }) => 
                     <h3>{info.type}</h3>
                     <p><span>Patrimônio:</span> {info.patrimony}</p>
                     <p><span>Modelo:</span> {info.model}</p>
-                    {info.ips &&  
-                        
+                    {info.ips &&    
                         <p><span>Ips:</span> {info.ips.map((ip, index) => {
                             if (info.ips && index !== info.ips.length - 1) {
                                 return ip + ', '
