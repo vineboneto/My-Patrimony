@@ -52,7 +52,10 @@ const PatrimonyList: React.FC = () => {
                 </div>
 
                 <Main>
-                    <PatrimonyItem />
+                    <PatrimonyItem
+                        owner="Viniicus Gazolla Boneto"
+                        sector="UPA"
+                        info={{ type: 'Computador', patrimony: '666', model: 'Dell', ips: ['192.168.1.54', '192.168.2.54'] }} />
                 </Main>
 
 
