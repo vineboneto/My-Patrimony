@@ -1,8 +1,6 @@
 #page-owner-form {
     width: 100vw;
     max-width: 1100vw;
-    height: 100vh;
-    background-color: var(--color-background-form);
 }
 
 #page-owner-form .form-block fieldset legend {

@@ -2,7 +2,7 @@ import React from 'react';
 
 import Routes from './routes'
 
-import './assets/css/global.css'
+import './assets/styles/global.css'
 
 function App() {
     return (

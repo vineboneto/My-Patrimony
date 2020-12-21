@@ -48,16 +48,15 @@ const PatrimonyList: React.FC = () => {
                         onChange={(e) => setPatrimony(e.target.value)}
                     />
 
-                </div>
+            </div>
 
-                
+            
                 <PatrimonyItem
                     owner="Viniicus Gazolla Boneto"
                     sector="UPA"
                     info={{ type: 'Computador', patrimony: '666', model: 'Dell', ips: ['192.168.1.54', '192.168.2.54'] }} />
-            
 
-            
+                        
                 <PatrimonyItem
                     owner="Viniicus Gazolla Boneto"
                     sector="UPA"
@@ -67,6 +66,7 @@ const PatrimonyList: React.FC = () => {
                     owner="Viniicus Gazolla Boneto"
                     sector="UPA"
                     info={{ type: 'Computador', patrimony: '666', model: 'Dell',}} />
+            
                 
 
         </div>
