@@ -4,7 +4,7 @@ import db from '../database/connection'
 
 export default class OwnerController {
     async index(req: Request, res: Response) {
-        const owners = await db('sectors').select('*').from('owners')
+        const owners = await db('owners').select('*').from('owners')
         return res.json(owners)
     }
 
