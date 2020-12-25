@@ -1,31 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import Input from '../../components/Input'
 
+import Input from '../../components/Input'
 import PageHeader from '../../components/PageHeader'
-import PatrimonyItem from '../../components/PatrimonyItem'
+import PatrimonyItem, { Patrimony } from '../../components/PatrimonyItem'
 import Select from '../../components/Select'
 import api from '../../services/api'
 
 import './styles.css'
-
-// interface Ips {
-//     ip: string
-//     mask: string
-//     gateway: string
-// }
-
-interface Computer {
-    ownerId: number
-    ownerName: string
-    sectorId: number
-    sectorName: string
-    computerId: number
-    patrimony: string
-    model: string
-    description: string
-    // ips: Ips[]
-}
-
 
 
 const PatrimonyList: React.FC = () => {
@@ -41,7 +22,7 @@ const PatrimonyList: React.FC = () => {
         { value: '', label: ''}
     ])
     // List
-    const [computers, setComputers] = useState<Computer[]>()
+    const [computers, setComputers] = useState([])
 
     useEffect(() => {
         getDataOwner()
@@ -55,17 +36,23 @@ const PatrimonyList: React.FC = () => {
         const datas = response.data
         const list = datas.map((data: any) => {
             return {
+                patrimonyId: data.computer_id,
                 ownerId: data.owner_id,
                 sectorId: data.sector_id,
                 ownerName: data.owner_name,
                 sectorName: data.sector_name,
-                computerId: data.computer_id,
-                patrimony: data.patrimony,
-                model: data.model,
-                description: data.description,
+                info: {
+                    type: 'Computador',
+                    patrimony: data.patrimony,
+                    model: data.model,
+                    description: data.description,
+                    ips: data.ips.map((ip: any) => {
+                        return Object.values(ip)
+                    })
+                }
             }
         })
-        
+
         setComputers(list)
     }
 
@@ -128,30 +115,13 @@ const PatrimonyList: React.FC = () => {
 
                 {}
             </div>
-
-
-                {computers && computers.map((computer: Computer) => {
-                    return <PatrimonyItem key={computer.computerId} owner={computer.ownerName} sector={computer.sectorName} 
-                        info={{ type: 'Computador', patrimony: computer.patrimony, model: computer.model }} />
-                })}
-                {/* <PatrimonyItem
-                    owner="Viniicus Gazolla Boneto"
-                    sector="UPA"
-                    info={{ type: 'Computador', patrimony: '666', model: 'Dell', ips: ['192.168.1.54', '192.168.2.54'] }} />
-
-                        
-                <PatrimonyItem
-                    owner="Viniicus Gazolla Boneto"
-                    sector="UPA"
-                    info={{ type: 'Computador', patrimony: '666', model: 'Dell', ips: ['192.168.1.54', '192.168.2.54'] }} />
-                
-                <PatrimonyItem
-                    owner="Viniicus Gazolla Boneto"
-                    sector="UPA"
-                    info={{ type: 'Computador', patrimony: '666', model: 'Dell',}} /> */}
-            
-                
-
+            {computers && computers.map((computer: Patrimony) => {
+                return <PatrimonyItem
+                            key={computer.patrimonyId} 
+                            patrimony={computer}
+                        />
+                }
+            )}
         </div>
         
     )

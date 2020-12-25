@@ -40,7 +40,6 @@ export default class PatrimonyController {
              'ips.mask', 'ips.gateway')
             .from('ips')
             .join('computers', 'computers.id', '=', 'ips.computer_id')
-        console.log(ipList)
 
         const newComputerList: Array<Computer> = computerList.map((computer, index) => {
             return {
@@ -71,7 +70,6 @@ export default class PatrimonyController {
                 }
             })
         })
-
         
         return res.json(newComputerList)
     }
