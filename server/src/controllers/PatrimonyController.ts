@@ -2,10 +2,6 @@ import { Response, Request } from 'express'
 
 import db from '../database/connection'
 
-interface Ips {
-
-}
-
 interface Computer {
     owner_id: number
     owner_name: string
@@ -15,13 +11,15 @@ interface Computer {
     patrimony: string
     model: string
     description: string
-    ips: Array<{
-        id: number
-        ip: string
-        mask: string
+    ips: Array<[
+        id: number,
+        ip: string,
+        mask: string,
         gateway: string
-    }>
+    ]>
 }
+
+
 
 export default class PatrimonyController {
     async listComputer(req: Request, res: Response) {
@@ -60,13 +58,13 @@ export default class PatrimonyController {
             ipList.forEach((ip, index) => {
                 if (computer.computer_id === ip.computer_id){
                     computer.ips.push(
-                        { 
-                            id: ip.id,
-                            ip: ip.ip,
-                            mask: ip.mask,
-                            gateway: ip.gateway
-                        }
-                    )   
+                        [
+                           ip.id,
+                           ip.ip,
+                           ip.mask,
+                           ip.gateway,
+                        ]
+                    )
                 }
             })
         })

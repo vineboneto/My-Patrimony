@@ -46,9 +46,7 @@ const PatrimonyList: React.FC = () => {
                     patrimony: data.patrimony,
                     model: data.model,
                     description: data.description,
-                    ips: data.ips.map((ip: any) => {
-                        return Object.values(ip)
-                    })
+                    ips: data.ips
                 }
             }
         })
