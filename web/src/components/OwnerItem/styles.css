@@ -1,6 +1,0 @@
-.owner-item{
-    display: grid;
-    grid-template-columns: 300px 300px;
-    grid-template-areas: "sector owner";
-    justify-content: space-between;
-}

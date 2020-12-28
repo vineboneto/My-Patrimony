@@ -1,0 +1,13 @@
+#page-patrimony-form {
+    width: 100vw;
+}
+
+#page-patrimony-form .owner-block {
+    display: grid;
+    grid-template-areas: "owner sector";
+    grid-template-columns: 300px 300px;
+    justify-content: space-between;
+    align-items: center;
+}
+    
+    
