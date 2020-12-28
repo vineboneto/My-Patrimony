@@ -67,6 +67,7 @@ export default class PatrimonyController {
                     )
                 }
             })
+            
         })
         
         return res.json(newComputerList)
