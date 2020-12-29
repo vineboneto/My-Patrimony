@@ -19,7 +19,7 @@ export default class ComputerController {
         try {  
             
             const insertedComputerId = await trx('computers').insert({ patrimony, description, model, owner_id })
-            console.log('Entrou')
+            
 
             // Captura id inserido
             const computer_id = insertedComputerId[0]
