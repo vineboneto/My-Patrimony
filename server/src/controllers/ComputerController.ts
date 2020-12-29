@@ -14,7 +14,6 @@ export default class ComputerController {
         const { patrimony, description, model, owner_id,  ips } = req.body
 
         const trx = await db.transaction()
-        console.log(owner_id)
 
         try {  
             
