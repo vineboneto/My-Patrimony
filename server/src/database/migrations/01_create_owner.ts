@@ -15,5 +15,5 @@ export async function up(knex: Knex) {
 }
 
 export async function down(knex: Knex) {
-    return knex.schema.dropSchema('owners')
+    return knex.schema.dropTable('owners')
 }

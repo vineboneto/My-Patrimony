@@ -1,12 +1,12 @@
 import Knex from 'knex'
 
 export async function up(knex: Knex) {
-    return knex.schema.createTable('sectors', table => {
+    return knex.schema.createTable('types', table => {
         table.increments('id').primary()
-        table.string('name').notNullable()
+        table.string('name', 155).notNullable()
     })
 }
 
 export async function down(knex: Knex) {
-    return knex.schema.dropTable('sectors')
+    return knex.schema.dropTable('types')
 }
