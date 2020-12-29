@@ -18,3 +18,7 @@ export async function up(knex: Knex) {
             .inTable('types')
     })
 }
+
+export async function down(knex: Knex) {
+    return knex.schema.dropTable('patrimonys')
+}
