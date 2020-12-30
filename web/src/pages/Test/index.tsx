@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Collapse from '../../components/Collapse'
 import Select from '../../components/Select'
 
 import api from '../../services/api'
@@ -42,8 +43,16 @@ const Test: React.FC = () => {
                     setValue(e.target.value)
                 }}
              />
+            <Collapse
+                title="Test">
+                <p>Texto de teste</p>
+            </Collapse>
         </div>
+        
     )
+
+
+    
 }
 
 export default Test

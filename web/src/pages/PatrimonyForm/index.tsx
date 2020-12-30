@@ -12,6 +12,7 @@ import Footer from '../../components/Footer'
 import api from '../../services/api'
 
 import './styles.css'
+import Collapse from '../../components/Collapse'
 
 const PatrimonyForm: React.FC = () => {
 
@@ -21,7 +22,6 @@ const PatrimonyForm: React.FC = () => {
     const [patrimony, setPatrimony] = useState('')
     const [model, setModel] = useState('')
     const [description, setDescription] = useState('')
-    const isIp = true
 
     const [optionsOwner, setOptionsOwner] = useState([
         { value: '', label: '', sectorId: '' }
@@ -85,8 +85,6 @@ const PatrimonyForm: React.FC = () => {
             { ip: '', mask: '', gateway: '' }
         ]);
     }
-
-
 
     return (
         <div id="page-patrimony-form">
@@ -152,24 +150,29 @@ const PatrimonyForm: React.FC = () => {
                         </div>
 
                     </Form>
-                    
-                    {isIp  &&
+                   
+                    <Collapse title="Adicionar Ip">
                         <Form 
                             legend="Ips"
                             addNew={addNewIpItem}
                             labelButton="+ Novo Ip">
-                            {ipItems.map((ipItem, index) => {
-                                return (
-                                    <IpItems
-                                        key={index}
-                                        ipItem={ipItem}
-                                        onIpChange={(ipValue: string) => setIpItemsValue(index, 'ip', ipValue) }
-                                        onMaskChange={(maskValue: string) => setIpItemsValue(index, 'mask', maskValue)} 
-                                        onGatewayChange={(gatewayValue: string) => setIpItemsValue(index, 'gateway', gatewayValue)} />
-                                )
-                            })}   
+
+                            
+                            
+                                {ipItems.map((ipItem, index) => {
+                                    return (
+                                        <IpItems
+                                            key={index}
+                                            ipItem={ipItem}
+                                            onIpChange={(ipValue: string) => setIpItemsValue(index, 'ip', ipValue) }
+                                            onMaskChange={(maskValue: string) => setIpItemsValue(index, 'mask', maskValue)} 
+                                            onGatewayChange={(gatewayValue: string) => setIpItemsValue(index, 'gateway', gatewayValue)} />
+                                    )
+                                })}
+                            
                         </Form>
-                    }
+                    </Collapse>
+                    
 
                     <Footer>
                         <button onSubmit={() => handleCreatePatrimony}>
