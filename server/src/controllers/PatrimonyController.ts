@@ -38,8 +38,7 @@ export default class PatrimonyController {
                 
                 await trx('ips').insert(classIps)
             }
-
-            
+ 
             await trx.commit()
 
             return res.status(201).send()
@@ -54,10 +53,16 @@ export default class PatrimonyController {
     }
 
     async index(req: Request, res: Response) {
-        const patrimonies = await db('patrimonies').select('*').from('patrimonies')
+        const patrimonies = await db('patrimonies')
+            .select('patrimonies.*', 'owners.name AS owner_name',
+            'sectors.name AS sector_name', 'types.name AS type_name')
+            .from('patrimonies')
+            .join('owners', 'patrimonies.owner_id', '=', 'owners.id')
+            .join('types', 'patrimonies.type_id', '=', 'types.id')
+            .join('sectors', 'owners.sector_id', '=', 'sectors.id')
+        
 
         const ips = await db('ips').select('*').from('ips')
-
 
         const listPatrimonies = patrimonies.map((patrimony) => {
             return {
@@ -67,6 +72,9 @@ export default class PatrimonyController {
                 description: patrimony.description,
                 owner_id: patrimony.owner_id,
                 type_id: patrimony.type_id,
+                owner_name: patrimony.owner_name,
+                sector_name: patrimony.sector_name,
+                type_name: patrimony.type_name,
                 ips: [] as any
             }
         })
