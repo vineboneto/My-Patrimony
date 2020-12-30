@@ -1,4 +1,5 @@
 import { Response, Request } from 'express'
+
 import db from '../database/connection'
 
 export default class TypeController {

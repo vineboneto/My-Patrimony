@@ -10,7 +10,7 @@ export async function up(knex: Knex) {
 
         table.foreign('patrimony_id')
             .references('id')
-            .inTable('patrimonys')
+            .inTable('patrimonies')
     })
 }
 

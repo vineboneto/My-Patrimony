@@ -2,74 +2,90 @@ import { Response, Request } from 'express'
 
 import db from '../database/connection'
 
-interface Computer {
-    owner_id: number
-    owner_name: string
-    sector_id: number
-    sector_name: string
-    computer_id: number
-    patrimony: string
-    model: string
-    description: string
-    ips: Array<[
-        id: number,
-        ip: string,
-        mask: string,
-        gateway: string
-    ]>
+interface Ips {
+    id?: number
+    ip: string
+    mask: string
+    gateway: string
 }
 
-
-
 export default class PatrimonyController {
-    async listComputer(req: Request, res: Response) {
+    async create(req: Request, res: Response) {
+        const { patrimony, model, description, owner_id, type_id, ips } = req.body
 
-        
-        const computerList = await db('owners')
-            .select('owners.id AS owner_id', 'owners.name AS owner_name',
-                'sectors.id AS sector_id', 'sectors.name AS sector_name',
-                'computers.id AS computer_id', 'computers.patrimony', 'computers.model', 'computers.description')
-            .from('owners')
-            .join('computers', 'owners.id', '=', 'computers.owner_id')
-            .join('sectors', 'sectors.id', '=', 'owners.sector_id')
+        const trx = await db.transaction()
 
-        const ipList = await db('ips')
-            .select('ips.id', 'ips.computer_id', 'ips.ip',
-             'ips.mask', 'ips.gateway')
-            .from('ips')
-            .join('computers', 'computers.id', '=', 'ips.computer_id')
+        try {
+            const insertedPatrimony = await trx('patrimonies').insert({
+                patrimony,
+                model,
+                description,
+                owner_id,
+                type_id
+            })
 
-        const newComputerList: Array<Computer> = computerList.map((computer, index) => {
+           
+            if (ips) {
+                const patrimony_id = insertedPatrimony[0]
+                const classIps = ips.map((ip: Ips) => {
+                    return {
+                        ip: ip.ip,
+                        mask: ip.mask,
+                        gateway: ip.gateway,
+                        patrimony_id
+                    }
+                })
+                
+                await trx('ips').insert(classIps)
+            }
+
+            
+            await trx.commit()
+
+            return res.status(201).send()
+
+        } catch (err) {
+            await trx.rollback()
+
+            return res.status(400).send({
+                error: err
+            })
+        }
+    }
+
+    async index(req: Request, res: Response) {
+        const patrimonies = await db('patrimonies').select('*').from('patrimonies')
+
+        const ips = await db('ips').select('*').from('ips')
+
+
+        const listPatrimonies = patrimonies.map((patrimony) => {
             return {
-                owner_id: computer.owner_id,
-                owner_name: computer.owner_name,
-                sector_id: computer.sector_id,
-                sector_name: computer.sector_name,
-                computer_id: computer.computer_id,
-                patrimony: computer.patrimony,
-                description: computer.description,
-                model: computer.model,
-                ips: []
+                id: patrimony.id,
+                patrimony: patrimony.patrimony,
+                model: patrimony.model,
+                description: patrimony.description,
+                owner_id: patrimony.owner_id,
+                type_id: patrimony.type_id,
+                ips: [] as any
             }
         })
 
-        newComputerList.forEach((computer, index) => {
-
-            ipList.forEach((ip, index) => {
-                if (computer.computer_id === ip.computer_id){
-                    computer.ips.push(
+        listPatrimonies.forEach((patrimony) => {
+            ips.forEach((ip) => {
+                if (ip.patrimony_id === patrimony.id) {
+                    patrimony.ips.push(
                         [
-                           ip.id,
-                           ip.ip,
-                           ip.mask,
-                           ip.gateway,
+                            ip.id,
+                            ip.ip,
+                            ip.mask,
+                            ip.gateway
                         ]
                     )
-                }
+                }    
             })
-            
         })
         
-        return res.json(newComputerList)
+        return res.json(listPatrimonies)
     }
 }
