@@ -9,6 +9,8 @@ import Select from '../../components/Select'
 import Input from '../../components/Input'
 import Textarea from '../../components/Textarea'
 import Footer from '../../components/Footer'
+
+
 import api from '../../services/api'
 
 import './styles.css'
@@ -33,6 +35,8 @@ const PatrimonyForm: React.FC = () => {
     const [ipItems, setIpItems] = useState([
         { ip: '', mask: '', gateway: '' }
     ])
+
+    const [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => {
         getDataOwner()
@@ -151,7 +155,10 @@ const PatrimonyForm: React.FC = () => {
 
                     </Form>
                    
-                    <Collapse title="Adicionar Ip">
+                    <button className="button-collapse" onClick={(e) => setIsOpen(!isOpen)}>
+                        Adicionar Ip
+                    </button>
+                    <Collapse isOpen={isOpen}>
                         <Form 
                             legend="Ips"
                             addNew={addNewIpItem}
@@ -171,7 +178,9 @@ const PatrimonyForm: React.FC = () => {
                                 })}
                             
                         </Form>
-                    </Collapse>
+                        </Collapse>
+                    
+                    
                     
 
                     <Footer>

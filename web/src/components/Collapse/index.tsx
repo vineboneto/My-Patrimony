@@ -1,33 +1,21 @@
-import React, { MouseEvent, useState } from 'react'
+import React, { useState } from 'react'
 
 import './styles.css'
 
 interface CollapseProps {
-    title: string
+    isOpen: boolean
 }
 
-const Collapse: React.FC<CollapseProps> = ({ title, children }) => {
-    const [isOpen, setIsOpen] = useState(false)
+const Collapse: React.FC<CollapseProps> = ({ isOpen, children }) => {
     
-    function togglePanel(e: MouseEvent) {
-        console.log(e)
-        setIsOpen(!isOpen)
-    }
-
     return(
-        <div className="collapse-block">
-           
-            <button className="collapse" onClick={(e) => togglePanel(e)}>
-                {title}
-            </button>
-            
-             
+        <div className="collapse-block">          
             {isOpen &&
+            
                 <div className="content">
                     {children}
-                </div> 
-                
-            }      
+                </div>
+            }
         </div> 
     )
 }
