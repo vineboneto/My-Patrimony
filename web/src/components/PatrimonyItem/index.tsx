@@ -7,17 +7,17 @@ import editIcon from '../../assets/images/icons/editIcon.svg'
 import './styles.css'
 
 export interface Patrimony {
-    patrimonyId: number
+    id: number
+    patrimony: string
+    model: string
+    description: string
     ownerId: number
-    ownerName: string
     sectorId: number
+    typeId: number
+    ownerName: string
     sectorName: string
-    info: {
-        type: string,
-        patrimony: string,
-        model: string,  
-        ips?: []
-    }
+    typeName: string
+    ips: []
 }
 
 interface PatrimonyItemProps {
@@ -34,14 +34,14 @@ const PatrimonyItem: React.FC<PatrimonyItemProps> = ({ patrimony }) => {
 
             <div className="patrimony-content">
                 <div className="info">
-                    <h3>{patrimony.info.type}</h3>
-                    <p><span>Patrimônio:</span> {patrimony.info.patrimony}</p>
-                    <p><span>Modelo:</span> {patrimony.info.model}</p>
+                    <h3>{patrimony.typeName}</h3>
+                    <p><span>Patrimônio:</span> {patrimony.patrimony}</p>
+                    <p><span>Modelo:</span> {patrimony.model}</p>
 
-                    {patrimony.info.ips &&    
+                    {patrimony.ips &&    
                         <p><span>Ips: </span>
-                        {patrimony.info.ips.map((ip, index) => {
-                            if (patrimony.info.ips !== undefined && patrimony.info.ips.length - 1 === index) {
+                        {patrimony.ips.map((ip, index) => {
+                            if (patrimony.ips !== undefined && patrimony.ips.length - 1 === index) {
                                 return ip[1]
                             }
                             return ip[1] + ', '

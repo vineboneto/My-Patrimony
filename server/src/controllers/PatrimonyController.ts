@@ -26,13 +26,10 @@ export default class PatrimonyController {
 
             let existsIps 
             ips.forEach((ip: any) => {
-                if (ip.ip === '') {
-                    console.log('Entrou')
-                    existsIps = false
-                } else {
-                    existsIps = true
-                }
+                if (ip.ip === '') existsIps = false
+                else existsIps = true
             })
+            
             if (existsIps) {
                 const patrimony_id = insertedPatrimony[0]
                 const classIps = ips.map((ip: Ips) => {

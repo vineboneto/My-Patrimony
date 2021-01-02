@@ -4,6 +4,7 @@ import Input from '../../components/Input'
 import PageHeader from '../../components/PageHeader'
 import PatrimonyItem, { Patrimony } from '../../components/PatrimonyItem'
 import Select from '../../components/Select'
+
 import api from '../../services/api'
 
 import './styles.css'
@@ -27,27 +28,26 @@ const PatrimonyList: React.FC = () => {
     useEffect(() => {
         getDataOwner()
         getDataSector()
-        listComputers()
+        getDataPatrimony()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    async function listComputers() {
-        const response = await api.get('computer-list')
+    async function getDataPatrimony() {
+        const response = await api.get('patrimonies')
         const datas = response.data
         const list = datas.map((data: any) => {
             return {
-                patrimonyId: data.computer_id,
+                id: data.id,
+                patrimony: data.patrimony,
+                model: data.model,
+                description: data.description,
                 ownerId: data.owner_id,
                 sectorId: data.sector_id,
+                typeId: data.type_id,
                 ownerName: data.owner_name,
                 sectorName: data.sector_name,
-                info: {
-                    type: 'Computador',
-                    patrimony: data.patrimony,
-                    model: data.model,
-                    description: data.description,
-                    ips: data.ips
-                }
+                typeName: data.type_name,
+                ips: data.ips
             }
         })
 
@@ -113,10 +113,10 @@ const PatrimonyList: React.FC = () => {
 
                 {}
             </div>
-            {computers && computers.map((computer: Patrimony) => {
+            {computers && computers.map((patrimony: Patrimony) => {
                 return <PatrimonyItem
-                            key={computer.patrimonyId} 
-                            patrimony={computer}
+                            key={patrimony.id} 
+                            patrimony={patrimony}
                         />
                 }
             )}
