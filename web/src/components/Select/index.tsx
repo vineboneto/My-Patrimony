@@ -19,7 +19,7 @@ const Select : React.FC<SelectProps> = ({ name, label, options, ...rest }) => {
             </label>
             
             <select value="" id={name} {...rest}>
-                <option value="" disabled hidden>Selecione o setor</option>
+                <option value="" disabled hidden>{label}</option>
 
                 {options.map(option => {
                     return <option key={option.value} value={option.value}>{option.label}</option>

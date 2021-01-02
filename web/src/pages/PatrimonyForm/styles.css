@@ -13,11 +13,6 @@
 
 #page-patrimony-form .new-owner-block > :nth-child(2) {
     grid-area: sector;
-    margin-bottom: 6rem;
-    cursor: pointer;
-    border-radius: 0.8rem;
-    border: 1px solid var(--color-success);
-    z-index: 1;
 }
 
 #page-patrimony-form .new-owner-block > :nth-child(3) {
@@ -40,7 +35,26 @@
     justify-content: space-between;
 }
 
+#page-patrimony-form .patrimony-block > :nth-child(1) {
+    grid-area: type;
+    justify-self: flex-end;
+    align-self: center; 
+}
+
+#page-patrimony-form .patrimony-block > :nth-child(3) {
+    grid-area: type;
+}
+
 #page-patrimony-form .patrimony-block > :nth-child(4) {
+    grid-area: patrimony;
+}
+
+#page-patrimony-form .patrimony-block > :nth-child(5) {
+    grid-area: model;
+}
+
+
+#page-patrimony-form .patrimony-block > :nth-child(6) {
     margin-top: 2.4rem;
     grid-area: description;
 }

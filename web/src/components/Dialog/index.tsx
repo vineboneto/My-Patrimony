@@ -18,13 +18,13 @@ const Dialog: React.FC<DialogProps> = ({ children, isOpen, onIsOpenChange, label
             {isOpen &&
             <div className="dialog-block" role="dialog" tabIndex={-1}>
                 <div className="content">
-                    <button onClick={() => onIsOpenChange(!isOpen)}>
+                    <button onClick={() => onIsOpenChange(!isOpen)} className="close-button">
                         <img src={closeDialog} alt="Close"/>
                     </button>
                     {children}
                     
                     {labelButton && onClickButton &&
-                    <button className="dialog-button" onClick={(e: MouseEvent) => onClickButton(e)}>
+                    <button className="save-button" onClick={(e: MouseEvent) => onClickButton(e)}>
                         {labelButton}
                     </button>
                     }

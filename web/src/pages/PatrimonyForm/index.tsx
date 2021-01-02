@@ -11,9 +11,7 @@ import Textarea from '../../components/Textarea'
 import Footer from '../../components/Footer'
 import Collapse from '../../components/Collapse'
 import Dialog from '../../components/Dialog'
-
-import plusSector from '../../assets/images/icons/plusIcon.svg'
-
+import NewButton from '../../components/NewButton'
 
 import api from '../../services/api'
 
@@ -22,8 +20,8 @@ import './styles.css'
 const PatrimonyForm: React.FC = () => {
 
     const [sectorId, setSectorId] = useState('')
-    const [owner, setOwner] = useState('')
-    const [type, setType] = useState('')
+    const [ownerId, setOwnerId] = useState('')
+    const [typeId, setTypeId] = useState('')
     const [patrimony, setPatrimony] = useState('')
     const [model, setModel] = useState('')
     const [description, setDescription] = useState('')
@@ -42,17 +40,19 @@ const PatrimonyForm: React.FC = () => {
     const [sectorIdDialog, setSectorIdDialog] = useState('')
     const [sectorDialog, setSectorDialog] = useState('')
     const [ownerDialog, setOwnerDialog] = useState('')
+    const [typeDialog, setTypeDialog] = useState('')
     // Open Dialogs and Collapses
     const [isOpenOwner, setIsOpenOwner] = useState(false)
     const [isOpenSector, setIsOpenSector] = useState(false)
     const [isOpenIp, setIsOpenIp] = useState(false)
+    const [isOpenType, setIsOpenType] = useState(false)
 
     
 
     useEffect(() => {
         getDataOwner()
         getDataSector()
-    }, [isOpenSector, isOpenOwner])
+    }, [isOpenSector, isOpenOwner, isOpenType])
 
     async function getDataOwner() {
         const response = await api.get('owners')
@@ -79,6 +79,7 @@ const PatrimonyForm: React.FC = () => {
         })
         setOptionsSector(options)
     }
+
 
     async function handleCreatePatrimony(e: MouseEvent) {
         e.preventDefault()
@@ -107,6 +108,16 @@ const PatrimonyForm: React.FC = () => {
             setIsOpenSector(false)
         }).catch(() => alert('Erro ao cadastrar Setor'))
 
+    }
+
+    async function handleCreateType(e: MouseEvent) {
+        e.preventDefault()
+
+        api.post('/types', {
+            name: typeDialog
+        }).then(() => {
+            alert('Tipo Cadastrado')
+        }).catch(() => alert('Erro ao cadastrar Tipo'))
     }
 
     const setIpItemsValue = (position: Number, field: string, value: string) => {
@@ -150,14 +161,14 @@ const PatrimonyForm: React.FC = () => {
                                     value={ownerDialog}
                                     onChange={(e) => setOwnerDialog(e.target.value)}
                                 />
-                                
-                                <button onClick={(e) => { 
-                                        e.preventDefault() 
+
+                                <NewButton
+                                    isOpen={isOpenOwner}
+                                    onClick={(e) => {
+                                        e.preventDefault()
                                         setIsOpenSector(!isOpenSector)
-                                    }
-                                }>
-                                    <img src={plusSector} alt="Novo setor"/>
-                                </button>
+                                    }}
+                                />
                                 
                                 <Dialog 
                                     isOpen={isOpenSector}
@@ -187,8 +198,8 @@ const PatrimonyForm: React.FC = () => {
                                 name="owner"
                                 label="Proprietário"
                                 options={optionsOwner}
-                                value={owner}
-                                onChange={(e) => setOwner(e.target.value)}
+                                value={ownerId}
+                                onChange={(e) => setOwnerId(e.target.value)}
                             />
 
                             <Select
@@ -204,6 +215,30 @@ const PatrimonyForm: React.FC = () => {
                     <Form
                         legend="Patrimônio">
                         <div className="patrimony-block">
+                            
+                            <NewButton
+                                isOpen={isOpenOwner}
+                                onClick={(e) => {
+                                    e.preventDefault()
+                                    setIsOpenType(!isOpenType)
+                                }}
+                            />
+                            <div className="new-type-dialog">
+                                <Dialog
+                                    isOpen={isOpenType}
+                                    onIsOpenChange={(isOpen: boolean) => setIsOpenType(isOpen)}
+                                    labelButton="Salvar novo tipo"
+                                    onClickButton={(e) => handleCreateType(e)}
+                                    >
+                                    <Input
+                                        name="typeDialog"
+                                        label="Novo Tipo"
+                                        value={typeDialog}
+                                        onChange={(e) => setTypeDialog(e.target.value)}
+                                    />
+                                </Dialog>
+                            </div>
+                        
                             <Select
                                 name="type"
                                 label="Tipo"
@@ -211,8 +246,8 @@ const PatrimonyForm: React.FC = () => {
                                     { value: '1', label: 'Computador' },
                                     { value: '2', label: 'Impressora' }
                                 ]}
-                                value={type}
-                                onChange={(e) => setType(e.target.value)}
+                                value={typeId}
+                                onChange={(e) => setTypeId(e.target.value)}
                             />
 
                             <Input
