@@ -1,4 +1,4 @@
-import React, { MouseEvent, useCallback, useEffect, useState } from 'react'
+import React, { MouseEvent, useEffect, useState } from 'react'
 
 
 import PageHeader from '../../components/PageHeader'
@@ -21,7 +21,7 @@ import './styles.css'
 
 const PatrimonyForm: React.FC = () => {
 
-    const [sector, setSector] = useState('')
+    const [sectorId, setSectorId] = useState('')
     const [owner, setOwner] = useState('')
     const [type, setType] = useState('')
     const [patrimony, setPatrimony] = useState('')
@@ -39,8 +39,8 @@ const PatrimonyForm: React.FC = () => {
         { ip: '', mask: '', gateway: '' }
     ])
     // State's of dialogs
+    const [sectorIdDialog, setSectorIdDialog] = useState('')
     const [sectorDialog, setSectorDialog] = useState('')
-    const [sectorDialog2, setSectorDialog2] = useState('')
     const [ownerDialog, setOwnerDialog] = useState('')
     // Open Dialogs and Collapses
     const [isOpenOwner, setIsOpenOwner] = useState(false)
@@ -84,7 +84,32 @@ const PatrimonyForm: React.FC = () => {
         e.preventDefault()
     }
 
-    const setIpItemsValue = useCallback((position: Number, field: string, value: string) => {
+    async function handleCreateOwner(e: MouseEvent) {
+        e.preventDefault()
+
+        api.post('/owners', {
+            name: ownerDialog,
+            sector_id: parseInt(sectorIdDialog)
+        }).then(() => {
+            alert('Proprietário Cadastrado')
+            setIsOpenOwner(false)
+        }).catch(() => alert('Erro ao cadastrar proprietário'))
+
+    }
+    
+    async function handleCreateSector(e: MouseEvent) {
+        e.preventDefault()
+
+        api.post('/sectors', {
+            name: sectorDialog
+        }).then(() => {
+            alert('Setor Cadastrado')
+            setIsOpenSector(false)
+        }).catch(() => alert('Erro ao cadastrar Setor'))
+
+    }
+
+    const setIpItemsValue = (position: Number, field: string, value: string) => {
         const updateIpItems = ipItems.map((ipItem, index) => {
             if (index === position) {
                 return { ...ipItem, [field]: value }
@@ -92,13 +117,13 @@ const PatrimonyForm: React.FC = () => {
             return ipItem
         })
         setIpItems(updateIpItems)
-    }, [])
+    }
 
     const addNewIpItem = () => {
         setIpItems([
             ...ipItems,
             { ip: '', mask: '', gateway: '' }
-        ]);
+        ])
     }
 
     return (
@@ -116,6 +141,7 @@ const PatrimonyForm: React.FC = () => {
                             isOpen={isOpenOwner}
                             onIsOpenChange={(isOpen: boolean) => setIsOpenOwner(isOpen)}
                             labelButton="Salvar novo Proprietário"
+                            onClickButton={(e) => handleCreateOwner(e)}
                         >
                             <div className="new-owner-block">
                                 <Input
@@ -124,6 +150,7 @@ const PatrimonyForm: React.FC = () => {
                                     value={ownerDialog}
                                     onChange={(e) => setOwnerDialog(e.target.value)}
                                 />
+                                
                                 <button onClick={(e) => { 
                                         e.preventDefault() 
                                         setIsOpenSector(!isOpenSector)
@@ -134,25 +161,25 @@ const PatrimonyForm: React.FC = () => {
                                 
                                 <Dialog 
                                     isOpen={isOpenSector}
-                                    onIsOpenChange={(isOpen: boolean) => setIsOpenSector(!isOpenSector)}
+                                    onIsOpenChange={(isOpen: boolean) => setIsOpenSector(isOpen)}
                                     labelButton="Salvar novo setor"
+                                    onClickButton={(e) => handleCreateSector(e)}
                                 >
                                     <Input
                                         name="newSector"
                                         label="Novo Setor"
-                                        value={sectorDialog2}
-                                        onChange={(e) => setSectorDialog2(e.target.value)}
+                                        value={sectorDialog}
+                                        onChange={(e) => setSectorDialog(e.target.value)}
                                     />
-                                    
                                 </Dialog>
 
                                 <Select
-                                  name="sector"
+                                  name="sectorDialog"
                                   label="Setor"
-                                  value={sectorDialog}
-                                  onChange={(e) => setSectorDialog(e.target.value)}
+                                  value={sectorIdDialog}
                                   options={optionsSector} 
-                                  />
+                                  onChange={(e) => setSectorIdDialog(e.target.value)}
+                                />
                             </div>
                         </Dialog>
                         <div className="owner-block">
@@ -168,8 +195,8 @@ const PatrimonyForm: React.FC = () => {
                                 name="sector"
                                 label="Setor"
                                 options={optionsSector}
-                                value={sector}
-                                onChange={(e) => setSector(e.target.value)} 
+                                value={sectorId}
+                                onChange={(e) => setSectorId(e.target.value)} 
                             />
                         </div>
                     </Form>

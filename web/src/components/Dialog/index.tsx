@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { MouseEvent } from 'react'
 
 import closeDialog from '../../assets/images/icons/closeIcon.svg'
 
@@ -8,9 +8,10 @@ interface DialogProps {
     isOpen: boolean
     labelButton?: string
     onIsOpenChange: (isOpen: boolean) => void
+    onClickButton?: (e: MouseEvent) => void
 }
 
-const Dialog: React.FC<DialogProps> = ({ children, isOpen, onIsOpenChange, labelButton }) => {
+const Dialog: React.FC<DialogProps> = ({ children, isOpen, onIsOpenChange, labelButton, onClickButton }) => {
     return (
         
         <>
@@ -22,8 +23,8 @@ const Dialog: React.FC<DialogProps> = ({ children, isOpen, onIsOpenChange, label
                     </button>
                     {children}
                     
-                    {labelButton &&
-                    <button className="dialog-button">
+                    {labelButton && onClickButton &&
+                    <button className="dialog-button" onClick={(e: MouseEvent) => onClickButton(e)}>
                         {labelButton}
                     </button>
                     }
