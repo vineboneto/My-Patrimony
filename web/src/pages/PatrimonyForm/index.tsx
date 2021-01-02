@@ -26,10 +26,14 @@ const PatrimonyForm: React.FC = () => {
     const [model, setModel] = useState('')
     const [description, setDescription] = useState('')
     
+    // State's of selects
     const [optionsOwner, setOptionsOwner] = useState([
         { value: '', label: '', sectorId: '' }
     ])
     const [optionsSector, setOptionsSector] = useState([
+        { value: '', label: '' }
+    ])
+    const [optionsTypes, setOptionsTypes] = useState([
         { value: '', label: '' }
     ])
     
@@ -52,6 +56,7 @@ const PatrimonyForm: React.FC = () => {
     useEffect(() => {
         getDataOwner()
         getDataSector()
+        getDataTypes()
     }, [isOpenSector, isOpenOwner, isOpenType])
 
     async function getDataOwner() {
@@ -80,15 +85,41 @@ const PatrimonyForm: React.FC = () => {
         setOptionsSector(options)
     }
 
+    async function getDataTypes() {
+        const response = await api.get('types')
+        const datas = response.data
+
+        const options = datas.map((data: any) => {
+            return {
+                value: data.id,
+                label: data.name
+            }
+        })
+        setOptionsTypes(options)
+    }
+
 
     async function handleCreatePatrimony(e: MouseEvent) {
         e.preventDefault()
+        console.log('Criando Patrimônio')
+        console.log(ipItems)
+        console.log(ipItems.length)
+        api.post('patrimonies', {
+            patrimony: patrimony,
+            model: model,
+            description: description,
+            owner_id: parseInt(ownerId),
+            type_id: parseInt(typeId),
+            ips: ipItems
+        })
+        .then(() => alert('Patrimônio cadastrado com sucesso'))
+        .catch(() => alert('Erro ao cadastrar Patrimônio'))
     }
 
     async function handleCreateOwner(e: MouseEvent) {
         e.preventDefault()
 
-        api.post('/owners', {
+        api.post('owners', {
             name: ownerDialog,
             sector_id: parseInt(sectorIdDialog)
         }).then(() => {
@@ -101,7 +132,7 @@ const PatrimonyForm: React.FC = () => {
     async function handleCreateSector(e: MouseEvent) {
         e.preventDefault()
 
-        api.post('/sectors', {
+        api.post('sectors', {
             name: sectorDialog
         }).then(() => {
             alert('Setor Cadastrado')
@@ -113,14 +144,15 @@ const PatrimonyForm: React.FC = () => {
     async function handleCreateType(e: MouseEvent) {
         e.preventDefault()
 
-        api.post('/types', {
+        api.post('types', {
             name: typeDialog
         }).then(() => {
             alert('Tipo Cadastrado')
+            setIsOpenType(false)
         }).catch(() => alert('Erro ao cadastrar Tipo'))
     }
 
-    const setIpItemsValue = (position: Number, field: string, value: string) => {
+    function setIpItemsValue(position: Number, field: string, value: string) {
         const updateIpItems = ipItems.map((ipItem, index) => {
             if (index === position) {
                 return { ...ipItem, [field]: value }
@@ -242,10 +274,7 @@ const PatrimonyForm: React.FC = () => {
                             <Select
                                 name="type"
                                 label="Tipo"
-                                options={[
-                                    { value: '1', label: 'Computador' },
-                                    { value: '2', label: 'Impressora' }
-                                ]}
+                                options={optionsTypes}
                                 value={typeId}
                                 onChange={(e) => setTypeId(e.target.value)}
                             />
@@ -284,25 +313,25 @@ const PatrimonyForm: React.FC = () => {
 
                             
                             
-                                {ipItems.map((ipItem, index) => {
-                                    return (
-                                        <IpItems
-                                            key={index}
-                                            ipItem={ipItem}
-                                            onIpChange={(ipValue: string) => setIpItemsValue(index, 'ip', ipValue) }
-                                            onMaskChange={(maskValue: string) => setIpItemsValue(index, 'mask', maskValue)} 
-                                            onGatewayChange={(gatewayValue: string) => setIpItemsValue(index, 'gateway', gatewayValue)} />
-                                    )
-                                })}
+                            {ipItems.map((ipItem, index) => {
+                                return (
+                                    <IpItems
+                                        key={index}
+                                        ipItem={ipItem}
+                                        onIpChange={(ipValue: string) => setIpItemsValue(index, 'ip', ipValue) }
+                                        onMaskChange={(maskValue: string) => setIpItemsValue(index, 'mask', maskValue)} 
+                                        onGatewayChange={(gatewayValue: string) => setIpItemsValue(index, 'gateway', gatewayValue)} />
+                                )
+                            })}
                             
                         </Form>
-                        </Collapse>
+                    </Collapse>
                     
                     
                     
 
                     <Footer>
-                        <button onSubmit={() => handleCreatePatrimony}>
+                        <button onClick={handleCreatePatrimony}>
                             Salvar Patrimônio
                         </button>
                     </Footer>   

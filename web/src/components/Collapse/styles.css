@@ -1,7 +1,6 @@
 
-.collapse-block .content {
+.collapse-block .content:first-child {
   padding-top: 2rem;
   overflow: hidden;
-  color: #fff;
 }
 
