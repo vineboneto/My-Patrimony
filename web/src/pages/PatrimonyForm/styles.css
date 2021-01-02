@@ -2,6 +2,28 @@
     width: 100vw;
 }
 
+#page-patrimony-form .new-owner-block {
+    display: grid;
+    grid-template-columns: 300px 300px;
+    height: 100%;
+    grid-template-areas: "owner sector";
+    justify-content: space-between;
+    align-items: center;
+}
+
+#page-patrimony-form .new-owner-block > :nth-child(2) {
+    grid-area: sector;
+    margin-bottom: 6rem;
+    cursor: pointer;
+    border-radius: 0.8rem;
+    border: 1px solid var(--color-success);
+    z-index: 1;
+}
+
+#page-patrimony-form .new-owner-block > :nth-child(3) {
+    grid-area: sector;
+}
+
 #page-patrimony-form .owner-block {
     display: grid;
     grid-template-areas: "owner sector";

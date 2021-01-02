@@ -1,18 +1,6 @@
-.collapse-block .collapse {
-  background-color: #fff;
-  color: white;
-  cursor: pointer;
-  padding: 1.2rem 3.4rem;
-  width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 1.6rem;
-  color: #fff;
-  background-color: #777;
-}
+
 .collapse-block .content {
-  padding: 2rem 0;
+  padding-top: 2rem;
   overflow: hidden;
   color: #fff;
 }

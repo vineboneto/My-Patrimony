@@ -25,6 +25,7 @@
     font: 700 1.6rem Archivo;
     transition: color 0.2s;
     cursor: pointer;
+    z-index: 1;
 }
 
 .form-block legend button:hover {
