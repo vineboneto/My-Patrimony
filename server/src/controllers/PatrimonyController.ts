@@ -9,6 +9,20 @@ interface Ips {
     gateway: string
 }
 
+interface Patrimony {
+    id: number
+    patrimony: string
+    model: string
+    description: string
+    owner_id?: number
+    owner_name?: string
+    sector_id?: number
+    sector_name?: string
+    type_id?: number
+    type_name?: string
+    ips: Array<Ips>
+}
+
 export default class PatrimonyController {
     async create(req: Request, res: Response) {
         const { patrimony, model, description, owner_id, type_id, ips } = req.body
@@ -55,6 +69,55 @@ export default class PatrimonyController {
                 error: err
             })
         }
+    }
+
+    async getById(req:Request, res: Response) {
+        const { id } = req.params
+
+        const patrimony = await db('patrimonies')
+            .select('patrimonies.*', 'owners.sector_id')
+            .from('patrimonies')
+            .join('owners', 'patrimonies.owner_id', '=', 'owners.id')
+            .join('sectors', 'owners.sector_id', '=', 'sectors.id')
+            .where('patrimonies.id', '=', parseInt(id))
+            
+        const ip = await db('ips')
+            .select('*')
+            .from('ips')
+            .where('ips.patrimony_id', '=', parseInt(id))
+        
+        const updatedPatrimony = patrimony.map((patrimony: any) => {
+            return {
+                id: patrimony.id,
+                patrimony: patrimony.patrimony,
+                model: patrimony.model,
+                description: patrimony.description,
+                owner_id: patrimony.owner_id,
+                type_id: patrimony.type_id,
+                sector_id: patrimony.sector_id,
+                ips: [] as any
+            }
+        }) 
+
+        // Add ips
+        if (ip) {
+            updatedPatrimony.forEach((patrimony) => {
+                ip.forEach((ip) => {
+                    if (ip.patrimony_id === patrimony.id) {
+                        patrimony.ips.push(
+                            [
+                                ip.id,
+                                ip.ip,
+                                ip.mask,
+                                ip.gateway
+                            ]
+                        )
+                    }    
+                })
+            })
+        }
+
+        return res.json(updatedPatrimony)
     }
 
     async index(req: Request, res: Response) {

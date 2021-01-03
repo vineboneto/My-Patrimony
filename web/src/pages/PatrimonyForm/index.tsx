@@ -61,10 +61,13 @@ const PatrimonyForm: React.FC = () => {
         getDataOwner()
         getDataSector()
         getDataTypes()
-        console.log(id)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        getDataPatrimony()
     }, [isOpenSector, isOpenOwner, isOpenType])
 
+
+    async function getDataPatrimoy() {
+        const response = await api.get
+    }
 
     async function getDataOwner() {
         const response = await api.get('owners')
