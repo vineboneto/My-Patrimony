@@ -43,7 +43,7 @@ const PatrimonyForm: React.FC = () => {
     ])
     
     const [ipItems, setIpItems] = useState([
-        { ip: '', mask: '', gateway: '' }
+        { id: '', ip: '', mask: '', gateway: '' }
     ])
     // State's of dialogs
     const [sectorIdDialog, setSectorIdDialog] = useState('')
@@ -61,12 +61,34 @@ const PatrimonyForm: React.FC = () => {
         getDataOwner()
         getDataSector()
         getDataTypes()
-        getDataPatrimony()
+        if (id !== '') {
+            getDataPatrimony()
+        }
+        // eslint-disable-next-line
     }, [isOpenSector, isOpenOwner, isOpenType])
 
 
-    async function getDataPatrimoy() {
-        const response = await api.get
+    async function getDataPatrimony() {
+        const response = await api.get(`patrimonies/${id}`)
+        const data = response.data
+        console.log(id)
+        setOwnerId(data.owner_id)
+        setSectorId(data.sector_id)
+        setTypeId(data.type_id)
+        setPatrimony(data.patrimony)
+        setModel(data.model)
+        setDescription(data.description)
+        if (data.ips) {
+            const ips = data.ips.map((ip: any) => {
+                return {
+                    id: ip[0],
+                    ip: ip[1],
+                    mask: ip[2],
+                    gateway: ip[3]
+                }
+            })
+            setIpItems(ips)
+        }
     }
 
     async function getDataOwner() {
@@ -175,7 +197,7 @@ const PatrimonyForm: React.FC = () => {
     const addNewIpItem = () => {
         setIpItems([
             ...ipItems,
-            { ip: '', mask: '', gateway: '' }
+            { id: '', ip: '', mask: '', gateway: '' }
         ])
     }
 

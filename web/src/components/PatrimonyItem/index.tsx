@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import deleteForeverIcon from '../../assets/images/icons/deleteForeverIcon.svg'
 import editIcon from '../../assets/images/icons/editIcon.svg'
@@ -10,10 +10,6 @@ export interface Patrimony {
     id: number
     patrimony: string
     model: string
-    description: string
-    ownerId: number
-    sectorId: number
-    typeId: number
     ownerName: string
     sectorName: string
     typeName: string

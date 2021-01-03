@@ -9,7 +9,6 @@ import api from '../../services/api'
 
 import './styles.css'
 
-
 const PatrimonyList: React.FC = () => {
     
     // Filters
@@ -41,10 +40,6 @@ const PatrimonyList: React.FC = () => {
                 id: data.id,
                 patrimony: data.patrimony,
                 model: data.model,
-                description: data.description,
-                ownerId: data.owner_id,
-                sectorId: data.sector_id,
-                typeId: data.type_id,
                 ownerName: data.owner_name,
                 sectorName: data.sector_name,
                 typeName: data.type_name,

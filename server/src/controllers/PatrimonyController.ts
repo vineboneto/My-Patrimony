@@ -117,18 +117,18 @@ export default class PatrimonyController {
             })
         }
 
-        return res.json(updatedPatrimony)
+        return res.json(updatedPatrimony[0])
     }
 
     async index(req: Request, res: Response) {
         const patrimonies = await db('patrimonies')
-            .select('patrimonies.*', 'owners.name AS owner_name', 'owners.sector_id',
+            .select('patrimonies.id', 'patrimonies.patrimony', 'patrimonies.model', 'owners.name AS owner_name',
             'sectors.name AS sector_name', 'types.name AS type_name')
             .from('patrimonies')
             .join('owners', 'patrimonies.owner_id', '=', 'owners.id')
             .join('types', 'patrimonies.type_id', '=', 'types.id')
             .join('sectors', 'owners.sector_id', '=', 'sectors.id')
-        
+
         const ips = await db('ips').select('*').from('ips')
 
         const listPatrimonies = patrimonies.map((patrimony) => {
@@ -136,10 +136,6 @@ export default class PatrimonyController {
                 id: patrimony.id,
                 patrimony: patrimony.patrimony,
                 model: patrimony.model,
-                description: patrimony.description,
-                owner_id: patrimony.owner_id,
-                type_id: patrimony.type_id,
-                sector_id: patrimony.sector_id,
                 owner_name: patrimony.owner_name,
                 sector_name: patrimony.sector_name,
                 type_name: patrimony.type_name,
