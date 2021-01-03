@@ -11,6 +11,7 @@ import './styles.css'
 
 
 const PatrimonyList: React.FC = () => {
+    
     // Filters
     const [owner, setOwner] = useState('')
     const [patrimony, setPatrimony] = useState('')
@@ -23,7 +24,7 @@ const PatrimonyList: React.FC = () => {
         { value: '', label: ''}
     ])
     // List
-    const [computers, setComputers] = useState([])
+    const [patrimonies, setPatrimonies] = useState([])
 
     useEffect(() => {
         getDataOwner()
@@ -51,7 +52,7 @@ const PatrimonyList: React.FC = () => {
             }
         })
 
-        setComputers(list)
+        setPatrimonies(list)
     }
 
     async function getDataOwner() {
@@ -113,9 +114,9 @@ const PatrimonyList: React.FC = () => {
 
                 {}
             </div>
-            {computers && computers.map((patrimony: Patrimony) => {
+            {patrimonies && patrimonies.map((patrimony: Patrimony) => {
                 return <PatrimonyItem
-                            key={patrimony.id} 
+                            key={patrimony.id}
                             patrimony={patrimony}
                         />
                 }

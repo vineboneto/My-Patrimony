@@ -27,17 +27,17 @@ const Home: React.FC  = () => {
                 
                 <h1>O que você quer fazer ?</h1>
                 <div className="link-block">
-                    <Link to="/patrimony-register">
+                    <Link to="/patrimony/create">
                         Novo Patrimônio
                         <img src={okIcon} alt="Novo Patrimônio"/>
                     </Link>
 
-                    <Link to="/patrimony-list">
+                    <Link to="/patrimonies">
                         Buscar Patrimônio
                         <img src={searchIcon} alt="Buscar Patriônio"/>
                     </Link>
 
-                    <Link to="/patrimony-register"> 
+                    <Link to="/patrimony/create"> 
                         Realizar Trocar
                         <img src={updateIcon} alt="Realizar troca de patrimônio" />
                     </Link>

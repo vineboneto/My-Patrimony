@@ -1,5 +1,5 @@
 import React, { MouseEvent, useEffect, useState } from 'react'
-
+import { useParams } from 'react-router-dom'
 
 import PageHeader from '../../components/PageHeader'
 import IpItems from '../../components/IpItem'
@@ -17,8 +17,13 @@ import api from '../../services/api'
 
 import './styles.css'
 
-const PatrimonyForm: React.FC = () => {
+interface Params {
+    id: string
+}
 
+const PatrimonyForm: React.FC = () => {
+    
+    const { id }  = useParams<Params>()
     const [sectorId, setSectorId] = useState('')
     const [ownerId, setOwnerId] = useState('')
     const [typeId, setTypeId] = useState('')
@@ -51,13 +56,15 @@ const PatrimonyForm: React.FC = () => {
     const [isOpenIp, setIsOpenIp] = useState(false)
     const [isOpenType, setIsOpenType] = useState(false)
 
-    
 
     useEffect(() => {
         getDataOwner()
         getDataSector()
         getDataTypes()
+        console.log(id)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpenSector, isOpenOwner, isOpenType])
+
 
     async function getDataOwner() {
         const response = await api.get('owners')
@@ -337,6 +344,8 @@ const PatrimonyForm: React.FC = () => {
                     </Footer>   
                     
                 </Main>
+
+                <input type="hidden" value="" />
         </div>
     )
 }

@@ -29,7 +29,7 @@ export default class PatrimonyController {
                 if (ip.ip === '') existsIps = false
                 else existsIps = true
             })
-            
+
             if (existsIps) {
                 const patrimony_id = insertedPatrimony[0]
                 const classIps = ips.map((ip: Ips) => {
@@ -59,14 +59,13 @@ export default class PatrimonyController {
 
     async index(req: Request, res: Response) {
         const patrimonies = await db('patrimonies')
-            .select('patrimonies.*', 'owners.name AS owner_name',
+            .select('patrimonies.*', 'owners.name AS owner_name', 'owners.sector_id',
             'sectors.name AS sector_name', 'types.name AS type_name')
             .from('patrimonies')
             .join('owners', 'patrimonies.owner_id', '=', 'owners.id')
             .join('types', 'patrimonies.type_id', '=', 'types.id')
             .join('sectors', 'owners.sector_id', '=', 'sectors.id')
         
-
         const ips = await db('ips').select('*').from('ips')
 
         const listPatrimonies = patrimonies.map((patrimony) => {
@@ -77,6 +76,7 @@ export default class PatrimonyController {
                 description: patrimony.description,
                 owner_id: patrimony.owner_id,
                 type_id: patrimony.type_id,
+                sector_id: patrimony.sector_id,
                 owner_name: patrimony.owner_name,
                 sector_name: patrimony.sector_name,
                 type_name: patrimony.type_name,

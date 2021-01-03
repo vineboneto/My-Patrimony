@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 import deleteForeverIcon from '../../assets/images/icons/deleteForeverIcon.svg'
 import editIcon from '../../assets/images/icons/editIcon.svg'
@@ -56,7 +56,10 @@ const PatrimonyItem: React.FC<PatrimonyItemProps> = ({ patrimony }) => {
                     <Link to="/">
                         <img src={deleteForeverIcon} alt="Excluir"/>
                     </Link>
-                    <Link to="/">
+                    <Link to={{
+                        pathname: `/patrimony/edit/${patrimony.id}`,
+                    }}>
+
                         <img src={editIcon} alt="Editar"/>
                     </Link>
                 </div>

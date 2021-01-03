@@ -10,8 +10,9 @@ export default function Routes() {
     return (
         <BrowserRouter>
             <Route exact path="/" component={Home} />
-            <Route path="/patrimony-register" component={PatrimonyForm} />
-            <Route path="/patrimony-list" component={PatrimonyList} />
+            <Route path="/patrimony/create" component={PatrimonyForm} />
+            <Route path="/patrimony/edit/:id" component={PatrimonyForm} />
+            <Route path="/patrimonies" component={PatrimonyList} />
             <Route path="/test/" component={Test} />
         </BrowserRouter>
     )
