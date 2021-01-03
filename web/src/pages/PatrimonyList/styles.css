@@ -19,6 +19,9 @@
 #page-patrimony-list .search-block label {
     color: #fff;
 }
+#page-patrimony-list .search-block .select-block select {
+    background-position-x: 220px;
+}
 
 #page-patrimony-list .patrimony-item:last-child {
     margin-bottom: 3rem;
