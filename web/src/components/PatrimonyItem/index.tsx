@@ -53,7 +53,7 @@ const PatrimonyItem: React.FC<PatrimonyItemProps> = ({ patrimony }) => {
                         <img src={deleteForeverIcon} alt="Excluir"/>
                     </Link>
                     <Link to={{
-                        pathname: `/patrimony/edit/${patrimony.id}`,
+                        pathname: `/patrimony/edit/${patrimony.id}`
                     }}>
 
                         <img src={editIcon} alt="Editar"/>

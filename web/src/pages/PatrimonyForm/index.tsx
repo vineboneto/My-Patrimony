@@ -1,5 +1,5 @@
 import React, { MouseEvent, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { RouteComponentProps, useParams } from 'react-router-dom'
 
 import PageHeader from '../../components/PageHeader'
 import IpItems from '../../components/IpItem'
@@ -21,7 +21,7 @@ interface Params {
     id: string
 }
 
-const PatrimonyForm: React.FC = () => {
+const PatrimonyForm: React.FC<RouteComponentProps> = ({ location, match }) => {
     
     const { id }  = useParams<Params>()
     const [sectorId, setSectorId] = useState('')
@@ -45,6 +45,7 @@ const PatrimonyForm: React.FC = () => {
     const [ipItems, setIpItems] = useState([
         { id: '', ip: '', mask: '', gateway: '' }
     ])
+    const [readOnly, setReadOnly] = useState(false)
     // State's of dialogs
     const [sectorIdDialog, setSectorIdDialog] = useState('')
     const [sectorDialog, setSectorDialog] = useState('')
@@ -63,6 +64,7 @@ const PatrimonyForm: React.FC = () => {
         getDataTypes()
         if (id !== '') {
             getDataPatrimony()
+            setReadOnly(!readOnly)
         }
         // eslint-disable-next-line
     }, [isOpenSector, isOpenOwner, isOpenType])
@@ -71,7 +73,6 @@ const PatrimonyForm: React.FC = () => {
     async function getDataPatrimony() {
         const response = await api.get(`patrimonies/${id}`)
         const data = response.data
-        console.log(id)
         setOwnerId(data.owner_id)
         setSectorId(data.sector_id)
         setTypeId(data.type_id)
@@ -128,6 +129,16 @@ const PatrimonyForm: React.FC = () => {
             }
         })
         setOptionsTypes(options)
+    }
+    
+    const handleSelectOwner = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setOwnerId(e.target.value)
+        
+        optionsOwner.forEach((owner, index) => {
+            if (parseInt(owner.value) === parseInt(e.target.value)) {
+                setSectorId(owner.sectorId)
+            }
+        })
     }
 
 
@@ -263,7 +274,7 @@ const PatrimonyForm: React.FC = () => {
                                 label="Proprietário"
                                 options={optionsOwner}
                                 value={ownerId}
-                                onChange={(e) => setOwnerId(e.target.value)}
+                                onChange={handleSelectOwner}
                             />
 
                             <Select
@@ -271,7 +282,8 @@ const PatrimonyForm: React.FC = () => {
                                 label="Setor"
                                 options={optionsSector}
                                 value={sectorId}
-                                onChange={(e) => setSectorId(e.target.value)} 
+                                onChange={(e) => setSectorId(e.target.value)}
+                                disabled={readOnly} 
                             />
                         </div>
                     </Form>
