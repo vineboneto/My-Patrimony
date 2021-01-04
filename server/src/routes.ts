@@ -17,8 +17,8 @@ routes.get('/sectors', sectorController.index)
 routes.post('/sectors', sectorController.create)
 routes.get('/types', typeController.index)
 routes.post('/types', typeController.create)
-routes.get('/patrimonies', patrimonyController.index)
 routes.get('/patrimonies/:id', patrimonyController.getById)
+routes.get('/patrimonies', patrimonyController.index)
 routes.post('/patrimonies', patrimonyController.create)
 
 export default routes

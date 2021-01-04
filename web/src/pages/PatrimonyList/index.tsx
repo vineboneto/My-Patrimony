@@ -39,18 +39,19 @@ const PatrimonyList: React.FC = () => {
     async function getDataPatrimony() {
         const response = await api.get(`patrimonies?page=${currentPage}&limit=${limit}`)        
         const datas = response.data
-        const list = datas.map((data: any) => {
-            return {
-                id: data.id,
-                patrimony: data.patrimony,
-                model: data.model,
-                ownerName: data.owner_name,
-                sectorName: data.sector_name,
-                typeName: data.type_name,
-                ips: data.ips
-            }
-        })
-        setPatrimonies(list)
+        console.log(datas)
+        // const list = datas.map((data: any) => {
+        //     return {
+        //         id: data.id,
+        //         patrimony: data.patrimony,
+        //         model: data.model,
+        //         ownerName: data.owner_name,
+        //         sectorName: data.sector_name,
+        //         typeName: data.type_name,
+        //         ips: data.ips
+        //     }
+        // })
+        // setPatrimonies(list)
         setPagination(response.data.length)
     }
 

@@ -71,53 +71,25 @@ export default class PatrimonyController {
         }
     }
 
-    async getById(req:Request, res: Response) {
+    async getById(req: Request, res: Response) {
         const { id } = req.params
 
         const patrimony = await db('patrimonies')
-            .select('patrimonies.*', 'owners.sector_id')
+            .select('patrimonies.*', 'owners.sector_id',
+                db.raw('GROUP_CONCAT( JSON_ARRAY( ips.id, ips.ip, ips.mask, ips.gateway ) ) AS ips'))
             .from('patrimonies')
             .join('owners', 'patrimonies.owner_id', '=', 'owners.id')
             .join('sectors', 'owners.sector_id', '=', 'sectors.id')
+            .leftJoin('ips', 'ips.patrimony_id', '=', 'patrimonies.id')
             .where('patrimonies.id', '=', parseInt(id))
-            
-        const ip = await db('ips')
-            .select('*')
-            .from('ips')
-            .where('ips.patrimony_id', '=', parseInt(id))
-        
-        const updatedPatrimony = patrimony.map((patrimony: any) => {
+            .groupBy('patrimonies.id')        
+        const patrimony_ = patrimony.map((p) => {
             return {
-                id: patrimony.id,
-                patrimony: patrimony.patrimony,
-                model: patrimony.model,
-                description: patrimony.description,
-                owner_id: patrimony.owner_id,
-                type_id: patrimony.type_id,
-                sector_id: patrimony.sector_id,
-                ips: [] as any
+                ...p,
+                ips: JSON.parse(" [ " + p.ips + " ] ")
             }
-        }) 
-
-        // Add ips
-        if (ip) {
-            updatedPatrimony.forEach((patrimony) => {
-                ip.forEach((ip) => {
-                    if (ip.patrimony_id === patrimony.id) {
-                        patrimony.ips.push(
-                            [
-                                ip.id,
-                                ip.ip,
-                                ip.mask,
-                                ip.gateway
-                            ]
-                        )
-                    }    
-                })
-            })
-        }
-
-        return res.json(updatedPatrimony[0])
+        })
+        return res.json(patrimony_)
     }
 
     async index(req: Request, res: Response) {
@@ -137,9 +109,6 @@ export default class PatrimonyController {
             .leftJoin('ips', 'ips.patrimony_id', '=', 'patrimonies.id')
             .groupBy('patrimonies.id')
             .orderBy('patrimonies.id').limit(limit_).offset((page_ * limit_) - limit_)
-        
-
-       
         
         return res.json(patrimonies)
     }
