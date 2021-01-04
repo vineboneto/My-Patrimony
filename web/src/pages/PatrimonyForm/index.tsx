@@ -1,5 +1,5 @@
 import React, { MouseEvent, useEffect, useState } from 'react'
-import { RouteComponentProps, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import PageHeader from '../../components/PageHeader'
 import IpItems from '../../components/IpItem'
@@ -21,7 +21,7 @@ interface Params {
     id: string
 }
 
-const PatrimonyForm: React.FC<RouteComponentProps> = ({ location, match }) => {
+const PatrimonyForm: React.FC = () => {
     
     const { id }  = useParams<Params>()
     const [sectorId, setSectorId] = useState('')
@@ -45,7 +45,6 @@ const PatrimonyForm: React.FC<RouteComponentProps> = ({ location, match }) => {
     const [ipItems, setIpItems] = useState([
         { id: '', ip: '', mask: '', gateway: '' }
     ])
-    const [readOnly, setReadOnly] = useState(false)
     // State's of dialogs
     const [sectorIdDialog, setSectorIdDialog] = useState('')
     const [sectorDialog, setSectorDialog] = useState('')
@@ -62,15 +61,15 @@ const PatrimonyForm: React.FC<RouteComponentProps> = ({ location, match }) => {
         getDataOwner()
         getDataSector()
         getDataTypes()
-        if (id !== '') {
-            getDataPatrimony()
-            setReadOnly(!readOnly)
+        // Se não possui id não carrega nenhum dado 
+        if (id) {
+            loadDataPatrimony()
         }
         // eslint-disable-next-line
     }, [isOpenSector, isOpenOwner, isOpenType])
 
 
-    async function getDataPatrimony() {
+    async function loadDataPatrimony() {
         const response = await api.get(`patrimonies/${id}`)
         const data = response.data
         setOwnerId(data.owner_id)
@@ -283,7 +282,7 @@ const PatrimonyForm: React.FC<RouteComponentProps> = ({ location, match }) => {
                                 options={optionsSector}
                                 value={sectorId}
                                 onChange={(e) => setSectorId(e.target.value)}
-                                disabled={readOnly} 
+                                disabled={true} 
                             />
                         </div>
                     </Form>
@@ -381,8 +380,6 @@ const PatrimonyForm: React.FC<RouteComponentProps> = ({ location, match }) => {
                     </Footer>   
                     
                 </Main>
-
-                <input type="hidden" value="" />
         </div>
     )
 }

@@ -121,43 +121,26 @@ export default class PatrimonyController {
     }
 
     async index(req: Request, res: Response) {
+
+        const { page, limit } = req.query
+        const page_ = page ? parseInt(page.toString()) : 0
+        const limit_ = limit ? parseInt(limit.toString()) : 0
+
         const patrimonies = await db('patrimonies')
             .select('patrimonies.id', 'patrimonies.patrimony', 'patrimonies.model', 'owners.name AS owner_name',
-            'sectors.name AS sector_name', 'types.name AS type_name')
+                'sectors.name AS sector_name', 'types.name AS type_name',
+                db.raw('REPLACE (GROUP_CONCAT(ips.ip), ",", ", ") AS ips'))
             .from('patrimonies')
             .join('owners', 'patrimonies.owner_id', '=', 'owners.id')
             .join('types', 'patrimonies.type_id', '=', 'types.id')
             .join('sectors', 'owners.sector_id', '=', 'sectors.id')
-
-        const ips = await db('ips').select('*').from('ips')
-
-        const listPatrimonies = patrimonies.map((patrimony) => {
-            return {
-                id: patrimony.id,
-                patrimony: patrimony.patrimony,
-                model: patrimony.model,
-                owner_name: patrimony.owner_name,
-                sector_name: patrimony.sector_name,
-                type_name: patrimony.type_name,
-                ips: [] as any
-            }
-        })
-
-        listPatrimonies.forEach((patrimony) => {
-            ips.forEach((ip) => {
-                if (ip.patrimony_id === patrimony.id) {
-                    patrimony.ips.push(
-                        [
-                            ip.id,
-                            ip.ip,
-                            ip.mask,
-                            ip.gateway
-                        ]
-                    )
-                }    
-            })
-        })
+            .leftJoin('ips', 'ips.patrimony_id', '=', 'patrimonies.id')
+            .groupBy('patrimonies.id')
+            .orderBy('patrimonies.id').limit(limit_).offset((page_ * limit_) - limit_)
         
-        return res.json(listPatrimonies)
+
+       
+        
+        return res.json(patrimonies)
     }
 }
