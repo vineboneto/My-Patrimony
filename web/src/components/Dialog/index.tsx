@@ -2,7 +2,7 @@ import React, { MouseEvent } from 'react'
 
 import closeDialog from '../../assets/images/icons/closeIcon.svg'
 
-import './styles.css'
+import { DialogContainer, Content, ButtonSave, ButtonClose } from './styled'
 
 interface DialogProps {
     isOpen: boolean
@@ -16,21 +16,25 @@ const Dialog: React.FC<DialogProps> = ({ children, isOpen, onIsOpenChange, label
         
         <>
             {isOpen &&
-            <div className="dialog-block" role="dialog" tabIndex={-1}>
-                <div className="content">
-                    <button onClick={() => onIsOpenChange(!isOpen)} className="close-button">
+            <DialogContainer role="dialog" tabIndex={-1}>
+            {/* <div className="dialog-block" role="dialog" tabIndex={-1}> */}
+                <Content>
+                    <ButtonClose onClick={() => onIsOpenChange(!isOpen)}>              
+                    {/* <button onClick={() => onIsOpenChange(!isOpen)} className="close-button"> */}
                         <img src={closeDialog} alt="Close"/>
-                    </button>
+                    </ButtonClose>
                     {children}
                     
                     {labelButton && onClickButton &&
-                    <button className="save-button" onClick={(e: MouseEvent) => onClickButton(e)}>
+                    <ButtonSave onClick={(e: MouseEvent) => onClickButton(e)}>
+                    {/* <button className="save-button" onClick={(e: MouseEvent) => onClickButton(e)}> */}
                         {labelButton}
-                    </button>
+                    </ButtonSave>
                     }
                     
-                </div> 
-            </div>
+                </Content>
+
+            </DialogContainer>
             }
         </>
     )

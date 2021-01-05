@@ -1,12 +1,12 @@
 import React from 'react'
 
-import './styles.css'
+import { MainContainer } from './styled'
 
 const Main: React.FC = ({ children }) => {
     return (
-        <main className="main-block">
+        <MainContainer>
             {children}
-        </main>
+        </MainContainer>
     )
 }
 

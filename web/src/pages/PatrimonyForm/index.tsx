@@ -71,15 +71,15 @@ const PatrimonyForm: React.FC = () => {
 
     async function loadDataPatrimony() {
         const response = await api.get(`patrimonies/${id}`)
-        const data = response.data
-        setOwnerId(data.owner_id)
-        setSectorId(data.sector_id)
+        const data = response.data[0]
+        setOwnerId(data.owner_id.toString())
+        setSectorId(data.sector_id.toString())
         setTypeId(data.type_id)
         setPatrimony(data.patrimony)
         setModel(data.model)
         setDescription(data.description)
-        if (data.ips) {
-            const ips = data.ips.map((ip: any) => {
+        if (data.ips[0][0]) {
+            const ips = data.ips.map((ip: any) => { 
                 return {
                     id: ip[0],
                     ip: ip[1],
@@ -219,7 +219,7 @@ const PatrimonyForm: React.FC = () => {
 
                 <Main>
                     <Form
-                        addNew={() => setIsOpenOwner(!isOpenOwner)}
+                        addButton={() => setIsOpenOwner(!isOpenOwner)}
                         labelButton="+ Novo Proprietário"
                         legend="Proprietário">
                         <Dialog 
@@ -351,7 +351,7 @@ const PatrimonyForm: React.FC = () => {
                     <Collapse isOpen={isOpenIp}>
                         <Form 
                             legend="Ips"
-                            addNew={addNewIpItem}
+                            addButton={addNewIpItem}
                             labelButton="+ Novo Ip">
 
                             

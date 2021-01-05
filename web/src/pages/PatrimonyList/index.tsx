@@ -25,33 +25,25 @@ const PatrimonyList: React.FC = () => {
     // List
     const [patrimonies, setPatrimonies] = useState([])
     const [total, setTotal] = useState(0)
-    const [limit, setLimit] = useState(5)
+    const limit = 5
     const [pages, setPages] = useState([0])
-    const [currentPage, setCurrentPage] = useState(1)
+    const [currentPage, setCurrentPage] = useState(3)
     
     useEffect(() => {
         getDataOwner()
         getDataSector()
-        getDataPatrimony()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [limit, total])
+    }, [])
+    
+    useEffect(() => {
+        
+        getDataPatrimony()
+       // eslint-disable-next-line react-hooks/exhaustive-deps 
+    }, [total, limit])
 
     async function getDataPatrimony() {
         const response = await api.get(`patrimonies?page=${currentPage}&limit=${limit}`)        
-        const datas = response.data
-        console.log(datas)
-        // const list = datas.map((data: any) => {
-        //     return {
-        //         id: data.id,
-        //         patrimony: data.patrimony,
-        //         model: data.model,
-        //         ownerName: data.owner_name,
-        //         sectorName: data.sector_name,
-        //         typeName: data.type_name,
-        //         ips: data.ips
-        //     }
-        // })
-        // setPatrimonies(list)
+        setPatrimonies(response.data)
         setPagination(response.data.length)
     }
 

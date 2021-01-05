@@ -1,14 +1,15 @@
 import React from 'react'
 
-import './styles.css'
+import { FooterContainer, Content  } from './styled'
+
 
 const Footer: React.FC  = ({ children }) => {
     return (
-        <footer className="footer-block">
-            <div className="footer-content">   
+        <FooterContainer>
+            <Content>   
                 {children}
-            </div>
-        </footer>
+            </Content>
+        </FooterContainer>
     )
 } 
 

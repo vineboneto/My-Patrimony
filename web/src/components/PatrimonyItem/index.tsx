@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import deleteForeverIcon from '../../assets/images/icons/deleteForeverIcon.svg'
 import editIcon from '../../assets/images/icons/editIcon.svg'
 
-import './styles.css'
+import { Item, Header, Content, Info, Actions } from './styled'
 
 export interface Patrimony {
     id: number
@@ -21,34 +21,27 @@ interface PatrimonyItemProps {
 }
 
 const PatrimonyItem: React.FC<PatrimonyItemProps> = ({ patrimony }) => {
+
     return (
-        <div className="patrimony-item">
-            <div className="patrimony-header">
+        <Item>
+            <Header>
                 <h2>{patrimony.ownerName}</h2>
                 <span>{patrimony.sectorName}</span>
-            </div>
+            </Header>
 
-            <div className="patrimony-content">
-                <div className="info">
+            <Content>
+                <Info>
                     <h3>{patrimony.typeName}</h3>
                     <p><span>Patrimônio:</span> {patrimony.patrimony}</p>
                     <p><span>Modelo:</span> {patrimony.model}</p>
-
                     {patrimony.ips &&    
                         <p><span>Ips: </span>
-                        {patrimony.ips.map((ip, index) => {
-                            if (patrimony.ips !== undefined && patrimony.ips.length - 1 === index) {
-                                return ip[1]
-                            }
-                            return ip[1] + ', '
-                            
-                        })}    
+                            {patrimony.ips}
                         </p>
                     }
-                    
-                </div>
+                </Info>
 
-                <div className="patrimony-action">
+                <Actions>
                     <Link to="/">
                         <img src={deleteForeverIcon} alt="Excluir"/>
                     </Link>
@@ -58,10 +51,10 @@ const PatrimonyItem: React.FC<PatrimonyItemProps> = ({ patrimony }) => {
 
                         <img src={editIcon} alt="Editar"/>
                     </Link>
-                </div>
-            </div>  
+                </Actions>
+            </Content>
 
-        </div>
+        </Item>
     )
 }
 

@@ -1,5 +1,6 @@
+import styled from 'styled-components'
 
-.dialog-block  {
+export const DialogContainer = styled.div`
     position: fixed;   
     z-index: 999;
     top: 0;
@@ -7,20 +8,20 @@
     right: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0);
-}
 
-.dialog-block:before {
-    content: "";
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.25);
-    z-index: 999;
-}
+    &:before {
+        content: "";
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.25);
+        z-index: 999;
+    }
+`
 
-.dialog-block .content {
+export const Content = styled.div`
     box-sizing: border-box;
     position: fixed;
     top: 50%;
@@ -38,19 +39,21 @@
     
     grid-template-rows: 30px 1fr 30px;
     align-items: center;
-}
 
-.dialog-block .content button {
-    justify-self: flex-end;
+    button {
+        justify-self: flex-end;
+        max-height: 30px;
+        outline: 0;
+        border: none;
+        cursor: pointer;
+    }
+`
 
-    max-height: 30px;
+export const ButtonClose = styled.button`
     background-color: #fff;
-    outline: 0;
-    border: none;
-    cursor: pointer;
-}
+`
 
-.dialog-block .content .save-button {
+export const ButtonSave = styled.button`
     color: #fff;
     background-color: var(--color-success); 
     padding: 2.4rem;
@@ -58,4 +61,4 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
+`

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import './styles.css'
+import { Container, Content } from './styled'
 
 interface CollapseProps {
     isOpen: boolean
@@ -9,14 +9,13 @@ interface CollapseProps {
 const Collapse: React.FC<CollapseProps> = ({ isOpen, children }) => {
     
     return(
-        <div className="collapse-block">          
+        <Container>          
             {isOpen &&
-            
-                <div className="content">
+                <Content>
                     {children}
-                </div>
+                </Content>
             }
-        </div> 
+        </Container>
     )
 }
 

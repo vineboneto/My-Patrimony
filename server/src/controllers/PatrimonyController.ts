@@ -75,18 +75,18 @@ export default class PatrimonyController {
         const { id } = req.params
 
         const patrimony = await db('patrimonies')
-            .select('patrimonies.*', 'owners.sector_id',
+            .select('patrimonies.*', 'owners.sector_id AS sector_id',
                 db.raw('GROUP_CONCAT( JSON_ARRAY( ips.id, ips.ip, ips.mask, ips.gateway ) ) AS ips'))
             .from('patrimonies')
             .join('owners', 'patrimonies.owner_id', '=', 'owners.id')
             .join('sectors', 'owners.sector_id', '=', 'sectors.id')
             .leftJoin('ips', 'ips.patrimony_id', '=', 'patrimonies.id')
             .where('patrimonies.id', '=', parseInt(id))
-            .groupBy('patrimonies.id')        
+            .groupBy('patrimonies.id')
         const patrimony_ = patrimony.map((p) => {
             return {
                 ...p,
-                ips: JSON.parse(" [ " + p.ips + " ] ")
+                ips: JSON.parse("[" + p.ips + "]")
             }
         })
         return res.json(patrimony_)
@@ -99,8 +99,8 @@ export default class PatrimonyController {
         const limit_ = limit ? parseInt(limit.toString()) : 0
 
         const patrimonies = await db('patrimonies')
-            .select('patrimonies.id', 'patrimonies.patrimony', 'patrimonies.model', 'owners.name AS owner_name',
-                'sectors.name AS sector_name', 'types.name AS type_name',
+            .select('patrimonies.id', 'patrimonies.patrimony', 'patrimonies.model', 'owners.name AS ownerName',
+                'sectors.name AS sectorName', 'types.name AS typeName',
                 db.raw('REPLACE (GROUP_CONCAT(ips.ip), ",", ", ") AS ips'))
             .from('patrimonies')
             .join('owners', 'patrimonies.owner_id', '=', 'owners.id')

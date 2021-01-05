@@ -1,32 +1,30 @@
 import React, { FormHTMLAttributes } from 'react'
 
-import './styles.css'
+import { FormContainer, Fieldset, Legend } from './styled'
 
 interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
     legend: string;
     labelButton?: string
-    addNew?: () => void
+    addButton?: () => void
 }
 
-const Form: React.FC<FormProps> = ({ addNew, legend, children, labelButton="" }) => {
+const Form: React.FC<FormProps> = ({ addButton, legend, children, labelButton }) => {
     return (
-        <form className="form-block">
-            <fieldset>
-                <legend>
+        <FormContainer>
+            <Fieldset>
+                <Legend>
                     {legend}
                     
-                    {labelButton && addNew &&
-                        <button  type="button" onClick={() => addNew()}>
+                    {labelButton && addButton &&
+                        <button  type="button" onClick={() => addButton()}>
                             {labelButton}
                         </button> 
                     }
-
-                    {}
-                </legend>
+                </Legend>
 
                 { children }
-            </fieldset>
-        </form>
+            </Fieldset>
+        </FormContainer>
     )
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import Input from '../Input'
 
-import './styles.css'
+import { Item } from './styled'
 
 interface IpItemsProps {
     ipItem: {
@@ -17,7 +17,7 @@ interface IpItemsProps {
 const IpItems: React.FC<IpItemsProps> = ({ ipItem, onIpChange, onMaskChange, onGatewayChange }) => {
     
     return (
-        <div className="ip-items">
+        <Item>
             <Input 
                 name="ip"
                 label="Ip"
@@ -39,7 +39,7 @@ const IpItems: React.FC<IpItemsProps> = ({ ipItem, onIpChange, onMaskChange, onG
                 onChange={(e) => onGatewayChange(e.target.value)}
                 placeholder="192.168.1.1"
                 />
-        </div>
+        </Item>
     )
 }
 

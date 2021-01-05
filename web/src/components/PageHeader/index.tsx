@@ -2,9 +2,10 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 
-import prevIcon from '../../assets/images/icons/prevIcon.svg'
+import { Header, TopBar, Title } from './styled'
 
-import './styles.css'
+import prevIcon from 'assets/images/icons/prevIcon.svg'
+
 
 interface PageHeaderProps {
     title: string;
@@ -20,20 +21,22 @@ interface PageHeaderProps {
 const PageHeader: React.FC<PageHeaderProps> = (props) => {
     
     return(
-        <header className="page-header">
+        // <header className="page-header">
+        <Header>
             
-            <div className="top-bar-container">
+            <TopBar>
                 <Link to={props.linkPrev}>
                     <img src={prevIcon} alt="Voltar"/>
                 </Link>
-            </div>
+            </TopBar>
 
-            <div className="header-content">
+            <Title>
                 <strong>{props.title}</strong>
-            </div>
+            </Title>
 
             {props.children}
-        </header>
+        </Header>
+        // </header>
     )
 }
 

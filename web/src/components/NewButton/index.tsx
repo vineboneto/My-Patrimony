@@ -2,7 +2,7 @@ import React, { ButtonHTMLAttributes } from 'react'
 
 import plusSector from '../../assets/images/icons/plusIcon.svg'
 
-import './styles.css'
+import { Button } from './styled'
 
 interface NewProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     isOpen: boolean
@@ -11,9 +11,9 @@ interface NewProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const NewButton: React.FC<NewProps> = ({ isOpen, ...rest }) => {
     
     return (
-        <button className="new-block" {...rest}>
+        <Button {...rest}>
             <img src={plusSector} alt="Novo setor"/>
-        </button>
+        </Button>
     )
 }
 
