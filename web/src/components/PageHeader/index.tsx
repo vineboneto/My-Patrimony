@@ -6,6 +6,10 @@ import { Header, TopBar, Title } from './styled'
 
 import prevIcon from 'assets/images/icons/prevIcon.svg'
 
+export interface TitleStyle {
+    justifyContent?: string;
+    margin?: string;
+}
 
 interface PageHeaderProps {
     title: string;
@@ -15,28 +19,26 @@ interface PageHeaderProps {
             owner: string
             sector: string
         }
-    } | string
+    } | string;
+    titleStyle?: TitleStyle
 }
 
 const PageHeader: React.FC<PageHeaderProps> = (props) => {
     
     return(
-        // <header className="page-header">
-        <Header>
-            
+        <Header> 
             <TopBar>
                 <Link to={props.linkPrev}>
                     <img src={prevIcon} alt="Voltar"/>
                 </Link>
             </TopBar>
 
-            <Title>
+            <Title justifyContent={props.titleStyle?.justifyContent} margin={props.titleStyle?.margin} >
                 <strong>{props.title}</strong>
             </Title>
 
             {props.children}
         </Header>
-        // </header>
     )
 }
 

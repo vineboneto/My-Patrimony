@@ -7,7 +7,7 @@ import Select from '../../components/Select'
 
 import api from '../../services/api'
 
-import './styles.css'
+import { Container, Search } from './styled'
 
 const PatrimonyList: React.FC = () => {
     
@@ -27,7 +27,7 @@ const PatrimonyList: React.FC = () => {
     const [total, setTotal] = useState(0)
     const limit = 5
     const [pages, setPages] = useState([0])
-    const [currentPage, setCurrentPage] = useState(3)
+    const [currentPage, setCurrentPage] = useState(1)
     
     useEffect(() => {
         getDataOwner()
@@ -87,13 +87,14 @@ const PatrimonyList: React.FC = () => {
 
 
     return (
-        <div id="page-patrimony-list">
+        <Container>
             <PageHeader
                 title="O que procura ?"
                 linkPrev="/"
-                />
+                titleStyle={{margin: "5rem auto", justifyContent: "flex-start" }}
+            />
 
-            <div className="search-block">
+            <Search>
                     <Select
                         name="owner"
                         label="Proprietário"
@@ -117,8 +118,7 @@ const PatrimonyList: React.FC = () => {
                         onChange={(e) => setPatrimony(e.target.value)}
                         />
 
-                {}
-            </div>
+            </Search>
             {patrimonies && patrimonies.map((patrimony: Patrimony) => {
                 return <PatrimonyItem
                 key={patrimony.id}
@@ -139,7 +139,7 @@ const PatrimonyList: React.FC = () => {
                     </button>
                 </div>
             </div>
-        </div>
+        </Container>
         
     )
 }

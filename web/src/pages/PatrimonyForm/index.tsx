@@ -15,7 +15,7 @@ import NewButton from '../../components/NewButton'
 
 import api from '../../services/api'
 
-import './styles.css'
+import { Container, Patrimony, DialogOwner, Owner, ButtonCollapse, ButtonFooter } from './styled'
 
 interface Params {
     id: string
@@ -210,9 +210,10 @@ const PatrimonyForm: React.FC = () => {
             { id: '', ip: '', mask: '', gateway: '' }
         ])
     }
+    
 
     return (
-        <div id="page-patrimony-form">
+        <Container>
             <PageHeader
                 title="Novo Patrimônio"
                 linkPrev="/" />
@@ -222,27 +223,23 @@ const PatrimonyForm: React.FC = () => {
                         addButton={() => setIsOpenOwner(!isOpenOwner)}
                         labelButton="+ Novo Proprietário"
                         legend="Proprietário">
+                        
                         <Dialog 
                             isOpen={isOpenOwner}
                             onIsOpenChange={(isOpen: boolean) => setIsOpenOwner(isOpen)}
                             labelButton="Salvar novo Proprietário"
                             onClickButton={(e) => handleCreateOwner(e)}
                         >
-                            <div className="new-owner-block">
+                            <DialogOwner>
                                 <Input
-                                    name="owner"
+                                    name="newOwner"
                                     label="Novo Proprietário"
                                     value={ownerDialog}
                                     onChange={(e) => setOwnerDialog(e.target.value)}
                                 />
 
-                                <NewButton
-                                    isOpen={isOpenOwner}
-                                    onClick={(e) => {
-                                        e.preventDefault()
-                                        setIsOpenSector(!isOpenSector)
-                                    }}
-                                />
+                                <NewButton onClick={(e) => { e.preventDefault()
+                                        setIsOpenSector(!isOpenSector)}} />
                                 
                                 <Dialog 
                                     isOpen={isOpenSector}
@@ -265,9 +262,11 @@ const PatrimonyForm: React.FC = () => {
                                   options={optionsSector} 
                                   onChange={(e) => setSectorIdDialog(e.target.value)}
                                 />
-                            </div>
+                            </DialogOwner>
                         </Dialog>
-                        <div className="owner-block">
+
+
+                        <Owner>
                             <Select
                                 name="owner"
                                 label="Proprietário"
@@ -284,36 +283,36 @@ const PatrimonyForm: React.FC = () => {
                                 onChange={(e) => setSectorId(e.target.value)}
                                 disabled={true} 
                             />
-                        </div>
+                        </Owner>
                     </Form>
 
-                    <Form
-                        legend="Patrimônio">
-                        <div className="patrimony-block">
+                    <Form legend="Patrimônio">
+                        
+                        <Patrimony>
+                            <div>
+                            <Dialog
+                                isOpen={isOpenType}
+                                onIsOpenChange={(isOpen: boolean) => setIsOpenType(isOpen)}
+                                labelButton="Salvar novo tipo"
+                                onClickButton={(e) => handleCreateType(e)}
+                                >
+                                <Input
+                                    name="typeDialog"
+                                    label="Novo Tipo"
+                                    value={typeDialog}
+                                    onChange={(e) => setTypeDialog(e.target.value)}
+                                />
+                            </Dialog>
+                            </div>
+                            
                             
                             <NewButton
-                                isOpen={isOpenOwner}
                                 onClick={(e) => {
                                     e.preventDefault()
                                     setIsOpenType(!isOpenType)
                                 }}
                             />
-                            <div className="new-type-dialog">
-                                <Dialog
-                                    isOpen={isOpenType}
-                                    onIsOpenChange={(isOpen: boolean) => setIsOpenType(isOpen)}
-                                    labelButton="Salvar novo tipo"
-                                    onClickButton={(e) => handleCreateType(e)}
-                                    >
-                                    <Input
-                                        name="typeDialog"
-                                        label="Novo Tipo"
-                                        value={typeDialog}
-                                        onChange={(e) => setTypeDialog(e.target.value)}
-                                    />
-                                </Dialog>
-                            </div>
-                        
+                            
                             <Select
                                 name="type"
                                 label="Tipo"
@@ -341,13 +340,13 @@ const PatrimonyForm: React.FC = () => {
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                             />
-                        </div>
+                        </Patrimony>
 
                     </Form>
                    
-                    <button className="button-collapse" onClick={(e) => setIsOpenIp(!isOpenIp)}>
+                    <ButtonCollapse onClick={(e) => setIsOpenIp(!isOpenIp)}>
                         Adicionar Ip
-                    </button>
+                    </ButtonCollapse>
                     <Collapse isOpen={isOpenIp}>
                         <Form 
                             legend="Ips"
@@ -370,17 +369,14 @@ const PatrimonyForm: React.FC = () => {
                         </Form>
                     </Collapse>
                     
-                    
-                    
-
                     <Footer>
-                        <button onClick={handleCreatePatrimony}>
+                        <ButtonFooter onClick={handleCreatePatrimony}>
                             Salvar Patrimônio
-                        </button>
+                        </ButtonFooter>
                     </Footer>   
                     
                 </Main>
-        </div>
+        </Container>
     )
 }
 

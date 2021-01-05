@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import  { TitleStyle }  from './index'
+
 export const Header = styled.header`
     width: 100%;
     height: 405px;
@@ -28,17 +30,17 @@ export const TopBar = styled.div`
     }
 `
 
-export const Title = styled.div`
+export const Title = styled.div<TitleStyle>`
     width: 90%;
     flex: 1;
     position: relative;
-    margin: 0 auto;
+    margin: ${props => props.margin ||  "0 auto"};
     max-width: 1100px;
     padding-bottom: 48px;
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: ${props => props.justifyContent || "center"};
     align-items: flex-start;
 
     strong {

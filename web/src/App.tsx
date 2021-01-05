@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import Routes from './routes'
 
-import './assets/styles/global.css'
+import { GlobalStyles } from './assets/styles/global'
+
+// import './assets/styles/global.css'
 
 function App() {
     return (
-        <Routes />
+        <Fragment>
+            <Routes />
+            <GlobalStyles />
+        </Fragment>
     );
 }
 
