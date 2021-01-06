@@ -143,9 +143,6 @@ const PatrimonyForm: React.FC = () => {
 
     async function handleCreatePatrimony(e: MouseEvent) {
         e.preventDefault()
-        console.log('Criando Patrimônio')
-        console.log(ipItems)
-        console.log(ipItems.length)
         api.post('patrimonies', {
             patrimony: patrimony,
             model: model,

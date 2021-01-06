@@ -28,8 +28,6 @@ const Test: React.FC = () => {
         })
         setSectors(options)
     }
-
-    const [isOpen, setIsOpen] = useState(false)
     return (
         <div>
             <Select

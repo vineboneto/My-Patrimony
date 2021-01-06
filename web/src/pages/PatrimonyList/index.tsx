@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import Input from '../../components/Input'
 import PageHeader from '../../components/PageHeader'
@@ -9,9 +10,15 @@ import api from '../../services/api'
 
 import { Container, Search, Pagination, Pages, Page } from './styled'
 
-const PatrimonyList: React.FC = () => {
+function useQuery() {
+    return new URLSearchParams(useLocation().search)
+}
 
+const PatrimonyList: React.FC = () => { 
+    const query = useQuery()
     
+    const history = useHistory()
+
     // Filters
     const [owner, setOwner] = useState('')
     const [patrimony, setPatrimony] = useState('')
@@ -31,67 +38,66 @@ const PatrimonyList: React.FC = () => {
     const [currentPage, setCurrentPage] = useState(1)
     
     useEffect(() => {
+        async function getDataOwner() {
+            const response = await api.get('owners')
+            const datas = response.data
+            const options = datas.map((data: any) => {
+                return {
+                    value: data.id,
+                    label: data.name,
+                    sectorId: data.sector_id
+                }
+            })
+            setOptionsOwner(options)
+        }
         getDataOwner()
-        getDataSector()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     
     useEffect(() => {
-
-        getDataPatrimony()
-       // eslint-disable-next-line react-hooks/exhaustive-deps 
+        async function getDataSector() {
+            const response =  await api.get('sectors')
+            const datas = response.data
+            
+            const options = datas.map((data: any) => {
+                return {
+                    value: data.id,
+                    label: data.name
+                }
+            })
+            setOptionsSector(options)
+        }
+        getDataSector()
     }, [])
+    
+    useEffect(() => {
+        async function getDataPatrimony() {
+            const response = await api.get(`patrimonies?page=${currentPage}&limit=${limit}`)
+            setPatrimonies(response.data)
+            setTotal(response.headers['x-total-count'] || 0)
+        }
+        getDataPatrimony()
+    }, [currentPage])
 
     useEffect(() => {
         const setPagination = () => {
-            console.log('total: ' + total)
             const totalPages = Math.ceil(total / limit)
-            console.log(totalPages)
             const arrayPages = []
             for (let i = 1; i <= totalPages; i++) {
                 arrayPages.push(i)
             }
-            setPages(arrayPages)
+            setPages(arrayPages)    
         }
-
         setPagination()
     }, [total])
 
-    
+    useEffect(() => {
+        setCurrentPage(parseInt(query.get('page') || '1'))
+    }, [query])
 
-    async function getDataPatrimony() {
-        const response = await api.get(`patrimonies?page=${currentPage}&limit=${limit}`)
-        console.log('header: ')        
-        setPatrimonies(response.data)
-        setTotal(response.headers['x-total-count'] || 0)
-    }
 
-    async function getDataOwner() {
-        const response = await api.get('owners')
-        const datas = response.data
-        const options = datas.map((data: any) => {
-            return {
-                value: data.id,
-                label: data.name,
-                sectorId: data.sector_id
-            }
-        })
-        setOptionsOwner(options)
+    const handleSetPage = (page: number) => {
+        history.push(`patrimonies?page=${page}&limit=${limit}`)
     }
-    
-    async function getDataSector() {
-        const response =  await api.get('sectors')
-        const datas = response.data
-        
-        const options = datas.map((data: any) => {
-            return {
-                value: data.id,
-                label: data.name
-            }
-        })
-        setOptionsSector(options)
-    }
-
 
     return (
         <Container>
@@ -139,12 +145,15 @@ const PatrimonyList: React.FC = () => {
             <Pagination>
                 
                 <Pages>
-                    
-                    <Page>Anterior</Page>
+                    <Page onClick={() => handleSetPage(currentPage - 1 <= 0 ? 1 : currentPage - 1)}>
+                        Anterior
+                    </Page>
                     {pages.map((page) => {
-                        return <Page key={page} onClick={() => setCurrentPage(page)} >{page}</Page>
+                        return <Page key={page} onClick={() => handleSetPage(page)}>{page}</Page>
                     })}
-                    <Page>Próxima</Page>
+                    <Page onClick={() => handleSetPage(currentPage + 1 >= pages[pages.length - 1] ? currentPage : currentPage + 1)}>
+                        Próxima
+                    </Page>
                     
                 </Pages>
             </Pagination>

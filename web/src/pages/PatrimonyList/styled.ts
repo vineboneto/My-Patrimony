@@ -37,4 +37,5 @@ export const Page = styled.button`
     border-radius: 0.8rem;
     background-color: var(--color-primary);
     color: #fff;
+    cursor: pointer;
 `
