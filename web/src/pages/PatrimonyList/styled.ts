@@ -16,3 +16,25 @@ export const Search = styled.div`
         color: #fff
     }
 `
+
+export const Pagination = styled.div`
+    margin: 5rem auto;
+    max-width: 74rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
+export const Pages = styled.div`
+    /* display: flex; */
+`
+
+export const Page = styled.button`
+    padding: 0.8rem 1.8rem;
+    margin: 0 1rem;
+    border: 0;
+    border-radius: 0.8rem;
+    background-color: var(--color-primary);
+    color: #fff;
+`

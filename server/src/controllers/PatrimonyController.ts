@@ -9,20 +9,6 @@ interface Ips {
     gateway: string
 }
 
-interface Patrimony {
-    id: number
-    patrimony: string
-    model: string
-    description: string
-    owner_id?: number
-    owner_name?: string
-    sector_id?: number
-    sector_name?: string
-    type_id?: number
-    type_name?: string
-    ips: Array<Ips>
-}
-
 export default class PatrimonyController {
     async create(req: Request, res: Response) {
         const { patrimony, model, description, owner_id, type_id, ips } = req.body
@@ -109,7 +95,14 @@ export default class PatrimonyController {
             .leftJoin('ips', 'ips.patrimony_id', '=', 'patrimonies.id')
             .groupBy('patrimonies.id')
             .orderBy('patrimonies.id').limit(limit_).offset((page_ * limit_) - limit_)
+
+        const totalPatrimonies = await db('patrimonies')
+            .count({ total: 'patrimonies.id'})
+            .from('patrimonies')
+
+        res.header('x-total-count', totalPatrimonies[0].total?.toString() || '')
         
         return res.json(patrimonies)
+        
     }
 }

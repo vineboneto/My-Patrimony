@@ -7,9 +7,10 @@ import Select from '../../components/Select'
 
 import api from '../../services/api'
 
-import { Container, Search } from './styled'
+import { Container, Search, Pagination, Pages, Page } from './styled'
 
 const PatrimonyList: React.FC = () => {
+
     
     // Filters
     const [owner, setOwner] = useState('')
@@ -36,28 +37,34 @@ const PatrimonyList: React.FC = () => {
     }, [])
     
     useEffect(() => {
-        
+
         getDataPatrimony()
        // eslint-disable-next-line react-hooks/exhaustive-deps 
-    }, [total, limit])
+    }, [])
+
+    useEffect(() => {
+        const setPagination = () => {
+            console.log('total: ' + total)
+            const totalPages = Math.ceil(total / limit)
+            console.log(totalPages)
+            const arrayPages = []
+            for (let i = 1; i <= totalPages; i++) {
+                arrayPages.push(i)
+            }
+            setPages(arrayPages)
+        }
+
+        setPagination()
+    }, [total])
+
+    
 
     async function getDataPatrimony() {
-        const response = await api.get(`patrimonies?page=${currentPage}&limit=${limit}`)        
+        const response = await api.get(`patrimonies?page=${currentPage}&limit=${limit}`)
+        console.log('header: ')        
         setPatrimonies(response.data)
-        setPagination(response.data.length)
+        setTotal(response.headers['x-total-count'] || 0)
     }
-
-    const setPagination = (t: number) => {
-        setTotal(t)
-        const totalPages = Math.ceil(total / limit)
-        const arrayPages = []
-        for (let i = 0; i <= totalPages; i++) {
-            arrayPages.push(i)
-        }
-        setPages(arrayPages)
-    }
-    
-    
 
     async function getDataOwner() {
         const response = await api.get('owners')
@@ -119,6 +126,7 @@ const PatrimonyList: React.FC = () => {
                         />
 
             </Search>
+            
             {patrimonies && patrimonies.map((patrimony: Patrimony) => {
                 return <PatrimonyItem
                 key={patrimony.id}
@@ -126,19 +134,20 @@ const PatrimonyList: React.FC = () => {
                 />
                 }
             )}
+            
 
-            <div className="pagination-block">
-                <div>Qtd: {total} </div>
-                <div>
-                    <button>
-                        <div>Previous</div>
-                        {pages.map((page,) => {
-                            return <div key={page} onClick={() => setCurrentPage(page)} >{page}</div>
-                        })}
-                        <div>Next</div>
-                    </button>
-                </div>
-            </div>
+            <Pagination>
+                
+                <Pages>
+                    
+                    <Page>Anterior</Page>
+                    {pages.map((page) => {
+                        return <Page key={page} onClick={() => setCurrentPage(page)} >{page}</Page>
+                    })}
+                    <Page>Próxima</Page>
+                    
+                </Pages>
+            </Pagination>
         </Container>
         
     )
