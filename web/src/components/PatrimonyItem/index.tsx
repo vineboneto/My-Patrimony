@@ -8,8 +8,8 @@ import { Item, Header, Content, Info, Actions } from './styled'
 
 export interface Patrimony {
     id: number
-    patrimony: string
     model: string
+    patrimony: string
     ownerName: string
     sectorName: string
     typeName: string

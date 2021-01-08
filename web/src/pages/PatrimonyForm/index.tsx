@@ -1,21 +1,25 @@
 import React, { MouseEvent, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import PageHeader from '../../components/PageHeader'
-import IpItems from '../../components/IpItem'
-import Form from '../../components/Form'
-import Main from '../../components/Main'
-import Select from '../../components/Select'
-import Input from '../../components/Input'
-import Textarea from '../../components/Textarea'
-import Footer from '../../components/Footer'
-import Collapse from '../../components/Collapse'
-import Dialog from '../../components/Dialog'
-import NewButton from '../../components/NewButton'
+import PageHeader from 'components/PageHeader'
+import IpItems from 'components/IpItem'
+import Form from 'components/Form'
+import Main from 'components/Main'
+import Select from 'components/Select'
+import Input from 'components/Input'
+import Textarea from 'components/Textarea'
+import Footer from 'components/Footer'
+import Collapse from 'components/Collapse'
+import Dialog from 'components/Dialog'
+import NewButton from 'components/NewButton'
 
-import api from '../../services/api'
+import api from 'services/api'
 
 import { Container, Patrimony, DialogOwner, Owner, ButtonCollapse, ButtonFooter } from './styled'
+import { useDispatch, useSelector } from 'react-redux'
+import { ApplicationState } from 'stores'
+import { stat } from 'fs'
+import { loadRequest, setDialogIsOpen } from 'stores/ducks/sectors/action'
 
 interface Params {
     id: string
@@ -56,6 +60,13 @@ const PatrimonyForm: React.FC = () => {
     const [isOpenIp, setIsOpenIp] = useState(false)
     const [isOpenType, setIsOpenType] = useState(false)
 
+    const sectors__ = useSelector((state: ApplicationState) => state.sectors)
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(loadRequest('sectors'))
+        dispatch(setDialogIsOpen(true))
+        console.log(sectors__.data)
+    }, [])
 
     useEffect(() => {
         getDataOwner()
@@ -222,8 +233,6 @@ const PatrimonyForm: React.FC = () => {
                         legend="Proprietário">
                         
                         <Dialog 
-                            isOpen={isOpenOwner}
-                            onIsOpenChange={(isOpen: boolean) => setIsOpenOwner(isOpen)}
                             labelButton="Salvar novo Proprietário"
                             onClickButton={(e) => handleCreateOwner(e)}
                         >
@@ -239,8 +248,6 @@ const PatrimonyForm: React.FC = () => {
                                         setIsOpenSector(!isOpenSector)}} />
                                 
                                 <Dialog 
-                                    isOpen={isOpenSector}
-                                    onIsOpenChange={(isOpen: boolean) => setIsOpenSector(isOpen)}
                                     labelButton="Salvar novo setor"
                                     onClickButton={(e) => handleCreateSector(e)}
                                 >
@@ -288,8 +295,6 @@ const PatrimonyForm: React.FC = () => {
                         <Patrimony>
                             <div>
                             <Dialog
-                                isOpen={isOpenType}
-                                onIsOpenChange={(isOpen: boolean) => setIsOpenType(isOpen)}
                                 labelButton="Salvar novo tipo"
                                 onClickButton={(e) => handleCreateType(e)}
                                 >

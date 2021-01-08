@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import Input from '../../components/Input'
 import PageHeader from '../../components/PageHeader'
@@ -10,12 +10,7 @@ import api from '../../services/api'
 
 import { Container, Search, Pagination, Pages, Page } from './styled'
 
-function useQuery() {
-    return new URLSearchParams(useLocation().search)
-}
-
 const PatrimonyList: React.FC = () => { 
-    const query = useQuery()
     
     const history = useHistory()
 
@@ -78,6 +73,11 @@ const PatrimonyList: React.FC = () => {
         getDataPatrimony()
     }, [currentPage])
 
+    const handleSetPage = (page: number) => {
+        setCurrentPage(page)
+        history.push(`patrimonies?page=${page}&limit=${limit}`)
+    }
+
     useEffect(() => {
         const setPagination = () => {
             const totalPages = Math.ceil(total / limit)
@@ -90,14 +90,6 @@ const PatrimonyList: React.FC = () => {
         setPagination()
     }, [total])
 
-    useEffect(() => {
-        setCurrentPage(parseInt(query.get('page') || '1'))
-    }, [query])
-
-
-    const handleSetPage = (page: number) => {
-        history.push(`patrimonies?page=${page}&limit=${limit}`)
-    }
 
     return (
         <Container>
@@ -151,7 +143,7 @@ const PatrimonyList: React.FC = () => {
                     {pages.map((page) => {
                         return <Page key={page} onClick={() => handleSetPage(page)}>{page}</Page>
                     })}
-                    <Page onClick={() => handleSetPage(currentPage + 1 >= pages[pages.length - 1] ? currentPage : currentPage + 1)}>
+                    <Page onClick={() => handleSetPage(currentPage + 1 > pages[pages.length - 1] ? currentPage : currentPage + 1)}>
                         Próxima
                     </Page>
                     
