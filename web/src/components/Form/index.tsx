@@ -5,18 +5,18 @@ import { FormContainer, Fieldset, Legend } from './styled'
 interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
     legend: string;
     labelButton?: string
-    addButton?: () => void
+    clickButton?: () => void
 }
 
-const Form: React.FC<FormProps> = ({ addButton, legend, children, labelButton }) => {
+const Form: React.FC<FormProps> = ({ clickButton, legend, children, labelButton }) => {
     return (
         <FormContainer>
             <Fieldset>
                 <Legend>
                     {legend}
                     
-                    {labelButton && addButton &&
-                        <button  type="button" onClick={() => addButton()}>
+                    {labelButton && clickButton &&
+                        <button  type="button" onClick={() => clickButton()}>
                             {labelButton}
                         </button> 
                     }

@@ -17,12 +17,8 @@ const reducer: Reducer = (state = INITIAL_STATE, action) => {
             return { ...state, loading: false, error: false, data: action.payload.data }
         case SectorTypes.LOAD_FAILURE:
             return { ...state, error: true, data: [] }
-        case SectorTypes.SET_IS_OPEN: {
-
-            console.log('Entrou')
-            console.log(action.payload.isOpen)
+        case SectorTypes.SET_IS_OPEN: 
             return { ...state, dialogIsOpen: action.payload.isOpen }
-        }
         default : return state
     }
 }

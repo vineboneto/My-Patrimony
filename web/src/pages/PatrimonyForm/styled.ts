@@ -4,7 +4,7 @@ export const Container = styled.div`
     width: 100vw;
 `
 
-export const Owner = styled.div`
+export const OwnerData = styled.div`
     display: grid;
     grid-template-columns: 300px 300px;
     height: 100%;
@@ -43,22 +43,6 @@ export const Patrimony = styled.div`
         grid-area: description
     }
 `
-
-
-
-export const DialogOwner = styled.div`
-    display: grid;
-    grid-template-columns: 300px 300px;
-    height: 100%;
-    grid-template-areas: "owner sector";
-    justify-content: space-between;
-    align-items: center;
-
-    & > :nth-child(2), & > :nth-child(3) {
-        grid-area: sector;
-    }
-`
-
 
 export const ButtonFooter = styled.button`
     width: 23.1rem;

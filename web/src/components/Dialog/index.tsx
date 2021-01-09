@@ -1,46 +1,39 @@
 import React, { MouseEvent } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { ApplicationState } from 'stores'
-import { setDialogIsOpen } from 'stores/ducks/sectors/action'
 
-import closeDialog from '../../assets/images/icons/closeIcon.svg'
+import closeIcon from '../../assets/images/icons/closeIcon.svg'
 
-import { DialogContainer, Content, ButtonSave, ButtonClose } from './styled'
+import { DialogContainer, Content, ButtonSave, ButtonClose, Container } from './styled'
+
 
 interface DialogProps {
+    isOpen: boolean
+    closeDialog: () => void
+    clickButton?: (e: MouseEvent) => void
     labelButton?: string
-    onClickButton?: (e: MouseEvent) => void
 }
 
-const Dialog: React.FC<DialogProps> = ({ children, labelButton, onClickButton }) => {
-    const isOpen = useSelector((state: ApplicationState) => state.sectors.dialogIsOpen)
-    const dispatch = useDispatch()
-
-    const handleCloseDialog = () => {
-        dispatch(setDialogIsOpen(false))
-    }
+const Dialog: React.FC<DialogProps> = ({ children, isOpen, labelButton, clickButton, closeDialog }) => {
     
     return (
-        <>
-            {isOpen &&
-            <DialogContainer role="dialog" tabIndex={-1}>
-                <Content>
-                    <ButtonClose onClick={handleCloseDialog}>              
-                        <img src={closeDialog} alt="Close"/>
-                    </ButtonClose>
-                    {children}
-                    
-                    {labelButton && onClickButton &&
-                        <ButtonSave onClick={(e: MouseEvent) => onClickButton(e)}>
-                            {labelButton}
-                        </ButtonSave>
-                    }
-                    
-                </Content>
-
-            </DialogContainer>
+        <Container>
+            { isOpen &&  
+                <DialogContainer role="dialog" tabIndex={-1}>
+                    <Content>
+                        <ButtonClose onClick={closeDialog}>              
+                            <img src={closeIcon} alt="Close"/>
+                        </ButtonClose>
+                        {children}
+                        
+                        {labelButton && clickButton &&
+                            <ButtonSave onClick={clickButton}>
+                                {labelButton}
+                            </ButtonSave>
+                        }   
+                        
+                    </Content>
+                </DialogContainer>
             }
-        </>
+        </Container>
     )
 }
 

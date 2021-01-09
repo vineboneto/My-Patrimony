@@ -1,18 +1,20 @@
-import React, { MouseEvent, useEffect, useState } from 'react'
+import React, { MouseEvent, useCallback, useState } from 'react'
 
 import Input from 'components/Input';
 import Dialog from 'components/Dialog';
-import api from 'services/api';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from 'stores';
 import { setDialogIsOpen } from 'stores/ducks/sectors/action';
+
+import api from 'services/api';
 
 const DialogCreateSector: React.FC = () => {
     
     const [sector, setSector] = useState('')
 
     
-    const isOpen = useSelector((state: ApplicationState) => state.sectors.dialogIsOpen)
+    const sectors = useSelector((state: ApplicationState) => state.sectors)
     const dispatch = useDispatch()
 
     async function handleCreateSector(e: MouseEvent) {
@@ -26,20 +28,25 @@ const DialogCreateSector: React.FC = () => {
         }).catch(() => alert('Erro ao cadastrar Setor'))
 
     }
-    
-    return (
 
-        <Dialog 
-            labelButton="Salvar novo setor"
-            onClickButton={(e) => handleCreateSector(e)}
-        >
-            <Input
-                name="newSector"
-                label="Novo Setor"
-                value={sector}
-                onChange={(e) => setSector(e.target.value)}
-            />
-        </Dialog>
+    const handleCloseDialog = useCallback(() => {
+        dispatch(setDialogIsOpen(false))
+    }, [dispatch])
+    
+    return (   
+            <Dialog
+                isOpen={sectors.dialogIsOpen}
+                closeDialog={handleCloseDialog}
+                labelButton="Salvar novo setor"
+                clickButton={handleCreateSector}
+            >
+                <Input
+                    name="newSector"
+                    label="Novo Setor"
+                    value={sector}
+                    onChange={(e) => setSector(e.target.value)}
+                />
+            </Dialog>
     )
 }
 

@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+export const Container = styled.div``
+
 export const DialogContainer = styled.div`
     position: fixed;   
     z-index: 999;
