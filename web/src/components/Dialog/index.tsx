@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react'
+import React, { MouseEvent, useCallback } from 'react'
 
 import closeIcon from '../../assets/images/icons/closeIcon.svg'
 
@@ -13,7 +13,8 @@ interface DialogProps {
 }
 
 const Dialog: React.FC<DialogProps> = ({ children, isOpen, labelButton, clickButton, closeDialog }) => {
-    
+
+
     return (
         <Container>
             { isOpen &&  

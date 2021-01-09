@@ -2,29 +2,32 @@ import React, { useCallback, useState, MouseEvent } from 'react'
 
 import Dialog from 'components/Dialog'
 import Input from 'components/Input'
-import api from 'services/api'
+// import api from 'services/api'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { ApplicationState } from 'stores'
-import { setDialogIsOpen } from 'stores/ducks/categories/action'
+import { loadCreate, setDialogIsOpen } from 'stores/ducks/categories/action'
 
 const DialogCreateCategory = () => {
     
-    const [type, setType] = useState('')
+    const [category, setCategory] = useState('')
     
     const dialogIsOpen = useSelector((state: ApplicationState) => state.categories.dialogIsOpen)
     const dispatch = useDispatch()
 
 
-    async function handleCreateType(e: MouseEvent) {
+    function handleCreateType(e: MouseEvent) {
         e.preventDefault()
 
-        api.post('types', {
-            name: type
-        }).then(() => {
-            alert('Tipo Cadastrado')
-            dispatch(setDialogIsOpen(false))
-        }).catch(() => alert('Erro ao cadastrar Tipo'))
+        // api.post('types', {
+        //     name: category
+        // }).then(() => {
+        //     alert('Tipo Cadastrado')
+        // }).catch(() => alert('Erro ao cadastrar Tipo'))
+        
+        dispatch(setDialogIsOpen(false))
+        dispatch(loadCreate('types', { name: category }))
+        alert('Cadastrado com sucesso!')
     }
     
     const handleCloseDialogType = useCallback(() => {
@@ -42,8 +45,8 @@ const DialogCreateCategory = () => {
             <Input
                 name="category"
                 label="Nova Categoria"
-                value={type}
-                onChange={(e) => setType(e.target.value)}
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
             />
         </Dialog>
     )

@@ -13,5 +13,6 @@ export default function* rootSaga() {
         takeEvery(SectorTypes.LOAD_REQUEST, SectorsSaga.load),
         takeEvery(OwnersTypes.LOAD_REQUEST, OwnersSaga.load),
         takeEvery(CategoriesTypes.LOAD_REQUEST, CategoriesSaga.load),
+        takeEvery(CategoriesTypes.LOAD_CREATE, CategoriesSaga.create),
     ])
 }

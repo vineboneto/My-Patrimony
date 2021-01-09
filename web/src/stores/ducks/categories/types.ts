@@ -6,6 +6,7 @@ export enum CategoriesTypes {
     LOAD_REQUEST = '@categories/LOAD_REQUEST',
     LOAD_SUCCESS = '@categories/LOAD_SUCCESS',
     LOAD_FAILURE = '@categories/LOAD_FAILURE',
+    LOAD_CREATE = '@categories/LOAD_CREATE',
     SET_IS_OPEN = '@categories/SET_IS_OPEN'
 }
 
@@ -14,7 +15,7 @@ export enum CategoriesTypes {
  */
 
 export interface Category {
-    id: number
+    id?: number
     name: string
 }
 
