@@ -9,7 +9,7 @@ const INITIAL_STATE: CategoryStates = {
     url: '',
 }
 
-const reducer: Reducer = (state = INITIAL_STATE, action) => {
+const reducer: Reducer<CategoryStates> = (state = INITIAL_STATE, action) => {
     switch(action.type) {
         case CategoriesTypes.LOAD_REQUEST:
             return { ...state, loading: true, url: action.payload.url }

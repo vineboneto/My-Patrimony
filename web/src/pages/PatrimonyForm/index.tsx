@@ -2,17 +2,16 @@ import React, { MouseEvent, useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import PageHeader from 'components/PageHeader'
-import IpItems from 'components/IpItem'
 import Form from 'components/Form'
 import Main from 'components/Main'
 import Select from 'components/Select'
 import Input from 'components/Input'
 import Textarea from 'components/Textarea'
 import Footer from 'components/Footer'
-import Collapse from 'components/Collapse'
 import NewButton from 'components/NewButton'
 import DialogCreateOwner from './DialogCreateOwner'
 import DialogCreateCategory from './DialogCreateCategory'
+import CollapseIps from './CollapseIps'
 
 
 import { Container, Patrimony, OwnerData, ButtonCollapse, ButtonFooter } from './styled'
@@ -43,32 +42,6 @@ const PatrimonyForm: React.FC = () => {
     const [model, setModel] = useState('')
     const [description, setDescription] = useState('')
     
-    const [ipItems, setIpItems] = useState([
-        { id: '', ip: '', mask: '', gateway: '' }
-    ])
-    const [isOpenIp, setIsOpenIp] = useState(false)
-
-
-
-
-
-    function setIpItemsValue(position: Number, field: string, value: string) {
-        const updateIpItems = ipItems.map((ipItem, index) => {
-            if (index === position) {
-                return { ...ipItem, [field]: value }
-            }
-            return ipItem
-        })
-        setIpItems(updateIpItems)
-    }
-
-    const addNewIpItem = () => {
-        setIpItems([
-            ...ipItems,
-            { id: '', ip: '', mask: '', gateway: '' }
-        ])
-    }
-
     async function handleCreatePatrimony(e: MouseEvent) {
         e.preventDefault()
         api.post('patrimonies', {
@@ -77,7 +50,7 @@ const PatrimonyForm: React.FC = () => {
             description: description,
             owner_id: parseInt(ownerId),
             type_id: parseInt(typeId),
-            ips: ipItems
+            // ips: ipItems
         })
         .then(() => alert('Patrimônio cadastrado com sucesso'))
         .catch(() => alert('Erro ao cadastrar Patrimônio'))
@@ -86,6 +59,7 @@ const PatrimonyForm: React.FC = () => {
     const owners = useSelector((state: ApplicationState) => state.owners)
     const categories = useSelector((state: ApplicationState) => state.categories)
     const sectors = useSelector((state: ApplicationState) => state.sectors)
+    const ips = useSelector((state: ApplicationState) => state.sectors)
     const dispatch = useDispatch()
 
     const handleOpenDialogOwner = useCallback(() => {
@@ -127,35 +101,35 @@ const PatrimonyForm: React.FC = () => {
                 setSectorId(owner.sectorId.toString())
             }
         })
-    }, [owners.data])
+    }, [])
 
-    useEffect(() => {
-        async function loadDataPatrimony() {
-            const response = await api.get(`patrimonies/${id}`)
-            const data = response.data[0]
-            setOwnerId(data.owner_id.toString())
-            setSectorId(data.sector_id.toString())
-            setTypeId(data.type_id)
-            setPatrimony(data.patrimony)
-            setModel(data.model)
-            setDescription(data.description)
-            if (data.ips[0][0]) {
-                const ips = data.ips.map((ip: any) => { 
-                    return {
-                        id: ip[0],
-                        ip: ip[1],
-                        mask: ip[2],
-                        gateway: ip[3]
-                    }
-                })
-                setIpItems(ips)
-            }
-        }
+    // useEffect(() => {
+    //     async function loadDataPatrimony() {
+    //         const response = await api.get(`patrimonies/${id}`)
+    //         const data = response.data[0]
+    //         setOwnerId(data.owner_id.toString())
+    //         setSectorId(data.sector_id.toString())
+    //         setTypeId(data.type_id)
+    //         setPatrimony(data.patrimony)
+    //         setModel(data.model)
+    //         setDescription(data.description)
+    //         if (data.ips[0][0]) {
+    //             const ips = data.ips.map((ip: any) => { 
+    //                 return {
+    //                     id: ip[0],
+    //                     ip: ip[1],
+    //                     mask: ip[2],
+    //                     gateway: ip[3]
+    //                 }
+    //             })
+    //             // setIpItems(ips)
+    //         }
+    //     }
+    //     if (id) {
+    //         loadDataPatrimony
+    //     }
 
-        if (id) {
-            loadDataPatrimony()
-        }
-    }, [id])
+    // }, [id])
  
 
     
@@ -235,33 +209,9 @@ const PatrimonyForm: React.FC = () => {
                         </Patrimony>
 
                     </Form>
-                   
-                    <ButtonCollapse onClick={(e) => setIsOpenIp(!isOpenIp)}>
-                        Adicionar Ip
-                    </ButtonCollapse>
 
-                    <Collapse isOpen={isOpenIp}>
-                        <Form 
-                            legend="Ips"
-                            clickButton={addNewIpItem}
-                            labelButton="+ Novo Ip">
+                    <CollapseIps />
 
-                            
-                            
-                            {ipItems.map((ipItem, index) => {
-                                return (
-                                    <IpItems
-                                        key={index}
-                                        ipItem={ipItem}
-                                        onIpChange={(ipValue: string) => setIpItemsValue(index, 'ip', ipValue) }
-                                        onMaskChange={(maskValue: string) => setIpItemsValue(index, 'mask', maskValue)} 
-                                        onGatewayChange={(gatewayValue: string) => setIpItemsValue(index, 'gateway', gatewayValue)} />
-                                )
-                            })}
-                            
-                        </Form>
-                    </Collapse>
-                    
                     <Footer>
                         <ButtonFooter onClick={handleCreatePatrimony}>
                             Salvar Patrimônio

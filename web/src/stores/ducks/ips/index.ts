@@ -2,23 +2,23 @@ import { Reducer } from 'redux';
 import { IpState, IpsTypes } from './types';
 
 const INITIAL_STATE: IpState = {
-    data: [],
-    loading: false,
-    error: false,
-    dialogIsOpen: false,
-    url: '',
+    data: [
+       { id: '', ip: '', mask: '', gateway: '' }
+    ],
+    collapseIsOpen: false,
 }
 
-const reducer: Reducer = (state = INITIAL_STATE, action) => {
+const reducer: Reducer<IpState> = (state = INITIAL_STATE, action) => {
     switch(action.type) {
-        case IpsTypes.LOAD_REQUEST:
-            return { ...state, loading: true, url: action.payload.url }
-        case IpsTypes.LOAD_SUCCESS:
-            return { ...state, loading: false, error: false, data: action.payload.data }
-        case IpsTypes.LOAD_FAILURE:
-            return { ...state, error: true, data: [] }
-        case IpsTypes.SET_IS_OPEN:
-            return { ...state, dialogIsOpen: action.payload.isOpen }
+        case IpsTypes.SET_IS_OPEN: 
+            return { ...state, collapseIsOpen: action.payload.isOpen }
+        case IpsTypes.ADD_IP:
+            return { ...state, data: [...action.payload.ips, { id: '', ip: '', mask: '', gateway: '' }] }
+        case IpsTypes.SET_IP: {
+            console.log('Entrou')
+            console.log(action.payload.ips)
+            return {  ...state, data: action.payload.ips }
+        }
         default : return state
     }
 }

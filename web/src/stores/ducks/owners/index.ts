@@ -9,7 +9,7 @@ const INITIAL_STATE: OwnerStates = {
     url: '',
 }
 
-const reducer: Reducer = (state = INITIAL_STATE, action) => {
+const reducer: Reducer<OwnerStates> = (state = INITIAL_STATE, action) => {
     switch(action.type) {
         case OwnersTypes.LOAD_REQUEST:
             return { ...state, loading: true, url: action.payload.url }

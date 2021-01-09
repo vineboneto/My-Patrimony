@@ -16,7 +16,6 @@ export enum CategoriesTypes {
 export interface Category {
     id: number
     name: string
-    sectorId: number
 }
 
 /**

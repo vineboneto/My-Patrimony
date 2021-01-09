@@ -1,41 +1,45 @@
-import React, { useState } from 'react'
+import React, { useCallback } from 'react'
 
 import Collapse from 'components/Collapse'
 import Form from 'components/Form'
 import IpItems from 'components/IpItem'
 
+import { useDispatch, useSelector } from 'react-redux'
+import { ApplicationState } from 'stores'
+import { addNewIp, setCollapseIsOpen, setIp } from 'stores/ducks/ips/action'
+
 import { ButtonCollapse } from './styled'
 
 const CollapseIps = () => {
 
-    const [ipItems, setIpItems] = useState([
-        { id: '', ip: '', mask: '', gateway: '' }
-    ])
+    const ips = useSelector((state: ApplicationState) => state.ips)
+    const dispatch = useDispatch()
 
     function setIpItemsValue(position: Number, field: string, value: string) {
-        const updateIpItems = ipItems.map((ipItem, index) => {
+        const updateIpItems = ips.data.map((ipItem, index) => {
             if (index === position) {
                 return { ...ipItem, [field]: value }
             }
             return ipItem
         })
-        setIpItems(updateIpItems)
+        dispatch(setIp(updateIpItems))
     }
 
     const addNewIpItem = () => {
-        setIpItems([
-            ...ipItems,
-            { id: '', ip: '', mask: '', gateway: '' }
-        ])
+        dispatch(addNewIp(ips.data))
     }
+
+    const handleOpenCollapse  = useCallback(() => {
+        dispatch(setCollapseIsOpen(!ips.collapseIsOpen))
+    }, [dispatch, ips.collapseIsOpen])
 
     return (
         <>
-            <ButtonCollapse onClick={(e) => setIsOpenIp(!isOpenIp)}>
-                            Adicionar Ip
-                        </ButtonCollapse>
+            <ButtonCollapse onClick={handleOpenCollapse}>
+                Adicionar Ip
+            </ButtonCollapse>
 
-            <Collapse isOpen={isOpenIp}>
+            <Collapse isOpen={ips.collapseIsOpen}>
                 <Form 
                     legend="Ips"
                     clickButton={addNewIpItem}
@@ -43,7 +47,7 @@ const CollapseIps = () => {
 
                     
                     
-                    {ipItems.map((ipItem, index) => {
+                    {ips.data.map((ipItem, index) => {
                         return (
                             <IpItems
                                 key={index}
@@ -59,3 +63,5 @@ const CollapseIps = () => {
         </>
     )
 }
+
+export default CollapseIps

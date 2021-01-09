@@ -9,7 +9,7 @@ const INITIAL_STATE: SectorStates = {
     url: '',
 }
 
-const reducer: Reducer = (state = INITIAL_STATE, action) => {
+const reducer: Reducer<SectorStates> = (state = INITIAL_STATE, action) => {
     switch(action.type) {
         case SectorTypes.LOAD_REQUEST:
             return { ...state, loading: true, url: action.payload.url }
