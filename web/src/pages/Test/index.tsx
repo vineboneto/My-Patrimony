@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import DialogCreateOwner from 'pages/PatrimonyForm/DialogCreateOwner'
+import React from 'react'
 
 const Test: React.FC = () => {
 
@@ -7,7 +6,7 @@ const Test: React.FC = () => {
         <div>
 
             
-            <DialogCreateOwner />
+            
 
         </div>
         
