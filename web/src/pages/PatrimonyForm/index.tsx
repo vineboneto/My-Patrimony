@@ -14,7 +14,7 @@ import DialogCreateCategory from './DialogCreateCategory'
 import CollapseIps from './CollapseIps'
 
 
-import { Container, Patrimony, OwnerData, ButtonCollapse, ButtonFooter } from './styled'
+import { Container, Patrimony, OwnerData, ButtonFooter } from './styled'
 import { useDispatch, useSelector } from 'react-redux'
 import { ApplicationState } from 'stores'
 import * as SectorActions from 'stores/ducks/sectors/action'
@@ -59,7 +59,7 @@ const PatrimonyForm: React.FC = () => {
     const owners = useSelector((state: ApplicationState) => state.owners)
     const categories = useSelector((state: ApplicationState) => state.categories)
     const sectors = useSelector((state: ApplicationState) => state.sectors)
-    const ips = useSelector((state: ApplicationState) => state.sectors)
+    // const ips = useSelector((state: ApplicationState) => state.ips)
     const dispatch = useDispatch()
 
     const handleOpenDialogOwner = useCallback(() => {
@@ -101,38 +101,35 @@ const PatrimonyForm: React.FC = () => {
                 setSectorId(owner.sectorId.toString())
             }
         })
-    }, [])
+    }, [owners.data])
 
-    // useEffect(() => {
-    //     async function loadDataPatrimony() {
-    //         const response = await api.get(`patrimonies/${id}`)
-    //         const data = response.data[0]
-    //         setOwnerId(data.owner_id.toString())
-    //         setSectorId(data.sector_id.toString())
-    //         setTypeId(data.type_id)
-    //         setPatrimony(data.patrimony)
-    //         setModel(data.model)
-    //         setDescription(data.description)
-    //         if (data.ips[0][0]) {
-    //             const ips = data.ips.map((ip: any) => { 
-    //                 return {
-    //                     id: ip[0],
-    //                     ip: ip[1],
-    //                     mask: ip[2],
-    //                     gateway: ip[3]
-    //                 }
-    //             })
-    //             // setIpItems(ips)
-    //         }
-    //     }
-    //     if (id) {
-    //         loadDataPatrimony
-    //     }
+    useEffect(() => {
+        async function loadDataPatrimony() {
+            const response = await api.get(`patrimonies/${id}`)
+            const data = response.data[0]
+            setOwnerId(data.owner_id.toString())
+            setSectorId(data.sector_id.toString())
+            setTypeId(data.type_id)
+            setPatrimony(data.patrimony)
+            setModel(data.model)
+            setDescription(data.description)
+            if (data.ips[0][0]) {
+                // const ips = data.ips.map((ip: any) => { 
+                //     return {
+                //         id: ip[0],
+                //         ip: ip[1],
+                //         mask: ip[2],
+                //         gateway: ip[3]
+                //     }
+                // })
+                // setIpItems(ips)
+            }
+        }
+        if (id) {
+            loadDataPatrimony()
+        }
 
-    // }, [id])
- 
-
-    
+    }, [id])    
 
     return (
         <Container>
