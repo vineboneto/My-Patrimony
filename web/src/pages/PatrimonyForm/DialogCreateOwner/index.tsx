@@ -15,6 +15,7 @@ import * as OwnersActions from 'stores/ducks/owners/action'
 
 import { OwnerData } from './styled'
 import api from 'services/api'
+import { loadCreate } from 'stores/ducks/owners/action'
 
 const DialogCreateOwner: React.FC = () => {
 
@@ -28,13 +29,17 @@ const DialogCreateOwner: React.FC = () => {
     async function handleCreateOwner(e: MouseEvent) {
         e.preventDefault()
 
-        api.post('owners', {
-            name: owner,
-            sector_id: parseInt(sectorId)
-        }).then(() => {
-            alert('Proprietário Cadastrado')
+
+        // api.post('owners', {
+        //     name: owner,
+        //     sector_id: parseInt(sectorId)
+        // }).then(() => {
+        //     alert('Proprietário Cadastrado')
             
-        }).catch(() => alert('Erro ao cadastrar proprietário'))
+        // }).catch(() => alert('Erro ao cadastrar proprietário'))
+        dispatch(loadCreate('owners', { name: owner, sectorId: parseInt(sectorId) }))
+        dispatch(OwnersActions.setDialogIsOpen(false))
+        alert('Cadastrado com sucesso')
 
     }
 

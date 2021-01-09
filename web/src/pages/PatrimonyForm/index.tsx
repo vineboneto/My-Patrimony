@@ -97,7 +97,7 @@ const PatrimonyForm: React.FC = () => {
         setOwnerId(e.target.value)
 
         owners.data.forEach((owner) => {
-            if (owner.id.toString() === e.target.value) {
+            if (owner.id?.toString() === e.target.value) {
                 setSectorId(owner.sectorId.toString())
             }
         })

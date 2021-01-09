@@ -1,15 +1,16 @@
 import { call, put } from 'redux-saga/effects'
 import { Action } from 'redux';
 
+import { Category } from 'stores/ducks/categories/types';
 import { loadFailure, loadSuccess } from './action';
-import { Category } from './types';
+
 
 import api from 'services/api';
 
 interface ActionProps extends Action {
     payload: {
         url: string,
-        category?: Category
+        category: Category
     }
 }
 

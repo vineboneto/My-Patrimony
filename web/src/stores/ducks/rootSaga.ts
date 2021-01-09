@@ -1,4 +1,4 @@
-import { all, takeEvery } from 'redux-saga/effects'
+import { all, takeLatest } from 'redux-saga/effects'
 
 import * as SectorsSaga from './sectors/saga';
 import * as OwnersSaga from './owners/saga';
@@ -10,9 +10,10 @@ import { OwnersTypes } from './owners/types';
 
 export default function* rootSaga() {
     return yield all([
-        takeEvery(SectorTypes.LOAD_REQUEST, SectorsSaga.load),
-        takeEvery(OwnersTypes.LOAD_REQUEST, OwnersSaga.load),
-        takeEvery(CategoriesTypes.LOAD_REQUEST, CategoriesSaga.load),
-        takeEvery(CategoriesTypes.LOAD_CREATE, CategoriesSaga.create),
+        takeLatest(SectorTypes.LOAD_REQUEST, SectorsSaga.load),
+        takeLatest(OwnersTypes.LOAD_REQUEST, OwnersSaga.load),
+        takeLatest(CategoriesTypes.LOAD_REQUEST, CategoriesSaga.load),
+        takeLatest(CategoriesTypes.LOAD_CREATE, CategoriesSaga.create),
+        takeLatest(OwnersTypes.LOAD_CREATE, OwnersSaga.create),
     ])
 }

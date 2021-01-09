@@ -2,7 +2,6 @@ import React, { useCallback, useState, MouseEvent } from 'react'
 
 import Dialog from 'components/Dialog'
 import Input from 'components/Input'
-// import api from 'services/api'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { ApplicationState } from 'stores'
@@ -18,16 +17,8 @@ const DialogCreateCategory = () => {
 
     function handleCreateType(e: MouseEvent) {
         e.preventDefault()
-
-        // api.post('types', {
-        //     name: category
-        // }).then(() => {
-        //     alert('Tipo Cadastrado')
-        // }).catch(() => alert('Erro ao cadastrar Tipo'))
-        
         dispatch(setDialogIsOpen(false))
         dispatch(loadCreate('types', { name: category }))
-        alert('Cadastrado com sucesso!')
     }
     
     const handleCloseDialogType = useCallback(() => {
