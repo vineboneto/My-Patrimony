@@ -6,7 +6,6 @@ const INITIAL_STATE: CategoryStates = {
     loading: false,
     error: false,
     dialogIsOpen: false,
-    url: '',
 }
 
 const reducer: Reducer<CategoryStates> = (state = INITIAL_STATE, action) => {

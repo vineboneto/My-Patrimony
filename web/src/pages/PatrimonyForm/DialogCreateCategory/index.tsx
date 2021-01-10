@@ -11,14 +11,16 @@ const DialogCreateCategory = () => {
     
     const [category, setCategory] = useState('')
     
-    const dialogIsOpen = useSelector((state: ApplicationState) => state.categories.dialogIsOpen)
+    const categories = useSelector((state: ApplicationState) => state.categories)
     const dispatch = useDispatch()
 
 
     function handleCreateType(e: MouseEvent) {
         e.preventDefault()
-        dispatch(setDialogIsOpen(false))
         dispatch(loadCreate('types', { name: category }))
+        categories.error ? alert ('Erro ao realizar cadastro') : alert('Cadastrado com sucesso')
+        dispatch(setDialogIsOpen(false))
+
     }
     
     const handleCloseDialogType = useCallback(() => {
@@ -28,7 +30,7 @@ const DialogCreateCategory = () => {
     
     return (
         <Dialog
-            isOpen={dialogIsOpen}
+            isOpen={categories.dialogIsOpen}
             closeDialog={handleCloseDialogType}
             labelButton="Salvar nova Categoria"
             clickButton={handleCreateType}

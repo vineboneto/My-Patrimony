@@ -27,6 +27,5 @@ export interface CategoryStates {
     data: Category[]
     loading: boolean,
     error: boolean,
-    url: string,
     dialogIsOpen: boolean
 }

@@ -86,7 +86,7 @@ const PatrimonyForm: React.FC = () => {
     const handleSetOptions = useCallback((datas) => {
         const options = datas.map((data: Data) => {
             return {
-                value: data.id.toString(),
+                value: data.id?.toString(),
                 label: data.name,
             }
         })

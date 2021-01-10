@@ -28,6 +28,5 @@ export interface OwnerStates {
     data: Owner[]
     loading: boolean,
     error: boolean,
-    url: string,
     dialogIsOpen: boolean
 }
