@@ -13,7 +13,6 @@ const DialogCreateSector: React.FC = () => {
     
     const [sector, setSector] = useState('')
 
-    
     const sectors = useSelector((state: ApplicationState) => state.sectors)
     const dispatch = useDispatch()
 

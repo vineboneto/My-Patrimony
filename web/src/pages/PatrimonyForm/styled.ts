@@ -14,7 +14,7 @@ export const OwnerData = styled.div`
 
 `
 
-export const Patrimony = styled.div`
+export const PatrimonyData = styled.div`
     display: grid;
     grid-template-areas: "type patrimony model"
         "description description description";

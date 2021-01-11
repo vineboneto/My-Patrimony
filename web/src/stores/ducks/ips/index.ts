@@ -14,11 +14,8 @@ const reducer: Reducer<IpState> = (state = INITIAL_STATE, action) => {
             return { ...state, collapseIsOpen: action.payload.isOpen }
         case IpsTypes.ADD_IP:
             return { ...state, data: [...action.payload.ips, { id: '', ip: '', mask: '', gateway: '' }] }
-        case IpsTypes.SET_IP: {
-            console.log('Entrou')
-            console.log(action.payload.ips)
+        case IpsTypes.SET_IP: 
             return {  ...state, data: action.payload.ips }
-        }
         default : return state
     }
 }

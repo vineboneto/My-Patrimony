@@ -18,6 +18,6 @@ export default function* rootSaga() {
         takeLatest(PatrimonyTypes.LOAD_REQUEST, PatrimoniesSaga.load),
         takeLatest(CategoriesTypes.LOAD_CREATE, CategoriesSaga.create),
         takeLatest(OwnersTypes.LOAD_CREATE, OwnersSaga.create),
-        takeLatest(PatrimonyTypes.LOAD_CREATE, PatrimoniesSaga.create)
+        takeLatest(PatrimonyTypes.LOAD_CREATE, PatrimoniesSaga.createOrUpdate)
     ])
 }

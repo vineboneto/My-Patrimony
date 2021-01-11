@@ -22,7 +22,7 @@ export function* load(action: ActionProps) {
     }
 }
 
-export function* create(action: ActionProps) {
+export function* createOrUpdate(action: ActionProps) {
     try {
         const url = action.payload.url
         const patrimony = action.payload.patrimony

@@ -11,38 +11,49 @@ interface Ips {
 
 export default class PatrimonyController {
     async create(req: Request, res: Response) {
-        const { patrimony, model, description, owner_id, type_id, ips } = req.body
+        const { id, patrimony, model, description, ownerId, categoryId, ips } = req.body
+        console.log(req.body)
 
         const trx = await db.transaction()
 
         try {
-            const insertedPatrimony = await trx('patrimonies').insert({
-                patrimony,
-                model,
-                description,
-                owner_id,
-                type_id
-            })
 
-            let existsIps 
-            ips.forEach((ip: any) => {
-                if (ip.ip === '') existsIps = false
-                else existsIps = true
-            })
-
-            if (existsIps) {
-                const patrimony_id = insertedPatrimony[0]
-                const classIps = ips.map((ip: Ips) => {
-                    return {
-                        ip: ip.ip,
-                        mask: ip.mask,
-                        gateway: ip.gateway,
-                        patrimony_id
-                    }
+            if (!id) {
+                const insertedPatrimony = await trx('patrimonies').insert({
+                    patrimony,
+                    model,
+                    description,
+                    owner_id: ownerId,
+                    type_id: categoryId
                 })
-                
-                await trx('ips').insert(classIps)
+
+                let existsIps 
+                ips.forEach((ip: any) => {
+                    if (ip.ip === '') existsIps = false
+                    else existsIps = true
+                })
+                console.log('ExitsIps: ' + existsIps)
+
+                if (existsIps) {
+                    const patrimony_id = insertedPatrimony[0]
+                    const classIps = ips.map((ip: Ips) => {
+                        return {
+                            ip: ip.ip,
+                            mask: ip.mask,
+                            gateway: ip.gateway,
+                            patrimony_id
+                        }
+                    })
+                    
+                    await trx('ips').insert(classIps)
+                }
             }
+            else {
+                console.log('id definido ' +  id + ' Update')
+            }
+            
+
+            
  
             await trx.commit()
 

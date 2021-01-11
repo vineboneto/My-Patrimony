@@ -14,17 +14,18 @@ import DialogCreateCategory from './DialogCreateCategory'
 import CollapseIps from './CollapseIps'
 
 
-import { Container, Patrimony, OwnerData, ButtonFooter } from './styled'
+import { Container, PatrimonyData, OwnerData, ButtonFooter } from './styled'
 import { useDispatch, useSelector } from 'react-redux'
 import { ApplicationState } from 'stores'
 import * as SectorActions from 'stores/ducks/sectors/action'
 import * as OwnerActions from 'stores/ducks/owners/action'
 import * as CategoryActions from 'stores/ducks/categories/action'
+import * as PatrimonyActions from 'stores/ducks/patrimonies/action'
 import { Category } from 'stores/ducks/categories/types'
+import { Patrimony } from 'stores/ducks/patrimonies/types'
 import { Sector } from 'stores/ducks/sectors/types'
 import { Owner } from 'stores/ducks/owners/types'
 
-import api from 'services/api'
 
 type Data = Category & Owner & Sector
 
@@ -38,28 +39,14 @@ const PatrimonyForm: React.FC = () => {
     const patrimonyInputRef = useRef<HTMLInputElement>(null)
     const modelInputRef = useRef<HTMLInputElement>(null)
     const descriptionTextareaRef = useRef<HTMLTextAreaElement>(null)
-    const [sectorId, setSectorId] = useState('')
-    const [ownerId, setOwnerId] = useState('')
-    const [categoryId, setCategoryId] = useState('')
-    
-    // async function handleCreatePatrimony(e: MouseEvent) {
-    //     e.preventDefault()
-    //     api.post('patrimonies', {
-    //         patrimony: '',
-    //         model: model,
-    //         description: description,
-    //         owner_id: parseInt(ownerId),
-    //         type_id: parseInt(typeId),
-    //         // ips: ipItems
-    //     })
-    //     .then(() => alert('Patrimônio cadastrado com sucesso'))
-    //     .catch(() => alert('Erro ao cadastrar Patrimônio'))
-    // }
-    
+    const [sectorIdSelectState, setSectorIdSelectState] = useState('')
+    const [ownerIdSelectState, setOwnerIdSelectState] = useState('')
+    const [categoryIdSelectState, setCategoryIdSelectState] = useState('')
+    const ips = useSelector((state: ApplicationState) => state.ips.data)
+        
     const owners = useSelector((state: ApplicationState) => state.owners)
     const categories = useSelector((state: ApplicationState) => state.categories)
     const sectors = useSelector((state: ApplicationState) => state.sectors)
-    // const ips = useSelector((state: ApplicationState) => state.ips)
     const dispatch = useDispatch()
 
     const handleOpenDialogOwner = useCallback(() => {
@@ -94,11 +81,11 @@ const PatrimonyForm: React.FC = () => {
     }, [])
 
     const handleOwnerChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-        setOwnerId(e.target.value)
+        setOwnerIdSelectState(e.target.value)
 
         owners.data.forEach((owner) => {
             if (owner.id?.toString() === e.target.value) {
-                setSectorId(owner.sectorId.toString())
+                setSectorIdSelectState(owner.sectorId.toString())
             }
         })
     }, [owners.data])
@@ -129,7 +116,34 @@ const PatrimonyForm: React.FC = () => {
     //         loadDataPatrimony()
     //     }
 
-    // }, [id])    
+    // }, [id])
+    
+    // async function handleCreatePatrimony(e: MouseEvent) {
+    //     e.preventDefault()
+    //     api.post('patrimonies', {
+    //         patrimony: '',
+    //         model: model,
+    //         description: description,
+    //         owner_id: parseInt(ownerId),
+    //         type_id: parseInt(typeId),
+    //         // ips: ipItems
+    //     })
+    //     .then(() => alert('Patrimônio cadastrado com sucesso'))
+    //     .catch(() => alert('Erro ao cadastrar Patrimônio'))
+    // }
+    
+    const handleCreatePatrimony = useCallback(() => {
+        const patrimony: Patrimony = {
+            id: parseInt(id), 
+            patrimony: patrimonyInputRef.current?.value || '',
+            model: modelInputRef.current?.value || '',
+            description: descriptionTextareaRef.current?.value || '',
+            ownerId: parseInt(ownerIdSelectState),
+            categoryId: parseInt(categoryIdSelectState),
+            ips: ips
+        }
+        dispatch(PatrimonyActions.loadCreateOrUpdate('patrimonies', patrimony))
+    }, [ownerIdSelectState, categoryIdSelectState, ips])
 
     return (
         <Container>
@@ -152,7 +166,7 @@ const PatrimonyForm: React.FC = () => {
                             <Select
                                 name="owner"
                                 label="Proprietário"
-                                value={ownerId}
+                                value={ownerIdSelectState}
                                 options={handleSetOptions(owners.data)}
                                 onChange={handleOwnerChange}
                             />
@@ -161,8 +175,8 @@ const PatrimonyForm: React.FC = () => {
                                 name="sector"
                                 label="Setor"
                                 options={handleSetOptions(sectors.data)}
-                                value={sectorId}
-                                onChange={(e) => setSectorId(e.target.value)}
+                                value={sectorIdSelectState}
+                                onChange={(e) => setSectorIdSelectState(e.target.value)}
                                 disabled={true} 
                             />
                         </OwnerData>
@@ -170,7 +184,7 @@ const PatrimonyForm: React.FC = () => {
 
                     <Form legend="Patrimônio">
                         
-                        <Patrimony>
+                        <PatrimonyData>
                             
                             <DialogCreateCategory />
                             
@@ -180,8 +194,8 @@ const PatrimonyForm: React.FC = () => {
                                 name="type"
                                 label="Tipo"
                                 options={handleSetOptions(categories.data)}
-                                value={categoryId}
-                                onChange={(e) => setCategoryId(e.target.value)}
+                                value={categoryIdSelectState}
+                                onChange={(e) => setCategoryIdSelectState(e.target.value)}
                             />
 
                             <Input
@@ -200,14 +214,14 @@ const PatrimonyForm: React.FC = () => {
                                 label="Descrição"
                                 ref={descriptionTextareaRef}
                             />
-                        </Patrimony>
+                        </PatrimonyData>
 
                     </Form>
 
                     <CollapseIps />
 
                     <Footer>
-                        <ButtonFooter onClick={() => {}}>
+                        <ButtonFooter onClick={handleCreatePatrimony}>
                             Salvar Patrimônio
                         </ButtonFooter>
                     </Footer>   
