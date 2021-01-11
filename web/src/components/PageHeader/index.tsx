@@ -13,13 +13,7 @@ export interface TitleStyle {
 
 interface PageHeaderProps {
     title: string;
-    linkPrev: {
-        pathname: string,
-        state?: {
-            owner: string
-            sector: string
-        }
-    } | string;
+    prev: "/"
     titleStyle?: TitleStyle
 }
 
@@ -28,7 +22,7 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
     return(
         <Header> 
             <TopBar>
-                <Link to={props.linkPrev}>
+                <Link to={props.prev}>
                     <img src={prevIcon} alt="Voltar"/>
                 </Link>
             </TopBar>
