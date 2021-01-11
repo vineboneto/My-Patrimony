@@ -1,4 +1,4 @@
-import React, { MouseEvent, useCallback, useEffect, useState } from 'react'
+import React, { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import PageHeader from 'components/PageHeader'
@@ -35,26 +35,26 @@ interface Params {
 const PatrimonyForm: React.FC = () => {
     
     const { id }  = useParams<Params>()
+    const patrimonyInputRef = useRef<HTMLInputElement>(null)
+    const modelInputRef = useRef<HTMLInputElement>(null)
+    const descriptionTextareaRef = useRef<HTMLTextAreaElement>(null)
     const [sectorId, setSectorId] = useState('')
     const [ownerId, setOwnerId] = useState('')
-    const [typeId, setTypeId] = useState('')
-    const [patrimony, setPatrimony] = useState('')
-    const [model, setModel] = useState('')
-    const [description, setDescription] = useState('')
+    const [categoryId, setCategoryId] = useState('')
     
-    async function handleCreatePatrimony(e: MouseEvent) {
-        e.preventDefault()
-        api.post('patrimonies', {
-            patrimony: patrimony,
-            model: model,
-            description: description,
-            owner_id: parseInt(ownerId),
-            type_id: parseInt(typeId),
-            // ips: ipItems
-        })
-        .then(() => alert('Patrimônio cadastrado com sucesso'))
-        .catch(() => alert('Erro ao cadastrar Patrimônio'))
-    }
+    // async function handleCreatePatrimony(e: MouseEvent) {
+    //     e.preventDefault()
+    //     api.post('patrimonies', {
+    //         patrimony: '',
+    //         model: model,
+    //         description: description,
+    //         owner_id: parseInt(ownerId),
+    //         type_id: parseInt(typeId),
+    //         // ips: ipItems
+    //     })
+    //     .then(() => alert('Patrimônio cadastrado com sucesso'))
+    //     .catch(() => alert('Erro ao cadastrar Patrimônio'))
+    // }
     
     const owners = useSelector((state: ApplicationState) => state.owners)
     const categories = useSelector((state: ApplicationState) => state.categories)
@@ -103,33 +103,33 @@ const PatrimonyForm: React.FC = () => {
         })
     }, [owners.data])
 
-    useEffect(() => {
-        async function loadDataPatrimony() {
-            const response = await api.get(`patrimonies/${id}`)
-            const data = response.data[0]
-            setOwnerId(data.owner_id.toString())
-            setSectorId(data.sector_id.toString())
-            setTypeId(data.type_id)
-            setPatrimony(data.patrimony)
-            setModel(data.model)
-            setDescription(data.description)
-            if (data.ips[0][0]) {
-                // const ips = data.ips.map((ip: any) => { 
-                //     return {
-                //         id: ip[0],
-                //         ip: ip[1],
-                //         mask: ip[2],
-                //         gateway: ip[3]
-                //     }
-                // })
-                // setIpItems(ips)
-            }
-        }
-        if (id) {
-            loadDataPatrimony()
-        }
+    // useEffect(() => {
+    //     async function loadDataPatrimony() {
+    //         const response = await api.get(`patrimonies/${id}`)
+    //         const data = response.data[0]
+    //         setOwnerId(data.owner_id.toString())
+    //         setSectorId(data.sector_id.toString())
+    //         setTypeId(data.type_id)
+    //         // setPatrimony(data.patrimony)
+    //         setModel(data.model)
+    //         setDescription(data.description)
+    //         if (data.ips[0][0]) {
+    //             // const ips = data.ips.map((ip: any) => { 
+    //             //     return {
+    //             //         id: ip[0],
+    //             //         ip: ip[1],
+    //             //         mask: ip[2],
+    //             //         gateway: ip[3]
+    //             //     }
+    //             // })
+    //             // setIpItems(ips)
+    //         }
+    //     }
+    //     if (id) {
+    //         loadDataPatrimony()
+    //     }
 
-    }, [id])    
+    // }, [id])    
 
     return (
         <Container>
@@ -180,28 +180,25 @@ const PatrimonyForm: React.FC = () => {
                                 name="type"
                                 label="Tipo"
                                 options={handleSetOptions(categories.data)}
-                                value={typeId}
-                                onChange={(e) => setTypeId(e.target.value)}
+                                value={categoryId}
+                                onChange={(e) => setCategoryId(e.target.value)}
                             />
 
                             <Input
                                 name="patrimony"
                                 label="Patrimônio"
-                                value={patrimony}
-                                onChange={(e) => setPatrimony(e.target.value)}
+                                ref={patrimonyInputRef}
                             />
 
                             <Input
                                 name="model"
                                 label="Modelo"
-                                value={model}
-                                onChange={(e) => setModel(e.target.value)}
+                                ref={modelInputRef}
                             />
                             <Textarea
                                 name="description"
                                 label="Descrição"
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
+                                ref={descriptionTextareaRef}
                             />
                         </Patrimony>
 
@@ -210,7 +207,7 @@ const PatrimonyForm: React.FC = () => {
                     <CollapseIps />
 
                     <Footer>
-                        <ButtonFooter onClick={handleCreatePatrimony}>
+                        <ButtonFooter onClick={() => {}}>
                             Salvar Patrimônio
                         </ButtonFooter>
                     </Footer>   

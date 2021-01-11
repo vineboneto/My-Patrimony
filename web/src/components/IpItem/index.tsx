@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import Input from '../Input'
 
 import { Item } from './styled'
@@ -43,4 +43,4 @@ const IpItems: React.FC<IpItemsProps> = ({ ipItem, onIpChange, onMaskChange, onG
     )
 }
 
-export default IpItems
+export default memo(IpItems)

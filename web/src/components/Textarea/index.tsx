@@ -1,4 +1,4 @@
-import React, { TextareaHTMLAttributes } from 'react'
+import React, { forwardRef, memo, TextareaHTMLAttributes } from 'react'
 
 import { Container } from './styled'
 
@@ -7,13 +7,17 @@ interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     label: string
 }
 
-const Textarea: React.FC<TextareaProps> = ({ name, label, ...rest }) => {
+const Textarea: React.ForwardRefRenderFunction<HTMLTextAreaElement, TextareaProps> = ({ name, label, ...rest }, ref) => {
     return (
         <Container>
             <label htmlFor={name}>{label}</label>
-            <textarea id={name} {...rest} />
+            <textarea 
+                id={name}
+                {...rest}
+                ref={ref}
+            />
         </Container>
     )
 }
 
-export default Textarea
+export default forwardRef(Textarea)

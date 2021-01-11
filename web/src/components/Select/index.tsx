@@ -1,4 +1,4 @@
-import React, { SelectHTMLAttributes } from 'react'
+import React, { memo, SelectHTMLAttributes } from 'react'
 
 import { Container } from './styled'
 

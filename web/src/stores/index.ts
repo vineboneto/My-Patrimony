@@ -5,6 +5,7 @@ import { SectorStates } from './ducks/sectors/types';
 import { OwnerStates } from './ducks/owners/types'; 
 import { CategoryStates } from './ducks/categories/types';
 import { IpState } from './ducks/ips/types'
+import { PatrimonyStates } from './ducks/patrimonies/types'
 
 import rootReducer from './ducks/rootReducer';
 import rootSaga from './ducks/rootSaga';
@@ -15,6 +16,7 @@ export interface ApplicationState {
     owners: OwnerStates
     categories: CategoryStates
     ips: IpState
+    patrimonies: PatrimonyStates
 }
 
 const sagaMiddleware = createSagaMiddleware()

@@ -1,4 +1,4 @@
-import React, { FormHTMLAttributes } from 'react'
+import React, { FormHTMLAttributes, memo } from 'react'
 
 import { FormContainer, Fieldset, Legend } from './styled'
 
@@ -28,4 +28,4 @@ const Form: React.FC<FormProps> = ({ clickButton, legend, children, labelButton 
     )
 }
 
-export default Form
+export default memo(Form)

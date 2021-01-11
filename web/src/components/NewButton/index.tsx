@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes } from 'react'
+import React, { ButtonHTMLAttributes, memo } from 'react'
 
 import plusIcon from '../../assets/images/icons/plusIcon.svg'
 
@@ -16,4 +16,4 @@ const NewButton: React.FC<NewButtonProps> = ({ ...rest }) => {
     )
 }
 
-export default NewButton
+export default memo(NewButton)
