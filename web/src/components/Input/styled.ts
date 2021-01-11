@@ -6,7 +6,6 @@ export const InputBlock = styled.div`
     label {
         font-size: 1.4rem;
         color: var(--color-label-input);
-        padding-top: 2rem;
 
         display: flex;
         justify-content: space-between;

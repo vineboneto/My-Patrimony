@@ -1,11 +1,11 @@
 import React from 'react'
 import { SubmitHandler, FormHandles } from '@unform/core'
-import { Form } from '@unform/web'
 
 import Input from 'components/Input'
 import PageHeader from 'components/PageHeader'
 
-import { Container, Main, Form as SForm, Legend } from './styled'
+import { Container, Main, Form as SForm, Legend, Fieldset, OwnerData } from './styled'
+import Select from 'components/Select'
 
 const PatrimonyForm: React.FC = () => {
     return (
@@ -14,10 +14,17 @@ const PatrimonyForm: React.FC = () => {
 
             <Main>
                 <SForm onSubmit={() => {}}>
-                    <Legend>Proprietário</Legend>
-                    <Input name="owner" label="Proprietário" />
+                    
+                    <Fieldset>
+                        <Legend>Proprietário</Legend>
+                        <OwnerData>
+                            <Input name="owner" label="Proprietário" />
+                            <Select name="sectors" label="Setor" options={[ { value: '1', label: 'Compras' }, { value: '2', label: 'Admin' } ]} />
+                        </OwnerData>
+                    </Fieldset>
                 </SForm>
             </Main>
+            
 
         </Container>
     )

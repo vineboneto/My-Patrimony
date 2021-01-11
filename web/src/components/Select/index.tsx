@@ -1,33 +1,49 @@
-import React, { memo, SelectHTMLAttributes } from 'react'
+import React, { useRef, useEffect } from 'react';
+import {
+    OptionTypeBase,
+    Props as SelectProps,
+} from 'react-select';
+import { useField } from '@unform/core';
+import { StyledSelect, SelectBlock, Label } from './styled';
 
-import { Container } from './styled'
-
-
-interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
+interface Props extends SelectProps<OptionTypeBase> {
+    name: string;
     label: string
-    options: Array<{
-        value: string
-        label: string
-    }>
 }
+const Select: React.FC<Props> = ({ name, label, ...rest }) => {
+    const selectRef = useRef(null);
+    const { fieldName, defaultValue, registerField, error } = useField(name);
 
-const Select : React.FC<SelectProps> = ({ name, label, options, ...rest }) => {
+    useEffect(() => {
+        registerField({
+            name: fieldName,
+            ref: selectRef.current,
+            getValue: (ref: any) => {
+                if (rest.isMulti) {
+                    if (!ref.state.value) {
+                        return [];
+                    }
+                    return ref.state.value.map((option: OptionTypeBase) => option.value);
+                }
+                if (!ref.state.value) {
+                    return '';
+                }
+                return ref.state.value.value;
+            },
+        });
+    }, [fieldName, registerField, rest.isMulti]);
 
     return (
-        <Container>
-            <label htmlFor={name}>
-                {label}
-            </label>
-            
-            <select value="" id={name} {...rest}>
-                <option value="" disabled hidden>Selecione</option>
-
-                {options.map(option => {
-                    return <option key={option.value} value={option.value}>{option.label}</option>
-                })}
-            </select>
-        </Container>
-    )
-}
-
-export default Select
+        <SelectBlock>
+            <Label>{label}</Label>
+            <StyledSelect
+                defaultValue={defaultValue}
+                ref={selectRef}
+                classNamePrefix="react-select"
+                className="basic-single"
+                {...rest}
+            />
+        </SelectBlock>
+    );
+};
+export default Select;

@@ -11,16 +11,30 @@ export const Main = styled.main`
     border-radius: 0.8rem;
     margin: -8.2rem auto 3.2rem;
     padding-top: 3.4rem;
-    overflow: hidden;
+    /* overflow: hidden; */
+    /* z-index: 3; */
 `
 
 export const Form = styled(Unform)`
-        border: 0;
-        padding: 3.4rem;
 
-        & + & {
-            margin-top: 6.4rem;
-        }
+`
+
+export const OwnerData = styled.div`
+    display: grid;
+    grid-template-columns: 300px 300px;
+    
+    grid-template-areas: "owner sector";
+    justify-content: space-between;
+    align-items: center;
+`
+export const Fieldset = styled.fieldset`
+    border: 0;
+    padding: 3.4rem;
+
+    & + & {
+        margin-top: 6.4rem;
+    }
+
 `
 
 export const Legend = styled.legend`
@@ -47,16 +61,6 @@ export const Legend = styled.legend`
         color: #000;
     }
 `
-
-// export const OwnerData = styled.div`
-//     display: grid;
-//     grid-template-columns: 300px 300px;
-//     height: 100%;
-//     grid-template-areas: "owner sector";
-//     justify-content: space-between;
-//     align-items: center;
-
-// `
 
 // export const PatrimonyData = styled.div`
 //     display: grid;
