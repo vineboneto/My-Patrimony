@@ -31,6 +31,7 @@ const Select: React.FC<Props> = ({ name, label, ...rest }) => {
                 return ref.state.value.value;
             },
         });
+        
     }, [fieldName, registerField, rest.isMulti]);
 
     return (
@@ -43,6 +44,8 @@ const Select: React.FC<Props> = ({ name, label, ...rest }) => {
                 className="basic-single"
                 {...rest}
             />
+
+            { error && <span>{error}</span> }
         </SelectBlock>
     );
 };
