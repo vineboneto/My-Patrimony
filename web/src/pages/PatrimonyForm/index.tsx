@@ -47,6 +47,7 @@ const PatrimonyForm: React.FC = () => {
     const owners = useSelector((state: ApplicationState) => state.owners)
     const categories = useSelector((state: ApplicationState) => state.categories)
     const sectors = useSelector((state: ApplicationState) => state.sectors)
+    const patrimonies = useSelector((state: ApplicationState) => state.patrimonies)
     const dispatch = useDispatch()
 
     const handleOpenDialogOwner = useCallback(() => {
@@ -90,47 +91,13 @@ const PatrimonyForm: React.FC = () => {
         })
     }, [owners.data])
 
-    // useEffect(() => {
-    //     async function loadDataPatrimony() {
-    //         const response = await api.get(`patrimonies/${id}`)
-    //         const data = response.data[0]
-    //         setOwnerId(data.owner_id.toString())
-    //         setSectorId(data.sector_id.toString())
-    //         setTypeId(data.type_id)
-    //         // setPatrimony(data.patrimony)
-    //         setModel(data.model)
-    //         setDescription(data.description)
-    //         if (data.ips[0][0]) {
-    //             // const ips = data.ips.map((ip: any) => { 
-    //             //     return {
-    //             //         id: ip[0],
-    //             //         ip: ip[1],
-    //             //         mask: ip[2],
-    //             //         gateway: ip[3]
-    //             //     }
-    //             // })
-    //             // setIpItems(ips)
-    //         }
-    //     }
-    //     if (id) {
-    //         loadDataPatrimony()
-    //     }
-
-    // }, [id])
+    useEffect(() => {
+        if (id) {
+            dispatch(PatrimonyActions.loadRequest(`patrimonies/${id}`))
+            console.log(patrimonies.data)
+        }
+    }, [id])
     
-    // async function handleCreatePatrimony(e: MouseEvent) {
-    //     e.preventDefault()
-    //     api.post('patrimonies', {
-    //         patrimony: '',
-    //         model: model,
-    //         description: description,
-    //         owner_id: parseInt(ownerId),
-    //         type_id: parseInt(typeId),
-    //         // ips: ipItems
-    //     })
-    //     .then(() => alert('Patrimônio cadastrado com sucesso'))
-    //     .catch(() => alert('Erro ao cadastrar Patrimônio'))
-    // }
     
     const handleCreatePatrimony = useCallback(() => {
         const patrimony: Patrimony = {
@@ -143,7 +110,10 @@ const PatrimonyForm: React.FC = () => {
             ips: ips
         }
         dispatch(PatrimonyActions.loadCreateOrUpdate('patrimonies', patrimony))
-    }, [ownerIdSelectState, categoryIdSelectState, ips])
+        console.log(patrimonies.error)
+        patrimonies.error ? alert('Erro ao cadastrar') : alert('Cadastrado com sucesso')
+
+    }, [dispatch, ownerIdSelectState, categoryIdSelectState, patrimonies.error, ips, id])
 
     return (
         <Container>

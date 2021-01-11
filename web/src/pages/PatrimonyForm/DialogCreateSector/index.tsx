@@ -1,4 +1,4 @@
-import React, { MouseEvent, useCallback, useState } from 'react'
+import React, { MouseEvent, useCallback, useRef } from 'react'
 
 import Input from 'components/Input';
 import Dialog from 'components/Dialog';
@@ -11,7 +11,7 @@ import api from 'services/api';
 
 const DialogCreateSector: React.FC = () => {
     
-    const [sector, setSector] = useState('')
+    const sectorInputRef = useRef<HTMLInputElement>(null)
 
     const sectors = useSelector((state: ApplicationState) => state.sectors)
     const dispatch = useDispatch()
@@ -20,7 +20,7 @@ const DialogCreateSector: React.FC = () => {
         e.preventDefault()
 
         api.post('sectors', {
-            name: sector
+            name: sectorInputRef
         }).then(() => {
             alert('Setor Cadastrado')
             dispatch(setDialogIsOpen(false))
@@ -42,8 +42,7 @@ const DialogCreateSector: React.FC = () => {
                 <Input
                     name="newSector"
                     label="Novo Setor"
-                    value={sector}
-                    onChange={(e) => setSector(e.target.value)}
+                    ref={sectorInputRef}
                 />
             </Dialog>
     )

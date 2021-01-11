@@ -1,4 +1,4 @@
-import React, { MouseEvent, useCallback, useEffect, useState } from 'react'
+import React, { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
 
 
 import Select from 'components/Select'
@@ -17,8 +17,8 @@ import { OwnerData } from './styled'
 
 const DialogCreateOwner: React.FC = () => {
 
-    const [owner, setOwner] = useState('')
-    const [sectorId, setSectorId] = useState('')
+    const ownerInputRef = useRef<HTMLInputElement>(null)
+    const [sectorIdSelectState, setSectorIdSelectState] = useState('')
 
     const sectors = useSelector((state: ApplicationState) => state.sectors)
     const owners = useSelector((state: ApplicationState) => state.owners)
@@ -26,7 +26,8 @@ const DialogCreateOwner: React.FC = () => {
 
     function handleCreateOwner(e: MouseEvent) {
         e.preventDefault()
-        dispatch(OwnersActions.loadCreate('owners', { name: owner, sectorId: parseInt(sectorId) }))
+        dispatch(OwnersActions.loadCreate('owners',
+            { name: ownerInputRef.toString(), sectorId: parseInt(sectorIdSelectState) }))
         dispatch(OwnersActions.setDialogIsOpen(false))
         owners.error ? alert('Erro ao cadastrar') : alert('Cadastrado com sucesso')
     }
@@ -65,20 +66,19 @@ const DialogCreateOwner: React.FC = () => {
                 <Input
                     name="newOwner"
                     label="Novo Proprietário"
-                    value={owner}
-                    onChange={(e) => setOwner(e.target.value)}
+                    ref={ownerInputRef}
                 />
 
                 <DialogCreateSector />
 
-                <NewButton onClick={handleOpenDialogSector}/>
+                <NewButton onClick={handleOpenDialogSector} />
 
                 <Select
                     name="sectorDialog"
                     label="Setor"
-                    value={sectorId}
-                    options={handleSetOptions()} 
-                    onChange={(e) => setSectorId(e.target.value)}
+                    value={sectorIdSelectState}
+                    options={handleSetOptions()}
+                    onChange={(e) => setSectorIdSelectState(e.target.value)}
                 />
             </OwnerData>
         </Dialog>

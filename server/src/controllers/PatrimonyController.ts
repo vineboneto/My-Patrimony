@@ -12,12 +12,10 @@ interface Ips {
 export default class PatrimonyController {
     async create(req: Request, res: Response) {
         const { id, patrimony, model, description, ownerId, categoryId, ips } = req.body
-        console.log(req.body)
 
         const trx = await db.transaction()
 
         try {
-
             if (!id) {
                 const insertedPatrimony = await trx('patrimonies').insert({
                     patrimony,
@@ -47,13 +45,10 @@ export default class PatrimonyController {
                     
                     await trx('ips').insert(classIps)
                 }
-            }
-            else {
-                console.log('id definido ' +  id + ' Update')
-            }
-            
 
-            
+            } else {
+                console.log('id definido ' +  id + ' Update')
+            }            
  
             await trx.commit()
 
