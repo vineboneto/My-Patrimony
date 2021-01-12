@@ -8,7 +8,9 @@ import PageHeader from 'components/PageHeader'
 import Collapse from '@material-ui/core/Collapse'
 
 import { Container, Main, Form as SForm, Legend, Fieldset, OwnerData,
-     PatrimonyData, Footer, Button, ButtonCollapse, IpData, Create } from './styled'
+     PatrimonyData, Footer, Button, ButtonCollapse, IpData, Create, Plus } from './styled'
+
+import plusIcon from 'assets/images/icons/plusIcon.svg'
 
 interface FormData {
     patrimony: string
@@ -49,6 +51,10 @@ const PatrimonyForm: React.FC = () => {
         console.log(data)
     }, [])  
 
+    const handleOpenDialog = useCallback(() => {
+        console.log('Opa')
+    }, [])
+
 
     return (
         <Container>
@@ -72,6 +78,10 @@ const PatrimonyForm: React.FC = () => {
                     <Fieldset>
                         <Legend>Patrimônio</Legend>
                         <PatrimonyData>
+                            
+                            <Plus onClick={handleOpenDialog}>
+                                <img src={plusIcon} alt="Adicionar Categoria"/>
+                            </Plus>
                             <Select name="categories" label="Categoria" options={optionCategory} />
                             <Input name="patrimony"  label="Patrimônio" />
                             <Input name="model" label="Modelo" />

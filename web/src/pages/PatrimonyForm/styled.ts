@@ -62,11 +62,27 @@ export const PatrimonyData = styled.div`
     grid-template-columns: repeat(3, 200px);
     justify-content: space-between;
     align-items: center;
+    
+    & > :nth-child(1), & :nth-child(2) {
+        grid-area: category;
+    }
 
-    & > :nth-child(4) {
+    & > :nth-child(5) {
         margin-top: 2.4rem;
         grid-area: description
     }
+`
+
+export const Plus = styled.button`
+    background-color: #fff;
+    cursor: pointer;
+    max-width: 30px;
+    max-height: 30px;
+    outline: 0;
+    border: 0;
+    z-index: 3;
+    justify-self: flex-end;
+    padding-left: 5px;
 `
 
 export const IpData = styled.div`
