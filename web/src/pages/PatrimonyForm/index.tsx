@@ -1,11 +1,11 @@
 import React, { useCallback, useRef, useState } from 'react'
 import { SubmitHandler, FormHandles, Scope } from '@unform/core'
-import Collapse from '@material-ui/core/Collapse'
 
 import Input from 'components/Input'
 import Select from 'components/Select'
 import Textarea from 'components/Textarea'
 import PageHeader from 'components/PageHeader'
+import Collapse from '@material-ui/core/Collapse'
 
 import { Container, Main, Form as SForm, Legend, Fieldset, OwnerData,
      PatrimonyData, Footer, Button, ButtonCollapse, IpData } from './styled'
@@ -22,7 +22,7 @@ interface FormData {
     ]
 }
 
-const PatrimonyForm: React.FC = (props) => {
+const PatrimonyForm: React.FC = () => {
   
     const optionSector = [
         { value: '1', label: 'Compras' },
@@ -32,6 +32,11 @@ const PatrimonyForm: React.FC = (props) => {
     const optionCategory = [
         { value: '1', label: 'Computador' },
         { value: '2', label: 'Impressora' }
+    ]
+
+    const optionOwners = [
+        { value: '1', label: 'Vinicius' },
+        { value: '2', label: 'Weusley' }
     ]
 
     const [visible, setVisible] = useState(false)
@@ -55,7 +60,7 @@ const PatrimonyForm: React.FC = (props) => {
                     <Fieldset>
                         <Legend>Proprietário</Legend>
                         <OwnerData>
-                            <Input name="owner" label="Proprietário" />
+                            <Select name="owner" label="Proprietário" options={optionOwners} />
                             <Select name="sectors" label="Setor" options={optionSector} />
                         </OwnerData>
                     </Fieldset>
@@ -93,7 +98,6 @@ const PatrimonyForm: React.FC = (props) => {
                     
                 </SForm>
             </Main>
-            
 
         </Container>
     )
