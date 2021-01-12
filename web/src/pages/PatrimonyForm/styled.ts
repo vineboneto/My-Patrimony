@@ -27,12 +27,28 @@ export const OwnerData = styled.div`
     justify-content: space-between;
     align-items: center;
 `
+
+export const PatrimonyData = styled.div`
+    display: grid;
+    grid-template-areas: 
+        "category patrimony model"
+        "description description description";
+    grid-template-columns: repeat(3, 200px);
+    justify-content: space-between;
+    align-items: center;
+
+    & > :nth-child(4) {
+        margin-top: 2.4rem;
+        grid-area: description
+    }
+`
+
 export const Fieldset = styled.fieldset`
     border: 0;
     padding: 3.4rem;
 
     & + & {
-        margin-top: 6.4rem;
+        margin-top: 1.4rem;
     }
 
 `
@@ -62,45 +78,24 @@ export const Legend = styled.legend`
     }
 `
 
-// export const PatrimonyData = styled.div`
-//     display: grid;
-//     grid-template-areas: "type patrimony model"
-//         "description description description";
-//     grid-template-columns: repeat(3, 200px);
-//     justify-content: space-between;
+export const Footer = styled.footer`
+    height: 138px;
+    background-color: var(--color-border-input);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 3.4rem;
+`
 
-//     & > :nth-child(2), & > :nth-child(3)  {
-//         grid-area: type;
-//     }
-    
-//     & > :nth-child(2) {
-//         justify-self: flex-end;
-//         align-self: center;
-//     }
-
-//     & > :nth-child(4) {
-//         grid-area: patrimony;
-//     }    
-
-//     & > :nth-child(5) {
-//         grid-area: model;
-//     }
-
-//     & > :nth-child(6) {
-//         margin-top: 2.4rem;
-//         grid-area: description
-//     }
-// `
-
-// export const ButtonFooter = styled.button`
-//     width: 23.1rem;
-//     height: 5.4rem;
-//     border-radius: 0.8rem;
-//     border: 1px solid var(--color-border-input);
-//     background-color: var(--color-primary);
-//     color: #fff;
-//     outline: 0;
-//     padding: 0 1.6rem;
-//     font: 1.6rem 'Archivo';
-//     cursor: pointer;
-// `
+export const Button = styled.button`
+    width: 23.1rem;
+    height: 5.4rem;
+    border-radius: 0.8rem;
+    border: 1px solid var(--color-border-input);
+    background-color: var(--color-primary);
+    color: #fff;
+    outline: 0;
+    padding: 0 1.6rem;
+    font: 1.6rem 'Archivo';
+    cursor: pointer;
+`
