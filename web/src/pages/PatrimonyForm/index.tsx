@@ -8,7 +8,7 @@ import PageHeader from 'components/PageHeader'
 import Collapse from '@material-ui/core/Collapse'
 
 import { Container, Main, Form as SForm, Legend, Fieldset, OwnerData,
-     PatrimonyData, Footer, Button, ButtonCollapse, IpData } from './styled'
+     PatrimonyData, Footer, Button, ButtonCollapse, IpData, Create } from './styled'
 
 interface FormData {
     patrimony: string
@@ -52,13 +52,17 @@ const PatrimonyForm: React.FC = () => {
 
     return (
         <Container>
+
             <PageHeader title="Novo Patrimônio" prev="/" />
 
             <Main>
                 <SForm ref={formRef} onSubmit={handleSubmit}>
 
                     <Fieldset>
-                        <Legend>Proprietário</Legend>
+                        <Legend>
+                            Proprietário
+                            <Create>+ Novo Proprietário</Create>
+                        </Legend>
                         <OwnerData>
                             <Select name="owner" label="Proprietário" options={optionOwners} />
                             <Select name="sectors" label="Setor" options={optionSector} />
@@ -79,7 +83,10 @@ const PatrimonyForm: React.FC = () => {
                     <ButtonCollapse onClick={handleOpenCollapse}>{visible ? 'Fechar' : 'Adicionar Ips'}</ButtonCollapse>
                     <Fieldset padding="0 3.4rem">
                         <Collapse in={visible}>
-                        <Legend padding="3.4rem 0 0">Ips</Legend>
+                        <Legend padding="3.4rem 0 0">
+                            Ips
+                            <Create>+ Novo Ip</Create>
+                        </Legend>
                             <IpData>
                                 <Scope path={"ips"}>
                                     <Input name="ip" label="Ip" placeholder="192.168.1.55" />

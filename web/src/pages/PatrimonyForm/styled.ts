@@ -42,24 +42,6 @@ export const Legend = styled.legend<StyleProps>`
     padding: ${props => (props.padding ? props.padding : "0 0 3.4rem 0")};
     padding-bottom: 2.6rem;
     border-bottom: 1px solid var(--color-border-input);
-
-    legend:last-child {
-        background-color: red;
-    }
-
-    button {
-        background: none;
-        border: 0;
-        color: var(--color-primary);
-        font: 700 1.6rem 'Archivo';
-        transition: color 0.2s;
-        cursor: pointer;
-        z-index: 1;
-    }
-
-    button:hover {
-        color: #000;
-    }
 `
 
 
@@ -124,6 +106,21 @@ export const ButtonCollapse = styled.button`
     display: flex;
     justify-content: flex-start;
     align-items: center;
+`
+
+export const Create = styled.button`
+    background: none;
+    border: 0;
+    color: var(--color-primary);
+    font: 700 1.6rem 'Archivo';
+    transition: color 0.2s;
+    cursor: pointer;
+    z-index: 1;
+
+
+    &:hover {
+        color: #000;
+    } 
 `
 
 export const Footer = styled.footer`
