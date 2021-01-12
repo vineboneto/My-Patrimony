@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { SubmitHandler, FormHandles } from '@unform/core'
+import { SubmitHandler, FormHandles, Scope } from '@unform/core'
 import Collapse from '@material-ui/core/Collapse'
 
 import Input from 'components/Input'
@@ -8,7 +8,7 @@ import Textarea from 'components/Textarea'
 import PageHeader from 'components/PageHeader'
 
 import { Container, Main, Form as SForm, Legend, Fieldset, OwnerData,
-     PatrimonyData, Footer, Button, ButtonCollapse } from './styled'
+     PatrimonyData, Footer, Button, ButtonCollapse, IpData } from './styled'
 
 
 const PatrimonyForm: React.FC = (props) => {
@@ -59,14 +59,17 @@ const PatrimonyForm: React.FC = (props) => {
                     <ButtonCollapse onClick={handleOpenCollapse}>{visible ? 'Fechar' : 'Adicionar Ips'}</ButtonCollapse>
                     <Fieldset>
                         <Collapse in={visible}>
-                            <span>
-                                <span>Teste</span>
-                            </span>
+                            <IpData>
+                                <Scope path="patrimony">
+                                    <Input name="ip" label="Ip" placeholder="192.168.1.55" />
+                                    <Input name="mask" label="Máscara de sub-rede" placeholder="255.255.255.0" />
+                                    <Input name="gateway" label="Gateway" placeholder="192.168.1.1" />
+                                </Scope>
+                            </IpData>
                         </Collapse>
                     </Fieldset>
                     
                 </SForm>
-
 
                 <Footer>
                     <Button>

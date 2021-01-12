@@ -45,6 +45,18 @@ export const PatrimonyData = styled.div`
     }
 `
 
+export const IpData = styled.div`
+    display: grid;
+    grid-template-columns: repeat(3, 201px);
+    grid-template-areas: "ip mask gateway";
+    justify-content: space-between;
+    padding: 3.4rem 0;
+
+    & + & {
+        margin-top: 2.4rem;
+    }
+`
+
 export const Fieldset = styled.fieldset`
     border: 0;
     padding: 3.4rem;

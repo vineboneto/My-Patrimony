@@ -9471,14 +9471,6 @@ react-app-polyfill@^2.0.0:
     regenerator-runtime "^0.13.7"
     whatwg-fetch "^3.4.1"
 
-react-collapsed@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/react-collapsed/-/react-collapsed-3.0.1.tgz#1bd8daab639cba51917e7de6a5f7b4641d010717"
-  integrity sha512-TP3TEszJv0VXDgAq2XaSJffGGeNErYCLuODwK6i5CRM1jcSmZuEoQw54rbxvten7XnhoaX9FYub7BA/zc0o17A==
-  dependencies:
-    raf "^3.4.1"
-    tiny-warning "^1.0.3"
-
 react-dev-utils@^11.0.1:
   version "11.0.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-11.0.1.tgz#30106c2055acfd6b047d2dc478a85c356e66fe45"
