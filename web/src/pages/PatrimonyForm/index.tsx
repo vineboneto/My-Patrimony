@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import { SubmitHandler, FormHandles } from '@unform/core'
+import Collapse from '@material-ui/core/Collapse'
 
 import Input from 'components/Input'
 import Select from 'components/Select'
 import Textarea from 'components/Textarea'
 import PageHeader from 'components/PageHeader'
 
-import { Container, Main, Form as SForm, Legend, Fieldset, OwnerData, PatrimonyData, Footer, Button } from './styled'
+import { Container, Main, Form as SForm, Legend, Fieldset, OwnerData,
+     PatrimonyData, Footer, Button, ButtonCollapse } from './styled'
 
-const PatrimonyForm: React.FC = () => {
+
+const PatrimonyForm: React.FC = (props) => {
+  
     const optionSector = [
         { value: '1', label: 'Compras' },
         { value: '2', label: 'Admin' }
@@ -18,6 +22,13 @@ const PatrimonyForm: React.FC = () => {
         { value: '1', label: 'Computador' },
         { value: '2', label: 'Impressora' }
     ]
+
+    const [visible, setVisible] = useState(false)
+    const handleOpenCollapse = useCallback(() => {
+        setVisible(!visible)
+    }, [visible])
+
+
 
     return (
         <Container>
@@ -43,7 +54,19 @@ const PatrimonyForm: React.FC = () => {
                             <Textarea name="description" label="Descrição" />
                         </PatrimonyData>
                     </Fieldset>
+
+                    
+                    <ButtonCollapse onClick={handleOpenCollapse}>{visible ? 'Fechar' : 'Adicionar Ips'}</ButtonCollapse>
+                    <Fieldset>
+                        <Collapse in={visible}>
+                            <span>
+                                <span>Teste</span>
+                            </span>
+                        </Collapse>
+                    </Fieldset>
+                    
                 </SForm>
+
 
                 <Footer>
                     <Button>

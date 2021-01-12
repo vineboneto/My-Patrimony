@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Form as Unform } from '@unform/web'
-
+ 
 export const Container = styled.div`
     width: 100vw;
 `
@@ -12,11 +12,13 @@ export const Main = styled.main`
     margin: -8.2rem auto 3.2rem;
     padding-top: 3.4rem;
     /* overflow: hidden; */
-    /* z-index: 3; */
+    z-index: 3;
 `
 
 export const Form = styled(Unform)`
-
+    fieldset:last-child {
+        padding: 0 3.4rem;
+    }
 `
 
 export const OwnerData = styled.div`
@@ -78,15 +80,6 @@ export const Legend = styled.legend`
     }
 `
 
-export const Footer = styled.footer`
-    height: 138px;
-    background-color: var(--color-border-input);
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 0 3.4rem;
-`
-
 export const Button = styled.button`
     width: 23.1rem;
     height: 5.4rem;
@@ -99,3 +92,28 @@ export const Button = styled.button`
     font: 1.6rem 'Archivo';
     cursor: pointer;
 `
+
+export const ButtonCollapse = styled.button`
+    width: 100%;
+    background-color: #808080;
+    padding: 1rem 3.4rem;
+    color: #fff;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+`
+
+export const Footer = styled.footer`
+    height: 138px;
+    background-color: var(--color-border-input);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 3.4rem;
+`
+
+

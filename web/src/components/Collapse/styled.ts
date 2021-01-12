@@ -1,12 +1,12 @@
 import styled from 'styled-components'
 
-export const Container = styled.div`
+interface Content {
+    visible: boolean
+}
 
-`
-
-export const Content = styled.div`
-    &:first-child {
-        padding-top: 2rem;
-        overflow: hidden;
-    }
+export const Container = styled.div<Content>`
+    position: relative;
+    padding: ${props => (props.visible ? "3.4rem" : "#0")};
+    background: ${props => (props.visible ? "#333" : "#f2f2f2")};
+    transition: height 5s;
 `
