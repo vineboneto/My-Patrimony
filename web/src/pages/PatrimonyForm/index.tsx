@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { SubmitHandler, FormHandles, Scope } from '@unform/core'
 import Collapse from '@material-ui/core/Collapse'
 
@@ -10,6 +10,17 @@ import PageHeader from 'components/PageHeader'
 import { Container, Main, Form as SForm, Legend, Fieldset, OwnerData,
      PatrimonyData, Footer, Button, ButtonCollapse, IpData } from './styled'
 
+interface FormData {
+    patrimony: string
+    model: string
+    description: string
+    categoryId: string
+    ownerId: string
+    sectorId: string
+    ips: [
+        { id: number, ip: string, mask: string, gateway: string }
+    ]
+}
 
 const PatrimonyForm: React.FC = (props) => {
   
@@ -28,6 +39,10 @@ const PatrimonyForm: React.FC = (props) => {
         setVisible(!visible)
     }, [visible])
 
+    const formRef = useRef<FormHandles>(null)
+    const handleSubmit: SubmitHandler<FormData> = useCallback((data) => {
+        console.log(data)
+    }, [])  
 
 
     return (
@@ -35,7 +50,7 @@ const PatrimonyForm: React.FC = (props) => {
             <PageHeader title="Novo Patrimônio" prev="/" />
 
             <Main>
-                <SForm onSubmit={() => { }}>
+                <SForm ref={formRef} onSubmit={handleSubmit}>
 
                     <Fieldset>
                         <Legend>Proprietário</Legend>
@@ -57,10 +72,11 @@ const PatrimonyForm: React.FC = (props) => {
 
                     
                     <ButtonCollapse onClick={handleOpenCollapse}>{visible ? 'Fechar' : 'Adicionar Ips'}</ButtonCollapse>
-                    <Fieldset>
+                    <Fieldset padding="0 3.4rem">
                         <Collapse in={visible}>
+                        <Legend padding="3.4rem 0 0">Ips</Legend>
                             <IpData>
-                                <Scope path="patrimony">
+                                <Scope path={"ips"}>
                                     <Input name="ip" label="Ip" placeholder="192.168.1.55" />
                                     <Input name="mask" label="Máscara de sub-rede" placeholder="255.255.255.0" />
                                     <Input name="gateway" label="Gateway" placeholder="192.168.1.1" />
@@ -68,14 +84,14 @@ const PatrimonyForm: React.FC = (props) => {
                             </IpData>
                         </Collapse>
                     </Fieldset>
+
+                    <Footer>
+                        <Button>
+                            Salvar
+                        </Button>
+                    </Footer>
                     
                 </SForm>
-
-                <Footer>
-                    <Button>
-                        Salvar
-                    </Button>
-                </Footer>
             </Main>
             
 
