@@ -7,10 +7,10 @@ import { useField } from '@unform/core';
 import { StyledSelect, SelectBlock, Label } from './styled';
 
 interface Props extends SelectProps<OptionTypeBase> {
-    name: string;
+    name: string
     label: string
 }
-const Select: React.FC<Props> = ({ name, label, ...rest }) => {
+const Select: React.FC<Props> = ({ name, label, options, ...rest }) => {
     const selectRef = useRef(null);
     const { fieldName, defaultValue, registerField, error } = useField(name);
 
@@ -29,7 +29,7 @@ const Select: React.FC<Props> = ({ name, label, ...rest }) => {
                     return '';
                 }
                 return ref.state.value.value;
-            },
+            }
         });
         
     }, [fieldName, registerField, rest.isMulti]);
@@ -42,6 +42,7 @@ const Select: React.FC<Props> = ({ name, label, ...rest }) => {
                 ref={selectRef}
                 classNamePrefix="react-select"
                 className="basic-single"
+                options={options}
                 {...rest}
             />
 

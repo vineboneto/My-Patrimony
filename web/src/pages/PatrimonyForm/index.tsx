@@ -29,19 +29,25 @@ interface FormData {
 const PatrimonyForm: React.FC = () => {
   
     const optionSector = [
-        { value: '1', label: 'Compras' },
-        { value: '2', label: 'Admin' }
+        { value: 2, label: 'Compras' },
+        { value: 3, label: 'Admin' }
     ]
 
     const optionCategory = [
-        { value: '1', label: 'Computador' },
-        { value: '2', label: 'Impressora' }
+        { value: 2, label: 'Computador' },
+        { value: 3, label: 'Impressora' }
     ]
 
     const optionOwners = [
-        { value: '1', label: 'Vinicius' },
-        { value: '2', label: 'Weusley' }
+        { value: 2, label: 'Vinicius' },
+        { value: 3, label: 'Weusley' }
     ]
+
+    const DEFAULT_DATA = {
+        sectors: { value: -1, label: 'Selecione' },
+        categories: { value: -1, label: 'Selecione' },
+        owners: { value: -1, label: 'Selecione' },
+    }
 
     const [visible, setVisible] = useState(false)
     const handleOpenCollapse = useCallback(() => {
@@ -77,7 +83,7 @@ const PatrimonyForm: React.FC = () => {
             <PageHeader title="Novo Patrimônio" prev="/" />
 
             <Main>
-                <SForm ref={formRef} onSubmit={handleSubmit}>
+                <SForm ref={formRef} onSubmit={handleSubmit} initialData={DEFAULT_DATA}>
 
                     <Fieldset>
                         <Legend>
@@ -92,7 +98,7 @@ const PatrimonyForm: React.FC = () => {
                             </DialogContainer>
                         </Dialog>
                         <OwnerData>
-                            <Select name="owner" label="Proprietário" options={optionOwners} />
+                            <Select name="owners" label="Proprietário" options={optionOwners} />
                             <Select name="sectors" label="Setor" options={optionSector} />
                         </OwnerData>
                     </Fieldset>
