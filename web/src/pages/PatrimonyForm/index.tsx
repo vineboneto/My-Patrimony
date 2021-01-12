@@ -6,9 +6,11 @@ import Select from 'components/Select'
 import Textarea from 'components/Textarea'
 import PageHeader from 'components/PageHeader'
 import Collapse from '@material-ui/core/Collapse'
+import Dialog from '@material-ui/core/Dialog'
+// import { DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@material-ui/core'
 
 import { Container, Main, Form as SForm, Legend, Fieldset, OwnerData,
-     PatrimonyData, Footer, Button, ButtonCollapse, IpData, Create, Plus } from './styled'
+     PatrimonyData, Footer, Button, ButtonCollapse, IpData, Create, Plus, DialogContainer } from './styled'
 
 import plusIcon from 'assets/images/icons/plusIcon.svg'
 
@@ -51,10 +53,23 @@ const PatrimonyForm: React.FC = () => {
         console.log(data)
     }, [])  
 
-    const handleOpenDialog = useCallback(() => {
-        console.log('Opa')
+    const [openDialogCategory, setOpenDialogCategory] = useState(false)
+    const handleOpenDialogCategory = useCallback(() => {
+        setOpenDialogCategory(true)
     }, [])
 
+    const handleCloseDialogCategory = useCallback(() => {
+        setOpenDialogCategory(false)
+    }, [])
+
+    const [openDialogOwner, setOpenDialogOwner] = useState(false)
+    const handleOpenDialogOwner = useCallback(() => {
+        setOpenDialogOwner(true)
+    }, [])
+
+    const handleCloseDialogOwner = useCallback(() => {
+        setOpenDialogOwner(false)
+    }, [])
 
     return (
         <Container>
@@ -67,8 +82,15 @@ const PatrimonyForm: React.FC = () => {
                     <Fieldset>
                         <Legend>
                             Proprietário
-                            <Create>+ Novo Proprietário</Create>
+                            <Create type="button" onClick={handleOpenDialogOwner}>
+                                + Novo Proprietário
+                            </Create>
                         </Legend>
+                        <Dialog open={openDialogOwner} onClose={handleCloseDialogOwner}>
+                            <DialogContainer>
+                                <span>Dialog Owner</span>
+                            </DialogContainer>
+                        </Dialog>
                         <OwnerData>
                             <Select name="owner" label="Proprietário" options={optionOwners} />
                             <Select name="sectors" label="Setor" options={optionSector} />
@@ -79,7 +101,14 @@ const PatrimonyForm: React.FC = () => {
                         <Legend>Patrimônio</Legend>
                         <PatrimonyData>
                             
-                            <Plus onClick={handleOpenDialog}>
+                            <Dialog open={openDialogCategory} onClose={handleCloseDialogCategory} aria-labelledby="form-dialog-title">
+                            
+                                <DialogContainer>
+                                    <span>Dialog Category</span>
+                                </DialogContainer>
+                            </Dialog>
+
+                            <Plus type="button" onClick={handleOpenDialogCategory}>
                                 <img src={plusIcon} alt="Adicionar Categoria"/>
                             </Plus>
                             <Select name="categories" label="Categoria" options={optionCategory} />
@@ -90,25 +119,27 @@ const PatrimonyForm: React.FC = () => {
                     </Fieldset>
 
                     
-                    <ButtonCollapse onClick={handleOpenCollapse}>{visible ? 'Fechar' : 'Adicionar Ips'}</ButtonCollapse>
+                    <ButtonCollapse type="button" onClick={handleOpenCollapse}>
+                        {visible ? 'Fechar' : 'Adicionar Ips'}
+                    </ButtonCollapse>
                     <Fieldset padding="0 3.4rem">
                         <Collapse in={visible}>
-                        <Legend padding="3.4rem 0 0">
-                            Ips
-                            <Create>+ Novo Ip</Create>
-                        </Legend>
-                            <IpData>
-                                <Scope path={"ips"}>
-                                    <Input name="ip" label="Ip" placeholder="192.168.1.55" />
-                                    <Input name="mask" label="Máscara de sub-rede" placeholder="255.255.255.0" />
-                                    <Input name="gateway" label="Gateway" placeholder="192.168.1.1" />
-                                </Scope>
-                            </IpData>
+                            <Legend padding="3.4rem 0 0">
+                                Ips
+                                <Create>+ Novo Ip</Create>
+                            </Legend>
+                                <IpData>
+                                    <Scope path={"ips"}>
+                                        <Input name="ip" label="Ip" placeholder="192.168.1.55" />
+                                        <Input name="mask" label="Máscara de sub-rede" placeholder="255.255.255.0" />
+                                        <Input name="gateway" label="Gateway" placeholder="192.168.1.1" />
+                                    </Scope>
+                                </IpData>
                         </Collapse>
                     </Fieldset>
 
                     <Footer>
-                        <Button>
+                        <Button type="submit">
                             Salvar
                         </Button>
                     </Footer>
