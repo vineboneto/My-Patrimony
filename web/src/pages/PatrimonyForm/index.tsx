@@ -17,8 +17,9 @@ import { Fieldset, Legend  } from 'components/Fieldset/styled'
 
 import OwnerForm from './OwnerForm'
 import plusIcon from 'assets/images/icons/plusIcon.svg'
+import MultiInputs, { MultiInputsHandles } from 'components/Input/MultiInputs'
 
-interface Ip {
+export interface Ip {
     id?: number
     ip: string
     mask: string
@@ -58,6 +59,18 @@ const PatrimonyForm: React.FC = () => {
         owners: { value: -1, label: 'Selecione' },
     }
 
+
+    const multiInputRef = useRef<MultiInputsHandles>(null)
+    const fields = [
+        { name: 'ip', label: 'Ip' },
+        { name: 'mask', label: 'Mascará' },
+        { name: 'gateway', label: 'Gateway' },
+    ]
+
+    const handleAddIp = useCallback(() => {
+        multiInputRef.current?.addLine()
+    }, [])
+
     const [visible, setVisible] = useState(false)
     const handleOpenCollapse = useCallback(() => {
         setVisible(!visible)
@@ -84,16 +97,6 @@ const PatrimonyForm: React.FC = () => {
 
     const handleCloseDialogOwner = useCallback(() => {
         setOpenDialogOwner(false)
-    }, [])
-
-    const handleAddIp = useCallback(() => {
-        const datas: any = formRef.current?.getData()
-        const ips = datas.ips.concat({ ip: '', mask: '', gateway: '' })
-        console.log(ips)
-        formRef.current?.setData({
-            ips: ips
-        })
-        console.log(formRef.current?.getData())
     }, [])
 
     return (
@@ -148,13 +151,19 @@ const PatrimonyForm: React.FC = () => {
                                 Ips
                                 <Create type="button" onClick={handleAddIp}>+ Novo Ip</Create>
                             </Legend>
-                            <IpData>
+                            {/* <IpData>
                                 <Scope path={"ips[0]"}>
                                     <Input name="ip" label="Ip" placeholder="192.168.1.55" />
                                     <Input name="mask" label="Máscara de sub-rede" placeholder="255.255.255.0" />
                                     <Input name="gateway" label="Gateway" placeholder="192.168.1.1" />
                                 </Scope>
-                            </IpData>
+                            </IpData> */}
+                            <MultiInputs
+                                name="ips"
+                                ref={multiInputRef}
+                                fields={fields}
+                                newItem={{ ip: '', gateway: '', mask: '' }}
+                            />
                         </Collapse>
                     </Fieldset>
 
