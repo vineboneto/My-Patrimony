@@ -5,6 +5,8 @@ import { Ip } from 'pages/PatrimonyForm'
 import { Delete, Item } from './styled';
 import { InputBlock } from '../styled';
 
+import closeIcon from 'assets/images/icons/closeIcon.svg'
+
 interface Field {
     name: string
     label: string
@@ -64,9 +66,9 @@ const MultiInputs: React.ForwardRefRenderFunction<MultiInputsHandles, MultiInput
 
     return (         
         <>
-            {lines.map((line: any, index: number) => (
+            { lines.map((line: any, index: number) => (
                 <Item key={index}>
-                    {fields.map((field, indexField) => (
+                    { fields.map((field, indexField) => (
                         <InputBlock key={indexField}>
                             <label htmlFor={name}>{field.label}</label>
                             <input
@@ -75,12 +77,12 @@ const MultiInputs: React.ForwardRefRenderFunction<MultiInputsHandles, MultiInput
                                 onChange={e => handleChange(field.name, e.target.value, index)}
                             />
                         </InputBlock>
-                    ))}
-                    <Delete className="text-center">
-                        <span onClick={() => removeLine(index)}>X</span>
+                    )) }
+                    <Delete>
+                        <img src={closeIcon} alt="Excluir Ip" onClick={() => removeLine(index)} />
                     </Delete>
                 </Item>
-            ))}
+            )) }
             { error && <p>{error}</p> }
         </>
             

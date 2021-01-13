@@ -43,14 +43,23 @@ export const PatrimonyData = styled.div`
 `
 
 export const IpData = styled.div`
-    display: grid;
-    grid-template-columns: repeat(3, 201px);
-    grid-template-areas: "ip mask gateway";
-    justify-content: space-between;
-    padding: 3.4rem 0;
+    & > div {
+        display: grid;
+        grid-template-columns: repeat(3, 180px) 1fr;
+        grid-template-areas: "ip mask gateway delete";
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.4rem 0;
+        column-gap: 3rem;
+    }
 
-    & + & {
-        margin-top: 2.4rem;
+    & > div > :last-child {
+        justify-self: center;
+        align-self: flex-end
+    }
+
+    & > :last-child {
+        margin-bottom: 3.4rem;
     }
 `
 

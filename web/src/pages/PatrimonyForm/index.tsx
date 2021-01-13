@@ -158,12 +158,15 @@ const PatrimonyForm: React.FC = () => {
                                     <Input name="gateway" label="Gateway" placeholder="192.168.1.1" />
                                 </Scope>
                             </IpData> */}
-                            <MultiInputs
-                                name="ips"
-                                ref={multiInputRef}
-                                fields={fields}
-                                newItem={{ ip: '', gateway: '', mask: '' }}
-                            />
+                            <IpData>
+                                <MultiInputs
+                                    name="ips"
+                                    ref={multiInputRef}
+                                    fields={fields}
+                                    newItem={{ ip: '', gateway: '', mask: '' }}
+                                />
+                            </IpData>
+                            
                         </Collapse>
                     </Fieldset>
 
