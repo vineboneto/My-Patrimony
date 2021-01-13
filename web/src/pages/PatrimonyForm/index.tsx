@@ -8,11 +8,12 @@ import Textarea from 'components/Textarea'
 import PageHeader from 'components/PageHeader'
 import Collapse from '@material-ui/core/Collapse'
 import Dialog from '@material-ui/core/Dialog'
+import Button, { ButtonCollapse, Create, Plus } from 'components/Button'
 
 import { Container, Main, OwnerData,
      PatrimonyData, Footer, IpData } from './styled'
 import { Fieldset, Legend  } from 'components/Fieldset/styled'
-import { Button, ButtonCollapse, Create, Plus  } from 'components/Button/styled'
+
 
 import OwnerForm from './OwnerForm'
 import plusIcon from 'assets/images/icons/plusIcon.svg'

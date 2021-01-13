@@ -3,7 +3,7 @@ import { FormHandles } from '@unform/core'
 import { Form } from '@unform/web'
 
 import Input from 'components/Input'
-import { Button } from 'components/Button/styled'
+import Button from 'components/Button'
 import { DialogContainer, Title } from 'components/Dialog/styled'
 
 import { DialogContent } from './styled'

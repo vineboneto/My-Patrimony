@@ -5,7 +5,7 @@ import { FormHandles } from '@unform/core'
 import { Dialog } from '@material-ui/core'
 import Input from 'components/Input'
 import Select from 'components/Select'
-import { Button, Plus } from 'components/Button/styled'
+import Button, { Plus } from 'components/Button'
 import { DialogContainer, Title } from 'components/Dialog/styled'
 import { DialogContent } from './styled'
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const Button = styled.button`
+export const SButton = styled.button`
     width: 23.1rem;
     height: 5.4rem;
     border-radius: 0.8rem;
@@ -13,7 +13,18 @@ export const Button = styled.button`
     cursor: pointer;
 `
 
-export const ButtonCollapse = styled.button`
+export const SPlus = styled.button`
+    background-color: #fff;
+    cursor: pointer;
+    max-width: 15px;
+    max-height: 30px;
+    outline: 0;
+    border: 0;
+    z-index: 3;
+    justify-self: flex-end;
+`
+
+export const SButtonCollapse = styled.button`
     width: 100%;
     background-color: #808080;
     padding: 1rem 3.4rem;
@@ -27,7 +38,7 @@ export const ButtonCollapse = styled.button`
     align-items: center;
 `
 
-export const Create = styled.button`
+export const SCreate = styled.button`
     background: none;
     border: 0;
     color: var(--color-primary);
@@ -42,13 +53,3 @@ export const Create = styled.button`
     } 
 `
 
-export const Plus = styled.button`
-    background-color: #fff;
-    cursor: pointer;
-    max-width: 15px;
-    max-height: 30px;
-    outline: 0;
-    border: 0;
-    z-index: 3;
-    justify-self: flex-end;
-`
