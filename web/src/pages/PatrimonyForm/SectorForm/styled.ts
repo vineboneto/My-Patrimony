@@ -5,7 +5,7 @@ export const DialogContent = styled.div`
     display: grid;
     grid-template-areas: 
         "title title"
-        "owner sector"
+        "sector sector"
         "button button";
     grid-template-columns: repeat(2, 250px);
     justify-content: space-between;
@@ -18,20 +18,12 @@ export const DialogContent = styled.div`
     }
 
     & > :nth-child(2) {
-        grid-area: owner;
-    }
-
-    & > :nth-child(3), & > :nth-child(4) {
         grid-area: sector;
     }
 
-    & > :nth-child(5) {
+    & > :nth-child(3) {
         grid-area: button;
         width: 250px;
         justify-self: flex-end;
-    }
-`
-
-export const Title = styled.div`
-    color: var(--color-label-input);
+    } 
 `
