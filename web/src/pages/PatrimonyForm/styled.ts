@@ -63,9 +63,6 @@ export const Footer = styled.footer`
     padding: 0 3.4rem;
 `
 
-export const DialogContainer = styled.div`
-    width: 60rem;
-    height: auto;
-`
+
 
 

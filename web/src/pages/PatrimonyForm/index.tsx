@@ -10,7 +10,7 @@ import Collapse from '@material-ui/core/Collapse'
 import Dialog from '@material-ui/core/Dialog'
 
 import { Container, Main, OwnerData,
-     PatrimonyData, Footer, IpData, DialogContainer } from './styled'
+     PatrimonyData, Footer, IpData } from './styled'
 import { Fieldset, Legend  } from 'components/Fieldset/styled'
 import { Button, ButtonCollapse, Create, Plus  } from 'components/Button/styled'
 
@@ -96,9 +96,7 @@ const PatrimonyForm: React.FC = () => {
                             </Create>
                         </Legend>
                         <Dialog open={openDialogOwner} onClose={handleCloseDialogOwner}>
-                            <DialogContainer>
-                                <OwnerForm />
-                            </DialogContainer>
+                            <OwnerForm />
                         </Dialog>
                         <OwnerData>
                             <Select name="owners" label="Proprietário" options={optionOwners} />
@@ -112,9 +110,6 @@ const PatrimonyForm: React.FC = () => {
                             
                             <Dialog open={openDialogCategory} onClose={handleCloseDialogCategory} aria-labelledby="form-dialog-title">
                             
-                                <DialogContainer>
-                                    <span>Dialog Category</span>
-                                </DialogContainer>
                             </Dialog>
 
                             <Plus type="button" onClick={handleOpenDialogCategory}>

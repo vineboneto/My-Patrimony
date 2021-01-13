@@ -2,14 +2,14 @@ import React, { useCallback, useRef, useState } from 'react'
 import { Form } from '@unform/web'
 import { FormHandles } from '@unform/core'
 
+import { Dialog } from '@material-ui/core'
 import Input from 'components/Input'
 import Select from 'components/Select'
 import { Button, Plus } from 'components/Button/styled'
-import { DialogContent, Title } from './styled'
+import { DialogContainer, Title } from 'components/Dialog/styled'
+import { DialogContent } from './styled'
 
 import plusIcon from 'assets/images/icons/plusIcon.svg'
-import { Dialog } from '@material-ui/core'
-import { DialogContainer } from '../styled'
 import SectorForm from '../SectorForm'
 
 const OwnerForm = () => {
@@ -25,7 +25,7 @@ const OwnerForm = () => {
     }, [])
 
     return (
-        <> 
+        <DialogContainer> 
             <Form ref={formRef} onSubmit={() => {}}>    
                 <DialogContent>
                     <Title>Novo Proprietário</Title>
@@ -37,9 +37,7 @@ const OwnerForm = () => {
                         <img src={plusIcon} alt="Adicionar Setor"/>
                     </Plus>
                     <Dialog open={open} onClose={handleCloseDialog}>
-                        <DialogContainer>
-                            <SectorForm />
-                        </DialogContainer>
+                        <SectorForm />
                     </Dialog>
                     <Select name="sectors" label="Setor" />
                     
@@ -48,7 +46,7 @@ const OwnerForm = () => {
                     </Button>
                 </DialogContent>
             </Form> 
-        </>
+        </DialogContainer>
     )
 }
 
