@@ -7,7 +7,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> { }
 
 const Button: React.FC<ButtonProps> = ({ children, ...rest }) => {
     return (
-        <SButton {...rest}>
+        <SButton { ...rest }>
             {children}
         </SButton>
     )
@@ -21,9 +21,9 @@ export const Plus: React.FC<ButtonProps> = ({ ...rest }) => {
     )
 }
 
-export const ButtonCollapse: React.FC<ButtonProps> = ({ children }) => {
+export const ButtonCollapse: React.FC<ButtonProps> = ({ children, ...rest }) => {
     return (
-        <SButtonCollapse>
+        <SButtonCollapse { ...rest }>
             {children}
         </SButtonCollapse>
     )

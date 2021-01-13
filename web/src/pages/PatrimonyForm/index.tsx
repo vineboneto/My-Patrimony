@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react'
 import { Form } from '@unform/web'
-import { SubmitHandler, FormHandles, Scope } from '@unform/core'
+import { SubmitHandler,  FormHandles, Scope } from '@unform/core'
 
 import Input from 'components/Input'
 import Select from 'components/Select'
@@ -11,12 +11,19 @@ import Dialog from '@material-ui/core/Dialog'
 import Button, { ButtonCollapse, Create, Plus } from 'components/Button'
 
 import { Container, Main, OwnerData,
-     PatrimonyData, Footer, IpData } from './styled'
+     PatrimonyData, IpData, Footer } from './styled'
 import { Fieldset, Legend  } from 'components/Fieldset/styled'
 
 
 import OwnerForm from './OwnerForm'
 import plusIcon from 'assets/images/icons/plusIcon.svg'
+
+interface Ip {
+    id?: number
+    ip: string
+    mask: string
+    gateway: string
+}
 
 interface FormData {
     patrimony: string
@@ -25,9 +32,7 @@ interface FormData {
     categoryId: string
     ownerId: string
     sectorId: string
-    ips: [
-        { id: number, ip: string, mask: string, gateway: string }
-    ]
+    ips: Ip[]
 }
 
 const PatrimonyForm: React.FC = () => {
@@ -81,6 +86,16 @@ const PatrimonyForm: React.FC = () => {
         setOpenDialogOwner(false)
     }, [])
 
+    const handleAddIp = useCallback(() => {
+        const datas: any = formRef.current?.getData()
+        const ips = datas.ips.concat({ ip: '', mask: '', gateway: '' })
+        console.log(ips)
+        formRef.current?.setData({
+            ips: ips
+        })
+        console.log(formRef.current?.getData())
+    }, [])
+
     return (
         <Container>
 
@@ -131,15 +146,15 @@ const PatrimonyForm: React.FC = () => {
                         <Collapse in={visible}>
                             <Legend padding="3.4rem 0 0">
                                 Ips
-                                <Create>+ Novo Ip</Create>
+                                <Create type="button" onClick={handleAddIp}>+ Novo Ip</Create>
                             </Legend>
-                                <IpData>
-                                    <Scope path={"ips"}>
-                                        <Input name="ip" label="Ip" placeholder="192.168.1.55" />
-                                        <Input name="mask" label="Máscara de sub-rede" placeholder="255.255.255.0" />
-                                        <Input name="gateway" label="Gateway" placeholder="192.168.1.1" />
-                                    </Scope>
-                                </IpData>
+                            <IpData>
+                                <Scope path={"ips[0]"}>
+                                    <Input name="ip" label="Ip" placeholder="192.168.1.55" />
+                                    <Input name="mask" label="Máscara de sub-rede" placeholder="255.255.255.0" />
+                                    <Input name="gateway" label="Gateway" placeholder="192.168.1.1" />
+                                </Scope>
+                            </IpData>
                         </Collapse>
                     </Fieldset>
 

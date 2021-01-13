@@ -37,7 +37,7 @@ const OwnerForm = () => {
                         <SectorForm />
                     </Dialog>
 
-                    <Plus onClick={handleOpenDialog} />
+                    <Plus type="button" onClick={handleOpenDialog} />
                     <Select name="sectors" label="Setor" />
                 
                     <Button>

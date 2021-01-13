@@ -19,7 +19,7 @@ const SectorForm = () => {
                     <Title>Novo Setor</Title>
 
                     <Input name="sectors" label="Setor" />
-                    <Button>
+                    <Button type="button">
                         Salvar
                     </Button>                    
                 </Content>
