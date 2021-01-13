@@ -1,4 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react'
+import { Form } from '@unform/web'
 import { SubmitHandler, FormHandles, Scope } from '@unform/core'
 
 import Input from 'components/Input'
@@ -7,11 +8,13 @@ import Textarea from 'components/Textarea'
 import PageHeader from 'components/PageHeader'
 import Collapse from '@material-ui/core/Collapse'
 import Dialog from '@material-ui/core/Dialog'
-// import { DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@material-ui/core'
 
-import { Container, Main, Form as SForm, Legend, Fieldset, OwnerData,
-     PatrimonyData, Footer, Button, ButtonCollapse, IpData, Create, Plus, DialogContainer } from './styled'
+import { Container, Main, OwnerData,
+     PatrimonyData, Footer, IpData, DialogContainer } from './styled'
+import { Fieldset, Legend  } from 'components/Fieldset/styled'
+import { Button, ButtonCollapse, Create, Plus  } from 'components/Button/styled'
 
+import OwnerForm from './OwnerForm'
 import plusIcon from 'assets/images/icons/plusIcon.svg'
 
 interface FormData {
@@ -83,7 +86,7 @@ const PatrimonyForm: React.FC = () => {
             <PageHeader title="Novo Patrimônio" prev="/" />
 
             <Main>
-                <SForm ref={formRef} onSubmit={handleSubmit} initialData={DEFAULT_DATA}>
+                <Form ref={formRef} onSubmit={handleSubmit} initialData={DEFAULT_DATA}>
 
                     <Fieldset>
                         <Legend>
@@ -94,7 +97,7 @@ const PatrimonyForm: React.FC = () => {
                         </Legend>
                         <Dialog open={openDialogOwner} onClose={handleCloseDialogOwner}>
                             <DialogContainer>
-                                <span>Dialog Owner</span>
+                                <OwnerForm />
                             </DialogContainer>
                         </Dialog>
                         <OwnerData>
@@ -150,7 +153,7 @@ const PatrimonyForm: React.FC = () => {
                         </Button>
                     </Footer>
                     
-                </SForm>
+                </Form>
             </Main>
 
         </Container>
