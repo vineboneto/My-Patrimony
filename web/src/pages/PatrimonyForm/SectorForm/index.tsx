@@ -4,9 +4,9 @@ import { Form } from '@unform/web'
 
 import Input from 'components/Input'
 import Button from 'components/Button'
-import { DialogContainer, Title } from 'components/Dialog/styled'
+import { DialogContainer, Title } from 'components/DialogContainer/styled'
 
-import { DialogContent } from './styled'
+import { Content } from './styled'
 
 const SectorForm = () => {
     
@@ -15,14 +15,14 @@ const SectorForm = () => {
     return(
         <DialogContainer>
             <Form ref={formRef} onSubmit={() => {}}>
-                <DialogContent>
+                <Content>
                     <Title>Novo Setor</Title>
 
                     <Input name="sectors" label="Setor" />
                     <Button>
                         Salvar
                     </Button>                    
-                </DialogContent>
+                </Content>
             </Form>
         </DialogContainer>
     )

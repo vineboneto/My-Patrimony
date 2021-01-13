@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const DialogContent = styled.div`
+export const Content = styled.div`
     padding: 3rem ;
     display: grid;
     grid-template-areas: 

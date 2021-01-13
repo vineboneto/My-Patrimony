@@ -6,10 +6,9 @@ import { Dialog } from '@material-ui/core'
 import Input from 'components/Input'
 import Select from 'components/Select'
 import Button, { Plus } from 'components/Button'
-import { DialogContainer, Title } from 'components/Dialog/styled'
-import { DialogContent } from './styled'
+import { DialogContainer, Title } from 'components/DialogContainer/styled'
+import { Content } from './styled'
 
-import plusIcon from 'assets/images/icons/plusIcon.svg'
 import SectorForm from '../SectorForm'
 
 const OwnerForm = () => {
@@ -27,24 +26,24 @@ const OwnerForm = () => {
     return (
         <DialogContainer> 
             <Form ref={formRef} onSubmit={() => {}}>    
-                <DialogContent>
+                <Content>
+                    
                     <Title>Novo Proprietário</Title>
-
                     
                     <Input name="owner" label="Nome" />
 
-                    <Plus onClick={handleOpenDialog}>
-                        <img src={plusIcon} alt="Adicionar Setor"/>
-                    </Plus>
+                        
                     <Dialog open={open} onClose={handleCloseDialog}>
                         <SectorForm />
                     </Dialog>
+
+                    <Plus onClick={handleOpenDialog} />
                     <Select name="sectors" label="Setor" />
-                    
+                
                     <Button>
                         Salvar
                     </Button>
-                </DialogContent>
+                </Content>
             </Form> 
         </DialogContainer>
     )

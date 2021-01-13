@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 
-export const DialogContent = styled.div`
+export const Content = styled.div`
     padding: 3rem ;
     display: grid;
     grid-template-areas: 
         "title title"
-        "input sector"
+        "owner sector"
         "button button";
     grid-template-columns: repeat(2, 250px);
     justify-content: space-between;
@@ -30,4 +30,7 @@ export const DialogContent = styled.div`
         width: 250px;
         justify-self: flex-end;
     }
+`
+
+export const SelectWithPlus = styled.div`
 `
