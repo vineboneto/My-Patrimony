@@ -42,7 +42,7 @@ const OwnerForm = () => {
         try {
             const messageError =  'obrigatório'
             const schema = Yup.object().shape({
-                owner: Yup.string().required('Nome ' + messageError),
+                name: Yup.string().required('Nome ' + messageError),
                 sectors: Yup.number().moreThan(-1,'Setor ' +  messageError).required(messageError),
             })
 
@@ -57,8 +57,6 @@ const OwnerForm = () => {
             if (err instanceof Yup.ValidationError) {
                 err.inner.forEach(error => {
                     if (error.path) {
-                        console.log(error.path)
-                        console.log(error.message)
                         formRef.current?.setFieldError(error.path, error.message)
                     }
                 })
@@ -73,7 +71,7 @@ const OwnerForm = () => {
                     
                     <Title>Novo Proprietário</Title>
                     
-                    <Input name="owner" label="Nome" />
+                    <Input name="name" label="Nome" />
                     
                     <Dialog open={open} onClose={handleCloseDialog}>
                         <SectorForm />

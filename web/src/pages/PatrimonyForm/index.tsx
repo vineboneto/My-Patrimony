@@ -84,7 +84,8 @@ const PatrimonyForm: React.FC = () => {
             const schema = Yup.object().shape({
                 patrimony: Yup.string().required('Patrimônio ' + messageError),
                 model: Yup.string().required('Modelo ' + messageError),
-                sectors: Yup.number().moreThan(-1, 'Setor ' + messageError).required('Setor ' + messageError),
+                owners: Yup.number().moreThan(-1, 'Proprietário ' + messageError).required('Proprietário ' + messageError),
+                categories: Yup.number().moreThan(-1, 'Categoria obrigatória').required('Categoria obrigatória'),
             })
 
             await schema.validate(data, {
