@@ -1,22 +1,22 @@
 import React, { useCallback, useRef, useState } from 'react'
-import { SubmitHandler, FormHandles } from '@unform/core'
+import { SubmitHandler, FormHandles, Scope } from '@unform/core'
 import * as Yup from 'yup'
 import { Form } from '@unform/web'
 
 import Input from 'components/Input'
+import MultiInputs, { MultiInputsHandles, Field } from 'components/Input/MultiInputs'
 import Select from 'components/Select'
 import Textarea from 'components/Textarea'
 import PageHeader from 'components/PageHeader'
 import Button, { ButtonCollapse, Create, Plus } from 'components/Button'
+import { Fieldset, Legend } from 'components/Fieldset/styled'
 import Collapse from '@material-ui/core/Collapse'
 import Dialog from '@material-ui/core/Dialog'
 
 import { Container, Main, OwnerData, PatrimonyData, IpData, Footer } from './styled'
-import { Fieldset, Legend } from 'components/Fieldset/styled'
 
 
 import OwnerForm from './OwnerForm'
-import MultiInputs, { MultiInputsHandles, Field } from 'components/Input/MultiInputs'
 import CategoryForm from './CategoryForm'
 
 interface Ip {
@@ -79,6 +79,8 @@ const PatrimonyForm: React.FC = () => {
     const formRef = useRef<FormHandles>(null)
 
     const handleSubmit: SubmitHandler<FormData> = async (data, { reset })  =>  {
+
+        console.log(formRef.current?.getFieldRef('ips'))
         try {
             const messageError = 'obrigatório'
             const schema = Yup.object().shape({
@@ -86,6 +88,11 @@ const PatrimonyForm: React.FC = () => {
                 model: Yup.string().required('Modelo ' + messageError),
                 owners: Yup.number().moreThan(-1, 'Proprietário ' + messageError).required('Proprietário ' + messageError),
                 categories: Yup.number().moreThan(-1, 'Categoria obrigatória').required('Categoria obrigatória'),
+                ips: Yup.array().of(Yup.object().shape({
+                    ip: Yup.string().required('Ip ' + messageError),
+                    gateway: Yup.string().required('Gateway ' + messageError),
+                    mask: Yup.string().required('Mask ' + messageError)
+                }))
             })
 
             await schema.validate(data, {
@@ -98,9 +105,16 @@ const PatrimonyForm: React.FC = () => {
         } catch (err) {
             if (err instanceof Yup.ValidationError) {
                 err.inner.forEach(error => {
+                    Object.keys(error).map(key => {
+                        console.log(key)
+                        formRef.current?.setFieldError(key, error.message)
+                    })
+
                     if (error.path) {
+                        console.log(error.path)
+                        const ips = formRef.current?.getFieldValue('ips')
                         formRef.current?.setFieldError(error.path, error.message)
-                    }
+                    }   
                 })
             }
         }
@@ -168,6 +182,12 @@ const PatrimonyForm: React.FC = () => {
                                 <Create type="button" onClick={handleAddIp}>+ Novo Ip</Create>
                             </Legend>
                             <IpData>
+                                {/* <Scope path="ips[0]">
+                                    <Input name="ip" label="Ip" />
+                                    <Input name="mask" label="Mascara" />
+                                    <Input name="gateway" label="Gateway" />
+                                    
+                                </Scope> */}
                                 <MultiInputs
                                     name="ips"
                                     ref={multiInputRef}

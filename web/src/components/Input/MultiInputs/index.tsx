@@ -3,9 +3,9 @@ import { useField } from "@unform/core";
 
 import { Delete, Item } from './styled';
 import { InputBlock } from '../styled';
+import Input from '../index';
 
 import closeIcon from 'assets/images/icons/closeIcon.svg'
-import { ref } from 'yup';
 
 export interface Field {
     name: string
@@ -26,6 +26,7 @@ export interface MultiInputsHandles {
 
 const MultiInputs: React.ForwardRefRenderFunction<MultiInputsHandles, MultiInputsProps> = ({ name, fields, newItem }, ref) => {
     const { fieldName, defaultValue, registerField, error } = useField(name);
+
     const [lines, setLines] = useState(defaultValue);
     const inputRef = useRef({ value: defaultValue })
 
@@ -33,7 +34,13 @@ const MultiInputs: React.ForwardRefRenderFunction<MultiInputsHandles, MultiInput
         registerField({
             name: fieldName,
             ref: inputRef.current,
-            path: 'value'
+            path: 'value',
+            setValue(ref: any, value: string) {
+                ref.setInputValue(value)
+            },
+            clearValue(ref: any) {
+                ref.setInputValue('')
+            },
         })
     }, [fieldName, registerField])
 
@@ -63,15 +70,16 @@ const MultiInputs: React.ForwardRefRenderFunction<MultiInputsHandles, MultiInput
             addLine,
         }
     })
-
     return (         
-        <>
+        <>  
             { lines.map((line: any, index: number) => (
                 <Item key={index}>
                     { fields.map((field, indexField) => (
+                        
                         <InputBlock error={error} key={indexField}>
-                            <label htmlFor={name}>{field.label}</label>
+                            <label htmlFor={name}>{error ? error : field.label}</label>
                             <input
+                                ref={inputRef.current.value }   
                                 name={field.name}
                                 value={line[field.name]}
                                 placeholder={field.placeholder}
