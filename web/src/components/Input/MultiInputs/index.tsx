@@ -5,8 +5,9 @@ import { Delete, Item } from './styled';
 import { InputBlock } from '../styled';
 
 import closeIcon from 'assets/images/icons/closeIcon.svg'
+import { ref } from 'yup';
 
-interface Field {
+export interface Field {
     name: string
     label: string
     placeholder: string
@@ -15,7 +16,7 @@ interface Field {
 interface MultiInputsProps {
     name: string
     fields: Field[]
-    newItem: any
+    newItem: any,
 }
 
 export interface MultiInputsHandles {
@@ -32,25 +33,22 @@ const MultiInputs: React.ForwardRefRenderFunction<MultiInputsHandles, MultiInput
         registerField({
             name: fieldName,
             ref: inputRef.current,
-            path: 'value',
+            path: 'value'
         })
     }, [fieldName, registerField])
 
     const updateLines = (newLines: any) => {
-        console.log(newLines)
         inputRef.current.value = newLines   
         setLines(newLines)
     }
 
     const addLine = () => {
-        console.log(inputRef.current.value)
         updateLines([...inputRef.current.value, newItem ]);
     }
 
     const removeLine = (index: number) => {
         const newLines = lines.filter((item: any, i: number) => i !== index);
         updateLines(newLines)
-        setLines(newLines)
     }
 
     const handleChange = (field: string, newValue: string, index: number) => {
@@ -71,7 +69,7 @@ const MultiInputs: React.ForwardRefRenderFunction<MultiInputsHandles, MultiInput
             { lines.map((line: any, index: number) => (
                 <Item key={index}>
                     { fields.map((field, indexField) => (
-                        <InputBlock key={indexField}>
+                        <InputBlock error={error} key={indexField}>
                             <label htmlFor={name}>{field.label}</label>
                             <input
                                 name={field.name}
@@ -86,7 +84,6 @@ const MultiInputs: React.ForwardRefRenderFunction<MultiInputsHandles, MultiInput
                     </Delete>
                 </Item>
             )) }
-            { error && <p>{error}</p> }
         </>
             
     );

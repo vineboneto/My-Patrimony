@@ -1,22 +1,22 @@
 import React, { useCallback, useRef, useState } from 'react'
+import { SubmitHandler, FormHandles } from '@unform/core'
+import * as Yup from 'yup'
 import { Form } from '@unform/web'
-import { SubmitHandler,  FormHandles } from '@unform/core'
 
 import Input from 'components/Input'
 import Select from 'components/Select'
 import Textarea from 'components/Textarea'
 import PageHeader from 'components/PageHeader'
+import Button, { ButtonCollapse, Create, Plus } from 'components/Button'
 import Collapse from '@material-ui/core/Collapse'
 import Dialog from '@material-ui/core/Dialog'
-import Button, { ButtonCollapse, Create, Plus } from 'components/Button'
 
-import { Container, Main, OwnerData,
-     PatrimonyData, IpData, Footer } from './styled'
-import { Fieldset, Legend  } from 'components/Fieldset/styled'
+import { Container, Main, OwnerData, PatrimonyData, IpData, Footer } from './styled'
+import { Fieldset, Legend } from 'components/Fieldset/styled'
 
 
 import OwnerForm from './OwnerForm'
-import MultiInputs, { MultiInputsHandles } from 'components/Input/MultiInputs'
+import MultiInputs, { MultiInputsHandles, Field } from 'components/Input/MultiInputs'
 
 interface Ip {
     id?: number
@@ -36,7 +36,7 @@ interface FormData {
 }
 
 const PatrimonyForm: React.FC = () => {
-  
+
     const optionSector = [
         { value: 2, label: 'Compras' },
         { value: 3, label: 'Admin' }
@@ -56,11 +56,11 @@ const PatrimonyForm: React.FC = () => {
         sectors: { value: -1, label: 'Selecione' },
         categories: { value: -1, label: 'Selecione' },
         owners: { value: -1, label: 'Selecione' },
-        ips: [{ ip: '',  mask: '', gateway: '' }]
+        ips: [{ ip: '', mask: '', gateway: '' }]
     }
 
     const multiInputRef = useRef<MultiInputsHandles>(null)
-    const fieldsMultiInputs = [
+    const fieldsMultiInputs: Field[] = [
         { name: 'ip', label: 'Ip', placeholder: '192.168.1.11' },
         { name: 'mask', label: 'Mascara', placeholder: '255.255.255.0' },
         { name: 'gateway', label: 'Gateway', placeholder: '192.168.1.1' },
@@ -76,9 +76,33 @@ const PatrimonyForm: React.FC = () => {
     }, [openCollapse])
 
     const formRef = useRef<FormHandles>(null)
-    const handleSubmit: SubmitHandler<FormData> = useCallback((data) => {
-        console.log(data)
-    }, [])  
+
+    const handleSubmit: SubmitHandler<FormData> = async (data, { reset })  =>  {
+        try {
+            const messageError = 'Campo obrigatório'
+            const schema = Yup.object().shape({
+                patrimony: Yup.string().required(messageError),
+                model: Yup.string().required(messageError),
+                sectors: Yup.number().required(messageError),
+            })
+
+            await schema.validate(data, {
+                abortEarly: false
+            })
+
+            formRef.current?.setErrors({})
+            
+            reset()
+        } catch (err) {
+            if (err instanceof Yup.ValidationError) {
+                err.inner.forEach(error => {
+                    if (error.path) {
+                        formRef.current?.setFieldError(error.path, error.message)
+                    }
+                })
+            }
+        }
+    }
 
     const [openDialogCategory, setOpenDialogCategory] = useState(false)
     const handleOpenDialogCategory = useCallback(() => {
@@ -125,20 +149,20 @@ const PatrimonyForm: React.FC = () => {
                     <Fieldset>
                         <Legend>Patrimônio</Legend>
                         <PatrimonyData>
-                            
+
                             <Dialog open={openDialogCategory} onClose={handleCloseDialogCategory} aria-labelledby="form-dialog-title">
-                            
+                                
                             </Dialog>
 
                             <Plus type="button" onClick={handleOpenDialogCategory} />
                             <Select name="categories" label="Categoria" options={optionCategory} />
-                            <Input name="patrimony"  label="Patrimônio" />
+                            <Input name="patrimony" label="Patrimônio" />
                             <Input name="model" label="Modelo" />
                             <Textarea name="description" label="Descrição" />
                         </PatrimonyData>
                     </Fieldset>
 
-                    
+
                     <ButtonCollapse type="button" onClick={handleOpenCollapse}>
                         {openCollapse ? 'Fechar' : 'Adicionar Ips'}
                     </ButtonCollapse>
@@ -165,7 +189,7 @@ const PatrimonyForm: React.FC = () => {
                             Salvar
                         </Button>
                     </Footer>
-                    
+
                 </Form>
             </Main>
 

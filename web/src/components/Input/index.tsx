@@ -22,16 +22,15 @@ const Input: React.FC<InputProps> =({ name, label, ...rest }) => {
     }, [fieldName, registerField])
 
     return (
-        <InputBlock>
+        <InputBlock error={error}>
             <label htmlFor={name}>{label}</label>
             <input 
                 id={name} 
                 ref={inputRef}
+                placeholder={error ? error : ''}
                 defaultValue={defaultValue} 
                 {...rest}
             />
-
-            { error && <span>{error}</span> }
         </InputBlock>
     )
 }
