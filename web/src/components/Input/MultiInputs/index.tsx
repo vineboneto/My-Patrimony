@@ -9,6 +9,7 @@ import closeIcon from 'assets/images/icons/closeIcon.svg'
 interface Field {
     name: string
     label: string
+    placeholder: string
 }
 
 interface MultiInputsProps {
@@ -75,6 +76,7 @@ const MultiInputs: React.ForwardRefRenderFunction<MultiInputsHandles, MultiInput
                             <input
                                 name={field.name}
                                 value={line[field.name]}
+                                placeholder={field.placeholder}
                                 onChange={e => handleChange(field.name, e.target.value, index)}
                             />
                         </InputBlock>

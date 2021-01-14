@@ -18,7 +18,7 @@ import { Fieldset, Legend  } from 'components/Fieldset/styled'
 import OwnerForm from './OwnerForm'
 import MultiInputs, { MultiInputsHandles } from 'components/Input/MultiInputs'
 
-export interface Ip {
+interface Ip {
     id?: number
     ip: string
     mask: string
@@ -59,12 +59,11 @@ const PatrimonyForm: React.FC = () => {
         ips: [{ ip: '',  mask: '', gateway: '' }]
     }
 
-
     const multiInputRef = useRef<MultiInputsHandles>(null)
-    const fields = [
-        { name: 'ip', label: 'Ip' },
-        { name: 'mask', label: 'Mascara' },
-        { name: 'gateway', label: 'Gateway' },
+    const fieldsMultiInputs = [
+        { name: 'ip', label: 'Ip', placeholder: '192.168.1.11' },
+        { name: 'mask', label: 'Mascara', placeholder: '255.255.255.0' },
+        { name: 'gateway', label: 'Gateway', placeholder: '192.168.1.1' },
     ]
 
     const handleAddIp = useCallback(() => {
@@ -153,7 +152,7 @@ const PatrimonyForm: React.FC = () => {
                                 <MultiInputs
                                     name="ips"
                                     ref={multiInputRef}
-                                    fields={fields}
+                                    fields={fieldsMultiInputs}
                                     newItem={DEFAULT_DATA.ips[0]}
                                 />
                             </IpData>
