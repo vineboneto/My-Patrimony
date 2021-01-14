@@ -6,9 +6,9 @@ import Input from 'components/Input'
 import Button from 'components/Button'
 import { DialogContainer, Title } from 'components/DialogContainer/styled'
 
-import { Content } from './styled'
+import { Content } from '../SectorForm/styled'
 
-const SectorForm = () => {
+const CategoryForm = () => {
     
     const formRef = useRef<FormHandles>(null)
 
@@ -16,9 +16,9 @@ const SectorForm = () => {
         <DialogContainer>
             <Form ref={formRef} onSubmit={() => {}}>
                 <Content>
-                    <Title>Novo Setor</Title>
+                    <Title>Nova Categoria</Title>
 
-                    <Input name="sector" label="Setor" />
+                    <Input name="category" label="Categoria" />
                     <Button type="button">
                         Salvar
                     </Button>                    
@@ -28,4 +28,4 @@ const SectorForm = () => {
     )
 }
 
-export default SectorForm
+export default CategoryForm

@@ -17,6 +17,7 @@ import { Fieldset, Legend } from 'components/Fieldset/styled'
 
 import OwnerForm from './OwnerForm'
 import MultiInputs, { MultiInputsHandles, Field } from 'components/Input/MultiInputs'
+import CategoryForm from './CategoryForm'
 
 interface Ip {
     id?: number
@@ -151,7 +152,7 @@ const PatrimonyForm: React.FC = () => {
                         <PatrimonyData>
 
                             <Dialog open={openDialogCategory} onClose={handleCloseDialogCategory} aria-labelledby="form-dialog-title">
-                                
+                                <CategoryForm />
                             </Dialog>
 
                             <Plus type="button" onClick={handleOpenDialogCategory} />

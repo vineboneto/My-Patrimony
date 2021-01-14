@@ -31,8 +31,7 @@ const OwnerForm = () => {
                     <Title>Novo Proprietário</Title>
                     
                     <Input name="owner" label="Nome" />
-
-                        
+                    
                     <Dialog open={open} onClose={handleCloseDialog}>
                         <SectorForm />
                     </Dialog>
