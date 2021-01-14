@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react'
 import { Form } from '@unform/web'
-import { SubmitHandler,  FormHandles, Scope } from '@unform/core'
+import { SubmitHandler,  FormHandles } from '@unform/core'
 
 import Input from 'components/Input'
 import Select from 'components/Select'
@@ -16,7 +16,6 @@ import { Fieldset, Legend  } from 'components/Fieldset/styled'
 
 
 import OwnerForm from './OwnerForm'
-import plusIcon from 'assets/images/icons/plusIcon.svg'
 import MultiInputs, { MultiInputsHandles } from 'components/Input/MultiInputs'
 
 export interface Ip {
@@ -57,13 +56,14 @@ const PatrimonyForm: React.FC = () => {
         sectors: { value: -1, label: 'Selecione' },
         categories: { value: -1, label: 'Selecione' },
         owners: { value: -1, label: 'Selecione' },
+        ips: [{ ip: '',  mask: '', gateway: '' }]
     }
 
 
     const multiInputRef = useRef<MultiInputsHandles>(null)
     const fields = [
         { name: 'ip', label: 'Ip' },
-        { name: 'mask', label: 'Mascará' },
+        { name: 'mask', label: 'Mascara' },
         { name: 'gateway', label: 'Gateway' },
     ]
 
@@ -71,10 +71,10 @@ const PatrimonyForm: React.FC = () => {
         multiInputRef.current?.addLine()
     }, [])
 
-    const [visible, setVisible] = useState(false)
+    const [openCollapse, setCollapseOpen] = useState(false)
     const handleOpenCollapse = useCallback(() => {
-        setVisible(!visible)
-    }, [visible])
+        setCollapseOpen(!openCollapse)
+    }, [openCollapse])
 
     const formRef = useRef<FormHandles>(null)
     const handleSubmit: SubmitHandler<FormData> = useCallback((data) => {
@@ -131,9 +131,7 @@ const PatrimonyForm: React.FC = () => {
                             
                             </Dialog>
 
-                            <Plus type="button" onClick={handleOpenDialogCategory}>
-                                <img src={plusIcon} alt="Adicionar Categoria"/>
-                            </Plus>
+                            <Plus type="button" onClick={handleOpenDialogCategory} />
                             <Select name="categories" label="Categoria" options={optionCategory} />
                             <Input name="patrimony"  label="Patrimônio" />
                             <Input name="model" label="Modelo" />
@@ -143,30 +141,23 @@ const PatrimonyForm: React.FC = () => {
 
                     
                     <ButtonCollapse type="button" onClick={handleOpenCollapse}>
-                        {visible ? 'Fechar' : 'Adicionar Ips'}
+                        {openCollapse ? 'Fechar' : 'Adicionar Ips'}
                     </ButtonCollapse>
                     <Fieldset padding="0 3.4rem">
-                        <Collapse in={visible}>
+                        <Collapse in={openCollapse}>
                             <Legend padding="3.4rem 0 0">
                                 Ips
                                 <Create type="button" onClick={handleAddIp}>+ Novo Ip</Create>
                             </Legend>
-                            {/* <IpData>
-                                <Scope path={"ips[0]"}>
-                                    <Input name="ip" label="Ip" placeholder="192.168.1.55" />
-                                    <Input name="mask" label="Máscara de sub-rede" placeholder="255.255.255.0" />
-                                    <Input name="gateway" label="Gateway" placeholder="192.168.1.1" />
-                                </Scope>
-                            </IpData> */}
                             <IpData>
                                 <MultiInputs
                                     name="ips"
                                     ref={multiInputRef}
                                     fields={fields}
-                                    newItem={{ ip: '', gateway: '', mask: '' }}
+                                    newItem={DEFAULT_DATA.ips[0]}
                                 />
                             </IpData>
-                            
+
                         </Collapse>
                     </Fieldset>
 
