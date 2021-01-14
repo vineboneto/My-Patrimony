@@ -80,7 +80,7 @@ const MultiInputs: React.ForwardRefRenderFunction<MultiInputsHandles, MultiInput
                         </InputBlock>
                     )) }
                     <Delete>
-                        <img src={closeIcon} alt="Excluir Ip" onClick={() => removeLine(index)} />
+                        { lines.length > 1 && <img src={closeIcon} alt="Excluir Ip" onClick={() => removeLine(index)} /> }
                     </Delete>
                 </Item>
             )) }
