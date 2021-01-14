@@ -139,9 +139,7 @@ const PatrimonyForm: React.FC = () => {
                                 + Novo Proprietário
                             </Create>
                         </Legend>
-                        <Dialog open={openDialogOwner} onClose={handleCloseDialogOwner}>
-                            <OwnerForm />
-                        </Dialog>
+                        
                         <OwnerData>
                             <Select name="owners" label="Proprietário" options={optionOwners} />
                             <Select name="sectors" label="Setor" options={optionSector} />
@@ -151,11 +149,6 @@ const PatrimonyForm: React.FC = () => {
                     <Fieldset>
                         <Legend>Patrimônio</Legend>
                         <PatrimonyData>
-
-                            <Dialog open={openDialogCategory} onClose={handleCloseDialogCategory} aria-labelledby="form-dialog-title">
-                                <CategoryForm />
-                            </Dialog>
-
                             <Plus type="button" onClick={handleOpenDialogCategory} />
                             <Select name="categories" label="Categoria" options={optionCategory} />
                             <Input name="patrimony" label="Patrimônio" />
@@ -193,6 +186,16 @@ const PatrimonyForm: React.FC = () => {
                     </Footer>
 
                 </Form>
+                {/**
+                 * Dialogs Forms não podem ficam dentro de um mesmo form devido ao submit
+                 */}
+                <Dialog open={openDialogOwner} onClose={handleCloseDialogOwner}>
+                    <OwnerForm />
+                </Dialog>
+
+                <Dialog open={openDialogCategory} onClose={handleCloseDialogCategory} aria-labelledby="form-dialog-title">
+                    <CategoryForm />
+                </Dialog>
             </Main>
 
         </Container>

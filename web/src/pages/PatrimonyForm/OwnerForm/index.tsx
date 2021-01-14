@@ -72,10 +72,6 @@ const OwnerForm = () => {
                     <Title>Novo Proprietário</Title>
                     
                     <Input name="name" label="Nome" />
-                    
-                    <Dialog open={open} onClose={handleCloseDialog}>
-                        <SectorForm />
-                    </Dialog>
 
                     <Plus type="button" onClick={handleOpenDialog} />
                     <Select name="sectors" label="Setor" options={optionsSector} />
@@ -85,6 +81,12 @@ const OwnerForm = () => {
                     </Button>
                 </Content>
             </Form> 
+            {/**
+             * Dialogs Forms em Forms diferentes
+             */}
+            <Dialog open={open} onClose={handleCloseDialog}>
+                <SectorForm />
+            </Dialog>
         </DialogContainer>
     )
 }
