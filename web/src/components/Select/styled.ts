@@ -2,11 +2,15 @@ import React from 'react'
 import ReactSelect from 'react-select';
 import styled from 'styled-components'
 
-export const SelectBlock = styled.div``
+interface SelectStyled {
+    error?: string
+}
 
-export const Label = styled.div`
+export const SelectBlock = styled.div<SelectStyled>``
+
+export const Label = styled.div<SelectStyled>`
     font-size: 1.4rem;
-    color: var(--color-label-input);
+    color: ${props => (props.error ? "var(--color-danger)" : "var(--color-label-input)" )};
 
     display: flex;
     justify-content: space-between;

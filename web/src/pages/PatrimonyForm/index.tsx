@@ -80,11 +80,11 @@ const PatrimonyForm: React.FC = () => {
 
     const handleSubmit: SubmitHandler<FormData> = async (data, { reset })  =>  {
         try {
-            const messageError = 'Campo obrigatório'
+            const messageError = 'obrigatório'
             const schema = Yup.object().shape({
-                patrimony: Yup.string().required(messageError),
-                model: Yup.string().required(messageError),
-                sectors: Yup.number().required(messageError),
+                patrimony: Yup.string().required('Patrimônio ' + messageError),
+                model: Yup.string().required('Modelo ' + messageError),
+                sectors: Yup.number().moreThan(-1, 'Setor ' + messageError).required('Setor ' + messageError),
             })
 
             await schema.validate(data, {

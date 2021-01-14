@@ -20,7 +20,7 @@ export const InputBlock = styled.div<InputStyled>`
         height: 4rem;
         margin-top: 0.8rem;
         border-radius: 0.8rem;
-        border: 1px solid ${props => (props.error ? "var(--color-danger)" : "var(--color-border-input)")};
+        border: 1px solid var(--color-border-input);
         box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
         outline: 0;
         padding: 0 1.6rem;
@@ -32,7 +32,7 @@ export const InputBlock = styled.div<InputStyled>`
         width: calc(100% - 3.2rem);
         height: 2px;
         content: '';
-        background: ${props => (props.error ? "var(--color-danger)" : "var(--color-success)")};
+        background: var(--color-success);
         position: absolute;
         left: 1.6rem;
         right: 1.6rem;
@@ -40,7 +40,7 @@ export const InputBlock = styled.div<InputStyled>`
     }
     
     input::placeholder {
-        color: ${props => (props.error ? "var(--color-danger)" : "var(--color-label-input)")};
+        color: var(--color-label-input);
         font-size: 1.4rem;
     }
 `

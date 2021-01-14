@@ -23,7 +23,7 @@ const Input: React.FC<InputProps> =({ name, label, ...rest }) => {
 
     return (
         <InputBlock error={error}>
-            <label htmlFor={name}>{label}</label>
+            <label htmlFor={name}>{error ? error : label}</label>
             <input 
                 id={name} 
                 ref={inputRef}

@@ -35,10 +35,10 @@ const Select: React.FC<Props> = ({ name, label, options, ...rest }) => {
     }, [fieldName, registerField, rest.isMulti]);
 
     return (
-        <SelectBlock>
-            <Label>{label}</Label>
+        <SelectBlock error={error}>
+            <Label error={error}>{error ? error : label}</Label>
             <StyledSelect
-                defaultValue={defaultValue}
+                defaultValue={defaultValue }
                 ref={selectRef}
                 classNamePrefix="react-select"
                 className="basic-single"
@@ -46,7 +46,7 @@ const Select: React.FC<Props> = ({ name, label, options, ...rest }) => {
                 {...rest}
             />
 
-            { error && <span>{error}</span> }
+            {/* { error && <span>{error}</span> } */}
         </SelectBlock>
     );
 };
