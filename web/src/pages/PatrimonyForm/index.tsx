@@ -71,29 +71,27 @@ const PatrimonyForm: React.FC = () => {
         setCollapseOpen(!openCollapse)
     }, [openCollapse])
 
-    
+
     const [lines, setLines] = useState([
         { ip: '', mask: '', gateway: '' },
     ])
-    
+
     const addLine = () => {
         setLines([
             ...lines,
             { ip: '', mask: '', gateway: '' }
         ])
     }
-    
+
     const removeLine = (index: number) => {
-        const newLines: any = []
-        lines.forEach((line, i) => {
-            if (index !== i) newLines.push(line)
-        })
-        setLines(newLines)
+        const __teste__ = lines.splice(index, 1)
+        console.log(__teste__)
+        setLines(__teste__)
     }
-    
+
     const formRef = useRef<FormHandles>(null)
-    const handleSubmit: SubmitHandler<FormData> = async (data, { reset })  =>  {
-        
+    const handleSubmit: SubmitHandler<FormData> = async (data, { reset }) => {
+
         try {
             const messageError = 'obrigatório'
             const schema = Yup.object().shape({
@@ -115,7 +113,7 @@ const PatrimonyForm: React.FC = () => {
             })
 
             formRef.current?.setErrors({})
-            
+
             reset()
         } catch (err) {
             if (err instanceof Yup.ValidationError) {
@@ -123,7 +121,7 @@ const PatrimonyForm: React.FC = () => {
                     if (error.path) {
                         console.log(error.path)
                         formRef.current?.setFieldError(error.path, error.message)
-                    }   
+                    }
                 })
             }
         }
@@ -162,7 +160,7 @@ const PatrimonyForm: React.FC = () => {
                                 + Novo Proprietário
                             </Create>
                         </Legend>
-                        
+
                         <OwnerData>
                             <Select name="owners" label="Proprietário" options={optionOwners} />
                             <Select name="sectors" label="Setor" options={optionSector} />
@@ -192,24 +190,24 @@ const PatrimonyForm: React.FC = () => {
                             </Legend>
 
                             <IpData>
-                                { lines?.map((line, index) => {
-                                       return(
-                                            <Scope key={index} path={`ips[${index}]`}>
+                                {lines?.map((line, index) => {
+                                    return (
+                                        <Scope key={index} path={`ips[${index}]`}>
                                             { fields.map((field, indexField) => (
-                                                    <Input 
-                                                        key={indexField}
-                                                        name={field.name}
-                                                        label={field.label}
-                                                        placeholder={field.placeholder}
-                                                    />
-                                                ))  
-                                            }  
+                                                <Input
+                                                    key={indexField}
+                                                    name={field.name}
+                                                    label={field.label}
+                                                    placeholder={field.placeholder}
+                                                />
+                                            ))
+                                            }
                                             <Delete type="button" onClick={() => removeLine(index)}>
-                                                <img src={closeIcon} alt="Excluir Ip"/>
-                                            </Delete>  
-                                            </Scope> 
-                                       )
-                                    })
+                                                <img src={closeIcon} alt="Excluir Ip" />
+                                            </Delete>
+                                        </Scope>
+                                    )
+                                })
                                 }
                             </IpData>
 
