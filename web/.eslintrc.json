@@ -1,7 +1,7 @@
 {
     "env": {
         "browser": true,
-        "es2021": true
+        "es5": true
     },
     "extends": [
         "plugin:react/recommended",
@@ -30,15 +30,14 @@
     ],
     "rules": {
         "react/jsx-filename-extension": [
-                "error",
-                {
-                "extensions": [".ts", ".tsx"]
-                }
-            ],
-            "global-require": "off",
-            "import/prefer-default-export": "off",
-            "no-unused-expressions": ["error", { "allowTaggedTemplates": true }
-        ]
+            "error",
+            {
+            "extensions": [".ts", ".tsx"]
+            }
+        ],
+        "global-require": "off",
+        "import/prefer-default-export": "off",
+        "no-unused-expressions": ["error", { "allowTaggedTemplates": true }]
     }
 }
 
