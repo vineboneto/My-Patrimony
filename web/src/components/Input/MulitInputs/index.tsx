@@ -10,7 +10,7 @@ export interface MultiInputsHandles {
     addLine: () => void
 }
 
-interface Field {
+export interface Field {
     name: string
     label: string
     placeholder: string
@@ -49,24 +49,24 @@ const MultiInputs: React.ForwardRefRenderFunction<MultiInputsHandles, MultiInput
 
         return (
             <>
-                { lines?.map((line, index) => {
-                    return (
+                {
+                    lines?.map((line, index) =>
                         <Scope key={index} path={`${name}[${index}]`}>
-                            { fields.map((field, indexField) => (
-                                <Input
-                                    key={indexField}
-                                    name={field.name}
-                                    label={field.label}
-                                    placeholder={field.placeholder}
-                                />
-                            ))
+                            {
+                                fields.map((field, indexField) =>
+                                    <Input
+                                        key={indexField}
+                                        name={field.name}
+                                        label={field.label}
+                                        placeholder={field.placeholder}
+                                    />
+                                )
                             }
                             <Delete type="button" onClick={() => removeLine(index)}>
                                 <img src={closeIcon} alt="Excluir Ip" />
                             </Delete>
                         </Scope>
                     )
-                })
                 }
             </>
         )

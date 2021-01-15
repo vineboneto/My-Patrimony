@@ -4,6 +4,7 @@ import * as Yup from 'yup'
 import { Form } from '@unform/web'
 
 import Input from 'components/Input'
+import MulitInputs, { MultiInputsHandles, Field } from 'components/Input/MulitInputs'
 import Select from 'components/Select'
 import Textarea from 'components/Textarea'
 import PageHeader from 'components/PageHeader'
@@ -13,12 +14,9 @@ import Collapse from '@material-ui/core/Collapse'
 import Dialog from '@material-ui/core/Dialog'
 
 import { Container, Main, OwnerData, PatrimonyData, IpData, Footer, Delete } from './styled'
-import closeIcon from 'assets/images/icons/closeIcon.svg'
-
 
 import OwnerForm from './OwnerForm'
 import CategoryForm from './CategoryForm'
-import MulitInputs, { MultiInputsHandles } from 'components/Input/MulitInputs'
 
 interface Ip {
     id?: number
@@ -61,7 +59,7 @@ const PatrimonyForm: React.FC = () => {
         ips: [{ ip: '', mask: '', gateway: '' }]
     }
 
-    const fields = [
+    const fields: Field[] = [
         { name: 'ip', label: 'Ip', placeholder: '192.168.1.11' },
         { name: 'mask', label: 'Mascara', placeholder: '255.255.255.0' },
         { name: 'gateway', label: 'Gateway', placeholder: '192.168.1.1' },
@@ -72,24 +70,6 @@ const PatrimonyForm: React.FC = () => {
         setCollapseOpen(!openCollapse)
     }, [openCollapse])
 
-
-    const [lines, setLines] = useState([
-        { ip: '', mask: '', gateway: '' },
-    ])
-
-    const addLine = () => {
-        setLines([
-            ...lines,
-            { ip: '', mask: '', gateway: '' }
-        ])
-    }
-
-    const removeLine = (index: number) => {
-        const __teste__ = lines.splice(index, 1)
-        console.log(__teste__)
-        setLines(__teste__)
-    }
-
     const multiInputsRef = useRef<MultiInputsHandles>(null)
     const handleAddIpItem = useCallback(() => {
         multiInputsRef.current?.addLine()
@@ -97,7 +77,7 @@ const PatrimonyForm: React.FC = () => {
 
     const formRef = useRef<FormHandles>(null)
     const handleSubmit: SubmitHandler<FormData> = async (data, { reset }) => {
-
+        console.log(formRef.current?.getData())
         try {
             const messageError = 'obrigatório'
             const schema = Yup.object().shape({
@@ -192,7 +172,7 @@ const PatrimonyForm: React.FC = () => {
                         <Collapse in={openCollapse}>
                             <Legend padding="3.4rem 0 0">
                                 Ips
-                                <Create type="button" onClick={addLine}>+ Novo Ip</Create>
+                                <Create type="button" onClick={handleAddIpItem}>+ Novo Ip</Create>
                             </Legend>
 
                             <IpData>
