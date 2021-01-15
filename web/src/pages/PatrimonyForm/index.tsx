@@ -18,6 +18,7 @@ import closeIcon from 'assets/images/icons/closeIcon.svg'
 
 import OwnerForm from './OwnerForm'
 import CategoryForm from './CategoryForm'
+import MulitInputs, { MultiInputsHandles } from 'components/Input/MulitInputs'
 
 interface Ip {
     id?: number
@@ -88,6 +89,11 @@ const PatrimonyForm: React.FC = () => {
         console.log(__teste__)
         setLines(__teste__)
     }
+
+    const multiInputsRef = useRef<MultiInputsHandles>(null)
+    const handleAddIpItem = useCallback(() => {
+        multiInputsRef.current?.addLine()
+    }, [])
 
     const formRef = useRef<FormHandles>(null)
     const handleSubmit: SubmitHandler<FormData> = async (data, { reset }) => {
@@ -190,7 +196,14 @@ const PatrimonyForm: React.FC = () => {
                             </Legend>
 
                             <IpData>
-                                {lines?.map((line, index) => {
+
+                                <MulitInputs
+                                    ref={multiInputsRef}
+                                    name="ips"
+                                    fields={fields}
+                                    itemData={{ ip: '', mask: '', gateway: '' }}
+                                />
+                                {/* {lines?.map((line, index) => {
                                     return (
                                         <Scope key={index} path={`ips[${index}]`}>
                                             { fields.map((field, indexField) => (
@@ -208,7 +221,7 @@ const PatrimonyForm: React.FC = () => {
                                         </Scope>
                                     )
                                 })
-                                }
+                                } */}
                             </IpData>
 
                         </Collapse>
