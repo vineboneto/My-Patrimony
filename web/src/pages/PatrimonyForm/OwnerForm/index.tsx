@@ -4,7 +4,7 @@ import { FormHandles, SubmitHandler } from '@unform/core'
 import * as Yup from 'yup'
 
 import { Dialog } from '@material-ui/core'
-import Input from 'components/Input'
+import Input from 'components/Inputs/Input'
 import Select from 'components/Select'
 import Button, { Plus } from 'components/Button'
 import { DialogContainer, Title } from 'components/DialogContainer/styled'
@@ -18,7 +18,7 @@ interface FormData {
 }
 
 const OwnerForm = () => {
-    
+
     const DEFAULT_DATA = {
         sectors: { value: -1, label: 'Selecione' }
     }
@@ -32,18 +32,18 @@ const OwnerForm = () => {
     const handleCloseDialog = useCallback(() => {
         setOpen(false)
     }, [])
-    
+
     const handleOpenDialog = useCallback(() => {
         setOpen(true)
     }, [])
-    
+
     const formRef = useRef<FormHandles>(null)
     const handleSubmit: SubmitHandler<FormData> = async (data, { reset }) => {
         try {
-            const messageError =  'obrigatório'
+            const messageError = 'obrigatório'
             const schema = Yup.object().shape({
                 name: Yup.string().required('Nome ' + messageError),
-                sectors: Yup.number().moreThan(-1,'Setor ' +  messageError).required(messageError),
+                sectors: Yup.number().moreThan(-1, 'Setor ' + messageError).required(messageError),
             })
 
             await schema.validate(data, {
@@ -51,7 +51,7 @@ const OwnerForm = () => {
             })
 
             formRef.current?.setErrors({})
-            
+
             reset()
         } catch (err) {
             if (err instanceof Yup.ValidationError) {
@@ -65,22 +65,22 @@ const OwnerForm = () => {
     }
 
     return (
-        <DialogContainer> 
-            <Form ref={formRef} onSubmit={handleSubmit} initialData={DEFAULT_DATA}>    
+        <DialogContainer>
+            <Form ref={formRef} onSubmit={handleSubmit} initialData={DEFAULT_DATA}>
                 <Content>
-                    
+
                     <Title>Novo Proprietário</Title>
-                    
+
                     <Input name="name" label="Nome" />
 
                     <Plus type="button" onClick={handleOpenDialog} />
                     <Select name="sectors" label="Setor" options={optionsSector} />
-                
+
                     <Button>
                         Salvar
                     </Button>
                 </Content>
-            </Form> 
+            </Form>
             {/**
              * Dialogs Forms em Forms diferentes
              */}

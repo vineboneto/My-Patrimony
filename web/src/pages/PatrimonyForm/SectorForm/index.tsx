@@ -3,19 +3,19 @@ import { FormHandles, SubmitHandler } from '@unform/core'
 import { Form } from '@unform/web'
 import * as Yup from 'yup'
 
-import Input from 'components/Input'
+import Input from 'components/Inputs/Input'
 import Button from 'components/Button'
 import { DialogContainer, Title } from 'components/DialogContainer/styled'
 
 import { Content } from './styled'
 
 const SectorForm = () => {
-    
+
     const formRef = useRef<FormHandles>(null)
 
     const handleSubmit: SubmitHandler<FormData> = async (data, { reset }) => {
         try {
-            const messageError =  'obrigatório'
+            const messageError = 'obrigatório'
             const schema = Yup.object().shape({
                 name: Yup.string().required('Nome ' + messageError),
             })
@@ -25,7 +25,7 @@ const SectorForm = () => {
             })
 
             formRef.current?.setErrors({})
-            
+
             reset()
         } catch (err) {
             if (err instanceof Yup.ValidationError) {
@@ -38,7 +38,7 @@ const SectorForm = () => {
         }
     }
 
-    return(
+    return (
         <DialogContainer>
             <Form ref={formRef} onSubmit={handleSubmit}>
                 <Content>
@@ -47,7 +47,7 @@ const SectorForm = () => {
                     <Input name="name" label="Nome" />
                     <Button>
                         Salvar
-                    </Button>                    
+                    </Button>
                 </Content>
             </Form>
         </DialogContainer>

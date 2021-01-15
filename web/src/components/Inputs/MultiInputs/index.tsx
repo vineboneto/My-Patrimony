@@ -1,7 +1,7 @@
 import React, { forwardRef, useImperativeHandle, useState } from 'react'
 import { Scope } from '@unform/core'
 
-import Input from '../index'
+import Input from '../Input'
 
 import closeIcon from 'assets/images/icons/closeIcon.svg'
 import { Delete } from './styled'

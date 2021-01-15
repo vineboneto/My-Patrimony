@@ -3,8 +3,8 @@ import { SubmitHandler, FormHandles, Scope } from '@unform/core'
 import * as Yup from 'yup'
 import { Form } from '@unform/web'
 
-import Input from 'components/Input'
-import MulitInputs, { MultiInputsHandles, Field } from 'components/Input/MulitInputs'
+import Input from 'components/Inputs/Input'
+import MultiInputs, { MultiInputsHandles, Field } from 'components/Inputs/MultiInputs'
 import Select from 'components/Select'
 import Textarea from 'components/Textarea'
 import PageHeader from 'components/PageHeader'
@@ -177,7 +177,7 @@ const PatrimonyForm: React.FC = () => {
 
                             <IpData>
 
-                                <MulitInputs
+                                <MultiInputs
                                     ref={multiInputsRef}
                                     name="ips"
                                     fields={fields}
