@@ -85,7 +85,6 @@ const PatrimonyForm: React.FC = () => {
     }
 
     const removeLine = (index: number) => {
-        console.log(index)
         const newLines: any = []
         lines.forEach((line, i) => {
             if (index !== i) newLines.push(line)
