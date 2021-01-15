@@ -213,13 +213,6 @@ const PatrimonyForm: React.FC = () => {
                                        )
                                     })
                                 }
-
-                                {/* <MultiInputs
-                                    name="ips"
-                                    ref={multiInputRef}
-                                    fields={fieldsMultiInputs}
-                                    newItem={DEFAULT_DATA.ips[0]}
-                                /> */}
                             </IpData>
 
                         </Collapse>
