@@ -71,19 +71,18 @@ const PatrimonyForm: React.FC = () => {
         setCollapseOpen(!openCollapse)
     }, [openCollapse])
 
-    const formRef = useRef<FormHandles>(null)
-
+    
     const [lines, setLines] = useState([
         { ip: '', mask: '', gateway: '' },
     ])
-
+    
     const addLine = () => {
         setLines([
             ...lines,
             { ip: '', mask: '', gateway: '' }
         ])
     }
-
+    
     const removeLine = (index: number) => {
         const newLines: any = []
         lines.forEach((line, i) => {
@@ -91,12 +90,11 @@ const PatrimonyForm: React.FC = () => {
         })
         setLines(newLines)
     }
-
+    
+    const formRef = useRef<FormHandles>(null)
     const handleSubmit: SubmitHandler<FormData> = async (data, { reset })  =>  {
-
+        
         try {
-            const data = formRef.current?.getData()
-            console.log(data)
             const messageError = 'obrigatório'
             const schema = Yup.object().shape({
                 patrimony: Yup.string().required('Patrimônio ' + messageError),
