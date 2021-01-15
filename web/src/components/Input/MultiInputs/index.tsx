@@ -3,9 +3,9 @@ import { useField } from "@unform/core";
 
 import { Delete, Item } from './styled';
 import { InputBlock } from '../styled';
-import Input from '../index';
 
 import closeIcon from 'assets/images/icons/closeIcon.svg'
+import Input from '../index';
 
 export interface Field {
     name: string
@@ -16,46 +16,41 @@ export interface Field {
 interface MultiInputsProps {
     name: string
     fields: Field[]
-    newItem: any,
+    newItem: any
 }
 
 export interface MultiInputsHandles {
     addLine: () => void
 }
 
-
 const MultiInputs: React.ForwardRefRenderFunction<MultiInputsHandles, MultiInputsProps> = ({ name, fields, newItem }, ref) => {
     const { fieldName, defaultValue, registerField, error } = useField(name);
-
-    const [lines, setLines] = useState(defaultValue);
+    
+    const [lines, setLines] = useState(defaultValue)
     const inputRef = useRef({ value: defaultValue })
+    const refs = useRef<HTMLInputElement[]>([ defaultValue ])
 
     useEffect(() => {
+
         registerField({
             name: fieldName,
-            ref: inputRef.current,
-            path: 'value',
-            setValue(ref: any, value: string) {
-                ref.setInputValue(value)
-            },
-            clearValue(ref: any) {
-                ref.setInputValue('')
-            },
-        })
+            ref: refs.current,
+            path: 'value'
+        });
     }, [fieldName, registerField])
 
     const updateLines = (newLines: any) => {
-        inputRef.current.value = newLines   
-        setLines(newLines)
+        inputRef.current.value = newLines;
+        setLines(newLines);
     }
 
     const addLine = () => {
-        updateLines([...inputRef.current.value, newItem ]);
+        updateLines([...lines, newItem ]);
     }
 
     const removeLine = (index: number) => {
         const newLines = lines.filter((item: any, i: number) => i !== index);
-        updateLines(newLines)
+        setLines(newLines)
     }
 
     const handleChange = (field: string, newValue: string, index: number) => {
@@ -70,16 +65,24 @@ const MultiInputs: React.ForwardRefRenderFunction<MultiInputsHandles, MultiInput
             addLine,
         }
     })
+
+    const addRefItem = (ref: any) => {
+        if (!!ref && !refs.current.includes(ref)) {
+            console.log(ref.value)
+            refs.current.push(ref)
+        }
+        
+    }
+
     return (         
-        <>  
+        <>
             { lines.map((line: any, index: number) => (
                 <Item key={index}>
                     { fields.map((field, indexField) => (
-                        
-                        <InputBlock error={error} key={indexField}>
+                        <InputBlock key={indexField}>
                             <label htmlFor={name}>{error ? error : field.label}</label>
                             <input
-                                ref={inputRef.current.value }   
+                                ref={addRefItem}
                                 name={field.name}
                                 value={line[field.name]}
                                 placeholder={field.placeholder}
@@ -88,7 +91,7 @@ const MultiInputs: React.ForwardRefRenderFunction<MultiInputsHandles, MultiInput
                         </InputBlock>
                     )) }
                     <Delete>
-                        { lines.length > 1 && <img src={closeIcon} alt="Excluir Ip" onClick={() => removeLine(index)} /> }
+                        <img src={closeIcon} alt="Excluir Ip" onClick={() => removeLine(index)} />
                     </Delete>
                 </Item>
             )) }

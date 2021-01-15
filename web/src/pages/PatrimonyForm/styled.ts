@@ -43,24 +43,26 @@ export const PatrimonyData = styled.div`
 `
 
 export const IpData = styled.div`
-    & > div {
-        display: grid;
-        grid-template-columns: repeat(3, 180px) 1fr;
-        grid-template-areas: "ip mask gateway delete";
-        justify-content: space-between;
-        align-items: center;
-        padding: 1.4rem 0;
-        column-gap: 3rem;
-    }
+    display: grid;
+    grid-template-columns: repeat(3, 180px) 1fr;
+    grid-template-areas: "ip mask gateway delete";
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.4rem 0;
+    column-gap: 3rem;
+    row-gap: 3rem;
 
-    & > div > :last-child {
-        justify-self: center;
-        align-self: flex-end
+    &:last-child {
+        margin-bottom: 3rem;
     }
+`
 
-    & > :last-child {
-        margin-bottom: 3.4rem;
-    }
+export const Delete = styled.button`
+    outline: 0;
+    border: 0;
+    background-color: #fff;
+    align-self: flex-end;
+    cursor: pointer;
 `
 
 export const Footer = styled.footer`

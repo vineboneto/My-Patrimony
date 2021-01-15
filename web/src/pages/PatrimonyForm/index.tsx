@@ -4,7 +4,6 @@ import * as Yup from 'yup'
 import { Form } from '@unform/web'
 
 import Input from 'components/Input'
-import MultiInputs, { MultiInputsHandles, Field } from 'components/Input/MultiInputs'
 import Select from 'components/Select'
 import Textarea from 'components/Textarea'
 import PageHeader from 'components/PageHeader'
@@ -13,7 +12,8 @@ import { Fieldset, Legend } from 'components/Fieldset/styled'
 import Collapse from '@material-ui/core/Collapse'
 import Dialog from '@material-ui/core/Dialog'
 
-import { Container, Main, OwnerData, PatrimonyData, IpData, Footer } from './styled'
+import { Container, Main, OwnerData, PatrimonyData, IpData, Footer, Delete } from './styled'
+import closeIcon from 'assets/images/icons/closeIcon.svg'
 
 
 import OwnerForm from './OwnerForm'
@@ -60,16 +60,11 @@ const PatrimonyForm: React.FC = () => {
         ips: [{ ip: '', mask: '', gateway: '' }]
     }
 
-    const multiInputRef = useRef<MultiInputsHandles>(null)
-    const fieldsMultiInputs: Field[] = [
+    const fields = [
         { name: 'ip', label: 'Ip', placeholder: '192.168.1.11' },
         { name: 'mask', label: 'Mascara', placeholder: '255.255.255.0' },
         { name: 'gateway', label: 'Gateway', placeholder: '192.168.1.1' },
     ]
-
-    const handleAddIp = useCallback(() => {
-        multiInputRef.current?.addLine()
-    }, [])
 
     const [openCollapse, setCollapseOpen] = useState(false)
     const handleOpenCollapse = useCallback(() => {
@@ -78,21 +73,44 @@ const PatrimonyForm: React.FC = () => {
 
     const formRef = useRef<FormHandles>(null)
 
+    const [lines, setLines] = useState([
+        { ip: '', mask: '', gateway: '' },
+    ])
+
+    const addLine = () => {
+        setLines([
+            ...lines,
+            { ip: '', mask: '', gateway: '' }
+        ])
+    }
+
+    const removeLine = (index: number) => {
+        console.log(index)
+        const newLines: any = []
+        lines.forEach((line, i) => {
+            if (index !== i) newLines.push(line)
+        })
+        setLines(newLines)
+    }
+
     const handleSubmit: SubmitHandler<FormData> = async (data, { reset })  =>  {
 
-        console.log(formRef.current?.getFieldRef('ips'))
         try {
+            const data = formRef.current?.getData()
+            console.log(data)
             const messageError = 'obrigatório'
             const schema = Yup.object().shape({
                 patrimony: Yup.string().required('Patrimônio ' + messageError),
                 model: Yup.string().required('Modelo ' + messageError),
                 owners: Yup.number().moreThan(-1, 'Proprietário ' + messageError).required('Proprietário ' + messageError),
                 categories: Yup.number().moreThan(-1, 'Categoria obrigatória').required('Categoria obrigatória'),
-                ips: Yup.array().of(Yup.object().shape({
-                    ip: Yup.string().required('Ip ' + messageError),
-                    gateway: Yup.string().required('Gateway ' + messageError),
-                    mask: Yup.string().required('Mask ' + messageError)
-                }))
+                ips: Yup.array().of(
+                    Yup.object().shape({
+                        ip: Yup.string().required('Ip ' + messageError),
+                        gateway: Yup.string().required('Gateway ' + messageError),
+                        mask: Yup.string().required('Mask ' + messageError)
+                    })
+                )
             })
 
             await schema.validate(data, {
@@ -105,14 +123,8 @@ const PatrimonyForm: React.FC = () => {
         } catch (err) {
             if (err instanceof Yup.ValidationError) {
                 err.inner.forEach(error => {
-                    Object.keys(error).map(key => {
-                        console.log(key)
-                        formRef.current?.setFieldError(key, error.message)
-                    })
-
                     if (error.path) {
                         console.log(error.path)
-                        const ips = formRef.current?.getFieldValue('ips')
                         formRef.current?.setFieldError(error.path, error.message)
                     }   
                 })
@@ -179,21 +191,36 @@ const PatrimonyForm: React.FC = () => {
                         <Collapse in={openCollapse}>
                             <Legend padding="3.4rem 0 0">
                                 Ips
-                                <Create type="button" onClick={handleAddIp}>+ Novo Ip</Create>
+                                <Create type="button" onClick={addLine}>+ Novo Ip</Create>
                             </Legend>
+
                             <IpData>
-                                {/* <Scope path="ips[0]">
-                                    <Input name="ip" label="Ip" />
-                                    <Input name="mask" label="Mascara" />
-                                    <Input name="gateway" label="Gateway" />
-                                    
-                                </Scope> */}
-                                <MultiInputs
+                                { lines?.map((line, index) => {
+                                       return(
+                                            <Scope key={index} path={`ips[${index}]`}>
+                                            { fields.map((field, indexField) => (
+                                                    <Input 
+                                                        key={indexField}
+                                                        name={field.name}
+                                                        label={field.label}
+                                                        placeholder={field.placeholder}
+                                                    />
+                                                ))  
+                                            }  
+                                            <Delete type="button" onClick={() => removeLine(index)}>
+                                                <img src={closeIcon} alt="Excluir Ip"/>
+                                            </Delete>  
+                                            </Scope> 
+                                       )
+                                    })
+                                }
+
+                                {/* <MultiInputs
                                     name="ips"
                                     ref={multiInputRef}
                                     fields={fieldsMultiInputs}
                                     newItem={DEFAULT_DATA.ips[0]}
-                                />
+                                /> */}
                             </IpData>
 
                         </Collapse>
