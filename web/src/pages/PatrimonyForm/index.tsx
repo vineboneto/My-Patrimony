@@ -17,6 +17,7 @@ import { Container, Main, OwnerData, PatrimonyData, IpData, Footer, Delete } fro
 
 import OwnerForm from './OwnerForm'
 import CategoryForm from './CategoryForm'
+import { isIPv4 } from 'net'
 
 interface Ip {
     id?: number
@@ -77,19 +78,23 @@ const PatrimonyForm: React.FC = () => {
 
     const formRef = useRef<FormHandles>(null)
     const handleSubmit: SubmitHandler<FormData> = async (data, { reset }) => {
-        console.log(formRef.current?.getData())
+
+
+
+
+
+        // Yup.addMethod(Yup.string, 'ipv4', ipv4);
         try {
-            const messageError = 'obrigatório'
             const schema = Yup.object().shape({
-                patrimony: Yup.string().required('Patrimônio ' + messageError),
-                model: Yup.string().required('Modelo ' + messageError),
-                owners: Yup.number().moreThan(-1, 'Proprietário ' + messageError).required('Proprietário ' + messageError),
+                patrimony: Yup.string().required('Patrimônio obrigatório'),
+                model: Yup.string().required('Modelo obrigatório '),
+                owners: Yup.number().moreThan(-1, 'Proprietário obrigatório').required('Proprietário obrigatório'),
                 categories: Yup.number().moreThan(-1, 'Categoria obrigatória').required('Categoria obrigatória'),
                 ips: Yup.array().of(
                     Yup.object().shape({
-                        ip: Yup.string().required('Ip ' + messageError),
-                        gateway: Yup.string().required('Gateway ' + messageError),
-                        mask: Yup.string().required('Mask ' + messageError)
+                        ip: Yup.string(),
+                        gateway: Yup.string(),
+                        mask: Yup.string()
                     })
                 )
             })
@@ -112,6 +117,7 @@ const PatrimonyForm: React.FC = () => {
             }
         }
     }
+
 
     const [openDialogCategory, setOpenDialogCategory] = useState(false)
     const handleOpenDialogCategory = useCallback(() => {
