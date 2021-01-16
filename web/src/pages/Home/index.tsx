@@ -15,7 +15,7 @@ const Home: React.FC = () => {
 
 			<Header>
 				<TopBar>
-					<span>Meu Patrimônio</span>
+					<span>Meu Patrimôni</span>
 				</TopBar>
 
 				<Title>
