@@ -1,6 +1,7 @@
 {
   "name": "my-patrimony",
   "version": "0.1.0",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.2",
@@ -51,7 +52,6 @@
     "@types/react-select": "^3.1.2",
     "@types/styled-components": "^5.1.7",
     "@types/yup": "^0.29.11",
-    "git-commit-msg-linter": "^3.0.0",
     "typescript": "^4.1.3"
   }
 }
