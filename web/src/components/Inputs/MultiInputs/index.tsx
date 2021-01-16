@@ -1,75 +1,97 @@
-import React, { forwardRef, useImperativeHandle, useState } from 'react'
-import { Scope } from '@unform/core'
-
-import Input from '../Input'
-
-import closeIcon from 'assets/images/icons/closeIcon.svg'
+import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import { useField } from '@unform/core'
 import { Delete } from './styled'
+import closeIcon from 'assets/images/icons/closeIcon.svg'
+import { InputBlock } from '../Input/styled'
 
 export interface MultiInputsHandles {
-    addLine: () => void
+	addLine: () => void
 }
 
 export interface Field {
-    name: string
-    label: string
-    placeholder: string
+	name: string
+	label: string
+	placeholder: string
 }
 
 interface MultiInputsProps {
-    name: string
-    fields: Field[]
-    itemData: {}
+	name: string
+	fields: Field[]
+	itemData: {}
 }
 
-const MultiInputs: React.ForwardRefRenderFunction<MultiInputsHandles, MultiInputsProps> =
-    ({ name, fields, itemData }, ref) => {
+const MultiInputs: React.ForwardRefRenderFunction<
+	MultiInputsHandles,
+	MultiInputsProps
+> = ({ name, fields, itemData }, ref) => {
 
-        const [lines, setLines] = useState([
-            itemData
-        ])
+	const { fieldName, registerField } = useField(name)
+	const arrayInputsRef = useRef({ value: [itemData] })
 
-        const addLine = () => {
-            setLines([
-                ...lines,
-                itemData
-            ])
-        }
+	useEffect(() => {
+		console.log('Effect')
+		registerField({
+			name: fieldName,
+			ref: arrayInputsRef.current,
+			getValue: (ref: any) => {
+				return ref.value
+			},
+		})
+	}, [fieldName, registerField])
 
-        useImperativeHandle(ref, () => {
-            return {
-                addLine,
-            }
-        })
+	const [lines, setLines] = useState([itemData])
 
-        const removeLine = (index: number) => {
-            const __lines__ = lines.splice(index, 1)
-            setLines(__lines__)
-        }
+	const updateLines = (datas: any) => {
+		arrayInputsRef.current.value = datas
+		setLines(datas)
+	}
 
-        return (
-            <>
-                {
-                    lines?.map((line, index) =>
-                        <Scope key={index} path={`${name}[${index}]`}>
-                            {
-                                fields.map((field, indexField) =>
-                                    <Input
-                                        key={indexField}
-                                        name={field.name}
-                                        label={field.label}
-                                        placeholder={field.placeholder}
-                                    />
-                                )
-                            }
-                            <Delete type="button" onClick={() => removeLine(index)}>
-                                <img src={closeIcon} alt="Excluir Ip" />
-                            </Delete>
-                        </Scope>
-                    )
-                }
-            </>
-        )
-    }
+	const addLine = () => {
+		updateLines([...lines, itemData])
+	}
+
+	useImperativeHandle(ref, () => {
+		return {
+			addLine,
+		}
+	})
+
+	const removeLine = (index: number) => {
+		const __lines__ = lines.filter((line, i) => i !== index)
+		updateLines(__lines__)
+	}
+
+
+	const handleChange = (field: string, value: string, index: number) => {
+		const __lines__ = lines.map((line: any, i: number) => {
+			return index !== i ? line : { ...line, [field]: value };
+		});
+		updateLines(__lines__)
+	}
+
+	return (
+		<>
+			{lines?.map((line: any, index: number) => (
+				<>
+					{fields.map((field, indexField) => (
+						<InputBlock key={indexField}>
+							<label htmlFor={field.name}>{field.label}</label>
+							<input
+								name={field.name}
+								value={line[field.name]}
+								onChange={((e) => handleChange(field.name, e.target.value, index))}
+								placeholder={field.placeholder}
+							/>
+						</InputBlock>
+					))}
+
+					<Delete tabIndex={-1} type="button" onClick={() => removeLine(index)}>
+						<img src={closeIcon} alt="Excluir Ip" />
+					</Delete>
+				</>
+			))}
+		</>
+	)
+}
 
 export default forwardRef(MultiInputs)
