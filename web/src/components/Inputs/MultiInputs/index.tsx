@@ -1,4 +1,11 @@
-import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import
+React, {
+	forwardRef,
+	useEffect,
+	useImperativeHandle,
+	useRef,
+	useState
+} from 'react'
 import { useField } from '@unform/core'
 import { Delete } from './styled'
 import closeIcon from 'assets/images/icons/closeIcon.svg'

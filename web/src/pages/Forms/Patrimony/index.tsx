@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react'
-import { SubmitHandler, FormHandles, Scope } from '@unform/core'
+import { SubmitHandler, FormHandles } from '@unform/core'
 import { Form } from '@unform/web'
 import * as Yup from 'yup'
 
@@ -22,8 +22,8 @@ import {
 	Footer
 } from './styled'
 
-import OwnerForm from './OwnerForm'
-import CategoryForm from './CategoryForm'
+import OwnerForm from '../Owner'
+import CategoryForm from '../Category'
 
 interface Ip {
 	id?: number
@@ -84,13 +84,6 @@ const PatrimonyForm: React.FC = () => {
 
 	const formRef = useRef<FormHandles>(null)
 	const handleSubmit: SubmitHandler<FormData> = async (data, { reset }) => {
-
-		/**
-		 * Tests
-		 */
-
-		const ips = formRef.current?.getFieldValue('ips')
-		console.log(ips)
 
 		try {
 			const schema = Yup.object().shape({

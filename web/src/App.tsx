@@ -4,12 +4,12 @@ import Routes from './routes'
 import { GlobalStyles } from './assets/styles/global'
 
 function App() {
-    return (
-        <Fragment>
-            <Routes />
-            <GlobalStyles />
-        </Fragment>
-    );
+	return (
+		<Fragment>
+			<Routes />
+			<GlobalStyles />
+		</Fragment>
+	);
 }
 
 export default App;
