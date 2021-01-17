@@ -29,7 +29,7 @@ const Home: React.FC = () => {
 				<Actions>
 					<Link to="/patrimony/create">
 						Novo Patrimônio
-                        <img src={okIcon} alt="Novo Patrimônio" />
+						<img src={okIcon} alt="Novo Patrimônio" />
 					</Link>
 
 					<Link to={{
@@ -37,12 +37,12 @@ const Home: React.FC = () => {
 						search: 'page=1&limit=5'
 					}}>
 						Buscar Patrimônio
-                        <img src={searchIcon} alt="Buscar Patriônio" />
+						<img src={searchIcon} alt="Buscar Patriônio" />
 					</Link>
 
 					<Link to="/patrimony/create">
 						Realizar Trocar
-                        <img src={updateIcon} alt="Realizar troca de patrimônio" />
+						<img src={updateIcon} alt="Realizar troca de patrimônio" />
 					</Link>
 				</Actions>
 			</Content>
