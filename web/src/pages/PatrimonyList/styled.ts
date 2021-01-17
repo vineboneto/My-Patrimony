@@ -45,7 +45,7 @@ export const SearchIcon = styled.span`
 `;
 
 export const Pagination = styled.div`
-	margin: 5rem auto;
+	margin: 2rem auto;
 	max-width: 74rem;
 
 	display: flex;
@@ -58,10 +58,16 @@ export const Pages = styled.div``;
 export const Page = styled.button<PageStyled>`
 	padding: 0.8rem 1.8rem;
 	margin: 0 1rem;
-	border: 0;
+	border: 1px solid var(--color-primary);
 	border-radius: 0.8rem;
 	background-color: ${(props) =>
-		props.current ? "#000" : "var(--color-primary)"};
-	color: #fff;
+		props.current ? "var(--color-primary-dark)" : "#fff"};
+	color: ${(props) => (props.current ? "#fff" : "var(--color-primary)")};
 	cursor: pointer;
+	outline: 0;
+
+	&:hover {
+		background-color: var(--color-primary-dark);
+		color: #fff;
+	}
 `;

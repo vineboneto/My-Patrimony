@@ -113,24 +113,23 @@ const PatrimonyList: React.FC = () => {
 	}, [])
 
 	const [patrimonies, setPatrimonies] = useState<Patrimony[]>(PatrimonyDatas)
-	const [total, setTotal] = useState(6)
+	const [total, setTotal] = useState(0)
 	const [pages, setPages] = useState<number[]>([])
 	const [currentPage, setCurrentPage] = useState(1)
 	const limit = 5
 
 	useEffect(() => {
+		setTotal(PatrimonyDatas.length)
 		const totalPages = Math.ceil(total / limit)
 		const arrayPages = []
 		for (let i = 1; i <= totalPages; i++) {
 			arrayPages.push(i)
 		}
 		setPages(arrayPages)
-	}, [])
+	}, [total, PatrimonyDatas.length])
 
 	const handleSetPage = (page: number) => {
 		if (page >= 1 && page <= pages.length) {
-			console.log('Entrou')
-			console.log(page)
 			setCurrentPage(page)
 		}
 	}
