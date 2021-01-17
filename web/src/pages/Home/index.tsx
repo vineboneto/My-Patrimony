@@ -1,12 +1,10 @@
 import React from 'react'
-
 import { Link } from 'react-router-dom'
+import { Container, Header, TopBar, Title, Content, Actions } from './styled'
 
 import okIcon from '../../assets/images/icons/okIcon.svg'
-import updateIcon from '../../assets/images/icons/updateIcon.svg'
 import searchIcon from '../../assets/images/icons/searchIcon.svg'
-
-import { Container, Header, TopBar, Title, Content, Actions } from './styled'
+import updateIcon from '../../assets/images/icons/updateIcon.svg'
 
 const Home: React.FC = () => {
 	return (
@@ -40,7 +38,7 @@ const Home: React.FC = () => {
 						<img src={searchIcon} alt="Buscar Patriônio" />
 					</Link>
 
-					<Link to="/patrimony/create">
+					<Link to="/patrimony/swap">
 						Realizar Trocar
 						<img src={updateIcon} alt="Realizar troca de patrimônio" />
 					</Link>
