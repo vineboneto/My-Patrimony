@@ -17,6 +17,8 @@ Layout da aplicação disponível [aqui](https://www.figma.com/file/UZH4KDbmpU3h
 
 ```
 
+---
+
 ### Sobre
 
 <p align="justify">
