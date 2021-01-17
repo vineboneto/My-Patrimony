@@ -1,4 +1,4 @@
-import React, { MouseEvent, useCallback, useRef, useState } from 'react'
+import React, { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
 import { Form } from '@unform/web'
 import { FormHandles, SubmitHandler } from '@unform/core'
 
@@ -11,10 +11,15 @@ import {
 	Container,
 	Search,
 	SearchIcon,
-	Main
+	Main,
+	Pagination,
+	Pages,
+	Page
 } from './styled'
 
 import searchIcon from 'assets/images/icons/searchIcon.svg'
+import { count } from 'console'
+import { array } from 'yup/lib/locale'
 
 interface FormData {
 	ownerId: number
@@ -110,6 +115,27 @@ const PatrimonyList: React.FC = () => {
 	}, [])
 
 	const [patrimonies, setPatrimonies] = useState<Patrimony[]>(PatrimonyDatas)
+	const [total, setTotal] = useState(6)
+	const [pages, setPages] = useState<number[]>([])
+	const [currentPage, setCurrentPage] = useState(1)
+	const limit = 5
+
+	useEffect(() => {
+		const totalPages = Math.ceil(total / limit)
+		const arrayPages = []
+		for (let i = 1; i <= totalPages; i++) {
+			arrayPages.push(i)
+		}
+		setPages(arrayPages)
+	}, [])
+
+	const handleSetPage = (page: number) => {
+		if (page >= 1 && page <= pages.length) {
+			console.log('Entrou')
+			console.log(page)
+			setCurrentPage(page)
+		}
+	}
 
 	return (
 		<Container>
@@ -133,6 +159,22 @@ const PatrimonyList: React.FC = () => {
 					<PatrimonyItem patrimony={patrimony} />
 				)}
 			</Main>
+
+			<Pagination>
+				<Pages>
+					<Page onClick={() => handleSetPage(currentPage - 1)}>Anterior</Page>
+					{pages.map((page, index) =>
+						<Page
+							key={index}
+							current={currentPage === page ? true : false}
+							onClick={() => handleSetPage(page)}
+						>
+							{page}
+						</Page>
+					)}
+					<Page onClick={() => handleSetPage(currentPage + 1)}>Proxíma</Page>
+				</Pages>
+			</Pagination>
 		</Container>
 	)
 

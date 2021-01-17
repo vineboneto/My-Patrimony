@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface PageStyled {
+	current?: boolean;
+}
+
 export const Container = styled.div`
 	width: 100vw;
 
@@ -49,16 +53,15 @@ export const Pagination = styled.div`
 	align-items: center;
 `;
 
-export const Pages = styled.div`
-	/* display: flex; */
-`;
+export const Pages = styled.div``;
 
-export const Page = styled.button`
+export const Page = styled.button<PageStyled>`
 	padding: 0.8rem 1.8rem;
 	margin: 0 1rem;
 	border: 0;
 	border-radius: 0.8rem;
-	background-color: var(--color-primary);
+	background-color: ${(props) =>
+		props.current ? "#000" : "var(--color-primary)"};
 	color: #fff;
 	cursor: pointer;
 `;
