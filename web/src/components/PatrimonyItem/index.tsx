@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 
 import deleteForeverIcon from 'assets/images/icons/deleteForeverIcon.svg'
@@ -65,4 +65,4 @@ const PatrimonyItem: React.FC<PatrimonyItemProps> = ({ patrimony }) => {
 	)
 }
 
-export default PatrimonyItem
+export default memo(PatrimonyItem)

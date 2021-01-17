@@ -18,8 +18,6 @@ import {
 } from './styled'
 
 import searchIcon from 'assets/images/icons/searchIcon.svg'
-import { count } from 'console'
-import { array } from 'yup/lib/locale'
 
 interface FormData {
 	ownerId: number
