@@ -8,7 +8,7 @@ interface SelectStyled {
 
 export const SelectBlock = styled.div<SelectStyled>``;
 
-export const Label = styled.div<SelectStyled>`
+export const Label = styled.label<SelectStyled>`
 	font-size: 1.4rem;
 	color: ${(props) =>
 		props.error ? "var(--color-danger)" : "var(--color-label-input)"};

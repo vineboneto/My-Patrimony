@@ -38,7 +38,7 @@ const Select: React.FC<Props> = ({ name, label, options, ...rest }) => {
 		<SelectBlock error={error}>
 			<Label error={error}>{error ? error : label}</Label>
 			<StyledSelect
-				defaultValue={defaultValue}
+				defaultValue={defaultValue ? defaultValue : { value: -1, label: 'Selecione' }}
 				ref={selectRef}
 				classNamePrefix="react-select"
 				className="basic-single"

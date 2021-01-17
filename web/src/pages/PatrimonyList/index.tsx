@@ -1,9 +1,142 @@
-import React from 'react'
+import React, { MouseEvent, useCallback, useRef, useState } from 'react'
+import { Form } from '@unform/web'
+import { FormHandles, SubmitHandler } from '@unform/core'
 
-const PatrimonyList: React.FC = () => { 
-    
-    return <div>Refazendo</div>
-        
+import PatrimonyItem, { Patrimony } from 'components/PatrimonyItem'
+import PageHeader from 'components/PageHeader'
+import Select from 'components/Select'
+import Input from 'components/Inputs/Input'
+
+import {
+	Container,
+	Search,
+	SearchIcon,
+	Main
+} from './styled'
+
+import searchIcon from 'assets/images/icons/searchIcon.svg'
+
+interface FormData {
+	ownerId: number
+	sectorId: number
+	patrimony: string
+}
+
+const PatrimonyList: React.FC = () => {
+
+	const optionsOwners = [
+		{ value: 1, label: 'Vinicius' },
+		{ value: 2, label: 'Weusley' },
+	]
+
+	const optionSectors = [
+		{ value: 1, label: 'UPA' },
+		{ value: 2, label: 'Admin' },
+	]
+
+	const optionsCategories = [
+		{ value: 1, label: 'Impressora' },
+		{ value: 2, label: 'Computador' },
+	]
+
+	const PatrimonyDatas: Patrimony[] = [
+		{
+			id: 1,
+			model: 'Dell',
+			ownerName: 'Vinicius Gazolla Boneto',
+			patrimony: '656',
+			sectorName: 'UPA',
+			categoryName: 'Computador',
+			ips: [
+				{ id: 1, ip: '192.168.1.25', mask: '255.255.255.0', gateway: '192.168.1.1' },
+				{ id: 2, ip: '192.168.2.25', mask: '255.255.255.0', gateway: '192.168.2.1' },
+			]
+		},
+		{
+			id: 2,
+			model: 'SAMSUMG M4070FR',
+			ownerName: 'Weusley William de Paula',
+			patrimony: 'Locada',
+			sectorName: 'Preventivo',
+			categoryName: 'Impressora',
+			ips: [
+				{ id: 3, ip: '192.168.1.125', mask: '255.255.255.0', gateway: '192.168.1.1' }
+			]
+		},
+		{
+			id: 3,
+			model: 'AOC',
+			ownerName: 'Jessica',
+			patrimony: '4587',
+			sectorName: 'Compras',
+			categoryName: 'Monitor',
+		},
+		{
+			id: 4,
+			model: 'Concordia',
+			ownerName: 'Ivanice',
+			patrimony: '458758',
+			sectorName: 'Administração',
+			categoryName: 'Computador',
+			ips: [
+				{ id: 4, ip: '192.168.1.55', mask: '255.255.255.0', gateway: '192.168.1.1' }
+			]
+		},
+		{
+			id: 5,
+			model: 'TS-SHARA',
+			ownerName: 'Gustavo',
+			patrimony: '458789',
+			sectorName: 'Administração',
+			categoryName: 'Estabilizador',
+		},
+		{
+			id: 6,
+			model: 'POSITIVO',
+			ownerName: 'Ana Zatta',
+			patrimony: 'S/N',
+			sectorName: 'Recursos Humanos',
+			categoryName: 'Computador',
+		}
+	]
+
+	const formRef = useRef<FormHandles>(null)
+	const handleSubmit: SubmitHandler<FormData> = useCallback((data) => {
+		console.log(data)
+	}, [])
+
+	const handleSearch = useCallback((e: MouseEvent) => {
+		console.log('Searching....')
+	}, [])
+
+	const [patrimonies, setPatrimonies] = useState<Patrimony[]>(PatrimonyDatas)
+
+	return (
+		<Container>
+			<PageHeader title="O que procura ?" prev="/">
+				<Form ref={formRef} onSubmit={handleSubmit}>
+					<Search>
+						<Select name="owners" label="Proprietário" options={optionsOwners} />
+						<Select name="owners" label="Setor" options={optionSectors} />
+						<Input name="patrimony" label="Patrimônio" />
+						<Select name="categories" label="Categoria" options={optionsCategories} />
+						<Input name="ip" label="Ip" />
+						<SearchIcon>
+							<img src={searchIcon} alt="Realizar Busca" onClick={handleSearch} />
+						</SearchIcon>
+					</Search>
+				</Form>
+			</PageHeader>
+
+			<Main>
+				{patrimonies.map(patrimony =>
+					<PatrimonyItem patrimony={patrimony} />
+				)}
+			</Main>
+		</Container>
+	)
+
+
 }
 
 export default PatrimonyList

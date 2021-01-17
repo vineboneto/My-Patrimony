@@ -1,7 +1,5 @@
 import React, { memo } from 'react'
-
 import { Link } from 'react-router-dom'
-
 import { Header, TopBar, Title } from './styled'
 
 import prevIcon from 'assets/images/icons/prevIcon.svg'
@@ -15,23 +13,24 @@ interface PageHeaderProps {
 	title: string;
 	prev: "/"
 	titleStyle?: TitleStyle
+	children?: React.ReactNode
 }
 
-const PageHeader: React.FC<PageHeaderProps> = (props) => {
+const PageHeader: React.FC<PageHeaderProps> = ({ title, prev, titleStyle, children }) => {
 
 	return (
 		<Header>
 			<TopBar>
-				<Link to={props.prev}>
+				<Link to={prev}>
 					<img src={prevIcon} alt="Voltar" />
 				</Link>
 			</TopBar>
 
-			<Title justifyContent={props.titleStyle?.justifyContent} margin={props.titleStyle?.margin} >
-				<strong>{props.title}</strong>
+			<Title justifyContent={titleStyle?.justifyContent} margin={titleStyle?.margin} >
+				<strong>{title}</strong>
 			</Title>
 
-			{props.children}
+			{children}
 		</Header>
 	)
 }
