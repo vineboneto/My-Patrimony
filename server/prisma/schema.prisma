@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Patrimony {
+  id          Int      @id @default(autoincrement())
+  number      String
+  model       String
+  description String?
+  ownerId     Int
+  Owner       Owner    @relation(fields: [ownerId], references: [id])
+  categoryId  Int
+  Category    Category @relation(fields: [categoryId], references: [id])
+  Ip          Ip[]
+}
+
+model Ip {
+  id          Int       @id @default(autoincrement())
+  ip          String
+  mask        String    @default("255.255.255.0")
+  gateway     String
+  patrimonyId Int
+  Patrimony   Patrimony @relation(fields: [patrimonyId], references: [id])
+}
+
+model Owner {
+  id        Int         @id @default(autoincrement())
+  name      String
+  sectorId  Int         @unique
+  Sector    Sector      @relation(fields: [sectorId], references: [id])
+  Patrimony Patrimony[]
+}
+
+model Sector {
+  id    Int     @id @default(autoincrement())
+  name  String
+  Owner Owner[]
+}
+
+model Category {
+  id        Int         @id @default(autoincrement())
+  name      String      @unique
+  Patrimony Patrimony[]
+}
