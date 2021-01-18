@@ -11,8 +11,10 @@ Layout da aplicação disponível [aqui](https://www.figma.com/file/UZH4KDbmpU3h
 ```shell
 // Abra a pasta web
 $ cd web
+
 // Baixe as dependências
 $ yarn
+
 // Inicia o servidor
 $ yarn start
 ```
@@ -24,10 +26,16 @@ $ yarn start
 ```shell
 // Abra a pasta server
 $ cd server
+
 // Baixe as dependências
 $ yarn
+
 // Crie o arquivo .env
 $ touch .env
+
+// Configure seu arquivo .evn e depois monte as tabelas
+$ yarn knex:migrate
+
 // Inicie o servidor
 $ yarn start
 ```
