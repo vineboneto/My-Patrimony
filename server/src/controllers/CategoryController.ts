@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 export default class CategoryController {
   async index(req: Request, res: Response) {
-    const categories = await prisma.category.findMany();
+    const categories = await prisma.category.findMany({});
     return res.json(categories);
   }
 

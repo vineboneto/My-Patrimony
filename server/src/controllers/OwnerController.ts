@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 export default class OwnerController {
   async index(req: Request, res: Response) {
-    const owners = prisma.owner.findMany();
+    const owners = await prisma.owner.findMany({});
     return res.json(owners);
   }
 
