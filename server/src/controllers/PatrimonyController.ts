@@ -3,6 +3,14 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+interface Ip {
+  id?: number;
+  ip: string;
+  mask: string;
+  gateway: string;
+  patrimonyId?: number;
+}
+
 export default class PatrimonyController {
   async index(req: Request, res: Response) {
     const patrimonies = await prisma.patrimony.findMany({
@@ -15,6 +23,7 @@ export default class PatrimonyController {
 
   async create(req: Request, res: Response) {
     const {
+      id,
       patrimony,
       model,
       description,
@@ -22,28 +31,73 @@ export default class PatrimonyController {
       categoryId,
       ips,
     } = req.body;
+    console.log(req.body);
 
     try {
-      await prisma.patrimony.create({
-        data: {
-          number: patrimony,
-          model: model,
-          description: description,
-          Category: {
-            connect: {
-              id: categoryId,
+      if (id) {
+        const test = await prisma.patrimony.update({
+          data: {
+            number: patrimony,
+            model: model,
+            description: description,
+            Category: {
+              connect: {
+                id: categoryId,
+              },
+            },
+            Owner: {
+              connect: {
+                id: ownerId,
+              },
+            },
+            Ip: {},
+          },
+
+          where: {
+            id: id,
+          },
+        });
+        console.log(ips);
+        const upsertManyIps = ips.map((ip: Ip) => {
+          prisma.ip.upsert({
+            where: { id: ip.id },
+            update: {
+              ...ip,
+            },
+            create: {
+              ...ip,
+              Patrimony: {
+                connect: {
+                  id: id,
+                },
+              },
+            },
+          });
+        });
+
+        Promise.all(upsertManyIps);
+      } else {
+        await prisma.patrimony.create({
+          data: {
+            number: patrimony,
+            model: model,
+            description: description,
+            Category: {
+              connect: {
+                id: categoryId,
+              },
+            },
+            Owner: {
+              connect: {
+                id: ownerId,
+              },
+            },
+            Ip: {
+              create: [...ips],
             },
           },
-          Owner: {
-            connect: {
-              id: ownerId,
-            },
-          },
-          Ip: {
-            create: [...ips],
-          },
-        },
-      });
+        });
+      }
       return res.status(201).send();
     } catch (err) {
       return res.status(400).json({

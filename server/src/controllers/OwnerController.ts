@@ -11,38 +11,30 @@ export default class OwnerController {
 
   async create(req: Request, res: Response) {
     const { id, name, sectorId } = req.body;
-    console.log(req.body);
-
     try {
-      if (id) {
-        await prisma.owner.update({
-          data: {
-            name: name,
-            Sector: {
-              connect: {
-                id: sectorId,
-              },
+      await prisma.owner.upsert({
+        create: {
+          name: name,
+          Sector: {
+            connect: {
+              id: sectorId,
             },
           },
-          where: {
-            id: id,
-          },
-        });
-      } else {
-        await prisma.owner.create({
-          data: {
-            name: name,
-            Sector: {
-              connect: {
-                id: sectorId,
-              },
+        },
+        update: {
+          name: name,
+          Sector: {
+            connect: {
+              id: sectorId,
             },
           },
-        });
-      }
+        },
+        where: { id: id || -1 },
+      });
 
       return res.status(201).send();
     } catch (err) {
+      console.log(err);
       return res.status(400).json({
         error: err,
       });
