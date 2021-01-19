@@ -8,4 +8,21 @@ export default class SectorController {
 		const sectors = prisma.sector.findMany();
 		return res.json(sectors);
 	}
+
+	async create(req: Request, res: Response) {
+		const { name } = req.body;
+
+		try {
+			await prisma.sector.create({
+				data: {
+					name: name,
+				},
+			});
+			return res.status(201).send();
+		} catch (err) {
+			return res.status(400).json({
+				error: err,
+			});
+		}
+	}
 }
