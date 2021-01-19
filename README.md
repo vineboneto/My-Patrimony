@@ -59,7 +59,7 @@ Preencha com as informações do seu banco de dados no arquivo .env
 ```bash
 DATABASE_URL = 'postgresql://youruser:yourpassword@localhost:yourport/yourdb?schema=yourschema'
 
-Exemplo
+# # Exemplo
 
 DATABASE_URL = 'postgresql://vineboneto:randompassword@localhost:5432/test?schema=public'
 ```
