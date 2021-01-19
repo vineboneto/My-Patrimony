@@ -17,6 +17,7 @@ routes.get("/owners", ownerController.index);
 routes.post("/owners", ownerController.create);
 routes.get("/categories", categoryController.index);
 routes.post("/categories", categoryController.create);
-routes.post("/patrimonies", patrimonyController.index);
+routes.get("/patrimonies", patrimonyController.index);
+routes.post("/patrimonies", patrimonyController.create);
 
 export default routes;
