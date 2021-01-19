@@ -8,4 +8,14 @@ export default class CategoryController {
     const categories = await prisma.category.findMany();
     return res.json(categories);
   }
+
+  async create(req: Request, res: Response) {
+    const { name } = req.body;
+
+    await prisma.category.create({
+      data: {
+        name: name,
+      },
+    });
+  }
 }
