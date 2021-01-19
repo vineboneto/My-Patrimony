@@ -6,6 +6,16 @@ Layout da aplicação disponível [aqui](https://www.figma.com/file/UZH4KDbmpU3h
 
 ---
 
+### Sobre
+
+<p align="justify">
+Na secretaria de saúde percebe-se que o controle de patrimônio é um grande incomodo para muitos, exigindo tempo e dedicação para realizar verificação sobre os mesmos,
+além de ser extremamente complicado manter o seu controle, já que mudanças ocorrem o tempo todo.
+Com este intuito este software tem como principal objetivo tornar o controle do patrimônio eficiente e simples.
+</p>
+
+---
+
 ### FronteEnd
 
 ```shell
@@ -33,8 +43,8 @@ $ yarn
 // Crie o arquivo .env
 $ touch .env
 
-// Configure seu arquivo .evn e depois monte as tabelas
-$ yarn knex:migrate
+// Configure seu arquivo .env e depois monte as tabelas
+$ yarn prisma:migrate
 
 // Inicie o servidor
 $ yarn start
@@ -53,13 +63,3 @@ Exemplo
 
 DATABASE_URL = 'postgresql://vineboneto:randompassword@localhost:5432/test?schema=public'
 ```
-
----
-
-### Sobre
-
-<p align="justify">
-Na secretaria de saúde percebe-se que o controle de patrimônio é um grande incomodo para muitos, exigindo tempo e dedicação para realizar verificação sobre os mesmos,
-além de ser extremamente complicado manter o seu controle, já que mudanças ocorrem o tempo todo.
-Com este intuito este software tem como principal objetivo tornar o controle do patrimônio eficiente e simples.
-</p>
