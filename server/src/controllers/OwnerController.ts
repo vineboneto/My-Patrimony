@@ -11,8 +11,7 @@ export default class OwnerController {
 
   async create(req: Request, res: Response) {
     const { name, sectorId } = req.body;
-    console.log(name);
-    console.log(sectorId);
+
     try {
       await prisma.owner.create({
         data: {

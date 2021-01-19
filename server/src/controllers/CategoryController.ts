@@ -12,10 +12,17 @@ export default class CategoryController {
   async create(req: Request, res: Response) {
     const { name } = req.body;
 
-    await prisma.category.create({
-      data: {
-        name: name,
-      },
-    });
+    try {
+      await prisma.category.create({
+        data: {
+          name: name,
+        },
+      });
+      return res.status(201).send();
+    } catch (err) {
+      return res.status(400).json({
+        error: err,
+      });
+    }
   }
 }

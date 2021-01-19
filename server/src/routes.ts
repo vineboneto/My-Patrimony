@@ -14,6 +14,6 @@ routes.post("/sectors", sectorController.create);
 routes.get("/owners", ownerController.index);
 routes.post("/owners", ownerController.create);
 routes.get("/categories", categoryController.index);
-// routes.post("/categories", categoryController.create);
+routes.post("/categories", categoryController.create);
 
 export default routes;
