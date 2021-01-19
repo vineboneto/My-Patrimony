@@ -34,7 +34,7 @@ model Ip {
 model Owner {
   id        Int         @id @default(autoincrement())
   name      String
-  sectorId  Int         @unique
+  sectorId  Int
   Sector    Sector      @relation(fields: [sectorId], references: [id])
   Patrimony Patrimony[]
 }
