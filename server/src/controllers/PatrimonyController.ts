@@ -1,4 +1,3 @@
-import { Patrimony } from "./../../../web/src/components/PatrimonyItem/index";
 import { Response, Request } from "express";
 import { PrismaClient } from "@prisma/client";
 
