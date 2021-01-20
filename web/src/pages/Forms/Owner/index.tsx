@@ -1,32 +1,47 @@
-import React, { useCallback, useRef, useState } from 'react'
-import { Form } from '@unform/web'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { FormHandles, SubmitHandler } from '@unform/core'
+import Dialog from '@material-ui/core/Dialog'
 import * as Yup from 'yup'
+import { Form } from '@unform/web'
 
-import { Dialog } from '@material-ui/core'
-import Input from 'components/Inputs/Input'
 import Select from 'components/Select'
+import Input from 'components/Inputs/Input'
 import Button, { Plus } from 'components/Button'
 import { DialogContainer, Title } from 'components/DialogContainer/styled'
-import { Content } from './styled'
-
 import SectorForm from '../Sector'
 
+import { Content } from './styled'
+import api from 'services/api'
+
 interface FormData {
-	owner: string,
-	sectorId: number
+	owner: string;
+	sectorId: number;
+}
+
+interface Sector {
+	id: number;
+	name: string;
 }
 
 const OwnerForm = () => {
 
-	const DEFAULT_DATA = {
-		sectors: { value: -1, label: 'Selecione' }
-	}
+	const [optionsSectors, setOptionsSectors] = useState([
+		{ value: -1, label: '' }
+	])
 
-	const optionsSector = [
-		{ value: 1, label: 'UPA' },
-		{ value: 2, label: 'Compras' },
-	]
+	useEffect(() => {
+		async function handleSetOptionsSector() {
+			const response = await api.get('/sectors')
+			const options = response.data.map((data: Sector) => {
+				return {
+					value: data.id,
+					label: data.name
+				}
+			})
+			setOptionsSectors(options)
+		}
+		handleSetOptionsSector()
+	}, [])
 
 	const [open, setOpen] = useState(false)
 	const handleCloseDialog = useCallback(() => {
@@ -66,7 +81,7 @@ const OwnerForm = () => {
 
 	return (
 		<DialogContainer>
-			<Form ref={formRef} onSubmit={handleSubmit} initialData={DEFAULT_DATA}>
+			<Form ref={formRef} onSubmit={handleSubmit}>
 				<Content>
 
 					<Title>Novo Proprietário</Title>
@@ -74,7 +89,7 @@ const OwnerForm = () => {
 					<Input name="name" label="Nome" />
 
 					<Plus type="button" onClick={handleOpenDialog} />
-					<Select name="sectors" label="Setor" options={optionsSector} />
+					<Select name="sectors" label="Setor" options={optionsSectors} />
 
 					<Button>
 						Salvar

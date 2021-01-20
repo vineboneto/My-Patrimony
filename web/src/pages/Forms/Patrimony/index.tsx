@@ -1,7 +1,9 @@
 import React, { useCallback, useRef, useState } from 'react'
+import * as Yup from 'yup'
+import Dialog from '@material-ui/core/Dialog'
+import Collapse from '@material-ui/core/Collapse'
 import { SubmitHandler, FormHandles } from '@unform/core'
 import { Form } from '@unform/web'
-import * as Yup from 'yup'
 
 import Input from 'components/Inputs/Input'
 import MultiInputs, { MultiInputsHandles, Field } from 'components/Inputs/MultiInputs'
@@ -10,8 +12,9 @@ import Textarea from 'components/Textarea'
 import PageHeader from 'components/PageHeader'
 import Button, { ButtonCollapse, Create, Plus } from 'components/Button'
 import { Fieldset, Legend } from 'components/Fieldset/styled'
-import Collapse from '@material-ui/core/Collapse'
-import Dialog from '@material-ui/core/Dialog'
+import OwnerForm from '../Owner'
+import CategoryForm from '../Category'
+import { StyledDialog } from 'components/DialogContainer/styled'
 
 import {
 	Container,
@@ -22,8 +25,6 @@ import {
 	Footer
 } from './styled'
 
-import OwnerForm from '../Owner'
-import CategoryForm from '../Category'
 
 interface Ip {
 	id?: number
@@ -60,9 +61,6 @@ const PatrimonyForm: React.FC = () => {
 	]
 
 	const DEFAULT_DATA = {
-		sectors: { value: -1, label: 'Selecione' },
-		categories: { value: -1, label: 'Selecione' },
-		owners: { value: -1, label: 'Selecione' },
 		ips: [{ ip: '', mask: '', gateway: '' }]
 	}
 
@@ -205,9 +203,9 @@ const PatrimonyForm: React.FC = () => {
 				{/**
 					 * Dialogs Forms não podem ficam dentro de um mesmo form devido ao submit
 					 */}
-				<Dialog open={openDialogOwner} onClose={handleCloseDialogOwner}>
+				<StyledDialog open={openDialogOwner} onClose={handleCloseDialogOwner}>
 					<OwnerForm />
-				</Dialog>
+				</StyledDialog>
 
 				<Dialog open={openDialogCategory} onClose={handleCloseDialogCategory} aria-labelledby="form-dialog-title">
 					<CategoryForm />

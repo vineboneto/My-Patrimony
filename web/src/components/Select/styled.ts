@@ -1,4 +1,4 @@
-import ReactSelect from "react-select";
+import Select from "react-select";
 import styled from "styled-components";
 
 interface SelectStyled {
@@ -17,7 +17,7 @@ export const Label = styled.label<SelectStyled>`
 	align-items: center;
 `;
 
-export const StyledSelect = styled(ReactSelect)`
+export const StyledSelect = styled(Select)`
 	.react-select__control {
 		width: 100%;
 		height: 4rem;
