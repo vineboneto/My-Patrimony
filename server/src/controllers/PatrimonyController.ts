@@ -71,7 +71,7 @@ export default class PatrimonyController {
       });
       const newIps = patrimony.ips.map((ip: Ip) =>
         prisma.ip.upsert({
-          where: { id: ip.id },
+          where: { id: ip.id || -1 },
           update: {
             ip: ip.ip,
             mask: ip.mask,
