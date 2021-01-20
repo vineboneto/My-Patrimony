@@ -33,40 +33,27 @@ export default class PatrimonyController {
   async createOrUpdate(req: Request, res: Response) {
     const patrimony = req.body;
     if (req.params.id) patrimony.id = Number(req.params.id);
-    console.log(patrimony);
+
+    const newPatrimony = {
+      number: patrimony.patrimony,
+      model: patrimony.model,
+      description: patrimony.description,
+      Category: {
+        connect: {
+          id: patrimony.categoryId,
+        },
+      },
+      Owner: {
+        connect: {
+          id: patrimony.ownerId,
+        },
+      },
+    };
 
     try {
       await prisma.patrimony.upsert({
-        create: {
-          number: patrimony.patrimony,
-          model: patrimony.model,
-          description: patrimony.description,
-          Category: {
-            connect: {
-              id: patrimony.categoryId,
-            },
-          },
-          Owner: {
-            connect: {
-              id: patrimony.ownerId,
-            },
-          },
-        },
-        update: {
-          number: patrimony.patrimony,
-          model: patrimony.model,
-          description: patrimony.description,
-          Category: {
-            connect: {
-              id: patrimony.categoryId,
-            },
-          },
-          Owner: {
-            connect: {
-              id: patrimony.ownerId,
-            },
-          },
-        },
+        create: newPatrimony,
+        update: newPatrimony,
         where: { id: patrimony.id || -1 },
       });
       const newIps = patrimony.ips.map((ip: Ip) =>

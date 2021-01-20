@@ -3,11 +3,6 @@ import { Request, Response } from "express";
 
 const prisma = new PrismaClient();
 
-interface Owner {
-  name: string;
-  sectorId: number;
-}
-
 export default class OwnerController {
   async index(req: Request, res: Response) {
     const owners = await prisma.owner.findMany({});
