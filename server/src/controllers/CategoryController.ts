@@ -9,26 +9,18 @@ export default class CategoryController {
     return res.json(categories);
   }
 
-  async create(req: Request, res: Response) {
+  async createOrUpdate(req: Request, res: Response) {
     const { id, name } = req.body;
-
     try {
-      if (id) {
-        await prisma.category.update({
-          data: {
-            name: name,
-          },
-          where: {
-            id: id,
-          },
-        });
-      } else {
-        await prisma.category.create({
-          data: {
-            name: name,
-          },
-        });
-      }
+      await prisma.category.upsert({
+        create: {
+          name: name,
+        },
+        update: {
+          name: name,
+        },
+        where: { id: id || -1 },
+      });
       return res.status(201).send();
     } catch (err) {
       return res.status(400).json({
