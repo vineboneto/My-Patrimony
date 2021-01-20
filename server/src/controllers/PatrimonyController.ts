@@ -134,6 +134,10 @@ export default class PatrimonyController {
     const { id } = req.params;
 
     try {
+      await prisma.ip.deleteMany({
+        where: { patrimonyId: Number(id) },
+      });
+
       await prisma.patrimony.delete({
         where: {
           id: Number(id),
