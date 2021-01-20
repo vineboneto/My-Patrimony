@@ -13,12 +13,8 @@ export default class CategoryController {
     const { id, name } = req.body;
     try {
       await prisma.category.upsert({
-        create: {
-          name: name,
-        },
-        update: {
-          name: name,
-        },
+        create: { name: name },
+        update: { name: name },
         where: { id: id || -1 },
       });
       return res.status(201).send();
