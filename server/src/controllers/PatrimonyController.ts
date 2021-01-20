@@ -17,59 +17,59 @@ export default class PatrimonyController {
       skip: Number(page) * Number(limit) - Number(limit),
       take: Number(limit),
       include: {
-        Ip: true,
+        Ip: {
+          select: {
+            id: true,
+            ip: true,
+            mask: true,
+            gateway: true,
+          },
+        },
       },
     });
     return res.json(patrimonies);
   }
 
   async createOrUpdate(req: Request, res: Response) {
-    const {
-      id,
-      patrimony,
-      model,
-      description,
-      ownerId,
-      categoryId,
-      ips,
-    } = req.body;
+    const patrimony = req.body;
+    if (req.params.id) patrimony.id = Number(req.params.id);
+    console.log(patrimony);
 
     try {
       await prisma.patrimony.upsert({
         create: {
-          number: patrimony,
-          model: model,
-          description: description,
+          number: patrimony.patrimony,
+          model: patrimony.model,
+          description: patrimony.description,
           Category: {
             connect: {
-              id: categoryId,
+              id: patrimony.categoryId,
             },
           },
           Owner: {
             connect: {
-              id: ownerId,
+              id: patrimony.ownerId,
             },
           },
         },
         update: {
-          number: patrimony,
-          model: model,
-          description: description,
+          number: patrimony.patrimony,
+          model: patrimony.model,
+          description: patrimony.description,
           Category: {
             connect: {
-              id: categoryId,
+              id: patrimony.categoryId,
             },
           },
           Owner: {
             connect: {
-              id: ownerId,
+              id: patrimony.ownerId,
             },
           },
         },
-        where: { id: id || -1 },
+        where: { id: patrimony.id || -1 },
       });
-
-      const newIps = ips.map((ip: Ip) =>
+      const newIps = patrimony.ips.map((ip: Ip) =>
         prisma.ip.upsert({
           where: { id: ip.id },
           update: {
@@ -78,7 +78,7 @@ export default class PatrimonyController {
             gateway: ip.gateway,
             Patrimony: {
               connect: {
-                id: id,
+                id: patrimony.id,
               },
             },
           },
@@ -88,7 +88,7 @@ export default class PatrimonyController {
             gateway: ip.gateway,
             Patrimony: {
               connect: {
-                id: id,
+                id: patrimony.id,
               },
             },
           },
