@@ -12,7 +12,7 @@ const patrimonyController = new PatrimonyController();
 const routes = express.Router();
 
 routes.get("/sectors", sectorController.index);
-routes.post("/sectors", sectorController.create);
+routes.post("/sectors", sectorController.createOrUpdate);
 routes.get("/owners", ownerController.index);
 routes.post("/owners", ownerController.create);
 routes.get("/categories", categoryController.index);

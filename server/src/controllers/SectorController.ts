@@ -9,26 +9,15 @@ export default class SectorController {
     return res.json(sectors);
   }
 
-  async create(req: Request, res: Response) {
+  async createOrUpdate(req: Request, res: Response) {
     const { id, name } = req.body;
 
     try {
-      if (id) {
-        await prisma.sector.update({
-          data: {
-            name: name,
-          },
-          where: {
-            id: id,
-          },
-        });
-      } else {
-        await prisma.sector.create({
-          data: {
-            name: name,
-          },
-        });
-      }
+      await prisma.sector.upsert({
+        create: { name: name },
+        update: { name: name },
+        where: { id: id || -1 },
+      });
       return res.status(201).send();
     } catch (err) {
       return res.status(400).json({
