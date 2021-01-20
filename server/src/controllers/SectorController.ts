@@ -10,13 +10,13 @@ export default class SectorController {
   }
 
   async createOrUpdate(req: Request, res: Response) {
-    const { id, name } = req.body;
-
+    const sector = req.body;
+    if (req.params.id) sector.id = req.params.id;
     try {
       await prisma.sector.upsert({
-        create: { name: name },
-        update: { name: name },
-        where: { id: id || -1 },
+        create: { name: sector.name },
+        update: { name: sector.name },
+        where: { id: Number(sector.id) || -1 },
       });
       return res.status(201).send();
     } catch (err) {

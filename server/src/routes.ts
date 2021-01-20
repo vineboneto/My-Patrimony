@@ -12,17 +12,24 @@ const patrimonyController = new PatrimonyController();
 const routes = express.Router();
 
 routes.get("/sectors", sectorController.index);
+routes.put("/sectors/:id", sectorController.createOrUpdate);
+routes.delete("/sectors/:id", sectorController.delete);
 routes.post("/sectors", sectorController.createOrUpdate);
-routes.post("/sectors/:id", sectorController.delete);
+
 routes.get("/owners", ownerController.index);
+routes.put("/owners/:id", ownerController.createOrUpdate);
+routes.delete("/owners/:id", ownerController.delete);
 routes.post("/owners", ownerController.createOrUpdate);
-routes.post("/owners/:id", ownerController.delete);
+
 routes.get("/categories", categoryController.index);
+routes.put("/categories/:id", categoryController.createOrUpdate);
+routes.delete("/categories/:id", categoryController.delete);
 routes.post("/categories", categoryController.createOrUpdate);
-routes.post("/categories/:id", categoryController.delete);
+
 routes.get("/patrimonies", patrimonyController.index);
+routes.put("/patrimonies/:id", patrimonyController.createOrUpdate);
+routes.delete("/patrimonies/:id", patrimonyController.delete);
 routes.post("/patrimonies", patrimonyController.createOrUpdate);
-routes.post("/patrimonies/:id", patrimonyController.delete);
 routes.post("/patrimonies/transfer", patrimonyController.transfer);
 
 export default routes;
