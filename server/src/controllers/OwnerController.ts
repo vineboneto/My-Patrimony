@@ -3,6 +3,11 @@ import { Request, Response } from "express";
 
 const prisma = new PrismaClient();
 
+interface Owner {
+  name: string;
+  sectorId: number;
+}
+
 export default class OwnerController {
   async index(req: Request, res: Response) {
     const owners = await prisma.owner.findMany({});
@@ -11,31 +16,26 @@ export default class OwnerController {
 
   async createOrUpdate(req: Request, res: Response) {
     const owner = req.body;
-    if (req.params.id) owner.id = req.params.id;
+    if (req.params.id) owner.id = Number(req.params.id);
+
+    const newOwner = {
+      name: owner.name,
+      Sector: {
+        connect: {
+          id: owner.sectorId,
+        },
+      },
+    };
+
     try {
       await prisma.owner.upsert({
-        create: {
-          name: owner.name,
-          Sector: {
-            connect: {
-              id: owner.sectorId,
-            },
-          },
-        },
-        update: {
-          name: owner.name,
-          Sector: {
-            connect: {
-              id: owner.sectorId,
-            },
-          },
-        },
-        where: { id: Number(owner.id) || -1 },
+        create: newOwner,
+        update: newOwner,
+        where: { id: owner.id || -1 },
       });
 
       return res.status(201).send();
     } catch (err) {
-      console.log(err);
       return res.status(400).json({
         error: err,
       });
@@ -51,7 +51,7 @@ export default class OwnerController {
       });
       return res.status(201).send();
     } catch (err) {
-      return res.status(400).json({
+      return res.status(401).json({
         error: err,
       });
     }
