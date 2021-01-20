@@ -79,9 +79,9 @@ const MultiInputs: React.ForwardRefRenderFunction<
 	return (
 		<>
 			{lines?.map((line: any, index: number) => (
-				<InputBlock>
+				<div key={index}>
 					{fields.map((field, indexField) => (
-						<>
+						<InputBlock key={indexField}>
 							<label htmlFor={field.name}>{field.label}</label>
 							<input
 								name={field.name}
@@ -89,13 +89,13 @@ const MultiInputs: React.ForwardRefRenderFunction<
 								onChange={((e) => handleChange(field.name, e.target.value, index))}
 								placeholder={field.placeholder}
 							/>
-						</>
+						</InputBlock>
 					))}
 
 					<Delete tabIndex={-1} type="button" onClick={() => removeLine(index)}>
 						<img src={closeIcon} alt="Excluir Ip" />
 					</Delete>
-				</InputBlock>
+				</div>
 			))}
 		</>
 	)
