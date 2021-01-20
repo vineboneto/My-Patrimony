@@ -31,75 +31,73 @@ export default class PatrimonyController {
       categoryId,
       ips,
     } = req.body;
-    console.log(req.body);
 
     try {
-      if (id) {
-        const test = await prisma.patrimony.update({
-          data: {
-            number: patrimony,
-            model: model,
-            description: description,
-            Category: {
-              connect: {
-                id: categoryId,
-              },
+      await prisma.patrimony.upsert({
+        create: {
+          number: patrimony,
+          model: model,
+          description: description,
+          Category: {
+            connect: {
+              id: categoryId,
             },
-            Owner: {
-              connect: {
-                id: ownerId,
-              },
-            },
-            Ip: {},
           },
+          Owner: {
+            connect: {
+              id: ownerId,
+            },
+          },
+        },
+        update: {
+          number: patrimony,
+          model: model,
+          description: description,
+          Category: {
+            connect: {
+              id: categoryId,
+            },
+          },
+          Owner: {
+            connect: {
+              id: ownerId,
+            },
+          },
+        },
+        where: { id: id || -1 },
+      });
 
-          where: {
-            id: id,
-          },
-        });
-        console.log(ips);
-        const upsertManyIps = ips.map((ip: Ip) => {
-          prisma.ip.upsert({
-            where: { id: ip.id },
-            update: {
-              ...ip,
-            },
-            create: {
-              ...ip,
-              Patrimony: {
-                connect: {
-                  id: id,
-                },
+      const newIps = ips.map((ip: Ip) =>
+        prisma.ip.upsert({
+          where: { id: ip.id },
+          update: {
+            ip: ip.ip,
+            mask: ip.mask,
+            gateway: ip.gateway,
+            Patrimony: {
+              connect: {
+                id: id,
               },
             },
-          });
-        });
+          },
+          create: {
+            ip: ip.ip,
+            mask: ip.mask,
+            gateway: ip.gateway,
+            Patrimony: {
+              connect: {
+                id: id,
+              },
+            },
+          },
+        })
+      );
 
-        Promise.all(upsertManyIps);
-      } else {
-        await prisma.patrimony.create({
-          data: {
-            number: patrimony,
-            model: model,
-            description: description,
-            Category: {
-              connect: {
-                id: categoryId,
-              },
-            },
-            Owner: {
-              connect: {
-                id: ownerId,
-              },
-            },
-            Ip: {
-              create: [...ips],
-            },
-          },
-        });
-      }
+      Promise.all(newIps);
+
       return res.status(201).send();
     } catch (err) {
+      console.log(err);
       return res.status(400).json({
         error: err,
       });
