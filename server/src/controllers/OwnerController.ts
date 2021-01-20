@@ -9,7 +9,7 @@ export default class OwnerController {
     return res.json(owners);
   }
 
-  async create(req: Request, res: Response) {
+  async createOrUpdate(req: Request, res: Response) {
     const { id, name, sectorId } = req.body;
     try {
       await prisma.owner.upsert({
@@ -35,6 +35,21 @@ export default class OwnerController {
       return res.status(201).send();
     } catch (err) {
       console.log(err);
+      return res.status(400).json({
+        error: err,
+      });
+    }
+  }
+
+  async delete(req: Request, res: Response) {
+    const { id } = req.params;
+
+    try {
+      await prisma.owner.delete({
+        where: { id: Number(id) },
+      });
+      return res.status(201).send();
+    } catch (err) {
       return res.status(400).json({
         error: err,
       });

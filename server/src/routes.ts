@@ -16,6 +16,7 @@ routes.post("/sectors", sectorController.createOrUpdate);
 routes.post("/sectors/:id", sectorController.delete);
 routes.get("/owners", ownerController.index);
 routes.post("/owners", ownerController.createOrUpdate);
+routes.post("/owners/:id", ownerController.delete);
 routes.get("/categories", categoryController.index);
 routes.post("/categories", categoryController.createOrUpdate);
 routes.post("/categories/:id", categoryController.delete);
