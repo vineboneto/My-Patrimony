@@ -8,8 +8,13 @@ import Button from 'components/Button'
 import { DialogContainer, Title } from 'components/DialogContainer/styled'
 
 import { Content } from './styled'
+import api from 'services/api'
 
-const SectorForm = () => {
+interface SectorProps {
+	onClose: () => void
+}
+
+const SectorForm: React.FC<SectorProps> = ({ onClose }) => {
 
 	const formRef = useRef<FormHandles>(null)
 
@@ -26,7 +31,18 @@ const SectorForm = () => {
 
 			formRef.current?.setErrors({})
 
-			reset()
+			const sectorName = formRef.current?.getFieldValue('name');
+
+			api.post('sectors', {
+				name: sectorName
+			}).then(() => {
+				onClose();
+				alert('Setor cadastrado com sucesso');
+			}).catch((err) => {
+				alert(err);
+			})
+
+			reset();
 		} catch (err) {
 			if (err instanceof Yup.ValidationError) {
 				err.inner.forEach(error => {
@@ -47,7 +63,7 @@ const SectorForm = () => {
 					<Input name="name" label="Nome" />
 					<Button>
 						Salvar
-                    </Button>
+					</Button>
 				</Content>
 			</Form>
 		</DialogContainer>

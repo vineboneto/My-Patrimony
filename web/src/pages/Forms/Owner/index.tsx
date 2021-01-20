@@ -78,14 +78,14 @@ const OwnerForm = () => {
 
 					<Button>
 						Salvar
-                    </Button>
+					</Button>
 				</Content>
 			</Form>
 			{/**
-             * Dialogs Forms em Forms diferentes
-             */}
+			 * Dialogs Forms em Forms diferentes
+			 */}
 			<Dialog open={open} onClose={handleCloseDialog}>
-				<SectorForm />
+				<SectorForm onClose={handleCloseDialog} />
 			</Dialog>
 		</DialogContainer>
 	)
