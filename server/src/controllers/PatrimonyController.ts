@@ -23,7 +23,7 @@ export default class PatrimonyController {
     return res.json(patrimonies);
   }
 
-  async create(req: Request, res: Response) {
+  async createOrUpdate(req: Request, res: Response) {
     const {
       id,
       patrimony,
@@ -100,6 +100,30 @@ export default class PatrimonyController {
       return res.status(201).send();
     } catch (err) {
       console.log(err);
+      return res.status(400).json({
+        error: err,
+      });
+    }
+  }
+
+  async transfer(req: Request, res: Response) {
+    const { patrimonyId, nextOwner } = req.body;
+    try {
+      await prisma.patrimony.update({
+        data: {
+          Owner: {
+            connect: {
+              id: nextOwner,
+            },
+          },
+        },
+        where: {
+          id: patrimonyId,
+        },
+      });
+
+      return res.status(201).send();
+    } catch (err) {
       return res.status(400).json({
         error: err,
       });
