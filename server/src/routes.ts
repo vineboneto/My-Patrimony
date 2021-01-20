@@ -27,9 +27,9 @@ routes.delete("/categories/:id", categoryController.delete);
 routes.post("/categories", categoryController.createOrUpdate);
 
 routes.get("/patrimonies", patrimonyController.index);
+routes.put("/patrimonies/transfer", patrimonyController.transfer);
 routes.put("/patrimonies/:id", patrimonyController.createOrUpdate);
 routes.delete("/patrimonies/:id", patrimonyController.delete);
 routes.post("/patrimonies", patrimonyController.createOrUpdate);
-routes.post("/patrimonies/transfer", patrimonyController.transfer);
 
 export default routes;
