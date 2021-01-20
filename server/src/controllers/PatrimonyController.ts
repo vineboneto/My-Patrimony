@@ -8,12 +8,14 @@ interface Ip {
   ip: string;
   mask: string;
   gateway: string;
-  patrimonyId?: number;
 }
 
 export default class PatrimonyController {
   async index(req: Request, res: Response) {
+    const { page, limit } = req.query;
     const patrimonies = await prisma.patrimony.findMany({
+      skip: Number(page) * Number(limit) - Number(limit),
+      take: Number(limit),
       include: {
         Ip: true,
       },
