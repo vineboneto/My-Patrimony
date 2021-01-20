@@ -25,4 +25,18 @@ export default class SectorController {
       });
     }
   }
+
+  async delete(req: Request, res: Response) {
+    const { id } = req.params;
+    try {
+      await prisma.sector.delete({
+        where: { id: Number(id) },
+      });
+      return res.status(201).send();
+    } catch (err) {
+      return res.status(201).json({
+        error: err,
+      });
+    }
+  }
 }
