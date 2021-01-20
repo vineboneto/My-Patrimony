@@ -22,6 +22,7 @@ routes.post("/categories", categoryController.createOrUpdate);
 routes.post("/categories/:id", categoryController.delete);
 routes.get("/patrimonies", patrimonyController.index);
 routes.post("/patrimonies", patrimonyController.createOrUpdate);
+routes.post("/patrimonies/:id", patrimonyController.delete);
 routes.post("/patrimonies/transfer", patrimonyController.transfer);
 
 export default routes;

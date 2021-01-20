@@ -129,4 +129,21 @@ export default class PatrimonyController {
       });
     }
   }
+
+  async delete(req: Request, res: Response) {
+    const { id } = req.params;
+
+    try {
+      await prisma.patrimony.delete({
+        where: {
+          id: Number(id),
+        },
+      });
+      return res.status(201).send();
+    } catch (err) {
+      return res.status(400).json({
+        error: err,
+      });
+    }
+  }
 }

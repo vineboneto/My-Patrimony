@@ -1,49 +1,54 @@
 -- CreateTable
-CREATE TABLE "Patrimony" (
-"id" SERIAL,
-    "number" TEXT NOT NULL,
-    "model" TEXT NOT NULL,
-    "description" TEXT,
-    "ownerId" INTEGER NOT NULL,
-    "categoryId" INTEGER NOT NULL,
+CREATE TABLE "Patrimony"
+(
+  "id" SERIAL,
+  "number" TEXT NOT NULL,
+  "model" TEXT NOT NULL,
+  "description" TEXT,
+  "ownerId" INTEGER NOT NULL,
+  "categoryId" INTEGER NOT NULL,
 
-    PRIMARY KEY ("id")
+  PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Ip" (
-"id" SERIAL,
-    "ip" TEXT NOT NULL,
-    "mask" TEXT NOT NULL DEFAULT E'255.255.255.0',
-    "gateway" TEXT NOT NULL,
-    "patrimonyId" INTEGER NOT NULL,
+CREATE TABLE "Ip"
+(
+  "id" SERIAL,
+  "ip" TEXT NOT NULL,
+  "mask" TEXT NOT NULL DEFAULT '255.255.255.0',
+  "gateway" TEXT NOT NULL,
+  "patrimonyId" INTEGER NOT NULL,
 
-    PRIMARY KEY ("id")
+  PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Owner" (
-"id" SERIAL,
-    "name" TEXT NOT NULL,
-    "sectorId" INTEGER NOT NULL,
+CREATE TABLE "Owner"
+(
+  "id" SERIAL,
+  "name" TEXT NOT NULL,
+  "sectorId" INTEGER NOT NULL,
 
-    PRIMARY KEY ("id")
+  PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Sector" (
-"id" SERIAL,
-    "name" TEXT NOT NULL,
+CREATE TABLE "Sector"
+(
+  "id" SERIAL,
+  "name" TEXT NOT NULL,
 
-    PRIMARY KEY ("id")
+  PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Category" (
-"id" SERIAL,
-    "name" TEXT NOT NULL,
+CREATE TABLE "Category"
+(
+  "id" SERIAL,
+  "name" TEXT NOT NULL,
 
-    PRIMARY KEY ("id")
+  PRIMARY KEY ("id")
 );
 
 -- CreateIndex
