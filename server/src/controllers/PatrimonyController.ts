@@ -84,7 +84,7 @@ export default class PatrimonyController {
 
       Promise.all(newIps);
 
-      return res.status(201).send();
+      return res.status(204).send();
     } catch (err) {
       console.log(err);
       return res.status(400).json({
@@ -93,29 +93,53 @@ export default class PatrimonyController {
     }
   }
 
-  async transfer(req: Request, res: Response) {
-    const { patrimonyId, nextOwner } = req.body;
+  async updateOwnerId(req: Request, res: Response) {
+    const id = Number(req.params.id);
+    const patrimony = req.body;
+
     try {
       await prisma.patrimony.update({
         data: {
           Owner: {
             connect: {
-              id: nextOwner,
+              id: patrimony.ownerId,
             },
           },
         },
-        where: {
-          id: patrimonyId,
-        },
+        where: { id: id },
       });
-
-      return res.status(201).send();
+      return res.status(204).send();
     } catch (err) {
+      console.log(err);
       return res.status(400).json({
         error: err,
       });
     }
   }
+
+  // async transfer(req: Request, res: Response) {
+  //   const { patrimonyId, nextOwner } = req.body;
+  //   try {
+  //     await prisma.patrimony.update({
+  //       data: {
+  //         Owner: {
+  //           connect: {
+  //             id: nextOwner,
+  //           },
+  //         },
+  //       },
+  //       where: {
+  //         id: patrimonyId,
+  //       },
+  //     });
+
+  //     return res.status(201).send();
+  //   } catch (err) {
+  //     return res.status(400).json({
+  //       error: err,
+  //     });
+  //   }
+  // }
 
   async delete(req: Request, res: Response) {
     const { id } = req.params;
@@ -130,7 +154,7 @@ export default class PatrimonyController {
           id: Number(id),
         },
       });
-      return res.status(201).send();
+      return res.status(204).send();
     } catch (err) {
       return res.status(400).json({
         error: err,
