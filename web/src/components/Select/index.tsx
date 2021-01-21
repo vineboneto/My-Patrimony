@@ -10,6 +10,12 @@ interface Props extends SelectProps<OptionTypeBase> {
 	name: string
 	label: string
 }
+
+export interface OptionSelect {
+	value: number;
+	label: string;
+}
+
 const Select: React.FC<Props> = ({ name, label, options, ...rest }) => {
 	const selectRef = useRef(null);
 	const { fieldName, defaultValue, registerField, error } = useField(name);

@@ -7,7 +7,7 @@ import { Form } from '@unform/web'
 
 import Input from 'components/Inputs/Input'
 import MultiInputs, { MultiInputsHandles, Field } from 'components/Inputs/MultiInputs'
-import Select from 'components/Select'
+import Select, { OptionSelect } from 'components/Select'
 import Textarea from 'components/Textarea'
 import PageHeader from 'components/PageHeader'
 import Button, { ButtonCollapse, Create, Plus } from 'components/Button'
@@ -24,6 +24,7 @@ import {
 	IpData,
 	Footer
 } from './styled'
+import { Option } from 'react-select/src/filters'
 
 
 interface Ip {
@@ -45,20 +46,9 @@ interface FormData {
 
 const PatrimonyForm: React.FC = () => {
 
-	const optionSector = [
-		{ value: 2, label: 'Compras' },
-		{ value: 3, label: 'Admin' }
-	]
-
-	const optionCategory = [
-		{ value: 2, label: 'Computador' },
-		{ value: 3, label: 'Impressora' }
-	]
-
-	const optionOwners = [
-		{ value: 2, label: 'Vinicius' },
-		{ value: 3, label: 'Weusley' }
-	]
+	const [sectors, setSectors] = useState<OptionSelect[]>([])
+	const [categories, setCategories] = useState<OptionSelect[]>([])
+	const [owners, setOwners] = useState<OptionSelect[]>([])
 
 	const DEFAULT_DATA = {
 		ips: [{ ip: '', mask: '', gateway: '' }]
@@ -152,8 +142,8 @@ const PatrimonyForm: React.FC = () => {
 						</Legend>
 
 						<OwnerData>
-							<Select name="owners" label="Proprietário" options={optionOwners} />
-							<Select name="sectors" label="Setor" options={optionSector} />
+							<Select name="owners" label="Proprietário" options={owners} />
+							<Select name="sectors" label="Setor" options={sectors} />
 						</OwnerData>
 					</Fieldset>
 
@@ -161,7 +151,7 @@ const PatrimonyForm: React.FC = () => {
 						<Legend>Patrimônio</Legend>
 						<PatrimonyData>
 							<Plus type="button" onClick={handleOpenDialogCategory} />
-							<Select name="categories" label="Categoria" options={optionCategory} />
+							<Select name="categories" label="Categoria" options={categories} />
 							<Input name="patrimony" label="Patrimônio" />
 							<Input name="model" label="Modelo" />
 							<Textarea name="description" label="Descrição" />
