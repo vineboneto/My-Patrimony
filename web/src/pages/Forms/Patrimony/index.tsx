@@ -161,8 +161,6 @@ const PatrimonyForm: React.FC = () => {
 				else return ip
 			})
 
-			console.log(newIps)
-
 			await api.post('patrimonies', {
 				patrimony: data.patrimony,
 				model: data.model,
