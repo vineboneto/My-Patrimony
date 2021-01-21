@@ -156,8 +156,6 @@ const PatrimonyForm: React.FC = () => {
 				abortEarly: false
 			})
 
-			console.log(data)
-
 			const newIps = data.ips.map((ip) => {
 				if (ip.ip === '') return []
 				else return ip
@@ -165,19 +163,19 @@ const PatrimonyForm: React.FC = () => {
 
 			console.log(newIps)
 
-			// await api.post('patrimonies', {
-			// 	patrimony: data.patrimony,
-			// 	model: data.model,
-			// 	description: data.description,
-			// 	ownerId: data.ownerId,
-			// 	categoryId: data.categoryId,
-			// 	ips: data.ips[0].ip === '' ? [] : data.ips
-			// }).then(() => {
-			// 	alert('Patrimônio cadastrado com sucesso')
-			// }).catch((err) => {
-			// 	alert(err)
-			// })	
-			console.log('Chegou aqui')
+			await api.post('patrimonies', {
+				patrimony: data.patrimony,
+				model: data.model,
+				description: data.description,
+				ownerId: data.ownerId,
+				categoryId: data.categoryId,
+				ips: newIps
+			}).then(() => {
+				alert('Patrimônio cadastrado com sucesso')
+			}).catch((err) => {
+				alert(err)
+			})
+
 			formRef.current?.setErrors({})
 			reset()
 		} catch (err) {

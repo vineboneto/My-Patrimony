@@ -51,11 +51,13 @@ export default class PatrimonyController {
     };
 
     try {
-      await prisma.patrimony.upsert({
+      const createdPatrimony = await prisma.patrimony.upsert({
         create: newPatrimony,
         update: newPatrimony,
         where: { id: patrimony.id || -1 },
       });
+      if (!patrimony.id) patrimony.id = createdPatrimony.id;
+
       const newIps = patrimony.ips.map((ip: Ip) =>
         prisma.ip.upsert({
           where: { id: ip.id || -1 },
