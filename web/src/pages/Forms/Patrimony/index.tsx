@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import * as Yup from 'yup'
 import Dialog from '@material-ui/core/Dialog'
 import Collapse from '@material-ui/core/Collapse'
@@ -24,7 +24,7 @@ import {
 	IpData,
 	Footer
 } from './styled'
-import { Option } from 'react-select/src/filters'
+import api from 'services/api'
 
 
 interface Ip {
@@ -44,11 +44,47 @@ interface FormData {
 	ips: Ip[]
 }
 
+interface DataProps {
+	id: number;
+	name: string;
+}
+
+
 const PatrimonyForm: React.FC = () => {
 
 	const [sectors, setSectors] = useState<OptionSelect[]>([])
 	const [categories, setCategories] = useState<OptionSelect[]>([])
 	const [owners, setOwners] = useState<OptionSelect[]>([])
+
+	useEffect(() => {
+		async function setOptionsSectors() {
+			const response = await api.get('sectors');
+
+			const options = response.data.map((data: DataProps) => {
+				return {
+					value: data.id,
+					label: data.name
+				}
+			})
+			setSectors(options);
+		}
+		setOptionsSectors();
+	}, [])
+
+	useEffect(() => {
+		async function setOptionsOwners() {
+			const response = await api.get('owners');
+
+			const options = response.data.map((data: DataProps) => {
+				return {
+					value: data.id,
+					label: data.name
+				}
+			})
+			setOwners(options);
+		}
+		setOptionsOwners();
+	}, [])
 
 	const DEFAULT_DATA = {
 		ips: [{ ip: '', mask: '', gateway: '' }]

@@ -43,4 +43,8 @@ export const StyledSelect = styled(Select)`
 	.react-select__control:hover {
 		border: 1px solid var(--color-border-input);
 	}
+
+	.react-select__menu {
+		z-index: 4;
+	}
 `;
