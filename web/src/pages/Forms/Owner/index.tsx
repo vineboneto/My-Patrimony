@@ -4,7 +4,7 @@ import Dialog from '@material-ui/core/Dialog'
 import * as Yup from 'yup'
 import { Form } from '@unform/web'
 
-import Select from 'components/Select'
+import Select, { OptionSelect } from 'components/Select'
 import Input from 'components/Inputs/Input'
 import Button, { Plus } from 'components/Button'
 import { DialogContainer, Title } from 'components/DialogContainer/styled'
@@ -28,11 +28,16 @@ interface Props {
 }
 
 const OwnerForm: React.FC<Props> = ({ onClose }) => {
+	const [open, setOpen] = useState(false)
+	const handleCloseDialog = useCallback(() => {
+		setOpen(false)
+	}, [])
 
-	const [optionsSectors, setOptionsSectors] = useState([
-		{ value: -1, label: '' }
-	])
+	const handleOpenDialog = useCallback(() => {
+		setOpen(true)
+	}, [])
 
+	const [optionsSectors, setOptionsSectors] = useState<OptionSelect[]>([])
 	useEffect(() => {
 		async function handleSetOptionsSector() {
 			const response = await api.get('/sectors')
@@ -45,16 +50,7 @@ const OwnerForm: React.FC<Props> = ({ onClose }) => {
 			setOptionsSectors(options)
 		}
 		handleSetOptionsSector()
-	}, [])
-
-	const [open, setOpen] = useState(false)
-	const handleCloseDialog = useCallback(() => {
-		setOpen(false)
-	}, [])
-
-	const handleOpenDialog = useCallback(() => {
-		setOpen(true)
-	}, [])
+	}, [open])
 
 	const formRef = useRef<FormHandles>(null)
 	const handleSubmit: SubmitHandler<FormData> = async (data, { reset }) => {

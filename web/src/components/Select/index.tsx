@@ -35,10 +35,25 @@ const Select: React.FC<Props> = ({ name, label, options, ...rest }) => {
 					return '';
 				}
 				return ref.state.value.value;
-			}
+			},
+			setValue: (ref: any, value: any) => {
+				if (rest.isMulti && Array.isArray(value)) {
+					const items = ref?.props?.options?.filter((option: any) =>
+						value.includes(option.value)
+					);
+					ref?.select.setValue(items);
+				} else {
+					const item = ref?.props?.options?.filter(
+						(option: any) => option.value === value
+					);
+					if (item && item.length > 0) {
+						ref?.select?.setValue(item);
+					}
+				}
+			},
 		});
-
 	}, [fieldName, registerField, rest.isMulti]);
+
 
 	return (
 		<SelectBlock error={error}>

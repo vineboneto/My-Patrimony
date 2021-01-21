@@ -52,6 +52,24 @@ interface DataProps {
 
 const PatrimonyForm: React.FC = () => {
 
+	const [openDialogCategory, setOpenDialogCategory] = useState(false)
+	const handleOpenDialogCategory = useCallback(() => {
+		setOpenDialogCategory(true)
+	}, [])
+
+	const handleCloseDialogCategory = useCallback(() => {
+		setOpenDialogCategory(false)
+	}, [])
+
+	const [openDialogOwner, setOpenDialogOwner] = useState(false)
+	const handleOpenDialogOwner = useCallback(() => {
+		setOpenDialogOwner(true)
+	}, [])
+
+	const handleCloseDialogOwner = useCallback(() => {
+		setOpenDialogOwner(false)
+	}, [])
+
 	const [sectors, setSectors] = useState<OptionSelect[]>([])
 	const [categories, setCategories] = useState<OptionSelect[]>([])
 	const [owners, setOwners] = useState<OptionSelect[]>([])
@@ -69,7 +87,7 @@ const PatrimonyForm: React.FC = () => {
 			setSectors(options);
 		}
 		setOptionsSectors();
-	}, [])
+	}, [openDialogOwner])
 
 	useEffect(() => {
 		async function setOptionsOwners() {
@@ -78,13 +96,13 @@ const PatrimonyForm: React.FC = () => {
 			const options = response.data.map((data: DataProps) => {
 				return {
 					value: data.id,
-					label: data.name
+					label: data.name,
 				}
 			})
 			setOwners(options);
 		}
 		setOptionsOwners();
-	}, [])
+	}, [openDialogOwner])
 
 	useEffect(() => {
 		async function setOptionsCategory() {
@@ -99,7 +117,7 @@ const PatrimonyForm: React.FC = () => {
 			setCategories(options)
 		}
 		setOptionsCategory()
-	}, [])
+	}, [openDialogCategory])
 
 	const DEFAULT_DATA = {
 		ips: [{ ip: '', mask: '', gateway: '' }]
@@ -158,32 +176,18 @@ const PatrimonyForm: React.FC = () => {
 		}
 	}
 
-	const [openDialogCategory, setOpenDialogCategory] = useState(false)
-	const handleOpenDialogCategory = useCallback(() => {
-		setOpenDialogCategory(true)
-	}, [])
-
-	const handleCloseDialogCategory = useCallback(() => {
-		setOpenDialogCategory(false)
-	}, [])
-
-	const [openDialogOwner, setOpenDialogOwner] = useState(false)
-	const handleOpenDialogOwner = useCallback(() => {
-		setOpenDialogOwner(true)
-	}, [])
-
-	const handleCloseDialogOwner = useCallback(() => {
-		setOpenDialogOwner(false)
-	}, [])
+	const setOwnerTheSector = async () => {
+		const response = await api.get('owners')
+		const currentOwnerId = formRef.current?.getFieldValue('owners')
+		const owner = response.data.filter((data: any) => data.id === currentOwnerId)[0]
+		formRef.current?.setFieldValue('sectors', owner.sectorId)
+	}
 
 	return (
 		<Container>
-
 			<PageHeader title="Novo Patrimônio" prev="/" />
-
 			<Main>
 				<Form ref={formRef} onSubmit={handleSubmit} initialData={DEFAULT_DATA}>
-
 					<Fieldset>
 						<Legend>
 							Proprietário
@@ -191,13 +195,11 @@ const PatrimonyForm: React.FC = () => {
 								+ Novo Proprietário
 								</Create>
 						</Legend>
-
 						<OwnerData>
-							<Select name="owners" label="Proprietário" options={owners} />
-							<Select name="sectors" label="Setor" options={sectors} />
+							<Select name="owners" label="Proprietário" options={owners} onChange={setOwnerTheSector} />
+							<Select name="sectors" label="Setor" options={sectors} isDisabled={true} />
 						</OwnerData>
 					</Fieldset>
-
 					<Fieldset>
 						<Legend>Patrimônio</Legend>
 						<PatrimonyData>
@@ -208,8 +210,6 @@ const PatrimonyForm: React.FC = () => {
 							<Textarea name="description" label="Descrição" />
 						</PatrimonyData>
 					</Fieldset>
-
-
 					<ButtonCollapse type="button" onClick={handleOpenCollapse}>
 						{openCollapse ? 'Fechar' : 'Adicionar Ips'}
 					</ButtonCollapse>
@@ -219,27 +219,21 @@ const PatrimonyForm: React.FC = () => {
 								Ips
 								<Create type="button" onClick={handleAddIpItem}>+ Novo Ip</Create>
 							</Legend>
-
 							<IpData>
-
 								<MultiInputs
 									ref={multiInputsRef}
 									name="ips"
 									fields={fields}
 									itemData={{ ip: '', mask: '', gateway: '' }}
 								/>
-
 							</IpData>
-
 						</Collapse>
 					</Fieldset>
-
 					<Footer>
 						<Button type="submit">
 							Salvar
 						</Button>
 					</Footer>
-
 				</Form>
 				{/**
 					 * Dialogs Forms não podem ficam dentro de um mesmo form devido ao submit
