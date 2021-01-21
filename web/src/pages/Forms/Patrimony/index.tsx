@@ -86,6 +86,21 @@ const PatrimonyForm: React.FC = () => {
 		setOptionsOwners();
 	}, [])
 
+	useEffect(() => {
+		async function setOptionsCategory() {
+			const response = await api.get('categories')
+
+			const options = response.data.map((data: DataProps) => {
+				return {
+					value: data.id,
+					label: data.name
+				}
+			})
+			setCategories(options)
+		}
+		setOptionsCategory()
+	}, [])
+
 	const DEFAULT_DATA = {
 		ips: [{ ip: '', mask: '', gateway: '' }]
 	}
