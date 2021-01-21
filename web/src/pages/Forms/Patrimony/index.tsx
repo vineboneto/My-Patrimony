@@ -208,7 +208,7 @@ const PatrimonyForm: React.FC = () => {
 				</StyledDialog>
 
 				<Dialog open={openDialogCategory} onClose={handleCloseDialogCategory} aria-labelledby="form-dialog-title">
-					<CategoryForm />
+					<CategoryForm onClose={handleCloseDialogCategory} />
 				</Dialog>
 			</Main>
 

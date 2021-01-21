@@ -8,8 +8,13 @@ import Button from 'components/Button'
 import { DialogContainer, Title } from 'components/DialogContainer/styled'
 
 import { Content } from '../Sector/styled'
+import api from 'services/api'
 
-const CategoryForm = () => {
+interface Props {
+	onClose: () => void
+}
+
+const CategoryForm: React.FC<Props> = ({ onClose }) => {
 
 	const formRef = useRef<FormHandles>(null)
 	const handleSubmit: SubmitHandler<FormData> = async (data, { reset }) => {
@@ -24,6 +29,17 @@ const CategoryForm = () => {
 			})
 
 			formRef.current?.setErrors({})
+
+			const categoryName = formRef.current?.getFieldValue('name')
+
+			api.post('categories', {
+				name: categoryName
+			}).then(() => {
+				alert('Categoria Cadastrado com sucesso');
+				onClose();
+			}).catch((err) => {
+				alert(err)
+			})
 
 			reset()
 		} catch (err) {
@@ -46,7 +62,7 @@ const CategoryForm = () => {
 					<Input name="name" label="Nome" />
 					<Button>
 						Salvar
-                    </Button>
+					</Button>
 				</Content>
 			</Form>
 		</DialogContainer>
