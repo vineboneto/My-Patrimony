@@ -204,7 +204,7 @@ const PatrimonyForm: React.FC = () => {
 					 * Dialogs Forms não podem ficam dentro de um mesmo form devido ao submit
 					 */}
 				<StyledDialog open={openDialogOwner} onClose={handleCloseDialogOwner}>
-					<OwnerForm />
+					<OwnerForm onClose={handleCloseDialogOwner} />
 				</StyledDialog>
 
 				<Dialog open={openDialogCategory} onClose={handleCloseDialogCategory} aria-labelledby="form-dialog-title">

@@ -23,7 +23,11 @@ interface Sector {
 	name: string;
 }
 
-const OwnerForm = () => {
+interface Props {
+	onClose: () => void;
+}
+
+const OwnerForm: React.FC<Props> = ({ onClose }) => {
 
 	const [optionsSectors, setOptionsSectors] = useState([
 		{ value: -1, label: '' }
@@ -66,6 +70,20 @@ const OwnerForm = () => {
 			})
 
 			formRef.current?.setErrors({})
+
+			const ownerName = formRef.current?.getFieldValue('name')
+			const sectorId = formRef.current?.getFieldValue('sectors')
+
+			api.post('owners', {
+				name: ownerName,
+				sectorId: sectorId
+			}).then(() => {
+				onClose();
+				alert('Proprietário cadastrado com sucesso');
+
+			}).catch((err) => {
+				alert(err)
+			})
 
 			reset()
 		} catch (err) {
