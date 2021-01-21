@@ -24,6 +24,10 @@ const Select: React.FC<Props> = ({ name, label, options, ...rest }) => {
 		registerField({
 			name: fieldName,
 			ref: selectRef.current,
+			clearValue: (ref) => {
+				ref.select.clearValue();
+				ref?.select?.setValue(defaultValue)
+			},
 			getValue: (ref: any) => {
 				if (rest.isMulti) {
 					if (!ref.state.value) {

@@ -120,7 +120,10 @@ const PatrimonyForm: React.FC = () => {
 	}, [openDialogCategory])
 
 	const DEFAULT_DATA = {
-		ips: [{ ip: '', mask: '', gateway: '' }]
+		ips: [{ ip: '', mask: '', gateway: '' }],
+		categoryId: { value: -1, label: 'Selecione' },
+		sectorId: { value: -1, label: 'Selecione' },
+		ownerId: { value: -1, label: 'Selecione' },
 	}
 
 	const fields: Field[] = [
@@ -141,34 +144,46 @@ const PatrimonyForm: React.FC = () => {
 
 	const formRef = useRef<FormHandles>(null)
 	const handleSubmit: SubmitHandler<FormData> = async (data, { reset }) => {
-
 		try {
 			const schema = Yup.object().shape({
 				patrimony: Yup.string().required('Patrimônio obrigatório'),
 				model: Yup.string().required('Modelo obrigatório '),
-				owners: Yup.number().moreThan(-1, 'Proprietário obrigatório').required('Proprietário obrigatório'),
-				categories: Yup.number().moreThan(-1, 'Categoria obrigatória').required('Categoria obrigatória'),
-				ips: Yup.array().of(
-					Yup.object().shape({
-						ip: Yup.string().required(),
-						gateway: Yup.string().required(),
-						mask: Yup.string().required()
-					})
-				)
+				ownerId: Yup.number().moreThan(-1, 'Proprietário obrigatório').required('Proprietário obrigatório'),
+				categoryId: Yup.number().moreThan(-1, 'Categoria obrigatória').required('Categoria obrigatória'),
 			})
 
 			await schema.validate(data, {
 				abortEarly: false
 			})
 
-			formRef.current?.setErrors({})
+			console.log(data)
 
+			const newIps = data.ips.map((ip) => {
+				if (ip.ip === '') return []
+				else return ip
+			})
+
+			console.log(newIps)
+
+			// await api.post('patrimonies', {
+			// 	patrimony: data.patrimony,
+			// 	model: data.model,
+			// 	description: data.description,
+			// 	ownerId: data.ownerId,
+			// 	categoryId: data.categoryId,
+			// 	ips: data.ips[0].ip === '' ? [] : data.ips
+			// }).then(() => {
+			// 	alert('Patrimônio cadastrado com sucesso')
+			// }).catch((err) => {
+			// 	alert(err)
+			// })	
+			console.log('Chegou aqui')
+			formRef.current?.setErrors({})
 			reset()
 		} catch (err) {
 			if (err instanceof Yup.ValidationError) {
 				err.inner.forEach(error => {
 					if (error.path) {
-						console.log(error.path)
 						formRef.current?.setFieldError(error.path, error.message)
 					}
 				})
@@ -178,9 +193,10 @@ const PatrimonyForm: React.FC = () => {
 
 	const setOwnerTheSector = async () => {
 		const response = await api.get('owners')
-		const currentOwnerId = formRef.current?.getFieldValue('owners')
+		const currentOwnerId = formRef.current?.getFieldValue('ownerId')
 		const owner = response.data.filter((data: any) => data.id === currentOwnerId)[0]
-		formRef.current?.setFieldValue('sectors', owner.sectorId)
+		if (owner) formRef.current?.setFieldValue('sectorId', owner.sectorId)
+		else formRef.current?.setFieldValue('sectorId', -1)
 	}
 
 	return (
@@ -196,15 +212,15 @@ const PatrimonyForm: React.FC = () => {
 								</Create>
 						</Legend>
 						<OwnerData>
-							<Select name="owners" label="Proprietário" options={owners} onChange={setOwnerTheSector} />
-							<Select name="sectors" label="Setor" options={sectors} isDisabled={true} />
+							<Select name="ownerId" label="Proprietário" options={owners} onChange={setOwnerTheSector} />
+							<Select name="sectorId" label="Setor" options={sectors} isDisabled={true} />
 						</OwnerData>
 					</Fieldset>
 					<Fieldset>
 						<Legend>Patrimônio</Legend>
 						<PatrimonyData>
 							<Plus type="button" onClick={handleOpenDialogCategory} />
-							<Select name="categories" label="Categoria" options={categories} />
+							<Select name="categoryId" label="Categoria" options={categories} />
 							<Input name="patrimony" label="Patrimônio" />
 							<Input name="model" label="Modelo" />
 							<Textarea name="description" label="Descrição" />

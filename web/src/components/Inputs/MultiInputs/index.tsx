@@ -34,6 +34,7 @@ const MultiInputs: React.ForwardRefRenderFunction<
 
 	const { fieldName, registerField } = useField(name)
 	const arrayInputsRef = useRef({ value: [itemData] })
+	const [lines, setLines] = useState([itemData])
 
 	useEffect(() => {
 		console.log('Effect')
@@ -43,10 +44,13 @@ const MultiInputs: React.ForwardRefRenderFunction<
 			getValue: (ref: any) => {
 				return ref.value
 			},
+			clearValue: (ref) => {
+				ref.value = [itemData]
+				setLines(ref.value)
+			}
 		})
 	}, [fieldName, registerField])
 
-	const [lines, setLines] = useState([itemData])
 
 	const updateLines = (datas: any) => {
 		arrayInputsRef.current.value = datas
