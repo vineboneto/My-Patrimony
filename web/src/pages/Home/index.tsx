@@ -25,7 +25,7 @@ const Home: React.FC = () => {
 
 				<h1>O que você quer fazer ?</h1>
 				<Actions>
-					<Link to="/patrimony/create">
+					<Link to="/patrimony">
 						Novo Patrimônio
 						<img src={okIcon} alt="Novo Patrimônio" />
 					</Link>

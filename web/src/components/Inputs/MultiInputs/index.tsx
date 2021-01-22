@@ -37,7 +37,6 @@ const MultiInputs: React.ForwardRefRenderFunction<
 	const [lines, setLines] = useState([itemData])
 
 	useEffect(() => {
-		console.log('Effect')
 		registerField({
 			name: fieldName,
 			ref: arrayInputsRef.current,

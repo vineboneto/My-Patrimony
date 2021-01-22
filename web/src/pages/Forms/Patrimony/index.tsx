@@ -123,7 +123,6 @@ const PatrimonyForm: React.FC = () => {
 	}, [openDialogCategory])
 
 	const params = useParams<Params>();
-
 	useEffect(() => {
 		if (params.id) {
 			formRef.current?.setData({
