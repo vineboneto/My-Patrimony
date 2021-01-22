@@ -57,15 +57,33 @@ const PatrimonyList: React.FC = () => {
 		setOptionsCategories()
 	}, [])
 
-	const optionsOwners = [
-		{ value: 1, label: 'Vinicius' },
-		{ value: 2, label: 'Weusley' },
-	]
+	useEffect(() => {
+		async function setOptionsSectors() {
+			const response = await api.get('sectors')
+			const options = response.data.map((data: DataProps) => {
+				return {
+					value: data.id,
+					label: data.name
+				}
+			})
+			setSectors(options);
+		}
+		setOptionsSectors();
+	}, [])
 
-	const optionSectors = [
-		{ value: 1, label: 'UPA' },
-		{ value: 2, label: 'Admin' },
-	]
+	useEffect(() => {
+		async function setOptionsOwner() {
+			const response = await api.get('owners');
+			const options = response.data.map((data: DataProps) => {
+				return {
+					value: data.id,
+					label: data.name
+				}
+			})
+			setOwners(options);
+		}
+		setOptionsOwner();
+	}, [])
 
 	const PatrimonyDatas: Patrimony[] = [
 		{
@@ -164,8 +182,8 @@ const PatrimonyList: React.FC = () => {
 			<PageHeader title="O que procura ?" prev="/">
 				<Form ref={formRef} onSubmit={handleSubmit}>
 					<Search>
-						<Select name="owners" label="Proprietário" options={optionsOwners} />
-						<Select name="owners" label="Setor" options={optionSectors} />
+						<Select name="owners" label="Proprietário" options={owners} />
+						<Select name="owners" label="Setor" options={sectors} />
 						<Input name="patrimony" label="Patrimônio" />
 						<Select name="categories" label="Categoria" options={categories} />
 						<Input name="ip" label="Ip" />
