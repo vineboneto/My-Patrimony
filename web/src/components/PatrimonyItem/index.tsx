@@ -13,13 +13,29 @@ interface Ip {
 	gateway: string
 }
 
+interface Owner {
+	id: number;
+	name: string;
+	sectorId: number;
+}
+
+interface Category {
+	id: number;
+	name: string;
+}
+
+interface Sector {
+	id: number;
+	name: string;
+}
+
 export interface Patrimony {
-	id: number
-	model: string
-	patrimony: string
-	ownerName: string
-	sectorName: string
-	categoryName: string
+	id: number;
+	model: string;
+	patrimony: string;
+	owner: Owner;
+	sector: Sector;
+	category: Category
 	ips?: Ip[]
 }
 
@@ -32,13 +48,13 @@ const PatrimonyItem: React.FC<PatrimonyItemProps> = ({ patrimony }) => {
 	return (
 		<Item>
 			<Header>
-				<h2>{patrimony.ownerName}</h2>
-				<span>{patrimony.sectorName}</span>
+				<h2>{patrimony.owner.name}</h2>
+				<span>{patrimony.sector.name}</span>
 			</Header>
 
 			<Content>
 				<Info>
-					<h3>{patrimony.categoryName}</h3>
+					<h3>{patrimony.category.name}</h3>
 					<p><span>Patrimônio:</span> {patrimony.patrimony}</p>
 					<p><span>Modelo:</span> {patrimony.model}</p>
 					{/* {patrimony.ips &&

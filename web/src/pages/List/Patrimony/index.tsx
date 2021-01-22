@@ -44,6 +44,27 @@ const PatrimonyList: React.FC = () => {
 	const [sectors, setSectors] = useState<OptionSelect[]>([]);
 	const [patrimonies, setPatrimonies] = useState<Patrimony[]>([])
 
+	const [total, setTotal] = useState(0)
+	const [pages, setPages] = useState<number[]>([])
+	const [currentPage, setCurrentPage] = useState(1)
+	const limit = 5
+
+	useEffect(() => {
+		setTotal(5)
+		const totalPages = Math.ceil(total / limit)
+		const arrayPages = []
+		for (let i = 1; i <= totalPages; i++) {
+			arrayPages.push(i)
+		}
+		setPages(arrayPages)
+	}, [total])
+
+	const handleSetPage = (page: number) => {
+		if (page >= 1 && page <= pages.length) {
+			setCurrentPage(page)
+		}
+	}
+
 	useEffect(() => {
 		async function setOptionsCategories() {
 			const response = await api.get('categories')
@@ -88,10 +109,12 @@ const PatrimonyList: React.FC = () => {
 
 	useEffect(() => {
 		async function loadPatrimonies() {
-			const response = await api.get('patrimonies')
-			console.log(response.data)
+			const response = await api.get(`patrimonies?page=${currentPage}&limit=${limit}`)
+			const listing = response.data.map((data: Patrimony) => {
+
+			})
 		}
-		loadPatrimonies()
+		loadPatrimonies();
 	}, [])
 
 	const formRef = useRef<FormHandles>(null)
@@ -102,27 +125,6 @@ const PatrimonyList: React.FC = () => {
 	const handleSearch = useCallback((e: MouseEvent) => {
 		console.log('Searching....')
 	}, [])
-
-	const [total, setTotal] = useState(0)
-	const [pages, setPages] = useState<number[]>([])
-	const [currentPage, setCurrentPage] = useState(1)
-	const limit = 5
-
-	useEffect(() => {
-		setTotal(5)
-		const totalPages = Math.ceil(total / limit)
-		const arrayPages = []
-		for (let i = 1; i <= totalPages; i++) {
-			arrayPages.push(i)
-		}
-		setPages(arrayPages)
-	}, [total])
-
-	const handleSetPage = (page: number) => {
-		if (page >= 1 && page <= pages.length) {
-			setCurrentPage(page)
-		}
-	}
 
 	return (
 		<Container>
