@@ -5,6 +5,7 @@ import React, {
 	useRef,
 	useState
 } from 'react'
+import { useHistory } from 'react-router-dom'
 import { Form } from '@unform/web'
 import { FormHandles, SubmitHandler } from '@unform/core'
 
@@ -39,6 +40,8 @@ interface DataProps {
 
 const PatrimonyList: React.FC = () => {
 
+	const history = useHistory()
+
 	const [categories, setCategories] = useState<OptionSelect[]>([]);
 	const [owners, setOwners] = useState<OptionSelect[]>([]);
 	const [sectors, setSectors] = useState<OptionSelect[]>([]);
@@ -61,6 +64,7 @@ const PatrimonyList: React.FC = () => {
 	const handleSetPage = (page: number) => {
 		if (page >= 1 && page <= pages.length) {
 			setCurrentPage(page)
+			history.push(`patrimonies?page=${page}&limit=${limit}`)
 		}
 	}
 
