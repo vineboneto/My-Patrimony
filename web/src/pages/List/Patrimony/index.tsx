@@ -110,7 +110,6 @@ const PatrimonyList: React.FC = () => {
 	useEffect(() => {
 		async function loadPatrimonies() {
 			const response = await api.get(`patrimonies?page=${currentPage}&limit=${limit}`)
-			console.log(response.headers)
 			const list = response.data.map((data: any) => {
 				return {
 					id: data.id,
@@ -135,7 +134,7 @@ const PatrimonyList: React.FC = () => {
 			setPatrimonies(list);
 		}
 		loadPatrimonies();
-	}, [])
+	}, [currentPage])
 
 	const formRef = useRef<FormHandles>(null)
 	const handleSubmit: SubmitHandler<FormData> = useCallback((data) => {
@@ -166,7 +165,7 @@ const PatrimonyList: React.FC = () => {
 
 			<Main>
 				{patrimonies.map(patrimony =>
-					<PatrimonyItem patrimony={patrimony} />
+					<PatrimonyItem key={patrimony.id} patrimony={patrimony} />
 				)}
 			</Main>
 

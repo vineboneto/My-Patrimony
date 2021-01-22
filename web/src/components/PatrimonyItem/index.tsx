@@ -67,8 +67,9 @@ const PatrimonyItem: React.FC<PatrimonyItemProps> = ({ patrimony }) => {
 					{patrimony.ips &&
 						<IpInfo><span>Ips: </span>
 							{patrimony.ips.map((ip: Ip, index: number) => {
-								if (index === (Number(patrimony.ips?.length) - 1)) return <span>{ip.ip}</span>
-								else return <span>{ip.ip}, </span>
+								if (index === (Number(patrimony.ips?.length) - 1)) return <span key={index}>{ip.ip}</span>
+								else return <span key={index}>{ip.ip}, </span>
+
 							})}
 						</IpInfo>
 					}
