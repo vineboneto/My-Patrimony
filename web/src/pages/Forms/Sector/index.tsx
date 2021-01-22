@@ -10,6 +10,10 @@ import { DialogContainer, Title } from 'components/DialogContainer/styled'
 import { Content } from './styled'
 import api from 'services/api'
 
+interface FormData {
+	name: string
+}
+
 interface SectorProps {
 	onClose: () => void
 }
@@ -31,10 +35,8 @@ const SectorForm: React.FC<SectorProps> = ({ onClose }) => {
 
 			formRef.current?.setErrors({})
 
-			const sectorName = formRef.current?.getFieldValue('name');
-
 			api.post('sectors', {
-				name: sectorName
+				name: data.name
 			}).then(() => {
 				onClose();
 				alert('Setor cadastrado com sucesso');

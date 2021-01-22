@@ -67,12 +67,9 @@ const OwnerForm: React.FC<Props> = ({ onClose }) => {
 
 			formRef.current?.setErrors({})
 
-			const ownerName = formRef.current?.getFieldValue('name')
-			const sectorId = formRef.current?.getFieldValue('sectors')
-
 			api.post('owners', {
-				name: ownerName,
-				sectorId: sectorId
+				name: data.owner,
+				sectorId: data.sectorId
 			}).then(() => {
 				onClose();
 				alert('Proprietário cadastrado com sucesso');

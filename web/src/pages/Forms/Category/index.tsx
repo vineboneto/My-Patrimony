@@ -10,6 +10,10 @@ import { DialogContainer, Title } from 'components/DialogContainer/styled'
 import { Content } from '../Sector/styled'
 import api from 'services/api'
 
+interface FormData {
+	name: string
+}
+
 interface Props {
 	onClose: () => void
 }
@@ -30,10 +34,8 @@ const CategoryForm: React.FC<Props> = ({ onClose }) => {
 
 			formRef.current?.setErrors({})
 
-			const categoryName = formRef.current?.getFieldValue('name')
-
 			api.post('categories', {
-				name: categoryName
+				name: data.name
 			}).then(() => {
 				alert('Categoria Cadastrado com sucesso');
 				onClose();
