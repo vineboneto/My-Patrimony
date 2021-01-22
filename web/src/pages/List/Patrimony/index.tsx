@@ -50,7 +50,6 @@ const PatrimonyList: React.FC = () => {
 	const limit = 5
 
 	useEffect(() => {
-		setTotal(5)
 		const totalPages = Math.ceil(total / limit)
 		const arrayPages = []
 		for (let i = 1; i <= totalPages; i++) {
@@ -110,6 +109,7 @@ const PatrimonyList: React.FC = () => {
 	useEffect(() => {
 		async function loadPatrimonies() {
 			const response = await api.get(`patrimonies?page=${currentPage}&limit=${limit}`)
+			setTotal(Number(response.headers['x-total-patrimonies']))
 			const list = response.data.map((data: any) => {
 				return {
 					id: data.id,
