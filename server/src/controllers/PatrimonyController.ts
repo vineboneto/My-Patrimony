@@ -16,7 +16,18 @@ export default class PatrimonyController {
     const patrimonies = await prisma.patrimony.findMany({
       skip: Number(page) * Number(limit) - Number(limit),
       take: Number(limit),
-      include: {
+      select: {
+        id: true,
+        number: true,
+        description: true,
+        Category: true,
+        Owner: {
+          select: {
+            id: true,
+            name: true,
+            Sector: true,
+          },
+        },
         Ip: {
           select: {
             id: true,
