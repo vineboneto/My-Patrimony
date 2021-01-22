@@ -41,7 +41,6 @@ interface DataProps {
 const PatrimonyList: React.FC = () => {
 
 	const history = useHistory()
-
 	const [categories, setCategories] = useState<OptionSelect[]>([]);
 	const [owners, setOwners] = useState<OptionSelect[]>([]);
 	const [sectors, setSectors] = useState<OptionSelect[]>([]);

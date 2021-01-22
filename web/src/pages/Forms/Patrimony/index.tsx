@@ -25,6 +25,7 @@ import {
 	Footer
 } from './styled'
 import api from 'services/api'
+import { useParams } from 'react-router-dom'
 
 
 interface Ip {
@@ -49,8 +50,11 @@ interface DataProps {
 	name: string;
 }
 
-const PatrimonyForm: React.FC = () => {
+interface Params {
+	id?: string
+}
 
+const PatrimonyForm: React.FC = () => {
 	const [openDialogCategory, setOpenDialogCategory] = useState(false)
 	const handleOpenDialogCategory = useCallback(() => {
 		setOpenDialogCategory(true)
@@ -117,6 +121,16 @@ const PatrimonyForm: React.FC = () => {
 		}
 		setOptionsCategory()
 	}, [openDialogCategory])
+
+	const params = useParams<Params>();
+
+	useEffect(() => {
+		if (params.id) {
+			formRef.current?.setData({
+
+			})
+		}
+	}, [])
 
 	const DEFAULT_DATA = {
 		ips: [{ ip: '', mask: '', gateway: '' }],
