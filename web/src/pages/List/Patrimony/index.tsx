@@ -1,10 +1,16 @@
-import React, { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
+import React, {
+	MouseEvent,
+	useCallback,
+	useEffect,
+	useRef,
+	useState
+} from 'react'
 import { Form } from '@unform/web'
 import { FormHandles, SubmitHandler } from '@unform/core'
 
 import PatrimonyItem, { Patrimony } from 'components/PatrimonyItem'
 import PageHeader from 'components/PageHeader'
-import Select from 'components/Select'
+import Select, { OptionSelect } from 'components/Select'
 import Input from 'components/Inputs/Input'
 
 import {
@@ -18,6 +24,7 @@ import {
 } from './styled'
 
 import searchIcon from 'assets/images/icons/searchIcon.svg'
+import api from 'services/api'
 
 interface FormData {
 	ownerId: number
@@ -25,7 +32,30 @@ interface FormData {
 	patrimony: string
 }
 
+interface DataProps {
+	id: number;
+	name: string;
+}
+
 const PatrimonyList: React.FC = () => {
+
+	const [categories, setCategories] = useState<OptionSelect[]>([]);
+	const [owners, setOwners] = useState<OptionSelect[]>([]);
+	const [sectors, setSectors] = useState<OptionSelect[]>([]);
+
+	useEffect(() => {
+		async function setOptionsCategories() {
+			const response = await api.get('categories')
+			const options = response.data.map((data: DataProps) => {
+				return {
+					value: data.id,
+					label: data.name
+				}
+			})
+			setCategories(options)
+		}
+		setOptionsCategories()
+	}, [])
 
 	const optionsOwners = [
 		{ value: 1, label: 'Vinicius' },
@@ -35,11 +65,6 @@ const PatrimonyList: React.FC = () => {
 	const optionSectors = [
 		{ value: 1, label: 'UPA' },
 		{ value: 2, label: 'Admin' },
-	]
-
-	const optionsCategories = [
-		{ value: 1, label: 'Impressora' },
-		{ value: 2, label: 'Computador' },
 	]
 
 	const PatrimonyDatas: Patrimony[] = [
@@ -142,7 +167,7 @@ const PatrimonyList: React.FC = () => {
 						<Select name="owners" label="Proprietário" options={optionsOwners} />
 						<Select name="owners" label="Setor" options={optionSectors} />
 						<Input name="patrimony" label="Patrimônio" />
-						<Select name="categories" label="Categoria" options={optionsCategories} />
+						<Select name="categories" label="Categoria" options={categories} />
 						<Input name="ip" label="Ip" />
 						<SearchIcon>
 							<img src={searchIcon} alt="Realizar Busca" onClick={handleSearch} />
