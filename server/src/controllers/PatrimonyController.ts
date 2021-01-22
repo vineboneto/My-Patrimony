@@ -39,6 +39,8 @@ export default class PatrimonyController {
         },
       },
     });
+    const total = await prisma.patrimony.count();
+    res.setHeader("x-total-patrimonies", total);
     return res.json(patrimonies);
   }
 
