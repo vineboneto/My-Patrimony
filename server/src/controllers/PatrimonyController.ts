@@ -19,6 +19,7 @@ export default class PatrimonyController {
       select: {
         id: true,
         number: true,
+        model: true,
         description: true,
         Category: true,
         Owner: {

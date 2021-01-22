@@ -48,6 +48,17 @@ export const Info = styled.div`
 	}
 `;
 
+export const Ip = styled.p`
+	max-width: 60rem;
+	flex-wrap: wrap;
+	overflow-wrap: break-word;
+
+	& > :first-child ~ span {
+		color: #000;
+		margin: 0 5px;
+	}
+`;
+
 export const Actions = styled.div`
 	align-self: flex-end;
 

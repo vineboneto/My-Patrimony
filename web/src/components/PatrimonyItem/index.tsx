@@ -4,7 +4,15 @@ import { Link } from 'react-router-dom'
 import deleteForeverIcon from 'assets/images/icons/deleteForeverIcon.svg'
 import editIcon from 'assets/images/icons/editIcon.svg'
 
-import { Item, Header, Content, Info, Actions } from './styled'
+import {
+	Item,
+	Header,
+	Content,
+	Info,
+	Ip,
+	Actions
+} from './styled'
+import { isPrimitive } from 'util'
 
 interface Ip {
 	id: number
@@ -13,10 +21,15 @@ interface Ip {
 	gateway: string
 }
 
+interface Sector {
+	id: number;
+	name: string;
+}
+
 interface Owner {
 	id: number;
 	name: string;
-	sectorId: number;
+	sector: Sector;
 }
 
 interface Category {
@@ -24,19 +37,14 @@ interface Category {
 	name: string;
 }
 
-interface Sector {
-	id: number;
-	name: string;
-}
-
 export interface Patrimony {
 	id: number;
 	model: string;
-	patrimony: string;
+	number: string;
+	description: string;
 	owner: Owner;
-	sector: Sector;
-	category: Category
-	ips?: Ip[]
+	category: Category;
+	ips?: Ip[];
 }
 
 interface PatrimonyItemProps {
@@ -49,19 +57,22 @@ const PatrimonyItem: React.FC<PatrimonyItemProps> = ({ patrimony }) => {
 		<Item>
 			<Header>
 				<h2>{patrimony.owner.name}</h2>
-				<span>{patrimony.sector.name}</span>
+				<span>{patrimony.owner.sector.name}</span>
 			</Header>
 
 			<Content>
 				<Info>
 					<h3>{patrimony.category.name}</h3>
-					<p><span>Patrimônio:</span> {patrimony.patrimony}</p>
+					<p><span>Patrimônio:</span> {patrimony.number}</p>
 					<p><span>Modelo:</span> {patrimony.model}</p>
-					{/* {patrimony.ips &&
-						<p><span>Ips: </span>
-							{patrimony.ips}
-						</p>
-					} */}
+					{patrimony.ips &&
+						<Ip><span>Ips: </span>
+							{patrimony.ips.map((ip: Ip, index: number) => {
+								if (index === (Number(patrimony.ips?.length) - 1)) return <span>{ip.ip}</span>
+								else return <span>{ip.ip}, </span>
+							})}
+						</Ip>
+					}
 				</Info>
 
 				<Actions>
@@ -69,7 +80,7 @@ const PatrimonyItem: React.FC<PatrimonyItemProps> = ({ patrimony }) => {
 						<img src={deleteForeverIcon} alt="Excluir" />
 					</Link>
 					<Link to={{
-						pathname: `/patrimony/edit/${patrimony.id}`
+						pathname: `/ patrimony / edit / ${patrimony.id}`
 					}}>
 
 						<img src={editIcon} alt="Editar" />

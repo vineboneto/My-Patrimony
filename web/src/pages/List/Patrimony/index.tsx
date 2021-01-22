@@ -110,9 +110,29 @@ const PatrimonyList: React.FC = () => {
 	useEffect(() => {
 		async function loadPatrimonies() {
 			const response = await api.get(`patrimonies?page=${currentPage}&limit=${limit}`)
-			const listing = response.data.map((data: Patrimony) => {
-
+			console.log(response.data)
+			const list = response.data.map((data: any) => {
+				return {
+					id: data.id,
+					number: data.number,
+					model: data.model,
+					description: data.description,
+					category: {
+						id: data.Category.id,
+						name: data.Category.name
+					},
+					owner: {
+						id: data.Owner.id,
+						name: data.Owner.name,
+						sector: {
+							id: data.Owner.Sector.id,
+							name: data.Owner.Sector.name
+						}
+					},
+					ips: data.Ip,
+				}
 			})
+			setPatrimonies(list);
 		}
 		loadPatrimonies();
 	}, [])

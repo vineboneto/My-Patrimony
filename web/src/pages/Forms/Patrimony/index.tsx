@@ -49,7 +49,6 @@ interface DataProps {
 	name: string;
 }
 
-
 const PatrimonyForm: React.FC = () => {
 
 	const [openDialogCategory, setOpenDialogCategory] = useState(false)
