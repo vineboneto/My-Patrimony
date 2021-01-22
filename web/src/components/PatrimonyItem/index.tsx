@@ -9,10 +9,9 @@ import {
 	Header,
 	Content,
 	Info,
-	Ip,
+	Ip as IpInfo,
 	Actions
 } from './styled'
-import { isPrimitive } from 'util'
 
 interface Ip {
 	id: number
@@ -66,12 +65,12 @@ const PatrimonyItem: React.FC<PatrimonyItemProps> = ({ patrimony }) => {
 					<p><span>Patrimônio:</span> {patrimony.number}</p>
 					<p><span>Modelo:</span> {patrimony.model}</p>
 					{patrimony.ips &&
-						<Ip><span>Ips: </span>
+						<IpInfo><span>Ips: </span>
 							{patrimony.ips.map((ip: Ip, index: number) => {
 								if (index === (Number(patrimony.ips?.length) - 1)) return <span>{ip.ip}</span>
 								else return <span>{ip.ip}, </span>
 							})}
-						</Ip>
+						</IpInfo>
 					}
 				</Info>
 
