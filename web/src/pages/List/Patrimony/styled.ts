@@ -20,7 +20,10 @@ export const Search = styled.div`
 	max-width: 74rem;
 	margin: -12.4rem auto 0;
 	display: grid;
-	grid-template-columns: 250px 250px 190px;
+	grid-template-columns: 250px 250px 190px 1fr;
+	grid-template-areas:
+		"owner sector patrimony search"
+		"category ip model search";
 	justify-content: space-between;
 	margin-bottom: 3rem;
 	row-gap: 2rem;
@@ -30,7 +33,8 @@ export const Search = styled.div`
 		color: #fff;
 	}
 
-	& > :last-child {
+	& > :nth-child(7) {
+		grid-area: search;
 		align-self: flex-end;
 		justify-self: flex-start;
 	}

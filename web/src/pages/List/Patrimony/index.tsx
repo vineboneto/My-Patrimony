@@ -42,6 +42,7 @@ const PatrimonyList: React.FC = () => {
 	const [categories, setCategories] = useState<OptionSelect[]>([]);
 	const [owners, setOwners] = useState<OptionSelect[]>([]);
 	const [sectors, setSectors] = useState<OptionSelect[]>([]);
+	const [patrimonies, setPatrimonies] = useState<Patrimony[]>([])
 
 	useEffect(() => {
 		async function setOptionsCategories() {
@@ -85,66 +86,13 @@ const PatrimonyList: React.FC = () => {
 		setOptionsOwner();
 	}, [])
 
-	const PatrimonyDatas: Patrimony[] = [
-		{
-			id: 1,
-			model: 'Dell',
-			ownerName: 'Vinicius Gazolla Boneto',
-			patrimony: '656',
-			sectorName: 'UPA',
-			categoryName: 'Computador',
-			ips: [
-				{ id: 1, ip: '192.168.1.25', mask: '255.255.255.0', gateway: '192.168.1.1' },
-				{ id: 2, ip: '192.168.2.25', mask: '255.255.255.0', gateway: '192.168.2.1' },
-			]
-		},
-		{
-			id: 2,
-			model: 'SAMSUMG M4070FR',
-			ownerName: 'Weusley William de Paula',
-			patrimony: 'Locada',
-			sectorName: 'Preventivo',
-			categoryName: 'Impressora',
-			ips: [
-				{ id: 3, ip: '192.168.1.125', mask: '255.255.255.0', gateway: '192.168.1.1' }
-			]
-		},
-		{
-			id: 3,
-			model: 'AOC',
-			ownerName: 'Jessica',
-			patrimony: '4587',
-			sectorName: 'Compras',
-			categoryName: 'Monitor',
-		},
-		{
-			id: 4,
-			model: 'Concordia',
-			ownerName: 'Ivanice',
-			patrimony: '458758',
-			sectorName: 'Administração',
-			categoryName: 'Computador',
-			ips: [
-				{ id: 4, ip: '192.168.1.55', mask: '255.255.255.0', gateway: '192.168.1.1' }
-			]
-		},
-		{
-			id: 5,
-			model: 'TS-SHARA',
-			ownerName: 'Gustavo',
-			patrimony: '458789',
-			sectorName: 'Administração',
-			categoryName: 'Estabilizador',
-		},
-		{
-			id: 6,
-			model: 'POSITIVO',
-			ownerName: 'Ana Zatta',
-			patrimony: 'S/N',
-			sectorName: 'Recursos Humanos',
-			categoryName: 'Computador',
+	useEffect(() => {
+		async function loadPatrimonies() {
+			const response = await api.get('patrimonies')
+			console.log(response.data)
 		}
-	]
+		loadPatrimonies()
+	}, [])
 
 	const formRef = useRef<FormHandles>(null)
 	const handleSubmit: SubmitHandler<FormData> = useCallback((data) => {
@@ -155,21 +103,20 @@ const PatrimonyList: React.FC = () => {
 		console.log('Searching....')
 	}, [])
 
-	const [patrimonies, setPatrimonies] = useState<Patrimony[]>(PatrimonyDatas)
 	const [total, setTotal] = useState(0)
 	const [pages, setPages] = useState<number[]>([])
 	const [currentPage, setCurrentPage] = useState(1)
 	const limit = 5
 
 	useEffect(() => {
-		setTotal(PatrimonyDatas.length)
+		setTotal(5)
 		const totalPages = Math.ceil(total / limit)
 		const arrayPages = []
 		for (let i = 1; i <= totalPages; i++) {
 			arrayPages.push(i)
 		}
 		setPages(arrayPages)
-	}, [total, PatrimonyDatas.length])
+	}, [total])
 
 	const handleSetPage = (page: number) => {
 		if (page >= 1 && page <= pages.length) {
@@ -187,6 +134,7 @@ const PatrimonyList: React.FC = () => {
 						<Input name="patrimony" label="Patrimônio" />
 						<Select name="categories" label="Categoria" options={categories} />
 						<Input name="ip" label="Ip" />
+						<Input name="model" label="Modelo" />
 						<SearchIcon>
 							<img src={searchIcon} alt="Realizar Busca" onClick={handleSearch} />
 						</SearchIcon>
