@@ -49,7 +49,7 @@ const MultiInputs: React.ForwardRefRenderFunction<
 				setLines(ref.value)
 			}
 		})
-	}, [fieldName, registerField])
+	}, [fieldName, registerField, itemData])
 
 
 	const updateLines = (datas: any) => {
