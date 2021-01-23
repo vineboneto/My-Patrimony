@@ -22,10 +22,13 @@ import {
 	OwnerData,
 	PatrimonyData,
 	IpData,
-	Footer
+	Footer,
+	SSnackbar as Snackbar
 } from './styled'
 import api from 'services/api'
 import { useParams } from 'react-router-dom'
+import Alert from "@material-ui/lab/Alert";
+
 
 
 interface Ip {
@@ -155,6 +158,7 @@ const PatrimonyForm: React.FC = () => {
 	}, [])
 
 	const formRef = useRef<FormHandles>(null)
+	const [openMessageSuccess, setOpenMessageSuccess] = useState(false);
 	const handleSubmit: SubmitHandler<FormData> = async (data, { reset }) => {
 		try {
 			const schema = Yup.object().shape({
@@ -181,7 +185,8 @@ const PatrimonyForm: React.FC = () => {
 				categoryId: data.categoryId,
 				ips: newIps
 			}).then(() => {
-				alert('Patrimônio cadastrado com sucesso')
+				// alert('Patrimônio cadastrado com sucesso')
+				setOpenMessageSuccess(true);
 			}).catch((err) => {
 				alert(err)
 			})
@@ -269,10 +274,15 @@ const PatrimonyForm: React.FC = () => {
 				<Dialog open={openDialogCategory} onClose={handleCloseDialogCategory} aria-labelledby="form-dialog-title">
 					<CategoryForm onClose={handleCloseDialogCategory} />
 				</Dialog>
+
+				<Snackbar open={openMessageSuccess} autoHideDuration={2000} onClose={() => setOpenMessageSuccess(false)}>
+					<Alert onClose={() => setOpenMessageSuccess(false)} severity="success">
+						Cadastrado com sucesso
+					 </Alert>
+				</Snackbar>
 			</Main>
 
 		</Container>
 	)
 }
-
 export default PatrimonyForm

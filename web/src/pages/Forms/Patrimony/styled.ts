@@ -1,3 +1,4 @@
+import { Snackbar } from "@material-ui/core";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -75,4 +76,22 @@ export const Footer = styled.footer`
 	justify-content: flex-end;
 	align-items: center;
 	padding: 0 3.4rem;
+`;
+
+export const SSnackbar = styled(Snackbar)`
+	.MuiAlert-root {
+		padding: 0.6rem 5rem;
+		font-size: 2.4rem;
+		display: flex;
+		align-items: center;
+	}
+
+	.MuiAlert-icon {
+		max-width: 50px;
+	}
+
+	.MuiSvgIcon-root {
+		height: 2.4rem;
+		width: 2.4rem;
+	}
 `;
