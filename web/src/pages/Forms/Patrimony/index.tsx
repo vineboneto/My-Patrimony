@@ -127,12 +127,18 @@ const PatrimonyForm: React.FC = () => {
 
 	const params = useParams<Params>();
 	useEffect(() => {
-		if (params.id) {
-			formRef.current?.setData({
+		async function setDataPatrimony() {
+			if (params.id) {
+				const response = await api.get(`patrimonies/${params.id}`)
+				console.log(response.data)
+				formRef.current?.setData({
+					ownerId: response.data.id,
 
-			})
+				})
+			}
 		}
-	}, [])
+		setDataPatrimony();
+	}, [params.id])
 
 	const DEFAULT_DATA = {
 		ips: [{ ip: '', mask: '', gateway: '' }],

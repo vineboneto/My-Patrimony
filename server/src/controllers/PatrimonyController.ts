@@ -48,7 +48,13 @@ export default class PatrimonyController {
     const { id } = req.params;
     const patrimony = await prisma.patrimony.findUnique({
       where: { id: Number(id) },
-      include: {
+      select: {
+        id: true,
+        number: true,
+        model: true,
+        description: true,
+        categoryId: true,
+        Owner: true,
         Ip: {
           select: {
             id: true,
