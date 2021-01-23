@@ -1,19 +1,18 @@
 import React from 'react'
 
+import Pagination from '@material-ui/lab/Pagination'
+
 const Test: React.FC = () => {
 
-    return (
-        <div>
+	return (
+		<div>
 
-            
-            
+		</div>
 
-        </div>
-        
-    )
+	)
 
 
-    
+
 }
 
 export default Test

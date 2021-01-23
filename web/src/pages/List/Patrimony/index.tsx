@@ -172,6 +172,7 @@ const PatrimonyList: React.FC = () => {
 				)}
 			</Main>
 
+
 			<Pagination>
 				<Pages>
 					<Page onClick={() => handleSetPage(currentPage - 1)}>Anterior</Page>
