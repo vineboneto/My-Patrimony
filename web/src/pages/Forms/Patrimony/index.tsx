@@ -185,7 +185,6 @@ const PatrimonyForm: React.FC = () => {
 				categoryId: data.categoryId,
 				ips: newIps
 			}).then(() => {
-				// alert('Patrimônio cadastrado com sucesso')
 				setOpenMessageSuccess(true);
 			}).catch((err) => {
 				alert(err)
