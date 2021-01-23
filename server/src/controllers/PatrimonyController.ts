@@ -44,6 +44,24 @@ export default class PatrimonyController {
     return res.json(patrimonies);
   }
 
+  async getById(req: Request, res: Response) {
+    const { id } = req.params;
+    const patrimony = await prisma.patrimony.findUnique({
+      where: { id: Number(id) },
+      include: {
+        Ip: {
+          select: {
+            id: true,
+            ip: true,
+            mask: true,
+            gateway: true,
+          },
+        },
+      },
+    });
+    return res.json(patrimony);
+  }
+
   async createOrUpdate(req: Request, res: Response) {
     const patrimony = req.body;
     if (req.params.id) patrimony.id = Number(req.params.id);
@@ -132,30 +150,6 @@ export default class PatrimonyController {
       });
     }
   }
-
-  // async transfer(req: Request, res: Response) {
-  //   const { patrimonyId, nextOwner } = req.body;
-  //   try {
-  //     await prisma.patrimony.update({
-  //       data: {
-  //         Owner: {
-  //           connect: {
-  //             id: nextOwner,
-  //           },
-  //         },
-  //       },
-  //       where: {
-  //         id: patrimonyId,
-  //       },
-  //     });
-
-  //     return res.status(201).send();
-  //   } catch (err) {
-  //     return res.status(400).json({
-  //       error: err,
-  //     });
-  //   }
-  // }
 
   async delete(req: Request, res: Response) {
     const { id } = req.params;

@@ -27,6 +27,7 @@ routes.delete("/categories/:id", categoryController.delete);
 routes.post("/categories", categoryController.createOrUpdate);
 
 routes.get("/patrimonies", patrimonyController.index);
+routes.get("/patrimonies/:id", patrimonyController.getById);
 routes.patch("/patrimonies/:id", patrimonyController.updateOwnerId);
 routes.put("/patrimonies/:id", patrimonyController.createOrUpdate);
 routes.delete("/patrimonies/:id", patrimonyController.delete);
