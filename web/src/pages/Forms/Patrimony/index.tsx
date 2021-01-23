@@ -130,10 +130,14 @@ const PatrimonyForm: React.FC = () => {
 		async function setDataPatrimony() {
 			if (params.id) {
 				const response = await api.get(`patrimonies/${params.id}`)
-				console.log(response.data)
 				formRef.current?.setData({
-					ownerId: response.data.id,
-
+					ownerId: Number(response.data.Owner.id),
+					sectorId: Number(response.data.Owner.sectorId),
+					categoryId: Number(response.data.categoryId),
+					patrimony: response.data.number,
+					model: response.data.model,
+					description: response.data.description,
+					ips: response.data.Ip
 				})
 			}
 		}
@@ -148,6 +152,7 @@ const PatrimonyForm: React.FC = () => {
 	}
 
 	const fields: Field[] = [
+		{ name: 'id', label: 'Id', hidden: true },
 		{ name: 'ip', label: 'Ip', placeholder: '192.168.1.11' },
 		{ name: 'mask', label: 'Mascara', placeholder: '255.255.255.0' },
 		{ name: 'gateway', label: 'Gateway', placeholder: '192.168.1.1' },
@@ -166,6 +171,7 @@ const PatrimonyForm: React.FC = () => {
 	const formRef = useRef<FormHandles>(null)
 	const [openMessageSuccess, setOpenMessageSuccess] = useState(false);
 	const handleSubmit: SubmitHandler<FormData> = async (data, { reset }) => {
+		console.log(data)
 		try {
 			const schema = Yup.object().shape({
 				patrimony: Yup.string().required('Patrimônio obrigatório'),
@@ -178,23 +184,40 @@ const PatrimonyForm: React.FC = () => {
 				abortEarly: false
 			})
 
-			const newIps = data.ips.map((ip) => {
-				if (ip.ip === '') return []
-				else return ip
-			})
+			if (params.id) {
+				await api.put(`patrimonies/${params.id}`, {
+					id: params.id,
+					patrimony: data.patrimony,
+					model: data.model,
+					description: data.description,
+					ownerId: data.ownerId,
+					categoryId: data.categoryId,
+					ips: data.ips
+				}).then(() => {
+					alert('Atualizado com sucesso')
+				}).catch((err) => {
+					alert(err)
+				})
+			} else {
+				const newIps = data.ips.map((ip) => {
+					if (ip.ip === '') return []
+					else return ip
+				})
 
-			await api.post('patrimonies', {
-				patrimony: data.patrimony,
-				model: data.model,
-				description: data.description,
-				ownerId: data.ownerId,
-				categoryId: data.categoryId,
-				ips: newIps
-			}).then(() => {
-				setOpenMessageSuccess(true);
-			}).catch((err) => {
-				alert(err)
-			})
+				await api.post('patrimonies', {
+					patrimony: data.patrimony,
+					model: data.model,
+					description: data.description,
+					ownerId: data.ownerId,
+					categoryId: data.categoryId,
+					ips: newIps
+				}).then(() => {
+					setOpenMessageSuccess(true);
+				}).catch((err) => {
+					alert(err)
+				})
+			}
+
 
 			formRef.current?.setErrors({})
 			reset()
@@ -258,7 +281,7 @@ const PatrimonyForm: React.FC = () => {
 									ref={multiInputsRef}
 									name="ips"
 									fields={fields}
-									itemData={{ ip: '', mask: '', gateway: '' }}
+									itemData={{ id: '', ip: '', mask: '', gateway: '' }}
 								/>
 							</IpData>
 						</Collapse>

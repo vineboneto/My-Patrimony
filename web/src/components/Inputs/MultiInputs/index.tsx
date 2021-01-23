@@ -1,6 +1,7 @@
 import
 React, {
 	forwardRef,
+	InputHTMLAttributes,
 	useEffect,
 	useImperativeHandle,
 	useRef,
@@ -15,10 +16,11 @@ export interface MultiInputsHandles {
 	addLine: () => void
 }
 
-export interface Field {
+export interface Field extends InputHTMLAttributes<HTMLInputElement> {
 	name: string
 	label: string
-	placeholder: string
+	placeholder?: string
+	hidden?: boolean
 }
 
 interface MultiInputsProps {
@@ -42,6 +44,10 @@ const MultiInputs: React.ForwardRefRenderFunction<
 			ref: arrayInputsRef.current,
 			getValue: (ref: any) => {
 				return ref.value
+			},
+			setValue: (ref: any, value: Array<any>) => {
+				ref.value = value
+				updateLines(value)
 			},
 			clearValue: (ref) => {
 				ref.value = [itemData]
@@ -84,7 +90,7 @@ const MultiInputs: React.ForwardRefRenderFunction<
 			{lines?.map((line: any, index: number) => (
 				<div key={index}>
 					{fields.map((field, indexField) => (
-						<InputBlock key={indexField}>
+						<InputBlock hidden={field.hidden} key={indexField}>
 							<label htmlFor={field.name}>{field.label}</label>
 							<input
 								name={field.name}

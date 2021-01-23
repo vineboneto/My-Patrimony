@@ -38,7 +38,8 @@ const Select: React.FC<Props> = ({ name, label, options, ...rest }) => {
 				if (!ref.state.value) {
 					return '';
 				}
-				return ref.state.value.value;
+				if (Array.isArray(ref.state.value)) return ref.state?.value[0]?.value
+				else return ref.state.value.value
 			},
 			setValue: (ref: any, value: any) => {
 				if (rest.isMulti && Array.isArray(value)) {
@@ -56,7 +57,7 @@ const Select: React.FC<Props> = ({ name, label, options, ...rest }) => {
 				}
 			},
 		});
-	}, [fieldName, registerField, rest.isMulti]);
+	}, [fieldName, registerField, rest.isMulti, defaultValue]);
 
 
 	return (
