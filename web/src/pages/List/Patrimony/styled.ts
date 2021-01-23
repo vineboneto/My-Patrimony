@@ -61,7 +61,6 @@ export const Pages = styled.div``;
 export const Page = styled.button<PageStyled>`
 	padding: 0.8rem 2.2rem;
 	margin: 0 1rem;
-	/* border: 1px solid ${(props) => (props.current ? "" : "none")}; */
 	border: none;
 	border-radius: 0.8rem;
 	background-color: ${(props) =>
