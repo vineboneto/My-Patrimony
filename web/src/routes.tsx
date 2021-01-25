@@ -13,7 +13,7 @@ export default function Routes() {
 			<Route exact path="/" component={Home} />
 			<Route exact path="/patrimony/:id" component={PatrimonyForm} />
 			<Route exact path="/patrimony/" component={PatrimonyForm} />
-			<Route path="/patrimony/Transfer" component={Transfer} />
+			<Route exact path="/patrimony-transfer" component={Transfer} />
 			<Route path="/patrimonies" component={PatrimonyList} />
 			<Route path="/test/" component={Test} />
 		</BrowserRouter>

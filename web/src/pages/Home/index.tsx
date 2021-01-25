@@ -38,7 +38,7 @@ const Home: React.FC = () => {
 						<img src={searchIcon} alt="Buscar Patriônio" />
 					</Link>
 
-					<Link to="/patrimony/swap">
+					<Link to="/patrimony-transfer">
 						Realizar Trocar
 						<img src={updateIcon} alt="Realizar troca de patrimônio" />
 					</Link>

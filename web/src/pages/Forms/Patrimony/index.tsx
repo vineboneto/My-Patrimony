@@ -293,8 +293,8 @@ const PatrimonyForm: React.FC = () => {
 					</Footer>
 				</Form>
 				{/**
-					 * Dialogs Forms não podem ficam dentro de um mesmo form devido ao submit
-					 */}
+				 * Dialogs Forms não podem ficam dentro de um mesmo form devido ao submit
+				 */}
 				<StyledDialog open={openDialogOwner} onClose={handleCloseDialogOwner}>
 					<OwnerForm onClose={handleCloseDialogOwner} />
 				</StyledDialog>

@@ -1,9 +1,9 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Form } from '@unform/web'
-import { FormHandles } from '@unform/core'
+import { FormHandles, SubmitHandler } from '@unform/core'
 
 import PageHeader from 'components/PageHeader'
-import Select from 'components/Select'
+import Select, { OptionSelect } from 'components/Select'
 import Input from 'components/Inputs/Input'
 
 import {
@@ -18,15 +18,41 @@ import {
 	ButtonContainer
 } from './styled'
 
-import swapIcon from '../../assets/images/icons/updateIcon.svg'
-import sendIcon from '../../assets/images/icons/sendIcon.svg'
+import swapIcon from 'assets/images/icons/updateIcon.svg'
+import sendIcon from 'assets/images/icons/sendIcon.svg'
+import api from 'services/api'
+
+interface DataProps {
+	id: number;
+	name: string;
+}
+
+interface FormData {
+	ownerId: number;
+	patrimonyNumber: string;
+}
 
 const Swap = () => {
 
-	const optionsOwner = [
-		{ value: 1, label: 'Vinicius Gazolla Boneto' },
-		{ value: 2, label: 'Weusley William de Paula' }
-	]
+	const [ownerOptions, setOwnerOptions] = useState<OptionSelect[]>([])
+	useEffect(() => {
+		getOwnerOptions()
+		async function getOwnerOptions() {
+			const response = await api.get('owners')
+			const options = response.data.map((data: DataProps) => {
+				return {
+					value: data.id,
+					label: data.name
+				}
+			})
+			console.log(options)
+			setOwnerOptions(options)
+		}
+	}, [])
+
+	useEffect(() => {
+
+	}, [])
 
 	const patrimoniesFirstOwner = [
 		{ categoryName: 'Estabilizador', model: 'TS-SHARA', patrimony: '456287' },
@@ -43,8 +69,8 @@ const Swap = () => {
 		{ categoryName: 'Monitor', model: 'POSITIVO', patrimony: '45231' }
 	]
 
-	const formPrimaryRef = useRef<FormHandles>(null)
 	const formSecondRef = useRef<FormHandles>(null)
+	const formPrimaryRef = useRef<FormHandles>(null)
 
 	return (
 		<Container>
@@ -53,8 +79,8 @@ const Swap = () => {
 			<OwnerItem>
 				<Title>Primeiro Proprietário</Title>
 				<Form ref={formPrimaryRef} onSubmit={() => { }}>
-					<Select name="owners" label="Nome" options={optionsOwner} />
-					<Input name="patrimony" label="Patrimônio" />
+					<Select name="ownerId" label="Nome" options={ownerOptions} />
+					<Input name="patrimonyNumber" label="Patrimônio" />
 				</Form>
 				<ContainerBox>
 					{patrimoniesFirstOwner.map((patrimony, index) =>
@@ -69,7 +95,7 @@ const Swap = () => {
 			<OwnerItem>
 				<Title>Segundo Proprietário</Title>
 				<Form ref={formSecondRef} onSubmit={() => { }}>
-					<Select name="owners" label="Nome" options={optionsOwner} />
+					<Select name="owners" label="Nome" options={ownerOptions} />
 					<Input name="patrimony" label="Patrimônio" />
 				</Form>
 				<ContainerBox>
