@@ -4,7 +4,7 @@ import Dialog from '@material-ui/core/Dialog'
 import * as Yup from 'yup'
 import { Form } from '@unform/web'
 
-import Select, { OptionSelect } from 'components/Select'
+import Select, { OptionValue } from 'components/Select'
 import Input from 'components/Inputs/Input'
 import Button, { Plus } from 'components/Button'
 import { DialogContainer, Title } from 'components/DialogContainer/styled'
@@ -37,7 +37,7 @@ const OwnerForm: React.FC<Props> = ({ onClose }) => {
 		setOpen(true)
 	}, [])
 
-	const [optionsSectors, setOptionsSectors] = useState<OptionSelect[]>([])
+	const [optionsSectors, setOptionsSectors] = useState<OptionValue[]>([])
 	useEffect(() => {
 		async function handleSetOptionsSector() {
 			const response = await api.get('/sectors')

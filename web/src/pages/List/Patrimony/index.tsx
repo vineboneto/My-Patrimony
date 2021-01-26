@@ -11,7 +11,7 @@ import { FormHandles, SubmitHandler } from '@unform/core'
 
 import PatrimonyItem, { Patrimony } from 'components/PatrimonyItem'
 import PageHeader from 'components/PageHeader'
-import Select, { OptionSelect } from 'components/Select'
+import Select, { OptionValue } from 'components/Select'
 import Input from 'components/Inputs/Input'
 
 import {
@@ -41,9 +41,9 @@ interface DataProps {
 const PatrimonyList: React.FC = () => {
 
 	const history = useHistory()
-	const [categories, setCategories] = useState<OptionSelect[]>([]);
-	const [owners, setOwners] = useState<OptionSelect[]>([]);
-	const [sectors, setSectors] = useState<OptionSelect[]>([]);
+	const [categories, setCategories] = useState<OptionValue[]>([]);
+	const [owners, setOwners] = useState<OptionValue[]>([]);
+	const [sectors, setSectors] = useState<OptionValue[]>([]);
 	const [patrimonies, setPatrimonies] = useState<Patrimony[]>([])
 
 	const [total, setTotal] = useState(0)

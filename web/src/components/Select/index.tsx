@@ -11,7 +11,7 @@ interface Props extends SelectProps<OptionTypeBase> {
 	label: string
 }
 
-export interface OptionSelect {
+export interface OptionValue {
 	value: number;
 	label: string;
 }

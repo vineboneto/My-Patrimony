@@ -3,7 +3,7 @@ import { Form } from '@unform/web'
 import { FormHandles, SubmitHandler } from '@unform/core'
 
 import PageHeader from 'components/PageHeader'
-import Select, { OptionSelect } from 'components/Select'
+import Select, { OptionValue } from 'components/Select'
 import Input from 'components/Inputs/Input'
 
 import {
@@ -36,7 +36,7 @@ interface FormData {
 
 const Swap = () => {
 
-	const [ownerOptions, setOwnerOptions] = useState<OptionSelect[]>([])
+	const [ownerOptions, setOwnerOptions] = useState<OptionValue[]>([])
 	useEffect(() => { setOwnerValuesState() }, [])
 
 	const setOwnerValuesState = async () => {

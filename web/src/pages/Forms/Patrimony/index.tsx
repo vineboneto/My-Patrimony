@@ -7,7 +7,7 @@ import { Form } from '@unform/web'
 
 import Input from 'components/Inputs/Input'
 import MultiInputs, { MultiInputsHandles, Field } from 'components/Inputs/MultiInputs'
-import Select, { OptionSelect } from 'components/Select'
+import Select, { OptionValue } from 'components/Select'
 import Textarea from 'components/Textarea'
 import PageHeader from 'components/PageHeader'
 import Button, { ButtonCollapse, Create, Plus } from 'components/Button'
@@ -76,9 +76,9 @@ const PatrimonyForm: React.FC = () => {
 		setOpenDialogOwner(false)
 	}, [])
 
-	const [sectors, setSectors] = useState<OptionSelect[]>([])
-	const [categories, setCategories] = useState<OptionSelect[]>([])
-	const [owners, setOwners] = useState<OptionSelect[]>([])
+	const [sectors, setSectors] = useState<OptionValue[]>([])
+	const [categories, setCategories] = useState<OptionValue[]>([])
+	const [owners, setOwners] = useState<OptionValue[]>([])
 
 	useEffect(() => {
 		async function setOptionsSectors() {
