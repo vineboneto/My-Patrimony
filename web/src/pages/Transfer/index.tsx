@@ -22,7 +22,7 @@ import swapIcon from 'assets/images/icons/updateIcon.svg'
 import sendIcon from 'assets/images/icons/sendIcon.svg'
 import api from 'services/api'
 
-interface DataProps {
+interface ApiData {
 	id: number;
 	name: string;
 }
@@ -32,23 +32,32 @@ interface FormData {
 	patrimonyNumber: string;
 }
 
+
+
 const Swap = () => {
 
 	const [ownerOptions, setOwnerOptions] = useState<OptionSelect[]>([])
-	useEffect(() => {
-		getOwnerOptions()
-		async function getOwnerOptions() {
-			const response = await api.get('owners')
-			const options = response.data.map((data: DataProps) => {
-				return {
-					value: data.id,
-					label: data.name
-				}
-			})
-			console.log(options)
-			setOwnerOptions(options)
-		}
-	}, [])
+	useEffect(() => { setOwnerValuesState() }, [])
+
+	const setOwnerValuesState = async () => {
+		const ownerValues = await getApiOwnerData();
+		setOwnerOptions(changeToOptionsValues(ownerValues))
+	}
+
+	const getApiOwnerData = async () => {
+		const response = await api.get('owners')
+		return response.data
+	}
+
+	const changeToOptionsValues = (datas: any) => {
+		const options = datas.map((data: ApiData) => {
+			return {
+				value: data.id,
+				label: data.name
+			}
+		})
+		return options
+	}
 
 	useEffect(() => {
 
@@ -75,7 +84,6 @@ const Swap = () => {
 	return (
 		<Container>
 			<PageHeader title="Escolha os Proprietários" prev="/" />
-
 			<OwnerItem>
 				<Title>Primeiro Proprietário</Title>
 				<Form ref={formPrimaryRef} onSubmit={() => { }}>
