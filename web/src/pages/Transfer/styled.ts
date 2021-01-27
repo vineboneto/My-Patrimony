@@ -16,7 +16,7 @@ export const OwnerItem = styled.div`
 
 	form {
 		display: grid;
-		grid-template-columns: repeat(2, 250px);
+		grid-template-columns: repeat(2, 250px) 30px;
 		justify-content: space-between;
 		align-items: center;
 		margin-top: 3rem;
@@ -27,13 +27,21 @@ export const OwnerItem = styled.div`
 	}
 `;
 
-export const SearchButton = styled.button``;
-
-export const SearchData = styled.div``;
-
 export const Title = styled.h2`
 	padding-bottom: 2rem;
 	border-bottom: 1px solid var(--color-border-input);
+`;
+
+export const SearchButton = styled.button`
+	outline: 0;
+	border: 0;
+	background-color: #fff;
+	cursor: pointer;
+	align-self: flex-end;
+
+	img {
+		background-color: #fff;
+	}
 `;
 
 export const PatrimonyData = styled.div`
