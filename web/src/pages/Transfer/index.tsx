@@ -3,7 +3,7 @@ import { Form } from '@unform/web'
 import { FormHandles, SubmitHandler } from '@unform/core'
 
 import PageHeader from 'components/PageHeader'
-import Select, { OptionValue } from 'components/Select'
+import Select, { OptionValue } from 'components/Selects/Select'
 import Input from 'components/Inputs/Input'
 
 import {
@@ -41,7 +41,7 @@ const Swap = () => {
 
 	const setOwnerValuesState = async () => {
 		const ownerValues = await getApiOwnerData();
-		setOwnerOptions(changeToOptionsValues(ownerValues))
+		setOwnerOptions(convertToOptionsValues(ownerValues))
 	}
 
 	const getApiOwnerData = async () => {
@@ -49,7 +49,7 @@ const Swap = () => {
 		return response.data
 	}
 
-	const changeToOptionsValues = (datas: any) => {
+	const convertToOptionsValues = (datas: any) => {
 		const options = datas.map((data: ApiData) => {
 			return {
 				value: data.id,
@@ -58,10 +58,6 @@ const Swap = () => {
 		})
 		return options
 	}
-
-	useEffect(() => {
-
-	}, [])
 
 	const patrimoniesFirstOwner = [
 		{ categoryName: 'Estabilizador', model: 'TS-SHARA', patrimony: '456287' },
