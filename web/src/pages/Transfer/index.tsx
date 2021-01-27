@@ -24,6 +24,11 @@ import {
 import swapIcon from 'assets/images/icons/updateIcon.svg'
 import sendIcon from 'assets/images/icons/sendIcon.svg'
 
+interface FormData {
+	patrimonyNumber: string;
+	optionOwner: number;
+}
+
 const Swap = () => {
 
 	const patrimoniesFirstOwner = [
@@ -41,8 +46,14 @@ const Swap = () => {
 		{ categoryName: 'Monitor', model: 'POSITIVO', patrimony: '45231' }
 	]
 
+	const [patrimoniesFistOwner, setPatrimoniesFistOwner] = useState([])
 	const formPrimaryRef = useRef<FormHandles>(null)
 	const formSecondRef = useRef<FormHandles>(null)
+
+	const handleSubmitFirstOwner: SubmitHandler<FormData> = (data) => {
+
+	}
+
 
 	return (
 		<Container>
@@ -50,7 +61,7 @@ const Swap = () => {
 
 			<OwnerItem>
 				<Title>Primeiro Proprietário</Title>
-				<Form ref={formPrimaryRef} onSubmit={() => { }}>
+				<Form ref={formPrimaryRef} onSubmit={handleSubmitFirstOwner}>
 					<AsyncSelectOwner name="optionOwner" label="Nome" />
 					<Input name="patrimonyNumber" label="Patrimônio" />
 					<SearchButton>
@@ -73,6 +84,9 @@ const Swap = () => {
 				<Form ref={formSecondRef} onSubmit={() => { }}>
 					<AsyncSelectOwner name="ownerId" label="Nome" />
 					<Input name="patrimony" label="Patrimônio" />
+					<SearchButton>
+						<img src={searchIcon} alt="Buscar" />
+					</SearchButton>
 				</Form>
 				<PatrimonyData>
 					{patrimoniesSecondOwner.map((patrimony, index) =>
