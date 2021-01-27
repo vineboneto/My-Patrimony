@@ -24,6 +24,7 @@ import {
 import swapIcon from 'assets/images/icons/updateIcon.svg'
 import sendIcon from 'assets/images/icons/sendIcon.svg'
 import api from 'services/api'
+import { Patrimony } from 'pages/Forms'
 
 interface FormData {
 	patrimonyNumber: string;
@@ -32,12 +33,12 @@ interface FormData {
 
 const Swap = () => {
 
-	const patrimoniesFirstOwner = [
-		{ categoryName: 'Estabilizador', model: 'TS-SHARA', patrimony: '456287' },
-		{ categoryName: 'Impressora', model: 'Samsumg', patrimony: '45879' },
-		{ categoryName: 'Monitor', model: 'Dell', patrimony: '45879' },
-		{ categoryName: 'Monitor', model: 'POSITIVO', patrimony: '45231' }
-	]
+	// const patrimoniesFirstOwner = [
+	// 	{ categoryName: 'Estabilizador', model: 'TS-SHARA', patrimony: '456287' },
+	// 	{ categoryName: 'Impressora', model: 'Samsumg', patrimony: '45879' },
+	// 	{ categoryName: 'Monitor', model: 'Dell', patrimony: '45879' },
+	// 	{ categoryName: 'Monitor', model: 'POSITIVO', patrimony: '45231' }
+	// ]
 
 	const patrimoniesSecondOwner = [
 		{ categoryName: 'Estabilizador', model: 'TS-SHARA', patrimony: '456287' },
@@ -47,13 +48,22 @@ const Swap = () => {
 		{ categoryName: 'Monitor', model: 'POSITIVO', patrimony: '45231' }
 	]
 
-	const [patrimoniesFistOwner, setPatrimoniesFistOwner] = useState([])
+	const [patrimoniesFirstOwner, setPatrimoniesFirstOwner] = useState([])
 	const formPrimaryRef = useRef<FormHandles>(null)
 	const formSecondRef = useRef<FormHandles>(null)
 
 	const handleSubmitFirstOwner: SubmitHandler<FormData> = async (data) => {
 		const response = await api.get(`owners/${data.optionOwner}/patrimonies`)
-		console.log(response.data)
+
+		const values = response.data.map((data: any) => {
+			return {
+				id: data.id,
+				patrimonyNumber: data.number,
+				model: data.model,
+				categoryName: data.Category.name,
+			}
+		})
+		setPatrimoniesFirstOwner(values)
 	}
 
 
@@ -71,8 +81,8 @@ const Swap = () => {
 					</SearchButton>
 				</Form>
 				<PatrimonyData>
-					{patrimoniesFirstOwner.map((patrimony, index) =>
-						<PatrimonyItem key={index}>
+					{patrimoniesFirstOwner.map((patrimony: any, index) =>
+						<PatrimonyItem key={patrimony.id}>
 							<CategoryName>{patrimony.categoryName}</CategoryName>
 							<span>{patrimony.model}</span>
 							<span>{patrimony.patrimony}</span>
