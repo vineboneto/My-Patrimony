@@ -44,7 +44,7 @@ export const SearchButton = styled.button`
 	}
 `;
 
-export const PatrimonyData = styled.div`
+export const PatrimonyContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -56,7 +56,7 @@ export const PatrimonyItem = styled.div`
 	padding: 1rem 2rem;
 	margin-top: 3rem;
 	height: 17rem;
-	max-width: 15rem;
+	width: 15rem;
 	border: 1px solid #cecece;
 	border-radius: 0.8rem 0 0.8rem 0;
 	display: flex;

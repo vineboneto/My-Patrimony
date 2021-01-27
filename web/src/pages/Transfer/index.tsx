@@ -14,7 +14,7 @@ import {
 	Title,
 	PatrimonyItem,
 	CategoryName,
-	PatrimonyData,
+	PatrimonyContainer,
 	ButtonSend,
 	ButtonSwap,
 	ButtonContainer,
@@ -32,13 +32,6 @@ interface FormData {
 }
 
 const Swap = () => {
-
-	// const patrimoniesFirstOwner = [
-	// 	{ categoryName: 'Estabilizador', model: 'TS-SHARA', patrimony: '456287' },
-	// 	{ categoryName: 'Impressora', model: 'Samsumg', patrimony: '45879' },
-	// 	{ categoryName: 'Monitor', model: 'Dell', patrimony: '45879' },
-	// 	{ categoryName: 'Monitor', model: 'POSITIVO', patrimony: '45231' }
-	// ]
 
 	const patrimoniesSecondOwner = [
 		{ categoryName: 'Estabilizador', model: 'TS-SHARA', patrimony: '456287' },
@@ -80,7 +73,7 @@ const Swap = () => {
 						<img src={searchIcon} alt="Buscar" />
 					</SearchButton>
 				</Form>
-				<PatrimonyData>
+				<PatrimonyContainer>
 					{patrimoniesFirstOwner.map((patrimony: any, index) =>
 						<PatrimonyItem key={patrimony.id}>
 							<CategoryName>{patrimony.categoryName}</CategoryName>
@@ -88,7 +81,7 @@ const Swap = () => {
 							<span>{patrimony.patrimony}</span>
 						</PatrimonyItem>
 					)}
-				</PatrimonyData>
+				</PatrimonyContainer>
 			</OwnerItem>
 
 			<OwnerItem>
@@ -100,7 +93,7 @@ const Swap = () => {
 						<img src={searchIcon} alt="Buscar" />
 					</SearchButton>
 				</Form>
-				<PatrimonyData>
+				<PatrimonyContainer>
 					{patrimoniesSecondOwner.map((patrimony, index) =>
 						<PatrimonyItem key={index}>
 							<CategoryName>{patrimony.categoryName}</CategoryName>
@@ -108,7 +101,7 @@ const Swap = () => {
 							<span>{patrimony.patrimony}</span>
 						</PatrimonyItem>
 					)}
-				</PatrimonyData>
+				</PatrimonyContainer>
 			</OwnerItem>
 
 			<ButtonContainer>
