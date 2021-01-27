@@ -4,7 +4,7 @@ import Dialog from '@material-ui/core/Dialog'
 import * as Yup from 'yup'
 import { Form } from '@unform/web'
 
-import Select, { OptionValue } from 'components/Select'
+import Select, { OptionValue } from 'components/Selects/Select'
 import Input from 'components/Inputs/Input'
 import Button, { Plus } from 'components/Button'
 import { DialogContainer, Title } from 'components/DialogContainer/styled'

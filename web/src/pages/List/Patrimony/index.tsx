@@ -11,7 +11,7 @@ import { FormHandles, SubmitHandler } from '@unform/core'
 
 import PatrimonyItem, { Patrimony } from 'components/PatrimonyItem'
 import PageHeader from 'components/PageHeader'
-import Select, { OptionValue } from 'components/Select'
+import Select, { OptionValue } from 'components/Selects/Select'
 import Input from 'components/Inputs/Input'
 
 import {
@@ -26,6 +26,7 @@ import {
 
 import searchIcon from 'assets/images/icons/searchIcon.svg'
 import api from 'services/api'
+import AsyncSelectOwner from 'components/Selects/AsyncSelectOwner'
 
 interface FormData {
 	ownerId: number
@@ -42,7 +43,6 @@ const PatrimonyList: React.FC = () => {
 
 	const history = useHistory()
 	const [categories, setCategories] = useState<OptionValue[]>([]);
-	const [owners, setOwners] = useState<OptionValue[]>([]);
 	const [sectors, setSectors] = useState<OptionValue[]>([]);
 	const [patrimonies, setPatrimonies] = useState<Patrimony[]>([])
 
@@ -96,20 +96,6 @@ const PatrimonyList: React.FC = () => {
 	}, [])
 
 	useEffect(() => {
-		async function setOptionsOwner() {
-			const response = await api.get('owners');
-			const options = response.data.map((data: DataProps) => {
-				return {
-					value: data.id,
-					label: data.name
-				}
-			})
-			setOwners(options);
-		}
-		setOptionsOwner();
-	}, [])
-
-	useEffect(() => {
 		async function loadPatrimonies() {
 			const response = await api.get(`patrimonies?page=${currentPage}&limit=${limit}`)
 			setTotal(Number(response.headers['x-total-patrimonies']))
@@ -153,8 +139,8 @@ const PatrimonyList: React.FC = () => {
 			<PageHeader title="O que procura ?" prev="/">
 				<Form ref={formRef} onSubmit={handleSubmit}>
 					<Search>
-						<Select name="owners" label="Proprietário" options={owners} />
-						<Select name="owners" label="Setor" options={sectors} />
+						<AsyncSelectOwner name="optionsOwner" label="Proprietário" />
+						<Select name="sectors" label="Setor" options={sectors} />
 						<Input name="patrimony" label="Patrimônio" />
 						<Select name="categories" label="Categoria" options={categories} />
 						<Input name="ip" label="Ip" />

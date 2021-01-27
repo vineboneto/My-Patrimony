@@ -7,7 +7,7 @@ import { Form } from '@unform/web'
 
 import Input from 'components/Inputs/Input'
 import MultiInputs, { MultiInputsHandles, Field } from 'components/Inputs/MultiInputs'
-import Select, { OptionValue } from 'components/Select'
+import Select, { OptionValue } from 'components/Selects/Select'
 import Textarea from 'components/Textarea'
 import PageHeader from 'components/PageHeader'
 import Button, { ButtonCollapse, Create, Plus } from 'components/Button'

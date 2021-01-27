@@ -5,6 +5,7 @@ import { FormHandles, SubmitHandler } from '@unform/core'
 import PageHeader from 'components/PageHeader'
 import Select, { OptionValue } from 'components/Selects/Select'
 import Input from 'components/Inputs/Input'
+import AsyncSelectOwner from 'components/Selects/AsyncSelectOwner'
 
 import {
 	Container,
@@ -20,44 +21,8 @@ import {
 
 import swapIcon from 'assets/images/icons/updateIcon.svg'
 import sendIcon from 'assets/images/icons/sendIcon.svg'
-import api from 'services/api'
-
-interface ApiData {
-	id: number;
-	name: string;
-}
-
-interface FormData {
-	ownerId: number;
-	patrimonyNumber: string;
-}
-
-
 
 const Swap = () => {
-
-	const [ownerOptions, setOwnerOptions] = useState<OptionValue[]>([])
-	useEffect(() => { setOwnerValuesState() }, [])
-
-	const setOwnerValuesState = async () => {
-		const ownerValues = await getApiOwnerData();
-		setOwnerOptions(convertToOptionsValues(ownerValues))
-	}
-
-	const getApiOwnerData = async () => {
-		const response = await api.get('owners')
-		return response.data
-	}
-
-	const convertToOptionsValues = (datas: any) => {
-		const options = datas.map((data: ApiData) => {
-			return {
-				value: data.id,
-				label: data.name
-			}
-		})
-		return options
-	}
 
 	const patrimoniesFirstOwner = [
 		{ categoryName: 'Estabilizador', model: 'TS-SHARA', patrimony: '456287' },
@@ -83,7 +48,7 @@ const Swap = () => {
 			<OwnerItem>
 				<Title>Primeiro Proprietário</Title>
 				<Form ref={formPrimaryRef} onSubmit={() => { }}>
-					<Select name="ownerId" label="Nome" options={ownerOptions} />
+					<AsyncSelectOwner name="optionOwner" label="Nome" />
 					<Input name="patrimonyNumber" label="Patrimônio" />
 				</Form>
 				<ContainerBox>
@@ -99,7 +64,7 @@ const Swap = () => {
 			<OwnerItem>
 				<Title>Segundo Proprietário</Title>
 				<Form ref={formSecondRef} onSubmit={() => { }}>
-					<Select name="owners" label="Nome" options={ownerOptions} />
+					<AsyncSelectOwner name="ownerId" label="Nome" />
 					<Input name="patrimony" label="Patrimônio" />
 				</Form>
 				<ContainerBox>
