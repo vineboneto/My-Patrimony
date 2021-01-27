@@ -182,6 +182,13 @@ export default class PatrimonyController {
     const { id } = req.params;
     const { patrimonyNumber } = req.body;
     let patrimonies;
+    const selectParams = {
+      id: true,
+      model: true,
+      number: true,
+      Category: true,
+    };
+
     try {
       if (id && !patrimonyNumber) {
         patrimonies = await prisma.patrimony.findMany({
@@ -190,12 +197,7 @@ export default class PatrimonyController {
               id: Number(id),
             },
           },
-          select: {
-            id: true,
-            model: true,
-            number: true,
-            Category: true,
-          },
+          select: selectParams,
         });
       } else {
         patrimonies = await prisma.patrimony.findMany({
@@ -205,6 +207,7 @@ export default class PatrimonyController {
               id: Number(id),
             },
           },
+          select: selectParams,
         });
       }
       return res.status(200).json(patrimonies);
