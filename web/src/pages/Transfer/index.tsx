@@ -23,6 +23,7 @@ import {
 
 import swapIcon from 'assets/images/icons/updateIcon.svg'
 import sendIcon from 'assets/images/icons/sendIcon.svg'
+import api from 'services/api'
 
 interface FormData {
 	patrimonyNumber: string;
@@ -50,8 +51,9 @@ const Swap = () => {
 	const formPrimaryRef = useRef<FormHandles>(null)
 	const formSecondRef = useRef<FormHandles>(null)
 
-	const handleSubmitFirstOwner: SubmitHandler<FormData> = (data) => {
-
+	const handleSubmitFirstOwner: SubmitHandler<FormData> = async (data) => {
+		const response = await api.get(`owners/${data.optionOwner}/patrimonies`)
+		console.log(response.data)
 	}
 
 

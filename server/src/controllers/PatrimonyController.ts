@@ -177,4 +177,35 @@ export default class PatrimonyController {
       });
     }
   }
+
+  async getByOwnerId(req: Request, res: Response) {
+    const { id } = req.params;
+    const { patrimonyNumber } = req.body;
+    let patrimonies;
+    try {
+      if (id && !patrimonyNumber) {
+        patrimonies = await prisma.patrimony.findMany({
+          where: {
+            Owner: {
+              id: Number(id),
+            },
+          },
+        });
+      } else {
+        patrimonies = await prisma.patrimony.findMany({
+          where: {
+            number: patrimonyNumber,
+            Owner: {
+              id: Number(id),
+            },
+          },
+        });
+      }
+      return res.status(200).json(patrimonies);
+    } catch (err) {
+      return res.status(400).json({
+        error: err,
+      });
+    }
+  }
 }
