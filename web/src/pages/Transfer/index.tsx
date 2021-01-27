@@ -24,11 +24,27 @@ import {
 import swapIcon from 'assets/images/icons/updateIcon.svg'
 import sendIcon from 'assets/images/icons/sendIcon.svg'
 import api from 'services/api'
-import { Patrimony } from 'pages/Forms'
+
+interface ApiPatrimoniesData {
+	id: number;
+	model: string;
+	number: string;
+	Category: {
+		id: number,
+		name: string
+	};
+}
 
 interface FormData {
 	patrimonyNumber: string;
 	optionOwner: number;
+}
+
+interface PropsStatePatrimony {
+	id: number;
+	model: string;
+	categoryName: string;
+	patrimonyNumber: string;
 }
 
 const Swap = () => {
@@ -41,22 +57,31 @@ const Swap = () => {
 		{ categoryName: 'Monitor', model: 'POSITIVO', patrimony: '45231' }
 	]
 
-	const [patrimoniesFirstOwner, setPatrimoniesFirstOwner] = useState([])
+	const [patrimoniesFirstOwner, setPatrimoniesFirstOwner] = useState<PropsStatePatrimony[]>([])
 	const formPrimaryRef = useRef<FormHandles>(null)
 	const formSecondRef = useRef<FormHandles>(null)
 
 	const handleSubmitFirstOwner: SubmitHandler<FormData> = async (data) => {
-		const response = await api.get(`owners/${data.optionOwner}/patrimonies`)
+		const patrimonies = await getApiPatrimoniesDataById(data.optionOwner)
+		setPatrimoniesFirstOwner(convertToPatrimoniesData(patrimonies))
+	}
 
-		const values = response.data.map((data: any) => {
+	const convertToPatrimoniesData = (datas: ApiPatrimoniesData[]) => {
+		const patrimonies = datas.map(data => {
 			return {
 				id: data.id,
-				patrimonyNumber: data.number,
 				model: data.model,
-				categoryName: data.Category.name,
+				patrimonyNumber: data.number,
+				categoryName: data.Category.name
 			}
 		})
-		setPatrimoniesFirstOwner(values)
+		return patrimonies
+	}
+
+	const getApiPatrimoniesDataById = async (id: number) => {
+		const url = `owners/${id}/patrimonies`
+		const response = await api.get(url)
+		return response.data
 	}
 
 
