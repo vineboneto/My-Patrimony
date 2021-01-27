@@ -27,19 +27,23 @@ export const OwnerItem = styled.div`
 	}
 `;
 
+export const SearchButton = styled.button``;
+
+export const SearchData = styled.div``;
+
 export const Title = styled.h2`
 	padding-bottom: 2rem;
 	border-bottom: 1px solid var(--color-border-input);
 `;
 
-export const ContainerBox = styled.div`
+export const PatrimonyData = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	flex-wrap: wrap;
 `;
 
-export const Box = styled.div`
+export const PatrimonyItem = styled.div`
 	cursor: pointer;
 	padding: 1rem 2rem;
 	margin-top: 3rem;

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { SelectHTMLAttributes, useEffect, useState } from 'react'
 
 import Select, { OptionValue } from 'components/Selects/Select'
 import api from 'services/api'
 
-interface Props {
+interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
 	name: string;
 	label: string;
 }
