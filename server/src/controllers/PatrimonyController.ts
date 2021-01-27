@@ -190,6 +190,12 @@ export default class PatrimonyController {
               id: Number(id),
             },
           },
+          select: {
+            id: true,
+            model: true,
+            number: true,
+            Category: true,
+          },
         });
       } else {
         patrimonies = await prisma.patrimony.findMany({
