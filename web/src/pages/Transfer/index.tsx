@@ -49,24 +49,21 @@ interface PropsStatePatrimony {
 
 const Swap = () => {
 
-	const patrimoniesSecondOwner = [
-		{ categoryName: 'Estabilizador', model: 'TS-SHARA', patrimony: '456287' },
-		{ categoryName: 'Impressora', model: 'Samsumg', patrimony: '45879' },
-		{ categoryName: 'Monitor', model: 'Dell', patrimony: '45879' },
-		{ categoryName: 'Monitor', model: 'POSITIVO', patrimony: '45231' },
-		{ categoryName: 'Monitor', model: 'POSITIVO', patrimony: '45231' }
-	]
-
 	const [patrimoniesFirstOwner, setPatrimoniesFirstOwner] = useState<PropsStatePatrimony[]>([])
 	const formPrimaryRef = useRef<FormHandles>(null)
-	const formSecondRef = useRef<FormHandles>(null)
-
 	const handleSubmitFirstOwner: SubmitHandler<FormData> = async (data) => {
 		const patrimonies = await getApiPatrimoniesDataById(data.optionOwner)
-		setPatrimoniesFirstOwner(convertToPatrimoniesData(patrimonies))
+		setPatrimoniesFirstOwner(convertToPatrimoniesItemData(patrimonies))
 	}
 
-	const convertToPatrimoniesData = (datas: ApiPatrimoniesData[]) => {
+	const [patrimoniesSecondOwner, setPatrimoniesSecondOwner] = useState<PropsStatePatrimony[]>([])
+	const formSecondRef = useRef<FormHandles>(null)
+	const handleSubmitSecondRef: SubmitHandler<FormData> = async (data) => {
+		const patrimonies = await getApiPatrimoniesDataById(data.optionOwner)
+		setPatrimoniesSecondOwner(convertToPatrimoniesItemData(patrimonies))
+	}
+
+	const convertToPatrimoniesItemData = (datas: ApiPatrimoniesData[]) => {
 		const patrimonies = datas.map(data => {
 			return {
 				id: data.id,
@@ -83,7 +80,6 @@ const Swap = () => {
 		const response = await api.get(url)
 		return response.data
 	}
-
 
 	return (
 		<Container>
@@ -111,9 +107,9 @@ const Swap = () => {
 
 			<OwnerItem>
 				<Title>Segundo Proprietário</Title>
-				<Form ref={formSecondRef} onSubmit={() => { }}>
-					<AsyncSelectOwner name="ownerId" label="Nome" />
-					<Input name="patrimony" label="Patrimônio" />
+				<Form ref={formSecondRef} onSubmit={handleSubmitSecondRef}>
+					<AsyncSelectOwner name="optionOwner" label="Nome" />
+					<Input name="patrimonyNumber" label="Patrimônio" />
 					<SearchButton>
 						<img src={searchIcon} alt="Buscar" />
 					</SearchButton>
@@ -123,7 +119,7 @@ const Swap = () => {
 						<PatrimonyItem key={index}>
 							<CategoryName>{patrimony.categoryName}</CategoryName>
 							<span>{patrimony.model}</span>
-							<span>{patrimony.patrimony}</span>
+							<span>{patrimony.patrimonyNumber}</span>
 						</PatrimonyItem>
 					)}
 				</PatrimonyContainer>
