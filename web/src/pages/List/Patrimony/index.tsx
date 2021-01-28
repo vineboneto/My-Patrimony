@@ -3,16 +3,16 @@ import React, {
 	useCallback,
 	useEffect,
 	useRef,
-	useState
-} from 'react'
-import { useHistory } from 'react-router-dom'
-import { Form } from '@unform/web'
-import { FormHandles, SubmitHandler } from '@unform/core'
+	useState,
+} from "react";
+import { useHistory } from "react-router-dom";
+import { Form } from "@unform/web";
+import { FormHandles, SubmitHandler } from "@unform/core";
 
-import PatrimonyItem, { Patrimony } from 'components/PatrimonyItem'
-import PageHeader from 'components/PageHeader'
-import Select, { OptionValue } from 'components/Selects/Select'
-import Input from 'components/Inputs/Input'
+import PatrimonyItem, { Patrimony } from "components/PatrimonyItem";
+import PageHeader from "components/PageHeader";
+import Select, { OptionValue } from "components/Selects/Select";
+import Input from "components/Inputs/Input";
 
 import {
 	Container,
@@ -21,17 +21,17 @@ import {
 	Main,
 	Pagination,
 	Pages,
-	Page
-} from './styled'
+	Page,
+} from "./styled";
 
-import searchIcon from 'assets/images/icons/searchIcon.svg'
-import api from 'services/api'
-import AsyncSelectOwner from 'components/Selects/AsyncSelectOwner'
+import searchIcon from "assets/images/icons/searchIcon.svg";
+import api from "services/api";
+import AsyncSelectOwner from "components/Selects/AsyncSelectOwner";
 
 interface FormData {
-	ownerId: number
-	sectorId: number
-	patrimony: string
+	ownerId: number;
+	sectorId: number;
+	patrimony: string;
 }
 
 interface DataProps {
@@ -40,65 +40,66 @@ interface DataProps {
 }
 
 const PatrimonyList: React.FC = () => {
-
-	const history = useHistory()
+	const history = useHistory();
 	const [categories, setCategories] = useState<OptionValue[]>([]);
 	const [sectors, setSectors] = useState<OptionValue[]>([]);
-	const [patrimonies, setPatrimonies] = useState<Patrimony[]>([])
+	const [patrimonies, setPatrimonies] = useState<Patrimony[]>([]);
 
-	const [total, setTotal] = useState(0)
-	const [pages, setPages] = useState<number[]>([])
-	const [currentPage, setCurrentPage] = useState(1)
-	const limit = 5
+	const [total, setTotal] = useState(0);
+	const [pages, setPages] = useState<number[]>([]);
+	const [currentPage, setCurrentPage] = useState(1);
+	const limit = 5;
 
 	useEffect(() => {
-		const totalPages = Math.ceil(total / limit)
-		const arrayPages = []
+		const totalPages = Math.ceil(total / limit);
+		const arrayPages = [];
 		for (let i = 1; i <= totalPages; i++) {
-			arrayPages.push(i)
+			arrayPages.push(i);
 		}
-		setPages(arrayPages)
-	}, [total])
+		setPages(arrayPages);
+	}, [total]);
 
 	const handleSetPage = (page: number) => {
 		if (page >= 1 && page <= pages.length) {
-			setCurrentPage(page)
-			history.push(`patrimonies?page=${page}&limit=${limit}`)
+			setCurrentPage(page);
+			history.push(`patrimonies?page=${page}&limit=${limit}`);
 		}
-	}
+	};
 
 	useEffect(() => {
 		async function setOptionsCategories() {
-			const response = await api.get('categories')
+			const response = await api.get("categories");
 			const options = response.data.map((data: DataProps) => {
 				return {
 					value: data.id,
-					label: data.name
-				}
-			})
-			setCategories(options)
+					label: data.name,
+				};
+			});
+			setCategories(options);
 		}
-		setOptionsCategories()
-	}, [])
+		setOptionsCategories();
+	}, []);
 
 	useEffect(() => {
 		async function setOptionsSectors() {
-			const response = await api.get('sectors')
+			const response = await api.get("sectors");
 			const options = response.data.map((data: DataProps) => {
 				return {
 					value: data.id,
-					label: data.name
-				}
-			})
+					label: data.name,
+				};
+			});
 			setSectors(options);
 		}
 		setOptionsSectors();
-	}, [])
+	}, []);
 
 	useEffect(() => {
 		async function loadPatrimonies() {
-			const response = await api.get(`patrimonies?page=${currentPage}&limit=${limit}`)
-			setTotal(Number(response.headers['x-total-patrimonies']))
+			const response = await api.get(
+				`patrimonies?page=${currentPage}&limit=${limit}`
+			);
+			setTotal(Number(response.headers["x-total-patrimonies"]));
 			const list = response.data.map((data: any) => {
 				return {
 					id: data.id,
@@ -107,32 +108,32 @@ const PatrimonyList: React.FC = () => {
 					description: data.description,
 					category: {
 						id: data.Category.id,
-						name: data.Category.name
+						name: data.Category.name,
 					},
 					owner: {
 						id: data.Owner.id,
 						name: data.Owner.name,
 						sector: {
 							id: data.Owner.Sector.id,
-							name: data.Owner.Sector.name
-						}
+							name: data.Owner.Sector.name,
+						},
 					},
 					ips: data.Ip,
-				}
-			})
+				};
+			});
 			setPatrimonies(list);
 		}
 		loadPatrimonies();
-	}, [currentPage])
+	}, [currentPage]);
 
-	const formRef = useRef<FormHandles>(null)
+	const formRef = useRef<FormHandles>(null);
 	const handleSubmit: SubmitHandler<FormData> = useCallback((data) => {
-		console.log(data)
-	}, [])
+		console.log(data);
+	}, []);
 
 	const handleSearch = useCallback((e: MouseEvent) => {
-		console.log('Searching....')
-	}, [])
+		console.log("Searching....");
+	}, []);
 
 	return (
 		<Container>
@@ -146,23 +147,26 @@ const PatrimonyList: React.FC = () => {
 						<Input name="ip" label="Ip" />
 						<Input name="model" label="Modelo" />
 						<SearchIcon>
-							<img src={searchIcon} alt="Realizar Busca" onClick={handleSearch} />
+							<img
+								src={searchIcon}
+								alt="Realizar Busca"
+								onClick={handleSearch}
+							/>
 						</SearchIcon>
 					</Search>
 				</Form>
 			</PageHeader>
 
 			<Main>
-				{patrimonies.map(patrimony =>
+				{patrimonies.map((patrimony) => (
 					<PatrimonyItem key={patrimony.id} patrimony={patrimony} />
-				)}
+				))}
 			</Main>
-
 
 			<Pagination>
 				<Pages>
 					<Page onClick={() => handleSetPage(currentPage - 1)}>Anterior</Page>
-					{pages.map((page, index) =>
+					{pages.map((page, index) => (
 						<Page
 							key={index}
 							current={currentPage === page ? true : false}
@@ -170,14 +174,12 @@ const PatrimonyList: React.FC = () => {
 						>
 							{page}
 						</Page>
-					)}
+					))}
 					<Page onClick={() => handleSetPage(currentPage + 1)}>Proxíma</Page>
 				</Pages>
 			</Pagination>
 		</Container>
-	)
+	);
+};
 
-
-}
-
-export default PatrimonyList
+export default PatrimonyList;

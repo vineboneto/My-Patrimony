@@ -1,14 +1,11 @@
-import React, { useRef, useEffect } from 'react';
-import {
-	OptionTypeBase,
-	Props as SelectProps,
-} from 'react-select';
-import { useField } from '@unform/core';
-import { StyledSelect, SelectBlock, Label } from './styled';
+import React, { useRef, useEffect } from "react";
+import { OptionTypeBase, Props as SelectProps } from "react-select";
+import { useField } from "@unform/core";
+import { StyledSelect, SelectBlock, Label } from "./styled";
 
 interface Props extends SelectProps<OptionTypeBase> {
-	name: string
-	label: string
+	name: string;
+	label: string;
 }
 
 export interface OptionValue {
@@ -26,7 +23,7 @@ const Select: React.FC<Props> = ({ name, label, options, ...rest }) => {
 			ref: selectRef.current,
 			clearValue: (ref) => {
 				ref.select.clearValue();
-				ref?.select?.setValue(defaultValue)
+				ref?.select?.setValue(defaultValue);
 			},
 			getValue: (ref: any) => {
 				if (rest.isMulti) {
@@ -36,10 +33,10 @@ const Select: React.FC<Props> = ({ name, label, options, ...rest }) => {
 					return ref.state.value.map((option: OptionTypeBase) => option.value);
 				}
 				if (!ref.state.value) {
-					return '';
+					return "";
 				}
-				if (Array.isArray(ref.state.value)) return ref.state?.value[0]?.value
-				else return ref.state.value.value
+				if (Array.isArray(ref.state.value)) return ref.state?.value[0]?.value;
+				else return ref.state.value.value;
 			},
 			setValue: (ref: any, value: any) => {
 				if (rest.isMulti && Array.isArray(value)) {
@@ -59,12 +56,13 @@ const Select: React.FC<Props> = ({ name, label, options, ...rest }) => {
 		});
 	}, [fieldName, registerField, rest.isMulti, defaultValue]);
 
-
 	return (
 		<SelectBlock error={error}>
 			<Label error={error}>{error ? error : label}</Label>
 			<StyledSelect
-				defaultValue={defaultValue ? defaultValue : { value: -1, label: 'Selecione' }}
+				defaultValue={
+					defaultValue ? defaultValue : { value: -1, label: "Selecione" }
+				}
 				ref={selectRef}
 				classNamePrefix="react-select"
 				className="basic-single"
