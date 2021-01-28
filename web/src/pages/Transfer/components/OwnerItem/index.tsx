@@ -40,6 +40,7 @@ interface StateProps {
 	model: string;
 	categoryName: string;
 	patrimonyNumber: string;
+	isSelect?: boolean;
 }
 
 const OwnerItem: React.ForwardRefRenderFunction<FormHandles, Props> = (
@@ -70,6 +71,17 @@ const OwnerItem: React.ForwardRefRenderFunction<FormHandles, Props> = (
 		return patrimonies;
 	};
 
+	const handleSelectPatrimony = (patrimony: StateProps) => {
+		const newPatrimonies = patrimonies.map((value, index) => {
+			if (value.id === patrimony.id) {
+				value.isSelect = value.isSelect ? !value.isSelect : true;
+				return value;
+			}
+			return value;
+		});
+		setPatrimonies(newPatrimonies);
+	};
+
 	return (
 		<StyledOwnerItem>
 			<Title>{title}</Title>
@@ -82,7 +94,11 @@ const OwnerItem: React.ForwardRefRenderFunction<FormHandles, Props> = (
 			</Form>
 			<PatrimonyContainer>
 				{patrimonies.map((patrimony: StateProps) => (
-					<PatrimonyItem key={patrimony.id}>
+					<PatrimonyItem
+						key={patrimony.id}
+						select={patrimony.isSelect}
+						onClick={() => handleSelectPatrimony(patrimony)}
+					>
 						<CategoryName>{patrimony.categoryName}</CategoryName>
 						<span>{patrimony.model}</span>
 						<span>{patrimony.patrimonyNumber}</span>

@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface PropsPatrimonyItem {
+	select?: boolean;
+}
+
 export const OwnerItem = styled.div`
 	max-width: 74rem;
 	margin: -10rem auto 0;
@@ -43,7 +47,7 @@ export const PatrimonyContainer = styled.div`
 	flex-wrap: wrap;
 `;
 
-export const PatrimonyItem = styled.div`
+export const PatrimonyItem = styled.div<PropsPatrimonyItem>`
 	cursor: pointer;
 	padding: 1rem 2rem;
 	margin-top: 3rem;
@@ -53,6 +57,7 @@ export const PatrimonyItem = styled.div`
 	border-radius: 0.8rem 0 0.8rem 0;
 	display: flex;
 	flex-direction: column;
+	background-color: ${(props) => (props.select ? "red" : "#fff")};
 
 	span {
 		font-size: 1.8rem;
