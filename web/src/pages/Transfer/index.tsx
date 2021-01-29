@@ -1,26 +1,57 @@
-import React, { MouseEvent, useCallback, useRef } from "react";
+import React, {
+	createContext,
+	MouseEvent,
+	useCallback,
+	useRef,
+	useState,
+} from "react";
 import { FormHandles } from "@unform/core";
 
 import PageHeader from "components/PageHeader";
 import { Container, ButtonSend, ButtonContainer } from "./styled";
-import OwnerItem from "./components/OwnerItem";
 
 import sendIcon from "assets/images/icons/sendIcon.svg";
+import OwnerForm from "pages/Transfer/components/OwnerForm";
+import { OwnerItem } from "./components/OwnerItem/styled";
+
+export interface StateProps {
+	id: number;
+	model: string;
+	categoryName: string;
+	patrimonyNumber: string;
+	isSelect?: boolean;
+}
+
+interface ContextProps {
+	patrimonies: StateProps[];
+	setValuesPatrimonies: (values: StateProps[]) => void;
+}
+
+export const TransferContext = createContext<ContextProps>(undefined!);
 
 const Swap = () => {
-	const formPrimaryRef = useRef<FormHandles>(null);
-	const formSecondRef = useRef<FormHandles>(null);
+	const formRefs = useRef<(FormHandles | null)[]>([]);
+	const [patrimonies, setPatrimonies] = useState<StateProps[]>([]);
 
-	const handleTransferPatrimony = useCallback((e: MouseEvent) => {
+	const handleTransferPatrimony = (e: MouseEvent) => {
 		e.preventDefault();
-		console.log(formPrimaryRef.current?.getData());
-	}, []);
+		console.log(formRefs.current[0]?.getData());
+		console.log(patrimonies);
+	};
+
+	const setValuesPatrimonies = (values: StateProps[]) => {
+		setPatrimonies(values);
+	};
 
 	return (
 		<Container>
 			<PageHeader title="Escolha os Proprietários" prev="/" />
-			<OwnerItem title="Primeiro proprietário" ref={formPrimaryRef} />
-			<OwnerItem title="Segundo proprietário" ref={formSecondRef} />
+			<TransferContext.Provider value={{ patrimonies, setValuesPatrimonies }}>
+				<OwnerItem>
+					<OwnerForm ref={(ref) => formRefs.current.push(ref)} />
+				</OwnerItem>
+			</TransferContext.Provider>
+
 			<ButtonContainer>
 				<ButtonSend onClick={handleTransferPatrimony}>
 					Transferir
