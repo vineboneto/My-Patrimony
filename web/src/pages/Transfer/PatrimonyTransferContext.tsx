@@ -1,4 +1,5 @@
 import { createContext } from "react";
+import { Context } from "vm";
 
 export interface StateProps {
 	id: number;
@@ -13,7 +14,7 @@ interface ContextProps {
 	setValuesPatrimonies: (values: StateProps[]) => void;
 }
 
-export const FirstOwnerContext = createContext<ContextProps>({
+export const PatrimonyOwnerContext = createContext<ContextProps>({
 	patrimonies: [],
 	setValuesPatrimonies: () => {},
 });

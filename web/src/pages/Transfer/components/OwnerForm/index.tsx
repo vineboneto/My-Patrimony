@@ -5,14 +5,10 @@ import { FormHandles, SubmitHandler } from "@unform/core";
 import Input from "components/Inputs/Input";
 import AsyncSelectOwner from "components/Selects/AsyncSelectOwner";
 import api from "services/api";
-import { FirstOwnerContext } from "pages/Transfer/PatrimonyTransferContext";
+import * as Context from "pages/Transfer/PatrimonyTransferContext";
 import { SearchButton } from "./styled";
 
 import searchIcon from "assets/images/icons/searchIcon.svg";
-
-interface Props {
-	handleSubmit?: () => void;
-}
 
 interface FormData {
 	patrimonyNumber: string;
@@ -29,14 +25,15 @@ interface ApiPatrimoniesData {
 	};
 }
 
-const OwnerForm: React.ForwardRefRenderFunction<FormHandles, Props> = (
-	{ handleSubmit },
+const OwnerForm: React.ForwardRefRenderFunction<FormHandles, {}> = (
+	{},
 	ref
 ) => {
-	const { setValuesPatrimonies } = useContext(FirstOwnerContext);
+	const { setValuesPatrimonies } = useContext(Context.PatrimonyOwnerContext);
 
 	const handleSubmitTest: SubmitHandler<FormData> = async (data) => {
 		const patrimoniesValues = await getApiPatrimoniesDataById(data.optionOwner);
+
 		setValuesPatrimonies(convertToStatePropsData(patrimoniesValues));
 	};
 
