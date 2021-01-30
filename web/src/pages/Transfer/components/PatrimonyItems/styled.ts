@@ -17,11 +17,12 @@ export const PatrimonyItem = styled.div<PropsPatrimonyItem>`
 	margin-top: 3rem;
 	height: 17rem;
 	width: 15rem;
-	border: 1px solid #cecece;
+	border: 3px solid;
+	border-color: ${(props) =>
+		props.select ? "var(--color-success)" : "#cecece"};
 	border-radius: 0.8rem 0 0.8rem 0;
 	display: flex;
 	flex-direction: column;
-	background-color: ${(props) => (props.select ? "red" : "#fff")};
 
 	span {
 		font-size: 1.8rem;
