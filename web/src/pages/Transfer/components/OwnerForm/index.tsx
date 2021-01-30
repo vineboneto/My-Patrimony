@@ -1,14 +1,13 @@
-import React, { forwardRef, useContext } from "react";
+import React from "react";
 import { Form } from "@unform/web";
 import { FormHandles, SubmitHandler } from "@unform/core";
-
 import Input from "components/Inputs/Input";
 import AsyncSelectOwner from "components/Selects/AsyncSelectOwner";
-import api from "services/api";
 import * as Context from "pages/Transfer/PatrimonyTransferContext";
-import { SearchButton } from "./styled";
-
+import * as Styled from "./styled";
 import searchIcon from "assets/images/icons/searchIcon.svg";
+
+import api from "services/api";
 
 interface FormData {
 	patrimonyNumber: string;
@@ -29,7 +28,9 @@ const OwnerForm: React.ForwardRefRenderFunction<FormHandles, {}> = (
 	{},
 	ref
 ) => {
-	const { setValuesPatrimonies } = useContext(Context.PatrimonyOwnerContext);
+	const { setValuesPatrimonies } = React.useContext(
+		Context.PatrimonyOwnerContext
+	);
 
 	const handleSubmitTest: SubmitHandler<FormData> = async (data) => {
 		const patrimoniesValues = await getApiPatrimoniesDataById(data.optionOwner);
@@ -60,11 +61,11 @@ const OwnerForm: React.ForwardRefRenderFunction<FormHandles, {}> = (
 		<Form ref={ref} onSubmit={handleSubmitTest}>
 			<AsyncSelectOwner name="optionOwner" label="Nome" />
 			<Input name="patrimonyNumber" label="Patriônio" />
-			<SearchButton>
+			<Styled.SearchButton>
 				<img src={searchIcon} alt="Buscar" />
-			</SearchButton>
+			</Styled.SearchButton>
 		</Form>
 	);
 };
 
-export default forwardRef(OwnerForm);
+export default React.forwardRef(OwnerForm);
