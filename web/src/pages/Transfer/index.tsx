@@ -2,12 +2,13 @@ import React, { MouseEvent, useRef, useState } from "react";
 import { FormHandles } from "@unform/core";
 
 import PageHeader from "components/PageHeader";
-import { Container, ButtonSend, ButtonContainer } from "./styled";
+import { Container, ButtonSend, ButtonContainer, OwnerItem } from "./styled";
 
 import sendIcon from "assets/images/icons/sendIcon.svg";
 import OwnerForm from "pages/Transfer/components/OwnerForm";
-import { OwnerItem } from "./components/OwnerItem/styled";
 import * as Context from "./PatrimonyTransferContext";
+import { Title } from "pages/Home/styled";
+import PatrimonyItems from "./components/PatrimonyItems";
 
 const Swap = () => {
 	const formRefs = useRef<(FormHandles | null)[]>([]);
@@ -30,7 +31,9 @@ const Swap = () => {
 				value={{ patrimonies, setValuesPatrimonies }}
 			>
 				<OwnerItem>
+					<Title>Primeiro Patrimônio</Title>
 					<OwnerForm ref={(ref) => formRefs.current.push(ref)} />
+					<PatrimonyItems />
 				</OwnerItem>
 			</Context.PatrimonyTransferContext.Provider>
 

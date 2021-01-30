@@ -7,15 +7,20 @@ const PatrimonyItems = () => {
 		Context.PatrimonyTransferContext
 	);
 
-	const handleSelectPatrimony = (patrimony: Context.StateProps) => {
-		const newPatrimonies = patrimonies.map((value, index) => {
-			if (value.id === patrimony.id) {
+	const handleSelectPatrimony = (id: number) => {
+		const patrimoniesSelected = getPatrimoniesSelect(id);
+		setValuesPatrimonies(patrimoniesSelected);
+	};
+
+	const getPatrimoniesSelect = (id: number) => {
+		const patrimoniesSelected = patrimonies.map((value) => {
+			if (value.id === id) {
 				value.isSelect = !value.isSelect;
 				return value;
 			}
 			return value;
 		});
-		setValuesPatrimonies(newPatrimonies);
+		return patrimoniesSelected;
 	};
 
 	return (
@@ -24,7 +29,7 @@ const PatrimonyItems = () => {
 				<Styled.PatrimonyItem
 					key={patrimony.id}
 					select={patrimony.isSelect}
-					onClick={() => handleSelectPatrimony(patrimony)}
+					onClick={() => handleSelectPatrimony(patrimony.id)}
 				>
 					<Styled.CategoryName>{patrimony.categoryName}</Styled.CategoryName>
 					<span>{patrimony.model}</span>

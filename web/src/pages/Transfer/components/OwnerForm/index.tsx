@@ -5,8 +5,10 @@ import { FormHandles, SubmitHandler } from "@unform/core";
 import Input from "components/Inputs/Input";
 import AsyncSelectOwner from "components/Selects/AsyncSelectOwner";
 import api from "services/api";
-import Button from "components/Button";
 import { PatrimonyTransferContext } from "pages/Transfer/PatrimonyTransferContext";
+import { SearchButton } from "./styled";
+
+import searchIcon from "assets/images/icons/searchIcon.svg";
 
 interface Props {
 	handleSubmit?: () => void;
@@ -61,7 +63,9 @@ const OwnerForm: React.ForwardRefRenderFunction<FormHandles, Props> = (
 		<Form ref={ref} onSubmit={handleSubmitTest}>
 			<AsyncSelectOwner name="optionOwner" label="Nome" />
 			<Input name="patrimonyNumber" label="Patriônio" />
-			<Button>Search</Button>
+			<SearchButton>
+				<img src={searchIcon} alt="Buscar" />
+			</SearchButton>
 		</Form>
 	);
 };
