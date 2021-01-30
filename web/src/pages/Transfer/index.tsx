@@ -24,7 +24,7 @@ const PatrimonyTransfer = () => {
 		e.preventDefault();
 		try {
 			const dataFistOwner = formRefs.current[0]?.getData() || {};
-			const schema = createSchema(dataFistOwner);
+			const schema = createSchema();
 			await schema.validate(dataFistOwner, {
 				abortEarly: false,
 			});
@@ -38,7 +38,7 @@ const PatrimonyTransfer = () => {
 
 		try {
 			const dataSecondOwner = formRefs.current[1]?.getData() || {};
-			const schema = createSchema(dataSecondOwner);
+			const schema = createSchema();
 			await schema.validate(dataSecondOwner, {
 				abortEarly: false,
 			});
@@ -50,7 +50,7 @@ const PatrimonyTransfer = () => {
 		}
 	};
 
-	const createSchema = (data: object) => {
+	const createSchema = () => {
 		const schema = Yup.object().shape({
 			optionOwner: Yup.number().moreThan(-1, "Nome obrigatório").required(),
 			patrimonyNumber: Yup.string(),
