@@ -35,7 +35,6 @@ const OwnerForm: React.ForwardRefRenderFunction<FormHandles, {}> = (
 
 	const handleSubmitTest: SubmitHandler<FormData> = async (data) => {
 		const patrimoniesValues = await getApiPatrimoniesDataById(data.optionOwner);
-
 		setValuesPatrimonies(convertToStatePropsData(patrimoniesValues));
 	};
 

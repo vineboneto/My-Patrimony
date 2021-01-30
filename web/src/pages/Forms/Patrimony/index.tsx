@@ -1,20 +1,23 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import * as Yup from 'yup'
-import Dialog from '@material-ui/core/Dialog'
-import Collapse from '@material-ui/core/Collapse'
-import { SubmitHandler, FormHandles } from '@unform/core'
-import { Form } from '@unform/web'
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import * as Yup from "yup";
+import Dialog from "@material-ui/core/Dialog";
+import Collapse from "@material-ui/core/Collapse";
+import { SubmitHandler, FormHandles } from "@unform/core";
+import { Form } from "@unform/web";
 
-import Input from 'components/Inputs/Input'
-import MultiInputs, { MultiInputsHandles, Field } from 'components/Inputs/MultiInputs'
-import Select, { OptionValue } from 'components/Selects/Select'
-import Textarea from 'components/Textarea'
-import PageHeader from 'components/PageHeader'
-import Button, { ButtonCollapse, Create, Plus } from 'components/Button'
-import { Fieldset, Legend } from 'components/Fieldset/styled'
-import OwnerForm from '../Owner'
-import CategoryForm from '../Category'
-import { StyledDialog } from 'components/DialogContainer/styled'
+import Input from "components/Inputs/Input";
+import MultiInputs, {
+	MultiInputsHandles,
+	Field,
+} from "components/Inputs/MultiInputs";
+import Select, { OptionValue } from "components/Selects/Select";
+import Textarea from "components/Textarea";
+import PageHeader from "components/PageHeader";
+import Button, { ButtonCollapse, Create, Plus } from "components/Button";
+import { Fieldset, Legend } from "components/Fieldset/styled";
+import OwnerForm from "../Owner";
+import CategoryForm from "../Category";
+import { StyledDialog } from "components/DialogContainer/styled";
 
 import {
 	Container,
@@ -23,29 +26,27 @@ import {
 	PatrimonyData,
 	IpData,
 	Footer,
-	SSnackbar as Snackbar
-} from './styled'
-import api from 'services/api'
-import { useParams } from 'react-router-dom'
+	SSnackbar as Snackbar,
+} from "./styled";
+import api from "services/api";
+import { useParams } from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
 
-
-
 interface Ip {
-	id?: number
-	ip: string
-	mask: string
-	gateway: string
+	id?: number;
+	ip: string;
+	mask: string;
+	gateway: string;
 }
 
 interface FormData {
-	patrimony: string
-	model: string
-	description: string
-	categoryId: string
-	ownerId: string
-	sectorId: string
-	ips: Ip[]
+	patrimony: string;
+	model: string;
+	description: string;
+	categoryId: string;
+	ownerId: string;
+	sectorId: string;
+	ips: Ip[];
 }
 
 interface DataProps {
@@ -54,82 +55,82 @@ interface DataProps {
 }
 
 interface Params {
-	id?: string
+	id?: string;
 }
 
 const PatrimonyForm: React.FC = () => {
-	const [openDialogCategory, setOpenDialogCategory] = useState(false)
+	const [openDialogCategory, setOpenDialogCategory] = useState(false);
 	const handleOpenDialogCategory = useCallback(() => {
-		setOpenDialogCategory(true)
-	}, [])
+		setOpenDialogCategory(true);
+	}, []);
 
 	const handleCloseDialogCategory = useCallback(() => {
-		setOpenDialogCategory(false)
-	}, [])
+		setOpenDialogCategory(false);
+	}, []);
 
-	const [openDialogOwner, setOpenDialogOwner] = useState(false)
+	const [openDialogOwner, setOpenDialogOwner] = useState(false);
 	const handleOpenDialogOwner = useCallback(() => {
-		setOpenDialogOwner(true)
-	}, [])
+		setOpenDialogOwner(true);
+	}, []);
 
 	const handleCloseDialogOwner = useCallback(() => {
-		setOpenDialogOwner(false)
-	}, [])
+		setOpenDialogOwner(false);
+	}, []);
 
-	const [sectors, setSectors] = useState<OptionValue[]>([])
-	const [categories, setCategories] = useState<OptionValue[]>([])
-	const [owners, setOwners] = useState<OptionValue[]>([])
+	const [sectors, setSectors] = useState<OptionValue[]>([]);
+	const [categories, setCategories] = useState<OptionValue[]>([]);
+	const [owners, setOwners] = useState<OptionValue[]>([]);
 
 	useEffect(() => {
 		async function setOptionsSectors() {
-			const response = await api.get('sectors');
-
-			const options = response.data.map((data: DataProps) => {
-				return {
-					value: data.id,
-					label: data.name
-				}
-			})
-			setSectors(options);
-		}
-		setOptionsSectors();
-	}, [openDialogOwner])
-
-	useEffect(() => {
-		async function setOptionsOwners() {
-			const response = await api.get('owners');
+			const response = await api.get("sectors");
 
 			const options = response.data.map((data: DataProps) => {
 				return {
 					value: data.id,
 					label: data.name,
-				}
-			})
-			setOwners(options);
+				};
+			});
+			setSectors(options);
 		}
-		setOptionsOwners();
-	}, [openDialogOwner])
+		setOptionsSectors();
+	}, [openDialogOwner]);
 
 	useEffect(() => {
-		async function setOptionsCategory() {
-			const response = await api.get('categories')
+		async function setOptionsOwners() {
+			const response = await api.get("owners");
 
 			const options = response.data.map((data: DataProps) => {
 				return {
 					value: data.id,
-					label: data.name
-				}
-			})
-			setCategories(options)
+					label: data.name,
+				};
+			});
+			setOwners(options);
 		}
-		setOptionsCategory()
-	}, [openDialogCategory])
+		setOptionsOwners();
+	}, [openDialogOwner]);
+
+	useEffect(() => {
+		async function setOptionsCategory() {
+			const response = await api.get("categories");
+
+			const options = response.data.map((data: DataProps) => {
+				return {
+					value: data.id,
+					label: data.name,
+				};
+			});
+			setCategories(options);
+		}
+		setOptionsCategory();
+	}, [openDialogCategory]);
 
 	const params = useParams<Params>();
 	useEffect(() => {
 		async function setDataPatrimony() {
 			if (params.id) {
-				const response = await api.get(`patrimonies/${params.id}`)
+				const response = await api.get(`patrimonies/${params.id}`);
 				formRef.current?.setData({
 					ownerId: Number(response.data.Owner.id),
 					sectorId: Number(response.data.Owner.sectorId),
@@ -137,108 +138,118 @@ const PatrimonyForm: React.FC = () => {
 					patrimony: response.data.number,
 					model: response.data.model,
 					description: response.data.description,
-					ips: response.data.Ip
-				})
+					ips: response.data.Ip,
+				});
 			}
 		}
 		setDataPatrimony();
-	}, [params.id])
+	}, [params.id]);
 
 	const DEFAULT_DATA = {
-		ips: [{ ip: '', mask: '', gateway: '' }],
-		categoryId: { value: -1, label: 'Selecione' },
-		sectorId: { value: -1, label: 'Selecione' },
-		ownerId: { value: -1, label: 'Selecione' },
-	}
+		ips: [{ ip: "", mask: "", gateway: "" }],
+		categoryId: { value: -1, label: "Selecione" },
+		sectorId: { value: -1, label: "Selecione" },
+		ownerId: { value: -1, label: "Selecione" },
+	};
 
 	const fields: Field[] = [
-		{ name: 'id', label: 'Id', hidden: true },
-		{ name: 'ip', label: 'Ip', placeholder: '192.168.1.11' },
-		{ name: 'mask', label: 'Mascara', placeholder: '255.255.255.0' },
-		{ name: 'gateway', label: 'Gateway', placeholder: '192.168.1.1' },
-	]
+		{ name: "id", label: "Id", hidden: true },
+		{ name: "ip", label: "Ip", placeholder: "192.168.1.11" },
+		{ name: "mask", label: "Mascara", placeholder: "255.255.255.0" },
+		{ name: "gateway", label: "Gateway", placeholder: "192.168.1.1" },
+	];
 
-	const [openCollapse, setCollapseOpen] = useState(false)
+	const [openCollapse, setCollapseOpen] = useState(false);
 	const handleOpenCollapse = useCallback(() => {
-		setCollapseOpen(!openCollapse)
-	}, [openCollapse])
+		setCollapseOpen(!openCollapse);
+	}, [openCollapse]);
 
-	const multiInputsRef = useRef<MultiInputsHandles>(null)
+	const multiInputsRef = useRef<MultiInputsHandles>(null);
 	const handleAddIpItem = useCallback(() => {
-		multiInputsRef.current?.addLine()
-	}, [])
+		multiInputsRef.current?.addLine();
+	}, []);
 
-	const formRef = useRef<FormHandles>(null)
+	const formRef = useRef<FormHandles>(null);
 	const [openMessageSuccess, setOpenMessageSuccess] = useState(false);
 	const handleSubmit: SubmitHandler<FormData> = async (data, { reset }) => {
-		console.log(data)
 		try {
 			const schema = Yup.object().shape({
-				patrimony: Yup.string().required('Patrimônio obrigatório'),
-				model: Yup.string().required('Modelo obrigatório '),
-				ownerId: Yup.number().moreThan(-1, 'Proprietário obrigatório').required('Proprietário obrigatório'),
-				categoryId: Yup.number().moreThan(-1, 'Categoria obrigatória').required('Categoria obrigatória'),
-			})
+				patrimony: Yup.string().required("Patrimônio obrigatório"),
+				model: Yup.string().required("Modelo obrigatório "),
+				ownerId: Yup.number()
+					.moreThan(-1, "Proprietário obrigatório")
+					.required("Proprietário obrigatório"),
+				categoryId: Yup.number()
+					.moreThan(-1, "Categoria obrigatória")
+					.required("Categoria obrigatória"),
+			});
 
 			await schema.validate(data, {
-				abortEarly: false
-			})
+				abortEarly: false,
+			});
 
 			if (params.id) {
-				await api.put(`patrimonies/${params.id}`, {
-					id: params.id,
-					patrimony: data.patrimony,
-					model: data.model,
-					description: data.description,
-					ownerId: data.ownerId,
-					categoryId: data.categoryId,
-					ips: data.ips
-				}).then(() => {
-					alert('Atualizado com sucesso')
-				}).catch((err) => {
-					alert(err)
-				})
+				await api
+					.put(`patrimonies/${params.id}`, {
+						id: params.id,
+						patrimony: data.patrimony,
+						model: data.model,
+						description: data.description,
+						ownerId: data.ownerId,
+						categoryId: data.categoryId,
+						ips: data.ips,
+					})
+					.then(() => {
+						alert("Atualizado com sucesso");
+					})
+					.catch((err) => {
+						alert(err);
+					});
 			} else {
 				const newIps = data.ips.map((ip) => {
-					if (ip.ip === '') return []
-					else return ip
-				})
+					if (ip.ip === "") return [];
+					else return ip;
+				});
 
-				await api.post('patrimonies', {
-					patrimony: data.patrimony,
-					model: data.model,
-					description: data.description,
-					ownerId: data.ownerId,
-					categoryId: data.categoryId,
-					ips: newIps
-				}).then(() => {
-					setOpenMessageSuccess(true);
-				}).catch((err) => {
-					alert(err)
-				})
+				await api
+					.post("patrimonies", {
+						patrimony: data.patrimony,
+						model: data.model,
+						description: data.description,
+						ownerId: data.ownerId,
+						categoryId: data.categoryId,
+						ips: newIps,
+					})
+					.then(() => {
+						setOpenMessageSuccess(true);
+					})
+					.catch((err) => {
+						alert(err);
+					});
 			}
 
-
-			formRef.current?.setErrors({})
-			reset()
+			formRef.current?.setErrors({});
+			reset();
 		} catch (err) {
 			if (err instanceof Yup.ValidationError) {
-				err.inner.forEach(error => {
+				err.inner.forEach((error) => {
 					if (error.path) {
-						formRef.current?.setFieldError(error.path, error.message)
+						formRef.current?.setFieldError(error.path, error.message);
 					}
-				})
+				});
 			}
 		}
-	}
+	};
 
 	const setOwnerTheSector = async () => {
-		const response = await api.get('owners')
-		const currentOwnerId = formRef.current?.getFieldValue('ownerId')
-		const owner = response.data.filter((data: any) => data.id === currentOwnerId)[0]
-		if (owner) formRef.current?.setFieldValue('sectorId', owner.sectorId)
-		else formRef.current?.setFieldValue('sectorId', -1)
-	}
+		const response = await api.get("owners");
+		const currentOwnerId = formRef.current?.getFieldValue("ownerId");
+		const owner = response.data.filter(
+			(data: any) => data.id === currentOwnerId
+		)[0];
+		if (owner) formRef.current?.setFieldValue("sectorId", owner.sectorId);
+		else formRef.current?.setFieldValue("sectorId", -1);
+	};
 
 	return (
 		<Container>
@@ -248,48 +259,62 @@ const PatrimonyForm: React.FC = () => {
 					<Fieldset>
 						<Legend>
 							Proprietário
-								<Create type="button" onClick={handleOpenDialogOwner}>
+							<Create type="button" onClick={handleOpenDialogOwner}>
 								+ Novo Proprietário
-								</Create>
+							</Create>
 						</Legend>
 						<OwnerData>
-							<Select name="ownerId" label="Proprietário" options={owners} onChange={setOwnerTheSector} />
-							<Select name="sectorId" label="Setor" options={sectors} isDisabled={true} />
+							<Select
+								name="ownerId"
+								label="Proprietário"
+								options={owners}
+								onChange={setOwnerTheSector}
+							/>
+							<Select
+								name="sectorId"
+								label="Setor"
+								options={sectors}
+								isDisabled={true}
+							/>
 						</OwnerData>
 					</Fieldset>
 					<Fieldset>
 						<Legend>Patrimônio</Legend>
 						<PatrimonyData>
 							<Plus type="button" onClick={handleOpenDialogCategory} />
-							<Select name="categoryId" label="Categoria" options={categories} />
+							<Select
+								name="categoryId"
+								label="Categoria"
+								options={categories}
+							/>
 							<Input name="patrimony" label="Patrimônio" />
 							<Input name="model" label="Modelo" />
 							<Textarea name="description" label="Descrição" />
 						</PatrimonyData>
 					</Fieldset>
 					<ButtonCollapse type="button" onClick={handleOpenCollapse}>
-						{openCollapse ? 'Fechar' : 'Adicionar Ips'}
+						{openCollapse ? "Fechar" : "Adicionar Ips"}
 					</ButtonCollapse>
 					<Fieldset padding="0 3.4rem">
 						<Collapse in={openCollapse}>
 							<Legend padding="3.4rem 0 0">
 								Ips
-								<Create type="button" onClick={handleAddIpItem}>+ Novo Ip</Create>
+								<Create type="button" onClick={handleAddIpItem}>
+									+ Novo Ip
+								</Create>
 							</Legend>
 							<IpData>
 								<MultiInputs
 									ref={multiInputsRef}
 									name="ips"
 									fields={fields}
-									itemData={{ id: '', ip: '', mask: '', gateway: '' }}
+									itemData={{ id: "", ip: "", mask: "", gateway: "" }}
 								/>
 							</IpData>
 						</Collapse>
 					</Fieldset>
 					<Footer>
-						<Button type="submit">
-							Salvar
-						</Button>
+						<Button type="submit">Salvar</Button>
 					</Footer>
 				</Form>
 				{/**
@@ -299,18 +324,28 @@ const PatrimonyForm: React.FC = () => {
 					<OwnerForm onClose={handleCloseDialogOwner} />
 				</StyledDialog>
 
-				<Dialog open={openDialogCategory} onClose={handleCloseDialogCategory} aria-labelledby="form-dialog-title">
+				<Dialog
+					open={openDialogCategory}
+					onClose={handleCloseDialogCategory}
+					aria-labelledby="form-dialog-title"
+				>
 					<CategoryForm onClose={handleCloseDialogCategory} />
 				</Dialog>
 
-				<Snackbar open={openMessageSuccess} autoHideDuration={2000} onClose={() => setOpenMessageSuccess(false)}>
-					<Alert onClose={() => setOpenMessageSuccess(false)} severity="success">
+				<Snackbar
+					open={openMessageSuccess}
+					autoHideDuration={2000}
+					onClose={() => setOpenMessageSuccess(false)}
+				>
+					<Alert
+						onClose={() => setOpenMessageSuccess(false)}
+						severity="success"
+					>
 						Cadastrado com sucesso
-					 </Alert>
+					</Alert>
 				</Snackbar>
 			</Main>
-
 		</Container>
-	)
-}
-export default PatrimonyForm
+	);
+};
+export default PatrimonyForm;

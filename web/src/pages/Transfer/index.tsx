@@ -7,6 +7,7 @@ import PatrimonyItems from "pages/Transfer/components/PatrimonyItems";
 import sendIcon from "assets/images/icons/sendIcon.svg";
 import * as Context from "pages/Transfer/hooks/context";
 import * as Styled from "./styled";
+import * as Yup from "yup";
 
 const PatrimonyTransfer = () => {
 	const formRefs = useRef<(FormHandles | null)[]>([]);
@@ -19,10 +20,27 @@ const PatrimonyTransfer = () => {
 		Context.StateProps[]
 	>([]);
 
-	const handleTransferPatrimony = (e: MouseEvent) => {
+	const handleTransferPatrimony = async (e: MouseEvent) => {
 		e.preventDefault();
-		console.log(formRefs.current[0]?.getData());
-		console.log(formRefs.current[1]?.getData());
+		try {
+			const dataFistOwner = formRefs.current[0]?.getData();
+			const schema = Yup.object().shape({
+				optionOwner: Yup.number().moreThan(-1, "Nome obrigatório").required(),
+				patrimonyNumber: Yup.string(),
+			});
+
+			await schema.validate(dataFistOwner, {
+				abortEarly: false,
+			});
+		} catch (err) {
+			if (err instanceof Yup.ValidationError) {
+				err.inner.forEach((error) => {
+					if (error.path) {
+						formRefs.current[0]?.setFieldError(error.path, error.message);
+					}
+				});
+			}
+		}
 	};
 
 	const setValuesPatrimoniesFirstOwner = (values: Context.StateProps[]) => {
