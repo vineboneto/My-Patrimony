@@ -1,4 +1,4 @@
-import React, { MouseEvent, useRef, useState } from "react";
+import React, { MouseEvent, RefObject, useRef, useState } from "react";
 import { FormHandles } from "@unform/core";
 
 import PageHeader from "components/PageHeader";
@@ -23,24 +23,45 @@ const PatrimonyTransfer = () => {
 	const handleTransferPatrimony = async (e: MouseEvent) => {
 		e.preventDefault();
 		try {
-			const dataFistOwner = formRefs.current[0]?.getData();
-			const schema = Yup.object().shape({
-				optionOwner: Yup.number().moreThan(-1, "Nome obrigatório").required(),
-				patrimonyNumber: Yup.string(),
-			});
-
+			const dataFistOwner = formRefs.current[0]?.getData() || {};
+			const schema = createSchema(dataFistOwner);
 			await schema.validate(dataFistOwner, {
 				abortEarly: false,
 			});
+
+			formRefs.current[0]?.setErrors({});
 		} catch (err) {
 			if (err instanceof Yup.ValidationError) {
-				err.inner.forEach((error) => {
-					if (error.path) {
-						formRefs.current[0]?.setFieldError(error.path, error.message);
-					}
-				});
+				if (formRefs.current[0]) setErrors(err, formRefs.current[0]);
 			}
 		}
+
+		try {
+			const dataSecondOwner = formRefs.current[1]?.getData() || {};
+			const schema = createSchema(dataSecondOwner);
+			await schema.validate(dataSecondOwner, {
+				abortEarly: false,
+			});
+			formRefs.current[1]?.setErrors({});
+		} catch (err) {
+			if (err instanceof Yup.ValidationError) {
+				if (formRefs.current[1]) setErrors(err, formRefs.current[1]);
+			}
+		}
+	};
+
+	const createSchema = (data: object) => {
+		const schema = Yup.object().shape({
+			optionOwner: Yup.number().moreThan(-1, "Nome obrigatório").required(),
+			patrimonyNumber: Yup.string(),
+		});
+		return schema;
+	};
+
+	const setErrors = (err: Yup.ValidationError, ref: FormHandles) => {
+		err.inner.forEach((error) => {
+			if (error.path) ref.setFieldError(error.path, error.message);
+		});
 	};
 
 	const setValuesPatrimoniesFirstOwner = (values: Context.StateProps[]) => {

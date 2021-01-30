@@ -33,7 +33,7 @@ const OwnerForm: React.ForwardRefRenderFunction<FormHandles, {}> = (
 		Context.PatrimonyOwnerContext
 	);
 
-	const handleSubmitTest: SubmitHandler<FormData> = async (data) => {
+	const handleSubmit: SubmitHandler<FormData> = async (data) => {
 		const patrimoniesValues = await getApiPatrimoniesDataById(data.optionOwner);
 		setValuesPatrimonies(convertToStatePropsData(patrimoniesValues));
 	};
@@ -58,7 +58,7 @@ const OwnerForm: React.ForwardRefRenderFunction<FormHandles, {}> = (
 	};
 
 	return (
-		<Form ref={ref} onSubmit={handleSubmitTest}>
+		<Form ref={ref} onSubmit={handleSubmit}>
 			<AsyncSelectOwner name="optionOwner" label="Nome" />
 			<Input name="patrimonyNumber" label="Patriônio" />
 			<Styled.SearchButton>
