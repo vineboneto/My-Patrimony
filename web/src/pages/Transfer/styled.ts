@@ -32,18 +32,6 @@ export const Title = styled.h2`
 	border-bottom: 1px solid var(--color-border-input);
 `;
 
-export const SearchButton = styled.button`
-	outline: 0;
-	border: 0;
-	background-color: #fff;
-	cursor: pointer;
-	align-self: flex-end;
-
-	img {
-		background-color: #fff;
-	}
-`;
-
 export const ButtonContainer = styled.div`
 	max-width: 74rem;
 	margin: 3rem auto 0;

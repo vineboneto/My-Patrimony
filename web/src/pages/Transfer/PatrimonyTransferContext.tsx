@@ -13,7 +13,7 @@ interface ContextProps {
 	setValuesPatrimonies: (values: StateProps[]) => void;
 }
 
-export const PatrimonyTransferContext = createContext<ContextProps>({
+export const FirstOwnerContext = createContext<ContextProps>({
 	patrimonies: [],
 	setValuesPatrimonies: () => {},
 });

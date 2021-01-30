@@ -4,7 +4,7 @@ import * as Styled from "./styled";
 
 const PatrimonyItems = () => {
 	const { patrimonies, setValuesPatrimonies } = useContext(
-		Context.PatrimonyTransferContext
+		Context.FirstOwnerContext
 	);
 
 	const handleSelectPatrimony = (id: number) => {

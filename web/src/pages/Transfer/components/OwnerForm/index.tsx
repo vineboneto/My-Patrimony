@@ -5,7 +5,7 @@ import { FormHandles, SubmitHandler } from "@unform/core";
 import Input from "components/Inputs/Input";
 import AsyncSelectOwner from "components/Selects/AsyncSelectOwner";
 import api from "services/api";
-import { PatrimonyTransferContext } from "pages/Transfer/PatrimonyTransferContext";
+import { FirstOwnerContext } from "pages/Transfer/PatrimonyTransferContext";
 import { SearchButton } from "./styled";
 
 import searchIcon from "assets/images/icons/searchIcon.svg";
@@ -33,7 +33,7 @@ const OwnerForm: React.ForwardRefRenderFunction<FormHandles, Props> = (
 	{ handleSubmit },
 	ref
 ) => {
-	const { setValuesPatrimonies } = useContext(PatrimonyTransferContext);
+	const { setValuesPatrimonies } = useContext(FirstOwnerContext);
 
 	const handleSubmitTest: SubmitHandler<FormData> = async (data) => {
 		const patrimoniesValues = await getApiPatrimoniesDataById(data.optionOwner);

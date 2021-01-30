@@ -12,30 +12,45 @@ import PatrimonyItems from "./components/PatrimonyItems";
 
 const Swap = () => {
 	const formRefs = useRef<(FormHandles | null)[]>([]);
+
 	const [patrimonies, setPatrimonies] = useState<Context.StateProps[]>([]);
+	const [patrimonies2, setPatrimonies2] = useState<Context.StateProps[]>([]);
 
 	const handleTransferPatrimony = (e: MouseEvent) => {
 		e.preventDefault();
 		console.log(formRefs.current[0]?.getData());
-		console.log(patrimonies);
 	};
 
 	const setValuesPatrimonies = (values: Context.StateProps[]) => {
 		setPatrimonies(values);
 	};
 
+	const setValuesPatrimonies2 = (values: Context.StateProps[]) => {
+		setPatrimonies2(values);
+	};
+
 	return (
 		<Container>
 			<PageHeader title="Escolha os Proprietários" prev="/" />
-			<Context.PatrimonyTransferContext.Provider
+			<Context.FirstOwnerContext.Provider
 				value={{ patrimonies, setValuesPatrimonies }}
 			>
 				<OwnerItem>
-					<Title>Primeiro Patrimônio</Title>
+					<Title>Primeiro Proprietário</Title>
 					<OwnerForm ref={(ref) => formRefs.current.push(ref)} />
 					<PatrimonyItems />
 				</OwnerItem>
-			</Context.PatrimonyTransferContext.Provider>
+			</Context.FirstOwnerContext.Provider>
+
+			{/* <Context.PatrimonyTransferContext.Provider
+				value={{ patrimonies2, setValuesPatrimonies2 }}
+			>
+				<OwnerItem>
+					<Title>Segundo Proprietário</Title>
+					<OwnerForm ref={(ref) => formRefs.current.push(ref)} />
+					<PatrimonyItems />
+				</OwnerItem>
+			</Context.PatrimonyTransferContext.Provider> */}
 
 			<ButtonContainer>
 				<ButtonSend onClick={handleTransferPatrimony}>
