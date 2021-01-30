@@ -8,19 +8,24 @@ const PatrimonyItems = () => {
 	);
 
 	const handleSelectPatrimony = (id: number) => {
-		const patrimoniesSelected = getPatrimoniesSelect(id);
+		const patrimoniesSelected = changeStateOfSelectedPatrimonies(id);
 		setValuesPatrimonies(patrimoniesSelected);
 	};
 
-	const getPatrimoniesSelect = (id: number) => {
-		const patrimoniesSelected = patrimonies.map((value) => {
-			if (value.id === id) {
-				value.isSelect = !value.isSelect;
-				return value;
+	const changeStateOfSelectedPatrimonies = (id: number) => {
+		const newPatrimonies = patrimonies.map((patrimony) => {
+			if (patrimoniesEquals(patrimony.id, id)) {
+				patrimony.isSelect = !patrimony.isSelect;
+				return patrimony;
 			}
-			return value;
+			return patrimony;
 		});
-		return patrimoniesSelected;
+		return newPatrimonies;
+	};
+
+	const patrimoniesEquals = (a: number, b: number) => {
+		if (a === b) return true;
+		return false;
 	};
 
 	return (
