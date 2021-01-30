@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import * as Context from "pages/Transfer/hooks/context";
 import * as Styled from "./styled";
 
 const PatrimonyItems = () => {
-	const { patrimonies, setValuesPatrimonies } = useContext(
+	const { patrimonies, setValuesPatrimonies } = React.useContext(
 		Context.PatrimonyOwnerContext
 	);
 
@@ -45,4 +45,4 @@ const PatrimonyItems = () => {
 	);
 };
 
-export default PatrimonyItems;
+export default React.memo(PatrimonyItems);

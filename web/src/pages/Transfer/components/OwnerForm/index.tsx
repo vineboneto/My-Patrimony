@@ -69,4 +69,4 @@ const OwnerForm: React.ForwardRefRenderFunction<FormHandles, {}> = (
 	);
 };
 
-export default React.forwardRef(OwnerForm);
+export default React.memo(React.forwardRef(OwnerForm));
