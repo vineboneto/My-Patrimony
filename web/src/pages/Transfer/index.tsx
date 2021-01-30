@@ -6,7 +6,7 @@ import { Container, ButtonSend, ButtonContainer, OwnerItem } from "./styled";
 
 import sendIcon from "assets/images/icons/sendIcon.svg";
 import OwnerForm from "pages/Transfer/components/OwnerForm";
-import * as Context from "./PatrimonyTransferContext";
+import * as Context from "./hooks/context";
 import { Title } from "./styled";
 import PatrimonyItems from "./components/PatrimonyItems";
 

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import * as Context from "pages/Transfer/PatrimonyTransferContext";
+import * as Context from "pages/Transfer/hooks/context";
 import * as Styled from "./styled";
 
 const PatrimonyItems = () => {
