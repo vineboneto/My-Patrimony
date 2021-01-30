@@ -2,13 +2,11 @@ import React, { MouseEvent, useRef, useState } from "react";
 import { FormHandles } from "@unform/core";
 
 import PageHeader from "components/PageHeader";
-import { Container, ButtonSend, ButtonContainer, OwnerItem } from "./styled";
-
-import sendIcon from "assets/images/icons/sendIcon.svg";
 import OwnerForm from "pages/Transfer/components/OwnerForm";
-import * as Context from "./hooks/context";
-import { Title } from "./styled";
-import PatrimonyItems from "./components/PatrimonyItems";
+import PatrimonyItems from "pages/Transfer/components/PatrimonyItems";
+import sendIcon from "assets/images/icons/sendIcon.svg";
+import * as Context from "pages/Transfer/hooks/context";
+import * as Styled from "./styled";
 
 const PatrimonyTransfer = () => {
 	const formRefs = useRef<(FormHandles | null)[]>([]);
@@ -36,7 +34,7 @@ const PatrimonyTransfer = () => {
 	};
 
 	return (
-		<Container>
+		<Styled.Container>
 			<PageHeader title="Escolha os Proprietários" prev="/" />
 
 			<Context.PatrimonyOwnerContext.Provider
@@ -45,11 +43,11 @@ const PatrimonyTransfer = () => {
 					setValuesPatrimonies: setValuesPatrimoniesFirstOwner,
 				}}
 			>
-				<OwnerItem>
-					<Title>Primeiro Proprietário</Title>
+				<Styled.OwnerItem>
+					<Styled.Title>Primeiro Proprietário</Styled.Title>
 					<OwnerForm ref={(ref) => formRefs.current.push(ref)} />
 					<PatrimonyItems />
-				</OwnerItem>
+				</Styled.OwnerItem>
 			</Context.PatrimonyOwnerContext.Provider>
 
 			<Context.PatrimonyOwnerContext.Provider
@@ -58,20 +56,20 @@ const PatrimonyTransfer = () => {
 					setValuesPatrimonies: setValuesPatrimoniesSecondOwner,
 				}}
 			>
-				<OwnerItem>
-					<Title>Segundo Proprietário</Title>
+				<Styled.OwnerItem>
+					<Styled.Title>Segundo Proprietário</Styled.Title>
 					<OwnerForm ref={(ref) => formRefs.current.push(ref)} />
 					<PatrimonyItems />
-				</OwnerItem>
+				</Styled.OwnerItem>
 			</Context.PatrimonyOwnerContext.Provider>
 
-			<ButtonContainer>
-				<ButtonSend onClick={handleTransferPatrimony}>
+			<Styled.ButtonContainer>
+				<Styled.ButtonSend onClick={handleTransferPatrimony}>
 					Transferir
 					<img src={sendIcon} alt="Transferir Patriônio" />
-				</ButtonSend>
-			</ButtonContainer>
-		</Container>
+				</Styled.ButtonSend>
+			</Styled.ButtonContainer>
+		</Styled.Container>
 	);
 };
 
