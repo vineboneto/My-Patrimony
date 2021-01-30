@@ -10,7 +10,7 @@ import * as Context from "./PatrimonyTransferContext";
 import { Title } from "./styled";
 import PatrimonyItems from "./components/PatrimonyItems";
 
-const Swap = () => {
+const PatrimonyTransfer = () => {
 	const formRefs = useRef<(FormHandles | null)[]>([]);
 
 	const [patrimoniesFistOwner, setPatrimoniesFistOwner] = useState<
@@ -75,4 +75,4 @@ const Swap = () => {
 	);
 };
 
-export default Swap;
+export default PatrimonyTransfer;
