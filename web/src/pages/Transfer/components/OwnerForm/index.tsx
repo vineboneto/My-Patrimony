@@ -6,7 +6,7 @@ import Input from "components/Inputs/Input";
 import AsyncSelectOwner from "components/Selects/AsyncSelectOwner";
 import api from "services/api";
 import Button from "components/Button";
-import { TransferContext } from "pages/Transfer";
+import { PatrimonyTransferContext } from "pages/Transfer/PatrimonyTransferContext";
 
 interface Props {
 	handleSubmit?: () => void;
@@ -31,7 +31,8 @@ const OwnerForm: React.ForwardRefRenderFunction<FormHandles, Props> = (
 	{ handleSubmit },
 	ref
 ) => {
-	const { setValuesPatrimonies } = useContext(TransferContext);
+	const { setValuesPatrimonies } = useContext(PatrimonyTransferContext);
+
 	const handleSubmitTest: SubmitHandler<FormData> = async (data) => {
 		const patrimoniesValues = await getApiPatrimoniesDataById(data.optionOwner);
 		setValuesPatrimonies(convertToStatePropsData(patrimoniesValues));
