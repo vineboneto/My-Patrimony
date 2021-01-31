@@ -1,4 +1,4 @@
-import React, { MouseEvent, RefObject, useRef, useState } from "react";
+import React from "react";
 import { FormHandles } from "@unform/core";
 
 import PageHeader from "components/PageHeader";
@@ -10,17 +10,17 @@ import * as Styled from "./styled";
 import * as Yup from "yup";
 
 const PatrimonyTransfer = () => {
-	const formRefs = useRef<(FormHandles | null)[]>([]);
+	const formRefs = React.useRef<(FormHandles | null)[]>([]);
 
-	const [patrimoniesFistOwner, setPatrimoniesFistOwner] = useState<
+	const [patrimoniesFistOwner, setPatrimoniesFistOwner] = React.useState<
 		Context.StateProps[]
 	>([]);
 
-	const [patrimoniesSecondOwner, setPatrimoniesSecondOwner] = useState<
+	const [patrimoniesSecondOwner, setPatrimoniesSecondOwner] = React.useState<
 		Context.StateProps[]
 	>([]);
 
-	const handleTransferPatrimony = async (e: MouseEvent) => {
+	const handleTransferPatrimony = async (e: React.MouseEvent) => {
 		e.preventDefault();
 		try {
 			const dataFistOwner = formRefs.current[0]?.getData() || {};
