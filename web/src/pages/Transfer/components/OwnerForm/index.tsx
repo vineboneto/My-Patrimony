@@ -10,7 +10,7 @@ import * as Styled from "./styled";
 
 import api from "services/api";
 
-interface FormData {
+export interface FormData {
 	patrimonyNumber: string;
 	optionOwner: number;
 }
