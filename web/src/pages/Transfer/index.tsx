@@ -23,26 +23,34 @@ const PatrimonyTransfer = () => {
 	const handleTransferPatrimony = async (e: React.MouseEvent) => {
 		if (formRefs.current[0]) {
 			const dataFirstOwner = formRefs.current[0]?.getData();
-			await validationForm(dataFirstOwner, formRefs.current[0]);
+			await validateForm(dataFirstOwner, formRefs.current[0]);
 		}
 
 		if (formRefs.current[1]) {
 			const dataSecondOwner = formRefs.current[1]?.getData();
-			await validationForm(dataSecondOwner, formRefs.current[1]);
+			await validateForm(dataSecondOwner, formRefs.current[1]);
 		}
 	};
 
-	const validationForm = async (datas: object, ref: FormHandles) => {
+	const validateForm = async (datas: object, ref: FormHandles) => {
 		try {
-			const schema = createSchema();
-			await schema.validate(datas, {
-				abortEarly: false,
-			});
+			await tryValidate(datas, ref);
 			ref.setErrors({});
 		} catch (err) {
-			if (err instanceof Yup.ValidationError) {
-				setErrors(err, ref);
-			}
+			setValidationErrors(err, ref);
+		}
+	};
+
+	const tryValidate = async (datas: object, ref: FormHandles) => {
+		const schema = createSchema();
+		await schema.validate(datas, {
+			abortEarly: false,
+		});
+	};
+
+	const setValidationErrors = (err: any, ref: FormHandles) => {
+		if (err instanceof Yup.ValidationError) {
+			setErrors(err, ref);
 		}
 	};
 
