@@ -44,27 +44,28 @@ const PatrimonyTransfer = () => {
 		setPatrimoniesSecondOwner(values);
 	};
 
+	const valuesFistOwner = {
+		patrimonies: patrimoniesFistOwner,
+		setValuesPatrimonies: setValuesPatrimoniesFirstOwner,
+	};
+
+	const valuesSecondOwner = {
+		patrimonies: patrimoniesSecondOwner,
+		setValuesPatrimonies: setValuesPatrimoniesSecondOwner,
+	};
+
 	return (
 		<Styled.Container>
 			<PageHeader title="Escolha os Proprietários" prev="/" />
 
-			<Context.PatrimonyOwnerContext.Provider
-				value={{
-					patrimonies: patrimoniesFistOwner,
-					setValuesPatrimonies: setValuesPatrimoniesFirstOwner,
-				}}
-			>
+			<Context.PatrimonyOwnerContext.Provider value={valuesFistOwner}>
 				<OwnerItem title="Primeiro proprietário" formRefs={formRefs} />
 			</Context.PatrimonyOwnerContext.Provider>
 
-			<Context.PatrimonyOwnerContext.Provider
-				value={{
-					patrimonies: patrimoniesSecondOwner,
-					setValuesPatrimonies: setValuesPatrimoniesSecondOwner,
-				}}
-			>
+			<Context.PatrimonyOwnerContext.Provider value={valuesSecondOwner}>
 				<OwnerItem title="Segundo proprietário" formRefs={formRefs} />
 			</Context.PatrimonyOwnerContext.Provider>
+
 			<Styled.ButtonContainer>
 				<Styled.ButtonSend onClick={handleTransferPatrimony}>
 					Transferir
