@@ -2,10 +2,9 @@ import React from "react";
 import { FormHandles } from "@unform/core";
 
 import PageHeader from "components/PageHeader";
-import OwnerForm from "pages/Transfer/components/OwnerForm";
-import PatrimonyItems from "pages/Transfer/components/PatrimonyItems";
-import sendIcon from "assets/images/icons/sendIcon.svg";
 import ValidateForm from "./validationForm";
+import OwnerItem from "pages/Transfer/components/OwnerItem";
+import sendIcon from "assets/images/icons/sendIcon.svg";
 import * as Context from "pages/Transfer/hooks/context";
 import * as Styled from "./styled";
 
@@ -23,21 +22,18 @@ const PatrimonyTransfer = () => {
 	const handleTransferPatrimony = async (e: React.MouseEvent) => {
 		if (formRefs.current[0]) {
 			const dataFirstOwner = formRefs.current[0]?.getData();
-			const validationForm = new ValidateForm(
-				dataFirstOwner,
-				formRefs.current[0]
-			);
-			await validationForm.validate();
+			await factoryValidateForm(dataFirstOwner, formRefs.current[0]);
 		}
 
 		if (formRefs.current[1]) {
 			const dataSecondOwner = formRefs.current[1]?.getData();
-			const validationForm = new ValidateForm(
-				dataSecondOwner,
-				formRefs.current[1]
-			);
-			await validationForm.validate();
+			await factoryValidateForm(dataSecondOwner, formRefs.current[1]);
 		}
+	};
+
+	const factoryValidateForm = async (datas: object, ref: FormHandles) => {
+		const validationForm = new ValidateForm(datas, ref);
+		await validationForm.validate();
 	};
 
 	const setValuesPatrimoniesFirstOwner = (values: Context.StateProps[]) => {
@@ -58,11 +54,7 @@ const PatrimonyTransfer = () => {
 					setValuesPatrimonies: setValuesPatrimoniesFirstOwner,
 				}}
 			>
-				<Styled.OwnerItem>
-					<Styled.Title>Primeiro Proprietário</Styled.Title>
-					<OwnerForm ref={(ref) => formRefs.current.push(ref)} />
-					<PatrimonyItems />
-				</Styled.OwnerItem>
+				<OwnerItem title="Primeiro proprietário" formRefs={formRefs} />
 			</Context.PatrimonyOwnerContext.Provider>
 
 			<Context.PatrimonyOwnerContext.Provider
@@ -71,13 +63,8 @@ const PatrimonyTransfer = () => {
 					setValuesPatrimonies: setValuesPatrimoniesSecondOwner,
 				}}
 			>
-				<Styled.OwnerItem>
-					<Styled.Title>Segundo Proprietário</Styled.Title>
-					<OwnerForm ref={(ref) => formRefs.current.push(ref)} />
-					<PatrimonyItems />
-				</Styled.OwnerItem>
+				<OwnerItem title="Segundo proprietário" formRefs={formRefs} />
 			</Context.PatrimonyOwnerContext.Provider>
-
 			<Styled.ButtonContainer>
 				<Styled.ButtonSend onClick={handleTransferPatrimony}>
 					Transferir
