@@ -21,31 +21,27 @@ const PatrimonyTransfer = () => {
 	>([]);
 
 	const handleTransferPatrimony = async (e: React.MouseEvent) => {
-		e.preventDefault();
-		try {
-			const dataFistOwner = formRefs.current[0]?.getData() || {};
-			const schema = createSchema();
-			await schema.validate(dataFistOwner, {
-				abortEarly: false,
-			});
-
-			formRefs.current[0]?.setErrors({});
-		} catch (err) {
-			if (err instanceof Yup.ValidationError) {
-				if (formRefs.current[0]) setErrors(err, formRefs.current[0]);
-			}
+		if (formRefs.current[0]) {
+			const dataFirstOwner = formRefs.current[0]?.getData();
+			await validationForm(dataFirstOwner, formRefs.current[0]);
 		}
 
+		if (formRefs.current[1]) {
+			const dataSecondOwner = formRefs.current[1]?.getData();
+			await validationForm(dataSecondOwner, formRefs.current[1]);
+		}
+	};
+
+	const validationForm = async (datas: object, ref: FormHandles) => {
 		try {
-			const dataSecondOwner = formRefs.current[1]?.getData() || {};
 			const schema = createSchema();
-			await schema.validate(dataSecondOwner, {
+			await schema.validate(datas, {
 				abortEarly: false,
 			});
-			formRefs.current[1]?.setErrors({});
+			ref.setErrors({});
 		} catch (err) {
 			if (err instanceof Yup.ValidationError) {
-				if (formRefs.current[1]) setErrors(err, formRefs.current[1]);
+				setErrors(err, ref);
 			}
 		}
 	};
