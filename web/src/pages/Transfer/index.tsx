@@ -5,9 +5,9 @@ import PageHeader from "components/PageHeader";
 import OwnerForm from "pages/Transfer/components/OwnerForm";
 import PatrimonyItems from "pages/Transfer/components/PatrimonyItems";
 import sendIcon from "assets/images/icons/sendIcon.svg";
+import ValidateForm from "./validationForm";
 import * as Context from "pages/Transfer/hooks/context";
 import * as Styled from "./styled";
-import * as Yup from "yup";
 
 const PatrimonyTransfer = () => {
 	const formRefs = React.useRef<(FormHandles | null)[]>([]);
@@ -23,49 +23,21 @@ const PatrimonyTransfer = () => {
 	const handleTransferPatrimony = async (e: React.MouseEvent) => {
 		if (formRefs.current[0]) {
 			const dataFirstOwner = formRefs.current[0]?.getData();
-			await validateForm(dataFirstOwner, formRefs.current[0]);
+			const validationForm = new ValidateForm(
+				dataFirstOwner,
+				formRefs.current[0]
+			);
+			await validationForm.validate();
 		}
 
 		if (formRefs.current[1]) {
 			const dataSecondOwner = formRefs.current[1]?.getData();
-			await validateForm(dataSecondOwner, formRefs.current[1]);
+			const validationForm = new ValidateForm(
+				dataSecondOwner,
+				formRefs.current[1]
+			);
+			await validationForm.validate();
 		}
-	};
-
-	const validateForm = async (datas: object, ref: FormHandles) => {
-		try {
-			await tryValidate(datas, ref);
-			ref.setErrors({});
-		} catch (err) {
-			setValidationErrors(err, ref);
-		}
-	};
-
-	const tryValidate = async (datas: object, ref: FormHandles) => {
-		const schema = createSchema();
-		await schema.validate(datas, {
-			abortEarly: false,
-		});
-	};
-
-	const setValidationErrors = (err: any, ref: FormHandles) => {
-		if (err instanceof Yup.ValidationError) {
-			setErrors(err, ref);
-		}
-	};
-
-	const createSchema = () => {
-		const schema = Yup.object().shape({
-			optionOwner: Yup.number().moreThan(-1, "Nome obrigatório").required(),
-			patrimonyNumber: Yup.string(),
-		});
-		return schema;
-	};
-
-	const setErrors = (err: Yup.ValidationError, ref: FormHandles) => {
-		err.inner.forEach((error) => {
-			if (error.path) ref.setFieldError(error.path, error.message);
-		});
 	};
 
 	const setValuesPatrimoniesFirstOwner = (values: Context.StateProps[]) => {
