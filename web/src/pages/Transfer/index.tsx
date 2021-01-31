@@ -2,9 +2,9 @@ import React from "react";
 import { FormHandles } from "@unform/core";
 
 import PageHeader from "components/PageHeader";
-import ValidateForm from "./validationForm";
+import Submit from "pages/Transfer/components/Submit";
 import OwnerItem from "pages/Transfer/components/OwnerItem";
-import sendIcon from "assets/images/icons/sendIcon.svg";
+import ValidateForm from "./validationForm";
 import * as Context from "pages/Transfer/hooks/context";
 import * as Styled from "./styled";
 
@@ -66,12 +66,7 @@ const PatrimonyTransfer = () => {
 				<OwnerItem title="Segundo proprietário" formRefs={formRefs} />
 			</Context.PatrimonyOwnerContext.Provider>
 
-			<Styled.ButtonContainer>
-				<Styled.ButtonSend onClick={handleTransferPatrimony}>
-					Transferir
-					<img src={sendIcon} alt="Transferir Patriônio" />
-				</Styled.ButtonSend>
-			</Styled.ButtonContainer>
+			<Submit handleSubmit={handleTransferPatrimony} />
 		</Styled.Container>
 	);
 };
