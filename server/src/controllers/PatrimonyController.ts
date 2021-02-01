@@ -181,7 +181,6 @@ export default class PatrimonyController {
   async getByOwnerId(req: Request, res: Response) {
     const { id } = req.params;
     const { number } = req.query;
-    console.log(number);
     let patrimonies;
     const selectParams = {
       id: true,

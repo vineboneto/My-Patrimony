@@ -41,13 +41,11 @@ const OwnerForm: React.ForwardRefRenderFunction<FormHandles, {}> = (
 
 	const getApiPatrimoniesDataById = async (data: FormData) => {
 		const id = data.optionOwner;
-		const url = `owners/${id}/patrimonies`;
-
-		const response = await api.get(url, {
-			params: {
-				patrimonyNumber: data.patrimonyNumber,
-			},
-		});
+		const number = data.patrimonyNumber;
+		const url = number
+			? `owners/${id}/patrimonies?number=${number}`
+			: `owners/${id}/patrimonies`;
+		const response = await api.get(url);
 		return response.data;
 	};
 
