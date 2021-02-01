@@ -40,16 +40,29 @@ const PatrimonyTransfer = () => {
 						};
 					}
 				);
-				console.log(updatedOwnerIdStatePatrimony);
+
+				const filterPatrimoniesUnSelected = patrimoniesFistOwner.filter(
+					(patrimony) => patrimony.isSelect === false
+				);
+
+				setPatrimoniesFistOwner(filterPatrimoniesUnSelected);
+
+				setPatrimoniesSecondOwner(
+					patrimoniesSecondOwner.concat(updatedOwnerIdStatePatrimony)
+				);
+
+				for (let i = 0; i < filterPatrimoniesSelected.length; i++) {
+					api
+						.patch(`patrimonies/${filterPatrimoniesSelected[i].id}`, {
+							ownerId: dataSecondOwner.optionOwner,
+						})
+						.then(() => {
+							alert("Transferido com sucesso");
+						});
+				}
 			} catch (err) {
 				console.log(err);
 			}
-
-			// for (let i = 0; i < filterPatrimoniesSelected.length; i++) {
-			// 	api.patch(`patrimonies/${filterPatrimoniesSelected[i].id}`, {
-			// 		ownerId: dataSecondOwner.optionOwner,
-			// 	});
-			// }
 		}
 	};
 
