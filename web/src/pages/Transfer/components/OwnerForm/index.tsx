@@ -34,13 +34,20 @@ const OwnerForm: React.ForwardRefRenderFunction<FormHandles, {}> = (
 	);
 
 	const handleSubmit: SubmitHandler<FormData> = async (data) => {
-		const patrimoniesValues = await getApiPatrimoniesDataById(data.optionOwner);
+		console.log(data);
+		const patrimoniesValues = await getApiPatrimoniesDataById(data);
 		setValuesPatrimonies(convertToStatePropsData(patrimoniesValues));
 	};
 
-	const getApiPatrimoniesDataById = async (id: number) => {
+	const getApiPatrimoniesDataById = async (data: FormData) => {
+		const id = data.optionOwner;
 		const url = `owners/${id}/patrimonies`;
-		const response = await api.get(url);
+
+		const response = await api.get(url, {
+			params: {
+				patrimonyNumber: data.patrimonyNumber,
+			},
+		});
 		return response.data;
 	};
 

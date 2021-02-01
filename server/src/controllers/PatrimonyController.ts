@@ -180,7 +180,8 @@ export default class PatrimonyController {
 
   async getByOwnerId(req: Request, res: Response) {
     const { id } = req.params;
-    const { patrimonyNumber } = req.body;
+    const { number } = req.query;
+    console.log(number);
     let patrimonies;
     const selectParams = {
       id: true,
@@ -190,7 +191,7 @@ export default class PatrimonyController {
     };
 
     try {
-      if (id && !patrimonyNumber) {
+      if (id && !number) {
         patrimonies = await prisma.patrimony.findMany({
           where: {
             Owner: {
@@ -202,7 +203,7 @@ export default class PatrimonyController {
       } else {
         patrimonies = await prisma.patrimony.findMany({
           where: {
-            number: patrimonyNumber,
+            number: number,
             Owner: {
               id: Number(id),
             },
