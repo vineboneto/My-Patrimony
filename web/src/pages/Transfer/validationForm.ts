@@ -1,4 +1,5 @@
 import { FormHandles } from "@unform/core";
+import { throws } from "assert";
 import * as Yup from "yup";
 
 export default class ValidateForm {
@@ -34,13 +35,14 @@ export default class ValidateForm {
 		return schema;
 	};
 
-	private readonly setValidationErrors = (err: any) => {
+	private readonly setValidationErrors = async (err: any) => {
 		if (err instanceof Yup.ValidationError) {
-			this.setErrors(err);
+			await this.setErrors(err);
+			throw Yup.ValidationError;
 		}
 	};
 
-	private readonly setErrors = (err: Yup.ValidationError) => {
+	private readonly setErrors = async (err: Yup.ValidationError) => {
 		err.inner.forEach((error) => {
 			if (error.path) this.ref.setFieldError(error.path, error.message);
 		});
