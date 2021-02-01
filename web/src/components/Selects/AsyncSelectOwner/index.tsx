@@ -1,7 +1,12 @@
-import React, { SelectHTMLAttributes, useEffect, useState } from 'react'
+import React, {
+	SelectHTMLAttributes,
+	useCallback,
+	useEffect,
+	useState,
+} from "react";
 
-import Select, { OptionValue } from 'components/Selects/Select'
-import api from 'services/api'
+import Select, { OptionValue } from "components/Selects/Select";
+import api from "services/api";
 
 interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
 	name: string;
@@ -14,30 +19,33 @@ interface ApiData {
 }
 
 const AsyncSelectOwner: React.FC<Props> = ({ name, label }) => {
-	const [ownerOptions, setOwnerOptions] = useState<OptionValue[]>([])
-	useEffect(() => { setOwnerValuesState() }, [])
+	const [ownerOptions, setOwnerOptions] = useState<OptionValue[]>([]);
 
-	const setOwnerValuesState = async () => {
+	const setOwnerValuesState = useCallback(async () => {
 		const ownerValues = await getApiOwnerData();
-		setOwnerOptions(convertToOptionsValues(ownerValues))
-	}
+		setOwnerOptions(convertToOptionsValues(ownerValues));
+	}, []);
+
+	useEffect(() => {
+		setOwnerValuesState();
+	}, [setOwnerValuesState]);
 
 	const getApiOwnerData = async () => {
-		const response = await api.get('owners')
-		return response.data
-	}
+		const response = await api.get("owners");
+		return response.data;
+	};
 
 	const convertToOptionsValues = (datas: any) => {
 		const options = datas.map((data: ApiData) => {
 			return {
 				value: data.id,
-				label: data.name
-			}
-		})
-		return options
-	}
+				label: data.name,
+			};
+		});
+		return options;
+	};
 
-	return <Select name={name} label={label} options={ownerOptions} />
-}
+	return <Select name={name} label={label} options={ownerOptions} />;
+};
 
-export default AsyncSelectOwner
+export default AsyncSelectOwner;

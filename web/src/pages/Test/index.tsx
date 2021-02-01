@@ -1,18 +1,7 @@
-import React from 'react'
-
-import Pagination from '@material-ui/lab/Pagination'
+import React from "react";
 
 const Test: React.FC = () => {
+	return <div></div>;
+};
 
-	return (
-		<div>
-
-		</div>
-
-	)
-
-
-
-}
-
-export default Test
+export default Test;
