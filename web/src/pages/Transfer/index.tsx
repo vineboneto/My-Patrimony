@@ -33,7 +33,9 @@ const PatrimonyTransfer = () => {
 				setPatrimoniesFistOwner(patrimoniesUnselectedFirstOwner);
 
 				setPatrimoniesSecondOwner(
-					patrimoniesSecondOwner.concat(patrimoniesSelectedFirstOwner)
+					patrimoniesSecondOwner.concat(
+						changeStateOfSelectedPatrimonies(patrimoniesSelectedFirstOwner)
+					)
 				);
 
 				updatedOwnerIdApi(
@@ -73,6 +75,18 @@ const PatrimonyTransfer = () => {
 			(patrimony) => patrimony.isSelect === false
 		);
 		return unselected;
+	};
+
+	const changeStateOfSelectedPatrimonies = (
+		patrimonies: Context.StateProps[]
+	) => {
+		const newPatrimonies = patrimonies.map((patrimony) => {
+			return {
+				...patrimony,
+				isSelect: !patrimony.isSelect,
+			};
+		});
+		return newPatrimonies;
 	};
 
 	const factoryValidateForm = async (datas: object, ref: FormHandles) => {
