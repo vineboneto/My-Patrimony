@@ -1,5 +1,4 @@
 import React from "react";
-import { Form } from "@unform/web";
 import { FormHandles, SubmitHandler } from "@unform/core";
 import AsyncSelectOwner from "components/Selects/AsyncSelectOwner";
 import searchIcon from "assets/images/icons/searchIcon.svg";
@@ -23,7 +22,7 @@ interface ApiPatrimoniesData {
 }
 
 const OwnerForm: React.ForwardRefRenderFunction<FormHandles, {}> = (
-	{},
+	props,
 	ref
 ) => {
 	const { setValuesPatrimonies } = React.useContext(
@@ -56,12 +55,12 @@ const OwnerForm: React.ForwardRefRenderFunction<FormHandles, {}> = (
 	};
 
 	return (
-		<Form ref={ref} onSubmit={handleSubmit}>
+		<Styled.Form ref={ref} onSubmit={handleSubmit}>
 			<AsyncSelectOwner name="optionOwner" label="Nome" />
 			<Styled.SearchButton>
 				<img src={searchIcon} alt="Buscar" />
 			</Styled.SearchButton>
-		</Form>
+		</Styled.Form>
 	);
 };
 

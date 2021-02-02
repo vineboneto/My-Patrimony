@@ -6,14 +6,6 @@ export const OwnerItem = styled.div`
 	background-color: #fff;
 	padding: 3.4rem;
 
-	form {
-		display: grid;
-		grid-template-columns: 250px 30px;
-		justify-content: space-between;
-		align-items: center;
-		margin-top: 3rem;
-	}
-
 	& + & {
 		margin-top: 5rem;
 	}
