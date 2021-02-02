@@ -28,56 +28,51 @@ const PatrimonyTransfer = () => {
 				const dataSecondOwner: any = formRefs.current[1]?.getData() || {};
 				await factoryValidateForm(dataSecondOwner, formRefs.current[1]);
 
-				const patrimoniesSelected = filterPatrimoniesSelected();
+				const patrimoniesSelectedFirstOwner = filterPatrimoniesFirstOwnerSelected();
+				const patrimoniesUnselectedFirstOwner = filterPatrimoniesFirstOwnerUnselected();
+				setPatrimoniesFistOwner(patrimoniesUnselectedFirstOwner);
 
-				// const updatedOwnerIdStatePatrimony = filterPatrimoniesSelected.map(
-				// 	(patrimony) => {
-				// 		return {
-				// 			...patrimony,
-				// 			ownerId: dataSecondOwner.optionOwner,
-				// 		};
-				// 	}
-				// );
+				setPatrimoniesSecondOwner(
+					patrimoniesSecondOwner.concat(patrimoniesSelectedFirstOwner)
+				);
 
-				// const filterPatrimoniesUnSelected = patrimoniesFistOwner.filter(
-				// 	(patrimony) => patrimony.isSelect === false
-				// );
-
-				// setPatrimoniesFistOwner(filterPatrimoniesUnSelected);
-
-				// setPatrimoniesSecondOwner(
-				// 	patrimoniesSecondOwner.concat(updatedOwnerIdStatePatrimony)
-				// );
-
-				// for (let i = 0; i < filterPatrimoniesSelected.length; i++) {
-				// 	api
-				// 		.patch(`patrimonies/${filterPatrimoniesSelected[i].id}`, {
-				// 			ownerId: dataSecondOwner.optionOwner,
-				// 		})
-				// 		.then(() => {
-				// 			alert("Transferido com sucesso");
-				// 		});
-				// }
+				updatedOwnerIdApi(
+					patrimoniesSelectedFirstOwner,
+					dataSecondOwner.optionOwner
+				);
 			} catch (err) {
 				console.log(err);
 			}
 		}
 	};
 
-	const filterPatrimoniesSelected = () => {
+	const updatedOwnerIdApi = async (
+		selecteds: Context.StateProps[],
+		id: number
+	) => {
+		for (let selected of selecteds) {
+			api
+				.patch(`patrimonies/${selected.id}`, {
+					ownerId: id,
+				})
+				.then(() => {
+					alert("Transferido com sucesso");
+				});
+		}
+	};
+
+	const filterPatrimoniesFirstOwnerSelected = () => {
 		const selected = patrimoniesFistOwner.filter(
 			(patrimony) => patrimony.isSelect === true
 		);
 		return selected;
 	};
 
-	const updatedOwnerIdStatePatrimony = (datas: Context.StateProps[]) => {
-		const updated = datas.map((patrimony) => {
-			return {
-				...patrimony,
-				ownerId: dataSecondOwner.optionOwner,
-			};
-		});
+	const filterPatrimoniesFirstOwnerUnselected = () => {
+		const unselected = patrimoniesFistOwner.filter(
+			(patrimony) => patrimony.isSelect === false
+		);
+		return unselected;
 	};
 
 	const factoryValidateForm = async (datas: object, ref: FormHandles) => {
