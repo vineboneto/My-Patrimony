@@ -180,8 +180,6 @@ export default class PatrimonyController {
 
   async getByOwnerId(req: Request, res: Response) {
     const { id } = req.params;
-    const { number } = req.query || "";
-    let patrimonies;
     const selectParams = {
       id: true,
       model: true,
@@ -190,26 +188,14 @@ export default class PatrimonyController {
     };
 
     try {
-      if (id && !number) {
-        patrimonies = await prisma.patrimony.findMany({
-          where: {
-            Owner: {
-              id: Number(id),
-            },
+      const patrimonies = await prisma.patrimony.findMany({
+        where: {
+          Owner: {
+            id: Number(id),
           },
-          select: selectParams,
-        });
-      } else {
-        patrimonies = await prisma.patrimony.findMany({
-          where: {
-            number: number?.toString(),
-            Owner: {
-              id: Number(id),
-            },
-          },
-          select: selectParams,
-        });
-      }
+        },
+        select: selectParams,
+      });
       return res.status(200).json(patrimonies);
     } catch (err) {
       return res.status(400).json({
