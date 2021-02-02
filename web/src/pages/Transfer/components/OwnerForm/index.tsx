@@ -25,13 +25,14 @@ const OwnerForm: React.ForwardRefRenderFunction<FormHandles, {}> = (
 	props,
 	ref
 ) => {
-	const { setValuesPatrimonies } = React.useContext(
-		Context.PatrimonyOwnerContext
-	);
+	const { dispatch } = React.useContext(Context.PatrimonyOwnerContext);
 
 	const handleSubmit: SubmitHandler<FormData> = async (data) => {
 		const patrimoniesValues = await getApiPatrimoniesDataById(data);
-		setValuesPatrimonies(convertToStatePropsData(patrimoniesValues));
+		dispatch({
+			type: "LOAD_REQUEST",
+			data: convertToStatePropsData(patrimoniesValues),
+		});
 	};
 
 	const getApiPatrimoniesDataById = async (data: FormData) => {
