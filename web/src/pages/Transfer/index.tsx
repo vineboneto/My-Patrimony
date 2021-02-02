@@ -28,42 +28,56 @@ const PatrimonyTransfer = () => {
 				const dataSecondOwner: any = formRefs.current[1]?.getData() || {};
 				await factoryValidateForm(dataSecondOwner, formRefs.current[1]);
 
-				const filterPatrimoniesSelected = patrimoniesFistOwner.filter(
-					(patrimony) => patrimony.isSelect === true
-				);
+				const patrimoniesSelected = filterPatrimoniesSelected();
 
-				const updatedOwnerIdStatePatrimony = filterPatrimoniesSelected.map(
-					(patrimony) => {
-						return {
-							...patrimony,
-							ownerId: dataSecondOwner.optionOwner,
-						};
-					}
-				);
+				// const updatedOwnerIdStatePatrimony = filterPatrimoniesSelected.map(
+				// 	(patrimony) => {
+				// 		return {
+				// 			...patrimony,
+				// 			ownerId: dataSecondOwner.optionOwner,
+				// 		};
+				// 	}
+				// );
 
-				const filterPatrimoniesUnSelected = patrimoniesFistOwner.filter(
-					(patrimony) => patrimony.isSelect === false
-				);
+				// const filterPatrimoniesUnSelected = patrimoniesFistOwner.filter(
+				// 	(patrimony) => patrimony.isSelect === false
+				// );
 
-				setPatrimoniesFistOwner(filterPatrimoniesUnSelected);
+				// setPatrimoniesFistOwner(filterPatrimoniesUnSelected);
 
-				setPatrimoniesSecondOwner(
-					patrimoniesSecondOwner.concat(updatedOwnerIdStatePatrimony)
-				);
+				// setPatrimoniesSecondOwner(
+				// 	patrimoniesSecondOwner.concat(updatedOwnerIdStatePatrimony)
+				// );
 
-				for (let i = 0; i < filterPatrimoniesSelected.length; i++) {
-					api
-						.patch(`patrimonies/${filterPatrimoniesSelected[i].id}`, {
-							ownerId: dataSecondOwner.optionOwner,
-						})
-						.then(() => {
-							alert("Transferido com sucesso");
-						});
-				}
+				// for (let i = 0; i < filterPatrimoniesSelected.length; i++) {
+				// 	api
+				// 		.patch(`patrimonies/${filterPatrimoniesSelected[i].id}`, {
+				// 			ownerId: dataSecondOwner.optionOwner,
+				// 		})
+				// 		.then(() => {
+				// 			alert("Transferido com sucesso");
+				// 		});
+				// }
 			} catch (err) {
 				console.log(err);
 			}
 		}
+	};
+
+	const filterPatrimoniesSelected = () => {
+		const selected = patrimoniesFistOwner.filter(
+			(patrimony) => patrimony.isSelect === true
+		);
+		return selected;
+	};
+
+	const updatedOwnerIdStatePatrimony = (datas: Context.StateProps[]) => {
+		const updated = datas.map((patrimony) => {
+			return {
+				...patrimony,
+				ownerId: dataSecondOwner.optionOwner,
+			};
+		});
 	};
 
 	const factoryValidateForm = async (datas: object, ref: FormHandles) => {

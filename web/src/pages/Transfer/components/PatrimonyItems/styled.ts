@@ -6,7 +6,6 @@ interface PropsPatrimonyItem {
 
 export const PatrimonyContainer = styled.div`
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
 	flex-wrap: wrap;
 `;
@@ -14,9 +13,9 @@ export const PatrimonyContainer = styled.div`
 export const PatrimonyItem = styled.div<PropsPatrimonyItem>`
 	cursor: pointer;
 	padding: 1rem 2rem;
-	margin-top: 3rem;
 	height: 17rem;
 	width: 15rem;
+	margin: 2rem 1.7rem 0 0;
 	border: 3px solid;
 	border-color: ${(props) =>
 		props.select ? "var(--color-success)" : "#cecece"};
