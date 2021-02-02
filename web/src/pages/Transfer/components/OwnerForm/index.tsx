@@ -1,8 +1,6 @@
 import React from "react";
 import { Form } from "@unform/web";
 import { FormHandles, SubmitHandler } from "@unform/core";
-
-import Input from "components/Inputs/Input";
 import AsyncSelectOwner from "components/Selects/AsyncSelectOwner";
 import searchIcon from "assets/images/icons/searchIcon.svg";
 import * as Context from "pages/Transfer/hooks/context";
@@ -11,7 +9,6 @@ import * as Styled from "./styled";
 import api from "services/api";
 
 export interface FormData {
-	patrimonyNumber: string;
 	optionOwner: number;
 }
 
@@ -34,17 +31,13 @@ const OwnerForm: React.ForwardRefRenderFunction<FormHandles, {}> = (
 	);
 
 	const handleSubmit: SubmitHandler<FormData> = async (data) => {
-		console.log(data);
 		const patrimoniesValues = await getApiPatrimoniesDataById(data);
 		setValuesPatrimonies(convertToStatePropsData(patrimoniesValues));
 	};
 
 	const getApiPatrimoniesDataById = async (data: FormData) => {
 		const id = data.optionOwner;
-		const number = data.patrimonyNumber;
-		const url = number
-			? `owners/${id}/patrimonies?number=${number}`
-			: `owners/${id}/patrimonies`;
+		const url = `owners/${id}/patrimonies`;
 		const response = await api.get(url);
 		return response.data;
 	};
@@ -65,7 +58,6 @@ const OwnerForm: React.ForwardRefRenderFunction<FormHandles, {}> = (
 	return (
 		<Form ref={ref} onSubmit={handleSubmit}>
 			<AsyncSelectOwner name="optionOwner" label="Nome" />
-			<Input name="patrimonyNumber" label="Patriônio" />
 			<Styled.SearchButton>
 				<img src={searchIcon} alt="Buscar" />
 			</Styled.SearchButton>

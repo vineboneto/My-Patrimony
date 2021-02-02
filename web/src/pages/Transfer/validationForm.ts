@@ -30,7 +30,6 @@ export default class ValidateForm {
 	private readonly createSchema = () => {
 		const schema = Yup.object().shape({
 			optionOwner: Yup.number().moreThan(-1, "Nome obrigatório").required(),
-			patrimonyNumber: Yup.string(),
 		});
 		return schema;
 	};

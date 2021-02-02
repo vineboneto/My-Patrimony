@@ -8,7 +8,7 @@ export const OwnerItem = styled.div`
 
 	form {
 		display: grid;
-		grid-template-columns: repeat(2, 250px) 30px;
+		grid-template-columns: 250px 30px;
 		justify-content: space-between;
 		align-items: center;
 		margin-top: 3rem;
