@@ -1,6 +1,6 @@
 import React from "react";
 
-export interface PatrimoniesItemData {
+export interface PatrimonyItemData {
 	id: number;
 	model: string;
 	categoryName: string;
@@ -11,8 +11,8 @@ export interface PatrimoniesItemData {
 interface ContextProps {
 	ownerId: number;
 	setOwnerId: (value: number) => void;
-	patrimonies: PatrimoniesItemData[];
-	setValuesPatrimonies: (value: PatrimoniesItemData[]) => void;
+	patrimonies: PatrimonyItemData[];
+	setValuesPatrimonies: (value: PatrimonyItemData[]) => void;
 }
 
 export const PatrimonyOwnerContext = React.createContext<ContextProps>({

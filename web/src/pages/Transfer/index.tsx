@@ -10,7 +10,7 @@ import PatrimonyItems from "./components/PatrimonyItems";
 const PatrimonyTransfer = () => {
 	const [firstOwnerId, setFirstOwnerId] = React.useState<number>(-1);
 	const [patrimoniesFirstOwner, setPatrimoniesFirstOwner] = React.useState<
-		Context.PatrimoniesItemData[]
+		Context.PatrimonyItemData[]
 	>([]);
 
 	const handleTransfer = (e: React.MouseEvent) => {

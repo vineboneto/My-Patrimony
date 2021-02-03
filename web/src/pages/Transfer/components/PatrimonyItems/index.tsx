@@ -1,8 +1,8 @@
 import React from "react";
 import * as Context from "pages/Transfer/hooks/context";
 import * as Styled from "./styled";
-import api from "services/api";
 import * as loadPatrimonies from "./loadPatrimonies";
+import * as utils from "./selectPatrimony";
 
 const PatrimonyItems = () => {
 	const { patrimonies, setValuesPatrimonies, ownerId } = React.useContext(
@@ -21,29 +21,16 @@ const PatrimonyItems = () => {
 	};
 
 	const handleSelectPatrimony = (id: number) => {
-		const patrimoniesSelected = changeStateOfSelectedPatrimonies(id);
+		const patrimoniesSelected = utils.changeStateOfSelectedPatrimonies(
+			id,
+			patrimonies
+		);
 		setValuesPatrimonies(patrimoniesSelected);
-	};
-
-	const changeStateOfSelectedPatrimonies = (id: number) => {
-		const newPatrimonies = patrimonies.map((patrimony) => {
-			if (patrimoniesEquals(patrimony.id, id)) {
-				patrimony.isSelect = !patrimony.isSelect;
-				return patrimony;
-			}
-			return patrimony;
-		});
-		return newPatrimonies;
-	};
-
-	const patrimoniesEquals = (a: number, b: number) => {
-		if (a === b) return true;
-		return false;
 	};
 
 	return (
 		<Styled.PatrimonyContainer>
-			{patrimonies.map((patrimony: Context.PatrimoniesItemData) => (
+			{patrimonies.map((patrimony: Context.PatrimonyItemData) => (
 				<Styled.PatrimonyItem
 					key={patrimony.id}
 					select={patrimony.isSelect}
