@@ -1,7 +1,7 @@
 import React from "react";
 import PageHeader from "components/PageHeader";
 import Submit from "pages/Transfer/components/Submit";
-import SearchBlock from "pages/Transfer/components/SearchBLock";
+import SearchBlock from "pages/Transfer/components/SearchBlock";
 import ValidateForm from "./validationForm";
 import * as Context from "pages/Transfer/hooks/context";
 import * as Styled from "./styled";

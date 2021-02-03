@@ -1,9 +1,15 @@
 import React from "react";
 import { OptionTypeBase, Props as SelectProps } from "react-select";
+import { string } from "yup/lib/locale";
 import * as Styled from "./styled";
 
 interface Props extends SelectProps<OptionTypeBase> {
 	name: string;
+	label: string;
+}
+
+export interface OptionValues {
+	value: string;
 	label: string;
 }
 

@@ -1,49 +1,28 @@
 import React from "react";
-import Select from "components/Select";
+import Select, { OptionValues } from "components/Select";
 import { PatrimonyOwnerContext } from "pages/Transfer/hooks/context";
 import * as SelectProps from "react-select";
 import * as Styled from "./styled";
-import api from "services/api";
-
+import * as loadOwners from "./loadOwners";
 interface Props {
 	title: string;
-}
-
-interface ApiData {
-	id: number;
-	name: string;
 }
 
 const SearchBlock: React.FC<Props> = ({ title }) => {
 	const { setOwnerId } = React.useContext(PatrimonyOwnerContext);
 
-	const [ownerOptions, setOwnerOptions] = React.useState([]);
+	const [ownerOptions, setOwnerOptions] = React.useState<OptionValues[]>([]);
 
 	const setOwnerValuesState = React.useCallback(async () => {
-		const ownerValues = await getApiOwnerData();
-		setOwnerOptions(convertToOptionsValues(ownerValues));
+		const ownerValues = await loadOwners.getApiOwnerData();
+		setOwnerOptions(ownerValues);
 	}, []);
 
 	React.useEffect(() => {
 		setOwnerValuesState();
 	}, [setOwnerValuesState]);
 
-	const getApiOwnerData = async () => {
-		const response = await api.get("owners");
-		return response.data;
-	};
-
-	const convertToOptionsValues = (datas: any) => {
-		const options = datas.map((data: ApiData) => {
-			return {
-				value: data.id,
-				label: data.name,
-			};
-		});
-		return options;
-	};
-
-	const handleChange = (
+	const handleChangeSelect = (
 		ownerOption: SelectProps.ValueType<SelectProps.OptionTypeBase, false>
 	) => setOwnerId(ownerOption?.value);
 
@@ -54,7 +33,7 @@ const SearchBlock: React.FC<Props> = ({ title }) => {
 				name="optionOwner"
 				label="Nome"
 				options={ownerOptions}
-				onChange={handleChange}
+				onChange={handleChangeSelect}
 			/>
 		</Styled.SearchBlock>
 	);
