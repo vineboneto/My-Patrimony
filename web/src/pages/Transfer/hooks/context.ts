@@ -1,13 +1,19 @@
 import React from "react";
-import { StateProps } from "./types";
-import { INITIAL_STATE } from "./reducer";
+
+export interface PatrimoniesItemData {
+	id: number;
+	model: string;
+	categoryName: string;
+	patrimonyNumber: string;
+	isSelect: boolean;
+}
 
 interface ContextProps {
-	state: StateProps;
-	dispatch: React.Dispatch<any>;
+	patrimonies: PatrimoniesItemData[];
+	setValuesPatrimonies: (value: PatrimoniesItemData[]) => void;
 }
 
 export const PatrimonyOwnerContext = React.createContext<ContextProps>({
-	state: INITIAL_STATE,
-	dispatch: () => {},
+	patrimonies: [],
+	setValuesPatrimonies: () => {},
 });

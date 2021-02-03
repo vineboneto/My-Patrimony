@@ -17,4 +17,4 @@ export const Submit: React.FC<Props> = ({ handleSubmit }) => {
 	);
 };
 
-export default Submit;
+export default React.memo(Submit);
