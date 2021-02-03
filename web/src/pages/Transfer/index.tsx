@@ -13,13 +13,15 @@ const PatrimonyTransfer = () => {
 		Context.PatrimoniesItemData[]
 	>([]);
 
-	const valuesFirstOwner = {
-		patrimonies: patrimoniesFirstOwner,
-		setValuesPatrimonies: setPatrimoniesFirstOwner,
-	};
-
 	const handleTransfer = (e: React.MouseEvent) => {
 		console.log(firstOwnerId);
+	};
+
+	const valuesFirstOwner = {
+		ownerId: firstOwnerId,
+		setOwnerId: setFirstOwnerId,
+		patrimonies: patrimoniesFirstOwner,
+		setValuesPatrimonies: setPatrimoniesFirstOwner,
 	};
 
 	return (
@@ -28,11 +30,7 @@ const PatrimonyTransfer = () => {
 
 			<Context.PatrimonyOwnerContext.Provider value={valuesFirstOwner}>
 				<Styled.OwnerItem>
-					<SearchBlock
-						title="Primeiro Proprietário"
-						ownerId={firstOwnerId}
-						onChangeId={(id: number) => setFirstOwnerId(id)}
-					/>
+					<SearchBlock title="Primeiro Proprietário" />
 					<PatrimonyItems />
 				</Styled.OwnerItem>
 			</Context.PatrimonyOwnerContext.Provider>

@@ -1,11 +1,24 @@
 import React from "react";
 import * as Context from "pages/Transfer/hooks/context";
 import * as Styled from "./styled";
+import api from "services/api";
+import * as loadPatrimonies from "./loadPatrimonies";
 
 const PatrimonyItems = () => {
-	const { patrimonies, setValuesPatrimonies } = React.useContext(
+	const { patrimonies, setValuesPatrimonies, ownerId } = React.useContext(
 		Context.PatrimonyOwnerContext
 	);
+
+	React.useEffect(() => {
+		setStatePatrimoniesByOwnerId();
+	}, [ownerId]);
+
+	const setStatePatrimoniesByOwnerId = async () => {
+		const patrimoniesValues = await loadPatrimonies.getApiPatrimoniesDataById(
+			ownerId
+		);
+		setValuesPatrimonies(patrimoniesValues);
+	};
 
 	const handleSelectPatrimony = (id: number) => {
 		const patrimoniesSelected = changeStateOfSelectedPatrimonies(id);

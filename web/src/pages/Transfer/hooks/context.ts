@@ -9,11 +9,15 @@ export interface PatrimoniesItemData {
 }
 
 interface ContextProps {
+	ownerId: number;
+	setOwnerId: (value: number) => void;
 	patrimonies: PatrimoniesItemData[];
 	setValuesPatrimonies: (value: PatrimoniesItemData[]) => void;
 }
 
 export const PatrimonyOwnerContext = React.createContext<ContextProps>({
+	ownerId: -1,
+	setOwnerId: () => {},
 	patrimonies: [],
 	setValuesPatrimonies: () => {},
 });

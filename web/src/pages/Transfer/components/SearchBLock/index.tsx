@@ -1,24 +1,12 @@
 import React from "react";
-import Select from "components/test/Select";
+import Select from "components/Select";
 import { PatrimonyOwnerContext } from "pages/Transfer/hooks/context";
-import { OptionTypeBase, ValueType } from "react-select";
+import * as SelectProps from "react-select";
 import * as Styled from "./styled";
 import api from "services/api";
 
 interface Props {
 	title: string;
-	ownerId: number;
-	onChangeId: (id: number) => void;
-}
-
-interface ApiPatrimoniesData {
-	id: number;
-	model: string;
-	number: string;
-	Category: {
-		id: number;
-		name: string;
-	};
 }
 
 interface ApiData {
@@ -26,42 +14,11 @@ interface ApiData {
 	name: string;
 }
 
-const SearchBlock: React.FC<Props> = ({ title, ownerId, onChangeId }) => {
-	const { setValuesPatrimonies } = React.useContext(PatrimonyOwnerContext);
-
-	React.useEffect(() => {
-		setPatrimonies();
-	}, [ownerId]);
-
-	const setPatrimonies = async () => {
-		const patrimoniesValues = await getApiPatrimoniesDataById();
-		console.log(patrimoniesValues);
-		setValuesPatrimonies(convertToStatePropsData(patrimoniesValues));
-	};
-
-	const getApiPatrimoniesDataById = async () => {
-		const url = `owners/${ownerId}/patrimonies`;
-		const response = await api.get(url);
-		return response.data;
-	};
-
-	const convertToStatePropsData = (datas: ApiPatrimoniesData[]) => {
-		const patrimonies = datas.map((data) => {
-			return {
-				id: data.id,
-				model: data.model,
-				patrimonyNumber: data.number,
-				categoryName: data.Category.name,
-				isSelect: false,
-			};
-		});
-		return patrimonies;
-	};
-
-	const handleChange = (ownerOption: ValueType<OptionTypeBase, false>) =>
-		onChangeId(ownerOption?.value);
+const SearchBlock: React.FC<Props> = ({ title }) => {
+	const { setOwnerId } = React.useContext(PatrimonyOwnerContext);
 
 	const [ownerOptions, setOwnerOptions] = React.useState([]);
+
 	const setOwnerValuesState = React.useCallback(async () => {
 		const ownerValues = await getApiOwnerData();
 		setOwnerOptions(convertToOptionsValues(ownerValues));
@@ -85,6 +42,10 @@ const SearchBlock: React.FC<Props> = ({ title, ownerId, onChangeId }) => {
 		});
 		return options;
 	};
+
+	const handleChange = (
+		ownerOption: SelectProps.ValueType<SelectProps.OptionTypeBase, false>
+	) => setOwnerId(ownerOption?.value);
 
 	return (
 		<Styled.SearchBlock>
