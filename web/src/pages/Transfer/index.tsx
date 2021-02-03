@@ -1,10 +1,11 @@
 import React from "react";
 import PageHeader from "components/PageHeader";
 import Submit from "pages/Transfer/components/Submit";
-import OwnerItem from "pages/Transfer/components/OwnerItem";
+import SearchBlock from "pages/Transfer/components/SearchBLock";
 import ValidateForm from "./validationForm";
 import * as Context from "pages/Transfer/hooks/context";
 import * as Styled from "./styled";
+import PatrimonyItems from "./components/PatrimonyItems";
 
 const PatrimonyTransfer = () => {
 	const [firstOwnerId, setFirstOwnerId] = React.useState<number>(-1);
@@ -24,12 +25,16 @@ const PatrimonyTransfer = () => {
 	return (
 		<Styled.Container>
 			<PageHeader title="Escolha os Proprietários" prev="/" />
+
 			<Context.PatrimonyOwnerContext.Provider value={valuesFirstOwner}>
-				<OwnerItem
-					title="Primeiro Proprietário"
-					ownerId={firstOwnerId}
-					onChangeId={(id: number) => setFirstOwnerId(id)}
-				/>
+				<Styled.OwnerItem>
+					<SearchBlock
+						title="Primeiro Proprietário"
+						ownerId={firstOwnerId}
+						onChangeId={(id: number) => setFirstOwnerId(id)}
+					/>
+					<PatrimonyItems />
+				</Styled.OwnerItem>
 			</Context.PatrimonyOwnerContext.Provider>
 
 			<Submit handleSubmit={handleTransfer} />

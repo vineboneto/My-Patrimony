@@ -1,10 +1,9 @@
 import React from "react";
 import Select from "components/test/Select";
-import PatrimonyItems from "pages/Transfer/components/PatrimonyItems";
 import { PatrimonyOwnerContext } from "pages/Transfer/hooks/context";
+import { OptionTypeBase, ValueType } from "react-select";
 import * as Styled from "./styled";
 import api from "services/api";
-import { OptionTypeBase, ValueType } from "react-select";
 
 interface Props {
 	title: string;
@@ -27,12 +26,7 @@ interface ApiData {
 	name: string;
 }
 
-interface OptionValues {
-	value: number;
-	label: string;
-}
-
-const OwnerItem: React.FC<Props> = ({ title, ownerId, onChangeId }) => {
+const SearchBlock: React.FC<Props> = ({ title, ownerId, onChangeId }) => {
 	const { setValuesPatrimonies } = React.useContext(PatrimonyOwnerContext);
 
 	React.useEffect(() => {
@@ -93,7 +87,7 @@ const OwnerItem: React.FC<Props> = ({ title, ownerId, onChangeId }) => {
 	};
 
 	return (
-		<Styled.OwnerItem>
+		<Styled.SearchBlock>
 			<Styled.Title>{title}</Styled.Title>
 			<Select
 				name="optionOwner"
@@ -101,9 +95,8 @@ const OwnerItem: React.FC<Props> = ({ title, ownerId, onChangeId }) => {
 				options={ownerOptions}
 				onChange={handleChange}
 			/>
-			<PatrimonyItems />
-		</Styled.OwnerItem>
+		</Styled.SearchBlock>
 	);
 };
 
-export default OwnerItem;
+export default SearchBlock;
