@@ -8,13 +8,13 @@ export const Container = styled.div`
 	}
 `;
 
-export const OwnerItem = styled.div`
-	max-width: 74rem;
-	margin: -10rem auto 0;
-	background-color: #fff;
-	padding: 3.4rem;
+// export const OwnerItem = styled.div`
+// 	max-width: 74rem;
+// 	margin: -10rem auto 0;
+// 	background-color: #fff;
+// 	padding: 3.4rem;
 
-	& + & {
-		margin-top: 5rem;
-	}
-`;
+// 	& + & {
+// 		margin-top: 5rem;
+// 	}
+// `;

@@ -28,7 +28,6 @@ const SearchBlock: React.FC<Props> = ({ title }) => {
 
 	return (
 		<Styled.SearchBlock>
-			<Styled.Title>{title}</Styled.Title>
 			<Select
 				error={ownerState.error}
 				name="optionOwner"
