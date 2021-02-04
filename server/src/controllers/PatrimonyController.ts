@@ -142,11 +142,11 @@ export default class PatrimonyController {
         data: {
           Owner: {
             connect: {
-              id: patrimony.ownerId,
+              id: Number(patrimony.ownerId),
             },
           },
         },
-        where: { id: id },
+        where: { id: Number(id) },
       });
       return res.status(204).send();
     } catch (err) {

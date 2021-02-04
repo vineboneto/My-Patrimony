@@ -49,4 +49,4 @@ const PatrimonyItems = () => {
 	);
 };
 
-export default React.memo(PatrimonyItems);
+export default PatrimonyItems;

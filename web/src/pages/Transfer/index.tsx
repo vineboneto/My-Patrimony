@@ -1,11 +1,13 @@
 import React from "react";
 import PageHeader from "components/PageHeader";
 import Submit from "pages/Transfer/components/Submit";
-import ValidateForm from "./validationForm";
+import ValidateForm from "./ValidationForm";
 import OwnerItem from "pages/Transfer/components/OwnerItem";
 import * as Context from "pages/Transfer/hooks/context";
 import * as Styled from "./styled";
 import * as Yup from "yup";
+import * as loadPatrimonies from "pages/Transfer/components/PatrimonyItems/loadPatrimonies";
+import api from "services/api";
 
 const PatrimonyTransfer = () => {
 	const [firstOwner, setFirstOwner] = React.useState<Context.OwnerState>(
@@ -26,33 +28,65 @@ const PatrimonyTransfer = () => {
 
 	const handleTransfer = async (e: React.MouseEvent) => {
 		try {
-			const filterSelectedPatrimony = patrimoniesFirstOwner.filter(
+			try {
+				const filterSelectedPatrimony = patrimoniesFirstOwner.filter(
+					(patrimony) => patrimony.isSelect === true
+				);
+				const datasFistOwner = {
+					optionOwner: firstOwner.ownerId,
+					isSelect: filterSelectedPatrimony.length,
+				};
+				const validateFistOwner = new ValidateForm(datasFistOwner);
+
+				await validateFistOwner.validate();
+			} catch (err) {
+				if (err instanceof Yup.ValidationError) {
+					setFirstOwner({ ownerId: firstOwner.ownerId, error: err.message });
+					throw Yup.ValidationError;
+				}
+			}
+
+			try {
+				const datasSecondOwner = {
+					optionOwner: secondOwner.ownerId,
+				};
+				const validateSecondOwner = new ValidateForm(datasSecondOwner);
+
+				await validateSecondOwner.validate();
+			} catch (err) {
+				if (err instanceof Yup.ValidationError) {
+					setSecondOwner({ ownerId: secondOwner.ownerId, error: err.message });
+					throw Yup.ValidationError;
+				}
+			}
+
+			const patrimoniesSelected = patrimoniesFirstOwner.filter(
 				(patrimony) => patrimony.isSelect === true
 			);
-			const datasFistOwner = {
-				optionOwner: firstOwner.ownerId,
-				isSelect: filterSelectedPatrimony.length,
-			};
-			const validateFistOwner = new ValidateForm(datasFistOwner);
 
-			await validateFistOwner.validate();
+			patrimoniesSelected.forEach((patrimony) => {
+				console.log(patrimony.id);
+				const url = `patrimonies/${patrimony.id}`;
+				api
+					.patch(url, {
+						ownerId: secondOwner.ownerId,
+					})
+					.then(() => {
+						alert("Patrimônio transferido com sucesso");
+					});
+			});
+
+			const updatedFistOwner = await loadPatrimonies.getApiPatrimoniesDataById(
+				firstOwner.ownerId
+			);
+			const updatedSecondOwner = await loadPatrimonies.getApiPatrimoniesDataById(
+				secondOwner.ownerId
+			);
+
+			setPatrimoniesFirstOwner(updatedFistOwner);
+			setPatrimoniesSecondOwner(updatedSecondOwner);
 		} catch (err) {
-			if (err instanceof Yup.ValidationError) {
-				setFirstOwner({ ownerId: firstOwner.ownerId, error: err.message });
-			}
-		}
-
-		try {
-			const datasSecondOwner = {
-				optionOwner: secondOwner.ownerId,
-			};
-			const validateSecondOwner = new ValidateForm(datasSecondOwner);
-
-			await validateSecondOwner.validate();
-		} catch (err) {
-			if (err instanceof Yup.ValidationError) {
-				setSecondOwner({ ownerId: secondOwner.ownerId, error: err.message });
-			}
+			console.log(err);
 		}
 	};
 

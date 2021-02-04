@@ -2,7 +2,6 @@ import * as Yup from "yup";
 
 export default class ValidateForm {
 	private readonly datas: object;
-	// private readonly schema: Yup.ObjectSchema<any>;
 
 	constructor(datas: object) {
 		this.datas = datas;
