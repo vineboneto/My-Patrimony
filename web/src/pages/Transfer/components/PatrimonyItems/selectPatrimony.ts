@@ -1,8 +1,8 @@
-import { PatrimonyItemData } from "pages/Transfer/hooks/context";
+import { PatrimonyState } from "pages/Transfer/hooks/context";
 
 export const changeStateOfSelectedPatrimonies = (
 	id: number,
-	patrimonies: PatrimonyItemData[]
+	patrimonies: PatrimonyState[]
 ) => {
 	const newPatrimonies = patrimonies.map((patrimony) => {
 		if (patrimoniesEquals(patrimony.id, id)) {

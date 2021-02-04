@@ -5,17 +5,17 @@ import * as loadPatrimonies from "./loadPatrimonies";
 import * as utils from "./selectPatrimony";
 
 const PatrimonyItems = () => {
-	const { patrimonies, setValuesPatrimonies, ownerId } = React.useContext(
+	const { patrimonies, setValuesPatrimonies, ownerState } = React.useContext(
 		Context.PatrimonyOwnerContext
 	);
 
 	React.useEffect(() => {
 		setStatePatrimoniesByOwnerId();
-	}, [ownerId]);
+	}, [ownerState.ownerId]);
 
 	const setStatePatrimoniesByOwnerId = async () => {
 		const patrimoniesValues = await loadPatrimonies.getApiPatrimoniesDataById(
-			ownerId
+			ownerState.ownerId
 		);
 		setValuesPatrimonies(patrimoniesValues);
 	};
@@ -30,7 +30,7 @@ const PatrimonyItems = () => {
 
 	return (
 		<Styled.PatrimonyContainer>
-			{patrimonies.map((patrimony: Context.PatrimonyItemData) => (
+			{patrimonies.map((patrimony: Context.PatrimonyState) => (
 				<Styled.PatrimonyItem
 					key={patrimony.id}
 					select={patrimony.isSelect}

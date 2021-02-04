@@ -1,22 +1,18 @@
-import { FormHandles } from "@unform/core";
 import * as Yup from "yup";
 
 export default class ValidateForm {
-	private readonly ref: FormHandles;
 	private readonly datas: object;
+	// private readonly schema: Yup.ObjectSchema<any>;
 
-	constructor(datas: object, ref: FormHandles) {
+	constructor(datas: object) {
 		this.datas = datas;
-		this.ref = ref;
 	}
 
 	public validate = async () => {
 		try {
 			await this.tryValidate();
-			this.ref.setErrors({});
 		} catch (err) {
-			await this.setValidationErrors(err);
-			throw Yup.ValidationError;
+			if (err instanceof Yup.ValidationError) throw err;
 		}
 	};
 
@@ -29,20 +25,10 @@ export default class ValidateForm {
 
 	private readonly createSchema = () => {
 		const schema = Yup.object().shape({
-			optionOwner: Yup.number().moreThan(-1, "Nome obrigatório").required(),
+			optionOwner: Yup.number()
+				.moreThan(-1, "Nome Obrigatório")
+				.required("Nome Obrigatório"),
 		});
 		return schema;
-	};
-
-	private readonly setValidationErrors = async (err: any) => {
-		if (err instanceof Yup.ValidationError) {
-			await this.setErrors(err);
-		}
-	};
-
-	private readonly setErrors = async (err: Yup.ValidationError) => {
-		err.inner.forEach((error) => {
-			if (error.path) this.ref.setFieldError(error.path, error.message);
-		});
 	};
 }

@@ -9,7 +9,7 @@ interface Props {
 }
 
 const SearchBlock: React.FC<Props> = ({ title }) => {
-	const { setOwnerId } = React.useContext(PatrimonyOwnerContext);
+	const { setOwnerState } = React.useContext(PatrimonyOwnerContext);
 
 	const [ownerOptions, setOwnerOptions] = React.useState<OptionValues[]>([]);
 
@@ -24,7 +24,7 @@ const SearchBlock: React.FC<Props> = ({ title }) => {
 
 	const handleChangeSelect = (
 		ownerOption: SelectProps.ValueType<SelectProps.OptionTypeBase, false>
-	) => setOwnerId(ownerOption?.value);
+	) => setOwnerState({ ownerId: ownerOption?.value, error: "" });
 
 	return (
 		<Styled.SearchBlock>
