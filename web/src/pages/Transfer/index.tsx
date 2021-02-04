@@ -29,19 +29,27 @@ const PatrimonyTransfer = () => {
 			const datasFistOwner = {
 				optionOwner: firstOwner.ownerId,
 			};
+			const validateFistOwner = new ValidateForm(datasFistOwner);
 
+			await validateFistOwner.validate();
+		} catch (err) {
+			if (err instanceof Yup.ValidationError) {
+				setFirstOwner({ ownerId: firstOwner.ownerId, error: err.message });
+			}
+		}
+
+		try {
 			const datasSecondOwner = {
 				optionOwner: secondOwner.ownerId,
 			};
-		} catch (err) {
-			if (err instanceof Yup.ValidationError)
-				setFirstOwner({ error: err.message, ownerId: firstOwner.ownerId });
-		}
-	};
+			const validateSecondOwner = new ValidateForm(datasSecondOwner);
 
-	const factoryValidate = async (datas: object) => {
-		const validation = new ValidateForm(datas);
-		await validation.validate();
+			await validateSecondOwner.validate();
+		} catch (err) {
+			if (err instanceof Yup.ValidationError) {
+				setSecondOwner({ ownerId: secondOwner.ownerId, error: err.message });
+			}
+		}
 	};
 
 	const valuesFirstOwner = {
