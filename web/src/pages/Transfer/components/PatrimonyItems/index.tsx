@@ -5,9 +5,12 @@ import * as loadPatrimonies from "./loadPatrimonies";
 import * as utils from "./selectPatrimony";
 
 const PatrimonyItems = () => {
-	const { patrimonies, setValuesPatrimonies, ownerState } = React.useContext(
-		Context.PatrimonyOwnerContext
-	);
+	const {
+		patrimonies,
+		setValuesPatrimonies,
+		ownerState,
+		setOwnerState,
+	} = React.useContext(Context.PatrimonyOwnerContext);
 
 	React.useEffect(() => {
 		setStatePatrimoniesByOwnerId();
@@ -26,6 +29,7 @@ const PatrimonyItems = () => {
 			patrimonies
 		);
 		setValuesPatrimonies(patrimoniesSelected);
+		setOwnerState({ error: "", ownerId: ownerState.ownerId });
 	};
 
 	return (

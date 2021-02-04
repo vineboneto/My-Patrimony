@@ -26,8 +26,12 @@ const PatrimonyTransfer = () => {
 
 	const handleTransfer = async (e: React.MouseEvent) => {
 		try {
+			const filterSelectedPatrimony = patrimoniesFirstOwner.filter(
+				(patrimony) => patrimony.isSelect === true
+			);
 			const datasFistOwner = {
 				optionOwner: firstOwner.ownerId,
+				isSelect: filterSelectedPatrimony.length,
 			};
 			const validateFistOwner = new ValidateForm(datasFistOwner);
 

@@ -18,13 +18,12 @@ export default class ValidateForm {
 
 	private readonly tryValidate = async () => {
 		const schema = this.createSchema();
-		await schema.validate(this.datas, {
-			abortEarly: false,
-		});
+		await schema.validate(this.datas);
 	};
 
 	private readonly createSchema = () => {
 		const schema = Yup.object().shape({
+			isSelect: Yup.number().moreThan(0, "Selecione algum patrimônio"),
 			optionOwner: Yup.number()
 				.moreThan(-1, "Nome Obrigatório")
 				.required("Nome Obrigatório"),
