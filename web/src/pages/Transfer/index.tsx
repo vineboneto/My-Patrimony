@@ -9,7 +9,7 @@ import * as Styled from "./styled";
 import * as Yup from "yup";
 
 const PatrimonyTransfer = () => {
-	const [firstOwnerId, setFirstOwnerId] = React.useState<Context.OwnerState>(
+	const [firstOwner, setFirstOwner] = React.useState<Context.OwnerState>(
 		Context.defaultValueOwnerState
 	);
 	const [patrimoniesFirstOwner, setPatrimoniesFirstOwner] = React.useState<
@@ -19,19 +19,20 @@ const PatrimonyTransfer = () => {
 	const handleTransfer = async (e: React.MouseEvent) => {
 		try {
 			const datas = {
-				optionOwner: firstOwnerId,
+				optionOwner: firstOwner.ownerId,
 			};
 
 			const validation = new ValidateForm(datas);
 			await validation.validate();
 		} catch (err) {
-			if (err instanceof Yup.ValidationError) console.log(err.message);
+			if (err instanceof Yup.ValidationError)
+				setFirstOwner({ error: err.message, ownerId: firstOwner.ownerId });
 		}
 	};
 
 	const valuesFirstOwner = {
-		ownerState: firstOwnerId,
-		setOwnerState: setFirstOwnerId,
+		ownerState: firstOwner,
+		setOwnerState: setFirstOwner,
 		patrimonies: patrimoniesFirstOwner,
 		setValuesPatrimonies: setPatrimoniesFirstOwner,
 	};

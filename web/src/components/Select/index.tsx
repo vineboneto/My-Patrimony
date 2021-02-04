@@ -6,6 +6,7 @@ import * as Styled from "./styled";
 interface Props extends SelectProps<OptionTypeBase> {
 	name: string;
 	label: string;
+	error?: string;
 }
 
 export interface OptionValues {
@@ -13,10 +14,10 @@ export interface OptionValues {
 	label: string;
 }
 
-const Select: React.FC<Props> = ({ name, label, ...rest }) => {
+const Select: React.FC<Props> = ({ name, label, error, ...rest }) => {
 	return (
 		<Styled.Block>
-			<Styled.Label>{label}</Styled.Label>
+			<Styled.Label error={error}>{error ? error : label}</Styled.Label>
 			<Styled.Select
 				defaultValue={{ value: -1, label: "Selecione" }}
 				classNamePrefix="react-select"

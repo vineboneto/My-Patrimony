@@ -9,7 +9,7 @@ interface Props {
 }
 
 const SearchBlock: React.FC<Props> = ({ title }) => {
-	const { setOwnerState } = React.useContext(PatrimonyOwnerContext);
+	const { ownerState, setOwnerState } = React.useContext(PatrimonyOwnerContext);
 
 	const [ownerOptions, setOwnerOptions] = React.useState<OptionValues[]>([]);
 
@@ -30,6 +30,7 @@ const SearchBlock: React.FC<Props> = ({ title }) => {
 		<Styled.SearchBlock>
 			<Styled.Title>{title}</Styled.Title>
 			<Select
+				error={ownerState.error}
 				name="optionOwner"
 				label="Nome"
 				options={ownerOptions}
