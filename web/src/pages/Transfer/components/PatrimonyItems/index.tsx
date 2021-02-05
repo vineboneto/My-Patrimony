@@ -1,40 +1,42 @@
 import React from "react";
+import { ActionsProps } from "pages/Transfer/hooks/types";
 import * as Context from "pages/Transfer/hooks/context";
 import * as Styled from "./styled";
 import * as loadPatrimonies from "./loadPatrimonies";
 import * as utils from "./selectPatrimony";
 
 const PatrimonyItems = () => {
-	const {
-		patrimonies,
-		setValuesPatrimonies,
-		ownerState,
-		setOwnerState,
-	} = React.useContext(Context.PatrimonyOwnerContext);
+	const { state, dispatch } = React.useContext(Context.PatrimonyOwnerContext);
 
 	React.useEffect(() => {
 		setStatePatrimoniesByOwnerId();
-	}, [ownerState.ownerId]);
+	}, [state.ownerData.ownerId]);
 
 	const setStatePatrimoniesByOwnerId = async () => {
 		const patrimoniesValues = await loadPatrimonies.getApiPatrimoniesDataById(
-			ownerState.ownerId
+			state.ownerData.ownerId
 		);
-		setValuesPatrimonies(patrimoniesValues);
+		dispatch({
+			type: ActionsProps.SET_PATRIMONIES,
+			patrimoniesData: patrimoniesValues,
+			messageErrors: "",
+		});
 	};
 
 	const handleSelectPatrimony = (id: number) => {
 		const patrimoniesSelected = utils.changeStateOfSelectedPatrimonies(
 			id,
-			patrimonies
+			state.patrimoniesData
 		);
-		setValuesPatrimonies(patrimoniesSelected);
-		setOwnerState({ error: "", ownerId: ownerState.ownerId });
+		dispatch({
+			type: ActionsProps.SET_PATRIMONIES,
+			patrimoniesData: patrimoniesSelected,
+		});
 	};
 
 	return (
 		<Styled.PatrimonyContainer>
-			{patrimonies.map((patrimony: Context.PatrimonyState) => (
+			{state.patrimoniesData.map((patrimony) => (
 				<Styled.PatrimonyItem
 					key={patrimony.id}
 					select={patrimony.isSelect}

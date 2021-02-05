@@ -4,12 +4,10 @@ import { PatrimonyOwnerContext } from "pages/Transfer/hooks/context";
 import * as SelectProps from "react-select";
 import * as Styled from "./styled";
 import * as loadOwners from "./loadOwners";
-interface Props {
-	title: string;
-}
+import { ActionsProps } from "pages/Transfer/hooks/types";
 
-const SearchBlock: React.FC<Props> = ({ title }) => {
-	const { ownerState, setOwnerState } = React.useContext(PatrimonyOwnerContext);
+const SelectOwner: React.FC = () => {
+	const { state, dispatch } = React.useContext(PatrimonyOwnerContext);
 
 	const [ownerOptions, setOwnerOptions] = React.useState<OptionValues[]>([]);
 
@@ -24,12 +22,17 @@ const SearchBlock: React.FC<Props> = ({ title }) => {
 
 	const handleChangeSelect = (
 		ownerOption: SelectProps.ValueType<SelectProps.OptionTypeBase, false>
-	) => setOwnerState({ ownerId: ownerOption?.value, error: "" });
+	) =>
+		dispatch({
+			type: ActionsProps.SET_OWNER,
+			ownerData: { ownerId: ownerOption?.value },
+			messageError: "",
+		});
 
 	return (
 		<Styled.SearchBlock>
 			<Select
-				error={ownerState.error}
+				error={state.messageError}
 				name="optionOwner"
 				label="Nome"
 				options={ownerOptions}
@@ -39,4 +42,4 @@ const SearchBlock: React.FC<Props> = ({ title }) => {
 	);
 };
 
-export default SearchBlock;
+export default SelectOwner;

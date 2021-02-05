@@ -1,8 +1,7 @@
 export enum ActionsProps {
-	LOAD_PATRIMONIES = "@LOAD_PATRIMONIES",
-	LOAD_OWNERS = "@LOAD_OWNERS",
 	SET_OWNER = "@SET_OWNER",
-	SET_PATRIMONY = "@SET_PATRIMONY",
+	SET_PATRIMONIES = "@SET_PATRIMONIES",
+	SET_ERRORS = "@SET_ERRORS",
 }
 
 export interface PatrimonyData {
@@ -18,7 +17,7 @@ export interface OwnerData {
 }
 
 export interface StateProps {
-	ownersData: OwnerData[];
+	ownerData: OwnerData;
 	patrimoniesData: PatrimonyData[];
 	messageError: string;
 }

@@ -1,21 +1,27 @@
 import { StateProps, ActionsProps } from "./types";
 
 export const INITIAL_STATE: StateProps = {
-	ownersData: [],
+	ownerData: { ownerId: -1 },
 	patrimoniesData: [],
 	messageError: "",
 };
 
 export const reducer = (state: StateProps, action: any) => {
 	switch (action.type) {
-		case ActionsProps.LOAD_OWNERS:
-			return { ...state };
-		case ActionsProps.LOAD_PATRIMONIES:
-			return { ...state };
 		case ActionsProps.SET_OWNER:
-			return { ...state };
-		case ActionsProps.SET_PATRIMONY:
-			return { ...state };
+			return {
+				...state,
+				ownerData: action.ownerData,
+				messageError: action.messageError,
+			};
+		case ActionsProps.SET_PATRIMONIES:
+			return {
+				...state,
+				patrimoniesData: action.patrimoniesData,
+				messageError: action.messageError,
+			};
+		case ActionsProps.SET_ERRORS:
+			return { ...state, messageError: action.messageError };
 		default:
 			return state;
 	}

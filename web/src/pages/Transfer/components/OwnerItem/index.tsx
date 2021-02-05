@@ -1,5 +1,5 @@
 import React from "react";
-import SearchBlock from "pages/Transfer/components/SearchBlock";
+import SelectOwner from "pages/Transfer/components/SelectOwner";
 import PatrimonyItems from "pages/Transfer/components/PatrimonyItems";
 import * as Styled from "./styled";
 
@@ -11,7 +11,7 @@ const OwnerItem: React.FC<Props> = ({ title }) => {
 	return (
 		<Styled.OwnerItem>
 			<Styled.Title>{title}</Styled.Title>
-			<SearchBlock title="Primeiro Proprietário" />
+			<SelectOwner />
 			<PatrimonyItems />
 		</Styled.OwnerItem>
 	);
