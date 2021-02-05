@@ -38,43 +38,29 @@ const PatrimonyTransfer = () => {
 
 	const handleTransfer = async (e: React.MouseEvent) => {
 		try {
-			await tryValidateFistOwner();
-			await tryValidateSecondOwner();
+			await tryValidateOwner(datasFistOwner, dispatchFirstOwner);
+			await tryValidateOwner(dataSecondOwner, dispatchSecondOwner);
 		} catch (err) {
 			console.log(err);
 		}
 	};
 
-	const tryValidateFistOwner = async () => {
+	const tryValidateOwner = async (
+		datas: object,
+		dispatch: (value: any) => void
+	) => {
 		try {
-			await validateData(datasFistOwner);
+			await validateData(datas);
 		} catch (err) {
 			if (existsErrorValidation(err)) {
-				setErrorsFistOwner(err.message);
+				setErros(dispatch, err.message);
 				throw Yup.ValidationError;
 			}
 		}
 	};
 
-	const tryValidateSecondOwner = async () => {
-		try {
-			await validateData(dataSecondOwner);
-		} catch (err) {
-			if (existsErrorValidation(err)) {
-				setErrorsSecondOwner(err.message);
-			}
-		}
-	};
-
-	const setErrorsFistOwner = (messageError: string) => {
-		dispatchFirstOwner({
-			type: Types.ActionsProps.SET_ERRORS,
-			messageError: messageError,
-		});
-	};
-
-	const setErrorsSecondOwner = (messageError: string) => {
-		dispatchSecondOwner({
+	const setErros = (dispatch: (value: any) => void, messageError: string) => {
+		dispatch({
 			type: Types.ActionsProps.SET_ERRORS,
 			messageError: messageError,
 		});
