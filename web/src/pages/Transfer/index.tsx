@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import * as Reducer from "pages/Transfer/hooks/reducer";
 import * as Types from "pages/Transfer/hooks/types";
 import * as loadPatrimonies from "pages/Transfer/components/PatrimonyItems/loadPatrimonies";
+import * as Utils from "pages/Transfer/utils/filterPatrimonies";
 import api from "services/api";
 
 const PatrimonyTransfer = () => {
@@ -22,57 +23,61 @@ const PatrimonyTransfer = () => {
 		Reducer.INITIAL_STATE
 	);
 
-	const filterPatrimoniesSelected = async () => {
-		const selected = await reducerFistOwner.patrimoniesData.filter(
-			(patrimony: Types.PatrimonyData) => patrimony.isSelect === true
-		);
-		return selected;
+	const patrimoniesSelected = Utils.filterPatrimoniesSelected(
+		reducerFistOwner.patrimoniesData
+	);
+	const datasFistOwner = {
+		optionOwner: reducerFistOwner.ownerData.ownerId,
+		isSelect: patrimoniesSelected.length,
+	};
+	const dataSecondOwner = {
+		optionOwner: reducerSecondOwner.ownerData.ownerId,
 	};
 
 	const handleTransfer = async (e: React.MouseEvent) => {
 		try {
-			const patrimoniesSelected = await filterPatrimoniesSelected();
-			const datasFistOwner = {
-				optionOwner: reducerFistOwner.ownerData.ownerId,
-				isSelect: patrimoniesSelected.length,
-			};
-			const dataSecondOwner = {
-				optionOwner: reducerSecondOwner.ownerData.ownerId,
-			};
 			await tryValidateOwner(datasFistOwner, dispatchFirstOwner);
 			await tryValidateOwner(dataSecondOwner, dispatchSecondOwner);
-
-			for (let patrimony of patrimoniesSelected) {
-				const url = `patrimonies/${patrimony.id}`;
-				await api
-					.patch(url, {
-						ownerId: reducerSecondOwner.ownerData.ownerId,
-					})
-					.then(() => {
-						alert("Transferido com sucesso");
-					});
-			}
-
-			const updatedPatrimoniesFistOwner = await loadPatrimonies.getApiPatrimoniesDataById(
-				reducerFistOwner.ownerData.ownerId
-			);
-
-			const updatedPatrimoniesSecondOwner = await loadPatrimonies.getApiPatrimoniesDataById(
-				reducerSecondOwner.ownerData.ownerId
-			);
-
-			dispatchFirstOwner({
-				type: Types.ActionsProps.SET_PATRIMONIES,
-				patrimoniesData: updatedPatrimoniesFistOwner,
-			});
-
-			dispatchSecondOwner({
-				type: Types.ActionsProps.SET_PATRIMONIES,
-				patrimoniesData: updatedPatrimoniesSecondOwner,
-			});
+			await transferPatrimoniesSelectedToSecondOwner();
+			await updatedPatrimoniesItems();
 		} catch (err) {
 			console.log(err);
 		}
+	};
+
+	const updatedPatrimoniesItems = async () => {
+		const firstOwnerId = reducerFistOwner.ownerData.ownerId;
+		const secondOwnerId = reducerSecondOwner.ownerData.ownerId;
+		await updatedPatrimoniesByOwnerId(firstOwnerId, dispatchFirstOwner);
+		await updatedPatrimoniesByOwnerId(secondOwnerId, dispatchSecondOwner);
+	};
+
+	const updatedPatrimoniesByOwnerId = async (
+		id: number,
+		dispatch: (values: any) => void
+	) => {
+		const patrimonies = await loadPatrimonies.getApiPatrimoniesDataById(id);
+		dispatch({
+			type: Types.ActionsProps.SET_PATRIMONIES,
+			patrimoniesData: patrimonies,
+		});
+	};
+
+	const transferPatrimoniesSelectedToSecondOwner = async () => {
+		for (let patrimony of patrimoniesSelected) {
+			const url = `patrimonies/${patrimony.id}`;
+			await transferPatrimonySelectedToSecondOwner(url);
+		}
+	};
+
+	const transferPatrimonySelectedToSecondOwner = async (url: string) => {
+		await api
+			.patch(url, {
+				ownerId: reducerSecondOwner.ownerData.ownerId,
+			})
+			.then(() => {
+				alert("Transferido com sucesso");
+			});
 	};
 
 	const tryValidateOwner = async (
