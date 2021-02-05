@@ -1,23 +1,16 @@
-import React, { memo } from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 
-import deleteForeverIcon from 'assets/images/icons/deleteForeverIcon.svg'
-import editIcon from 'assets/images/icons/editIcon.svg'
+import deleteForeverIcon from "assets/images/icons/deleteForeverIcon.svg";
+import editIcon from "assets/images/icons/editIcon.svg";
 
-import {
-	Item,
-	Header,
-	Content,
-	Info,
-	Ip as IpInfo,
-	Actions
-} from './styled'
+import { Item, Header, Content, Info, Ip as IpInfo, Actions } from "./styled";
 
 interface Ip {
-	id: number
-	ip: string
-	mask: string
-	gateway: string
+	id: number;
+	ip: string;
+	mask: string;
+	gateway: string;
 }
 
 interface Sector {
@@ -47,11 +40,10 @@ export interface Patrimony {
 }
 
 interface PatrimonyItemProps {
-	patrimony: Patrimony
+	patrimony: Patrimony;
 }
 
 const PatrimonyItem: React.FC<PatrimonyItemProps> = ({ patrimony }) => {
-
 	return (
 		<Item>
 			<Header>
@@ -62,34 +54,39 @@ const PatrimonyItem: React.FC<PatrimonyItemProps> = ({ patrimony }) => {
 			<Content>
 				<Info>
 					<h3>{patrimony.category.name}</h3>
-					<p><span>Patrimônio:</span> {patrimony.number}</p>
-					<p><span>Modelo:</span> {patrimony.model}</p>
-					{patrimony.ips &&
-						<IpInfo><span>Ips: </span>
+					<p>
+						<span>Patrimônio:</span> {patrimony.number}
+					</p>
+					<p>
+						<span>Modelo:</span> {patrimony.model}
+					</p>
+					{patrimony.ips && (
+						<IpInfo>
+							<span>Ips: </span>
 							{patrimony.ips.map((ip: Ip, index: number) => {
-								if (index === (Number(patrimony.ips?.length) - 1)) return <span key={index}>{ip.ip}</span>
-								else return <span key={index}>{ip.ip}, </span>
-
+								if (index === Number(patrimony.ips?.length) - 1)
+									return <span key={index}>{ip.ip}</span>;
+								else return <span key={index}>{ip.ip}, </span>;
 							})}
 						</IpInfo>
-					}
+					)}
 				</Info>
 
 				<Actions>
 					<Link to="/">
 						<img src={deleteForeverIcon} alt="Excluir" />
 					</Link>
-					<Link to={{
-						pathname: `/patrimony/${patrimony.id}`
-					}}>
-
+					<Link
+						to={{
+							pathname: `/patrimony/${patrimony.id}`,
+						}}
+					>
 						<img src={editIcon} alt="Editar" />
 					</Link>
 				</Actions>
 			</Content>
-
 		</Item>
-	)
-}
+	);
+};
 
-export default memo(PatrimonyItem)
+export default PatrimonyItem;

@@ -1,33 +1,13 @@
 import React from "react";
-
-export interface PatrimonyState {
-	id: number;
-	model: string;
-	categoryName: string;
-	patrimonyNumber: string;
-	isSelect: boolean;
-}
-
-export interface OwnerState {
-	ownerId: number;
-	error: string;
-}
-
-export const defaultValueOwnerState = {
-	ownerId: -1,
-	error: "",
-};
+import { StateProps } from "./types";
+import { INITIAL_STATE } from "./reducer";
 
 interface ContextProps {
-	ownerState: OwnerState;
-	setOwnerState: (value: OwnerState) => void;
-	patrimonies: PatrimonyState[];
-	setValuesPatrimonies: (value: PatrimonyState[]) => void;
+	state: StateProps;
+	dispatch: React.Dispatch<any>;
 }
 
 export const PatrimonyOwnerContext = React.createContext<ContextProps>({
-	ownerState: defaultValueOwnerState,
-	setOwnerState: () => {},
-	patrimonies: [],
-	setValuesPatrimonies: () => {},
+	state: INITIAL_STATE,
+	dispatch: () => {},
 });
