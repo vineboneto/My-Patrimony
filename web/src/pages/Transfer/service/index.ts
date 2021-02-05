@@ -1,3 +1,4 @@
+import { getApiPatrimoniesDataById } from "./loadPatrimonies";
 import { transferPatrimoniesSelectedToSecondOwner } from "./transferPatrimonies";
 
-export { transferPatrimoniesSelectedToSecondOwner };
+export { getApiPatrimoniesDataById, transferPatrimoniesSelectedToSecondOwner };

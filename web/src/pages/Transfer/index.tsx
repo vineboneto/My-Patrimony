@@ -8,9 +8,9 @@ import * as Styled from "./styled";
 import * as Yup from "yup";
 import * as Reducer from "pages/Transfer/hooks/reducer";
 import * as Types from "pages/Transfer/hooks/types";
-import * as loadPatrimonies from "pages/Transfer/components/PatrimonyItems/loadPatrimonies";
 import * as Utils from "pages/Transfer/utils/filterPatrimonies";
 import * as Services from "pages/Transfer/service";
+
 const PatrimonyTransfer = () => {
 	const [reducerFistOwner, dispatchFirstOwner] = React.useReducer(
 		Reducer.reducer,
@@ -61,7 +61,7 @@ const PatrimonyTransfer = () => {
 		id: number,
 		dispatch: (values: any) => void
 	) => {
-		const patrimonies = await loadPatrimonies.getApiPatrimoniesDataById(id);
+		const patrimonies = await Services.getApiPatrimoniesDataById(id);
 		dispatch({
 			type: Types.ActionsProps.SET_PATRIMONIES,
 			patrimoniesData: patrimonies,

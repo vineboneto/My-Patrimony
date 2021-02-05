@@ -1,8 +1,8 @@
 import React from "react";
 import { ActionsProps } from "pages/Transfer/hooks/types";
+import { getApiPatrimoniesDataById } from "pages/Transfer/service/loadPatrimonies";
 import * as Context from "pages/Transfer/hooks/context";
 import * as Styled from "./styled";
-import * as loadPatrimonies from "./loadPatrimonies";
 import * as utils from "./selectPatrimony";
 
 const PatrimonyItems = () => {
@@ -10,7 +10,7 @@ const PatrimonyItems = () => {
 
 	React.useEffect(() => {
 		const setStatePatrimoniesByOwnerId = async () => {
-			const patrimoniesValues = await loadPatrimonies.getApiPatrimoniesDataById(
+			const patrimoniesValues = await getApiPatrimoniesDataById(
 				state.ownerData.ownerId
 			);
 			dispatch({
