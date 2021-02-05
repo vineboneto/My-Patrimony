@@ -38,6 +38,9 @@ const PatrimonyTransfer = () => {
 		try {
 			await tryValidateOwner(datasFistOwner, dispatchFirstOwner);
 			await tryValidateOwner(dataSecondOwner, dispatchSecondOwner);
+			/**
+			 * Chamar essas duas próximas funções nesta ordem
+			 */
 			await transferPatrimoniesSelectedToSecondOwner();
 			await updatedPatrimoniesItems();
 		} catch (err) {
