@@ -9,19 +9,18 @@ const PatrimonyItems = () => {
 	const { state, dispatch } = React.useContext(Context.PatrimonyOwnerContext);
 
 	React.useEffect(() => {
+		const setStatePatrimoniesByOwnerId = async () => {
+			const patrimoniesValues = await loadPatrimonies.getApiPatrimoniesDataById(
+				state.ownerData.ownerId
+			);
+			dispatch({
+				type: ActionsProps.SET_PATRIMONIES,
+				patrimoniesData: patrimoniesValues,
+				messageErrors: "",
+			});
+		};
 		setStatePatrimoniesByOwnerId();
-	}, [state.ownerData.ownerId]);
-
-	const setStatePatrimoniesByOwnerId = async () => {
-		const patrimoniesValues = await loadPatrimonies.getApiPatrimoniesDataById(
-			state.ownerData.ownerId
-		);
-		dispatch({
-			type: ActionsProps.SET_PATRIMONIES,
-			patrimoniesData: patrimoniesValues,
-			messageErrors: "",
-		});
-	};
+	}, [state.ownerData.ownerId, dispatch]);
 
 	const handleSelectPatrimony = (id: number) => {
 		const patrimoniesSelected = utils.changeStateOfSelectedPatrimonies(
